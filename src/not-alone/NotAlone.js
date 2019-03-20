@@ -6,9 +6,9 @@ export default class NotAlone {
   creature
   hunted
 
-  setup() {
+  setup(options) {
     this.creature = {hand: ['Force Field', 'Despair', 'Tracking']}
-    this.hunted = [{}]
+    this.hunted = Array(options.numberOfPlayers - 1).fill({})
   }
 
   getPlayers() {
