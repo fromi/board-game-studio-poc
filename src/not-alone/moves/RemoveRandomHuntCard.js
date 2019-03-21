@@ -1,15 +1,15 @@
 import MoveRegistry from '../../game-api/MoveRegistry'
-import RandomMove from "../../game-api/RandomMove"
+import TakeRandomItem from "../../game-api/TakeRandomItem"
 
 const REMOVE_RANDOM_HUNT_CARD = 'Remove random hunt card'
 
-class RemoveRandomHuntCard extends RandomMove {
+class RemoveRandomHuntCard extends TakeRandomItem {
   prepareAction(game) {
-    return {card: game.creature.hand[Math.floor(Math.random() * game.creature.hand.length)]}
+    return this.takeRandomItemFrom(game.creature.hand)
   }
 
   execute(game, action) {
-    game.creature.hand.splice(game.creature.hand.indexOf(action.card), 1)
+    game.creature.hand.splice(game.creature.hand.indexOf(action.data), 1)
   }
 }
 
