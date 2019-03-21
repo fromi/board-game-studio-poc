@@ -28,7 +28,7 @@ export default class Studio extends Component {
         <StudioTools/>
         <div className="player-game-tabs">
           <Tabs value={this.state.player} onChange={this.selectPlayer}>
-            {this.state.game.getPlayers().map((player) => <Tab key={player} value={player} label={player}/>)}
+            {this.state.game.getPlayerIds().map((player) => <Tab key={player} value={player} label={player}/>)}
             <Tab value="Spectator" label="Spectator"/>
           </Tabs>
           <NotAloneUI game={this.state.game} player={this.state.player}/>

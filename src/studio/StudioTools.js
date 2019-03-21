@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import {connect} from 'react-redux'
-import LegalMovesList from "./LegalMovesList"
+import LegalMovesList from "./legal-actions/GameLegalActions"
 import {Button, Typography} from '@material-ui/core'
 
 class StudioTools extends Component {
