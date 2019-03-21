@@ -1,13 +1,14 @@
 import {getRandom, shuffle} from "../game-api/Random"
 import SurvivalCards, {STRIKE_BACK} from "./material/SurvivalCards"
-import HuntCards from "./material/HuntCards"
+import HuntCards, {SCREAM} from "./material/HuntCards"
 import {createAction, createActions} from "../game-api/Action"
 
 const CREATURE = 'Creature',
   HUNTED_PREFIX = 'Hunted ',
   CHOOSE_BOARD_SIDE = 'Choose board side',
   DRAW_HUNT_CARD = 'Draw Hunt card',
-  DRAW_SURVIVAL_CARD = 'Draw Survival card'
+  DRAW_SURVIVAL_CARD = 'Draw Survival card',
+  SHUFFLE_HUNT_CARDS = 'Shuffle Hunt cards'
 
 export default class NotAlone {
   boardSide
@@ -19,6 +20,7 @@ export default class NotAlone {
   reserve
   survivalCardsDeck
   huntCardsDeck
+  huntCardsDiscard
 
   setup(options) {
     this.boardSide = undefined
@@ -34,7 +36,7 @@ export default class NotAlone {
     this.reserve = {6: reserveSize, 7: reserveSize, 8: reserveSize, 9: reserveSize, 10: reserveSize}
     this.survivalCardsDeck = shuffle(SurvivalCards)
     this.huntCardsDeck = shuffle(HuntCards)
-    console.log(this.hunted[0] === this.hunted[1])
+    this.huntCardsDiscard = []
   }
 
   getPlayerIds() {
@@ -58,8 +60,18 @@ export default class NotAlone {
   }
 
   prepareAction(action) {
-    if (action.type === STRIKE_BACK)
-      action.data = getRandom(this.creature.hand, 2)
+    switch (action.type) {
+      case STRIKE_BACK:
+        action['data'] = this.creature.hand.length > 2 ? getRandom(this.creature.hand, 2) : this.creature.hand
+        return action
+      case DRAW_HUNT_CARD:
+        if (action.data > this.huntCardsDeck.length)
+          return {type: SHUFFLE_HUNT_CARDS, data: shuffle(this.huntCardsDiscard)}
+        else
+          return action
+      default:
+        return action
+    }
   }
 
   executeAction(action) {
@@ -75,6 +87,10 @@ export default class NotAlone {
         break;
       case STRIKE_BACK:
         this.strikeBack(action.data)
+        break;
+      case SHUFFLE_HUNT_CARDS:
+        this.huntCardsDeck.push(...shuffle(this.huntCardsDiscard))
+        this.huntCardsDiscard = []
         break;
       default:
         throw new Error('This action is not implemented: ' + action.type)

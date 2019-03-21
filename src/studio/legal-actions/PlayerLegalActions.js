@@ -7,8 +7,7 @@ import PlayableAction from "./PlayableAction"
 class PlayerLegalActions extends Component {
   playAction(action) {
     action['player'] = this.props.player
-    this.props.game.prepareAction(action)
-    this.props.dispatch(action)
+    this.props.dispatch(this.props.game.prepareAction(action))
   }
 
   getText(action) {
