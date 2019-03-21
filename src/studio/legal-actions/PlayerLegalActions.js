@@ -7,7 +7,10 @@ import PlayableAction from "./PlayableAction"
 class PlayerLegalActions extends Component {
   playAction(action) {
     action['player'] = this.props.player
-    this.props.dispatch(this.props.game.prepareAction(action))
+    const preparedAction = this.props.game.prepareAction(action)
+    this.props.dispatch(preparedAction)
+    if (preparedAction.type !== action.type) // Action interrupted, retry
+      this.playAction(action)
   }
 
   getText(action) {
