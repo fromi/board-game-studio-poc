@@ -1,7 +1,8 @@
 import {getRandom, shuffle} from "../game-api/Random"
 import SurvivalCards, {STRIKE_BACK} from "./material/SurvivalCards"
-import HuntCards, {SCREAM} from "./material/HuntCards"
+import HuntCards from "./material/HuntCards"
 import {createAction, createActions} from "../game-api/Action"
+import {hideItemsDetail} from "../game-api/Secrets"
 
 const CREATURE = 'Creature',
   HUNTED_PREFIX = 'Hunted ',
@@ -55,8 +56,12 @@ export default class NotAlone {
     if (id === CREATURE) {
       return this.creature
     } else {
-      return this.hunted[parseInt(id.slice(HUNTED_PREFIX.length)) - 1]
+      return this.hunted[NotAlone.getHuntedNumber(id) - 1]
     }
+  }
+
+  static getHuntedNumber(playerId) {
+    return parseInt(playerId.slice(HUNTED_PREFIX.length))
   }
 
   prepareAction(action) {
@@ -121,5 +126,38 @@ export default class NotAlone {
       this.creature.hand.splice(this.creature.hand.indexOf(card), 1)
       this.huntCardsDeck.push(card)
     })
+  }
+
+  getPlayerView(playerId) {
+    const view = {
+      ...this,
+      huntCardsDeck: hideItemsDetail(this.huntCardsDeck),
+      survivalCardsDeck: hideItemsDetail(this.survivalCardsDeck),
+      hunted: this.hunted.map((hunted) => NotAlone.hideHuntedSecrets(hunted))
+    }
+    if (playerId !== CREATURE) {
+      const huntedIndex = NotAlone.getHuntedNumber(playerId) - 1
+      view.hunted[huntedIndex] = this.hunted[huntedIndex]
+      view.creature = this.hideCreatureSecrets()
+    }
+    return view
+  }
+
+  getSpectatorView() {
+    return {
+      ...this,
+      huntCardsDeck: hideItemsDetail(this.huntCardsDeck),
+      survivalCardsDeck: hideItemsDetail(this.survivalCardsDeck),
+      creature: this.hideCreatureSecrets(),
+      hunted: this.hunted.map((hunted) => NotAlone.hideHuntedSecrets(hunted))
+    }
+  }
+
+  hideCreatureSecrets() {
+    return {...this.creature, hand: hideItemsDetail(this.creature.hand)}
+  }
+
+  static hideHuntedSecrets(hunted) {
+    return {...hunted, handPlaceCards: hideItemsDetail(hunted.handPlaceCards), handSurvivalCards: hideItemsDetail(hunted.handSurvivalCards)}
   }
 }
