@@ -5,11 +5,19 @@ export default function (state, action) {
   if (!state) {
     const game = new NotAlone()
     game.setup({numberOfPlayers: 3})
-    return {game, player: game.getPlayerIds()[0]}
+    return {game, tab: game.getPlayerIds()[0]}
   }
-  return {...state, game: produce(state.game, draft => {
-      draft = Object.assign(new NotAlone(), draft)
-      draft.executeAction(action)
-      return draft
-    })}
+  switch (action.type) {
+    case 'SELECT_TAB':
+      return {...state, tab: action.tab}
+    default:
+      return {
+        ...state,
+        game: produce(state.game, draft => {
+          draft = Object.assign(new NotAlone(), draft)
+          draft.executeAction(action)
+          return draft
+        })
+      }
+  }
 }

@@ -1,16 +1,20 @@
-import React, {Component} from "react"
+import React from "react"
+import * as PropTypes from "prop-types"
 import {ListItem, ListItemIcon, ListItemText} from '@material-ui/core'
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline"
 
-export default class PlayableAction extends Component {
-  render() {
-    return (
-      <ListItem button onClick={this.props.onPlay}>
-        <ListItemIcon>
-          <PlayCircleOutline/>
-        </ListItemIcon>
-        <ListItemText>{this.props.text}</ListItemText>
-      </ListItem>
-    )
-  }
+const PlayableAction = ({text, onPlay}) => (
+  <ListItem button onClick={onPlay}>
+    <ListItemIcon>
+      <PlayCircleOutline/>
+    </ListItemIcon>
+    <ListItemText>{text}</ListItemText>
+  </ListItem>
+)
+
+PlayableAction.propTypes = {
+  text: PropTypes.string.isRequired,
+  onPlay: PropTypes.func.isRequired
 }
+
+export default PlayableAction;
