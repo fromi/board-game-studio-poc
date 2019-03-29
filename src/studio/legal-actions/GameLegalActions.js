@@ -7,8 +7,8 @@ import GamePropType from "../GamePropType"
 const GameLegalActionsComponent = ({Game, game}) => (
   <List subheader={
     <ListSubheader component="div">Legal actions at this state:</ListSubheader>}>
-    {Game.getPlayerIds(game).map((player) =>
-      <PlayerLegalActions key={player} Game={Game} player={player}/>
+    {Game.getPlayerIds(game).map((playerId) =>
+      <PlayerLegalActions key={playerId} Game={Game} playerId={playerId}/>
     )}
   </List>
 )

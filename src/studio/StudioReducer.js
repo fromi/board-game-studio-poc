@@ -1,4 +1,5 @@
 import produce from 'immer'
+import {getActionMap} from "../game-api/Action"
 
 const createStudioReducer = (Game) => {
   const newGame = Game.setup({numberOfPlayers: 3})
@@ -14,11 +15,12 @@ const createStudioReducer = (Game) => {
   }
 
   const executeGameAction = (state, action) => produce(state, draft => {
-    Game.executeAction(draft.game, action)
+    const Action = getActionMap(Game)[action.type]
+    Action.execute(draft.game, action)
     Game.getPlayerIds(draft.game).forEach(playerId => {
-      Game.reportActionInGameView(draft.playerViews[playerId], Game.getPlayerActionView(action, playerId, draft.game))
+      Action.reportInPlayerView(draft.playerViews[playerId], Action.getPlayerView(action, playerId, draft.game), playerId)
     })
-    Game.reportActionInGameView(draft.spectatorView, Game.getSpectatorActionView(action, draft.game))
+    Action.reportInSpectatorView(draft.spectatorView, Action.getSpectatorView(action, draft.game))
   })
 
   return function (state, action) {
