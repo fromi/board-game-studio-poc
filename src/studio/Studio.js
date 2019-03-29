@@ -1,18 +1,21 @@
 import React from 'react'
 import {createStore} from "redux"
 import {Provider} from 'react-redux'
+import GamePropType from "./GamePropType"
 import StudioTools from './StudioTools'
 import PlayerViews from "./PlayerViews"
-import StudioReducer from "./StudioReducer"
+import createStudioReducer from "./StudioReducer"
 import './studio.css'
 
-const Studio = ({game, ui}) => {
-  return (
-    <Provider store={createStore(StudioReducer)}>
-      <StudioTools/>
-      <PlayerViews ui={ui}/>
-    </Provider>
-  )
+const Studio = ({Game, GameUI}) => (
+  <Provider store={createStore(createStudioReducer(Game))}>
+    <StudioTools Game={Game}/>
+    <PlayerViews GameUI={GameUI}/>
+  </Provider>
+)
+
+Studio.propTypes = {
+  Game: GamePropType.isRequired
 }
 
 export default Studio
