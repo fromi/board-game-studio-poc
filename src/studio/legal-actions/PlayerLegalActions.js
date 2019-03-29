@@ -3,12 +3,10 @@ import {List, ListItem} from "@material-ui/core"
 import ListSubheader from "@material-ui/core/ListSubheader"
 import {connect} from "react-redux"
 import PlayableAction from "./PlayableAction"
-import GamePropType from "../GamePropType"
 import * as PropTypes from "prop-types"
-import {playAction} from "../../game-api/Action"
 
-const PlayerLegalActionsComponent = ({Game, game, playerId, dispatch}) => {
-  const actions = Game.getLegalActions(game, playerId)
+const PlayerLegalActionsComponent = ({gameEngine, game, playerId}) => {
+  const actions = gameEngine.getLegalActions(game, playerId)
   if (actions.length === 0) {
     return null
   } else {
@@ -18,7 +16,7 @@ const PlayerLegalActionsComponent = ({Game, game, playerId, dispatch}) => {
           <ListSubheader component="div">{playerId}:</ListSubheader>
         }>
           {actions.map((action, index) =>
-            <PlayableAction key={index} text={JSON.stringify(action)} onPlay={() => playAction(Game, game, playerId, action, dispatch)}/>
+            <PlayableAction key={index} text={JSON.stringify(action)} onPlay={() => gameEngine.playAction(game, playerId, action)}/>
           )}
         </List>
       </ListItem>
@@ -29,7 +27,7 @@ const PlayerLegalActionsComponent = ({Game, game, playerId, dispatch}) => {
 const PlayerLegalActions = connect(state => ({game: state.game}))(PlayerLegalActionsComponent)
 
 PlayerLegalActions.propTypes = {
-  Game: GamePropType.isRequired,
+  gameEngine: PropTypes.object.isRequired,
   playerId: PropTypes.string.isRequired
 }
 

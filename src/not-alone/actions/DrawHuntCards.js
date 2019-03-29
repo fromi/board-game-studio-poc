@@ -2,7 +2,7 @@ import Action from "../../game-api/Action"
 import ShuffleHuntCards from "./ShuffleHuntCards"
 
 class DrawHuntCards extends Action {
-  hasPriorAction = (game, action) => action.numberOfCards > game.huntCardsDeck.length
+  hasPriorAction = (action, game) => action.numberOfCards > game.huntCardsDeck.length
   getPriorAction = () => ShuffleHuntCards.action
 
   execute = (game, action) => {

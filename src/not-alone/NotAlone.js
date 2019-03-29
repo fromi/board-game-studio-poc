@@ -62,6 +62,9 @@ export function getLegalActions(game, playerId) {
   if (player.pendingActions.length > 0) {
     return player.pendingActions[0]
   }
+  if (playerId === CREATURE) {
+    return [{...DrawHuntCards.action, numberOfCards: 3}]
+  }
   return [StrikeBack.action]
 }
 

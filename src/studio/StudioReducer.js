@@ -1,7 +1,6 @@
 import produce from 'immer'
-import {getActionMap} from "../game-api/Action"
 
-const createStudioReducer = (Game) => {
+const createStudioReducer = (Game, GameEngine) => {
   const newGame = Game.setup({numberOfPlayers: 3})
   const playerIds = Game.getPlayerIds(newGame)
   const initialState = {
@@ -15,7 +14,7 @@ const createStudioReducer = (Game) => {
   }
 
   const executeGameAction = (state, action) => produce(state, draft => {
-    const Action = getActionMap(Game)[action.type]
+    const Action = GameEngine.actions[action.type]
     Action.execute(draft.game, action)
     Game.getPlayerIds(draft.game).forEach(playerId => {
       Action.reportInPlayerView(draft.playerViews[playerId], Action.getPlayerView(action, playerId, draft.game), playerId)

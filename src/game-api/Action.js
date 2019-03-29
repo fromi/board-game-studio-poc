@@ -1,28 +1,3 @@
-let actionMap
-
-export const getActionMap = (Game) => {
-  if (!actionMap) {
-    actionMap = Game.actions.reduce((map, action) => {
-      map[action.constructor.name] = action
-      return map
-    }, {})
-  }
-  return actionMap
-}
-
-export const playAction = (Game, game, playerId, action, dispatch) => {
-  const Action = getActionMap(Game)[action.type]
-  if (Action.hasPriorAction && Action.hasPriorAction(game, action)) {
-    const priorAction = Action.getPriorAction(game, action)
-    playAction(Game, game, playerId, priorAction, dispatch)
-  }
-  action = {...action, playerId}
-  if (Action.setRandomOutput) {
-    Action.setRandomOutput(game, action)
-  }
-  dispatch(action)
-}
-
 export default class Action {
   action = {type: this.constructor.name}
 
@@ -30,6 +5,8 @@ export default class Action {
   getPriorAction = () => {
     throw new Error("You must implement getPriorAction alongside hasPriorAction")
   }
+
+  prepare = (action, playerId) => ({...action, playerId})
 
   execute = (game, action) => {
     throw new Error("You must implement function execute for action " + action.type)

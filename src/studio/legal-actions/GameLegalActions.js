@@ -2,13 +2,13 @@ import React from "react"
 import {connect} from "react-redux"
 import {List, ListSubheader} from '@material-ui/core'
 import PlayerLegalActions from "./PlayerLegalActions"
-import GamePropType from "../GamePropType"
+import * as PropTypes from "prop-types"
 
-const GameLegalActionsComponent = ({Game, game}) => (
+const GameLegalActionsComponent = ({gameEngine, game}) => (
   <List subheader={
     <ListSubheader component="div">Legal actions at this state:</ListSubheader>}>
-    {Game.getPlayerIds(game).map((playerId) =>
-      <PlayerLegalActions key={playerId} Game={Game} playerId={playerId}/>
+    {gameEngine.getPlayerIds(game).map((playerId) =>
+      <PlayerLegalActions key={playerId} gameEngine={gameEngine} playerId={playerId}/>
     )}
   </List>
 )
@@ -16,7 +16,7 @@ const GameLegalActionsComponent = ({Game, game}) => (
 const GameLegalActions = connect(state => ({game: state.game}))(GameLegalActionsComponent)
 
 GameLegalActions.propTypes = {
-  Game: GamePropType.isRequired
+  gameEngine: PropTypes.object.isRequired
 }
 
 export default GameLegalActions

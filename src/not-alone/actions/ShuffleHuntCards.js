@@ -1,11 +1,9 @@
-import Action from "../../game-api/Action"
 import {hideItemsDetail} from "../../game-api/Secrets"
 import {shuffle} from "../../game-api/Random"
+import RandomAction from "../../game-api/RandomAction"
 
-class ShuffleHuntCards extends Action {
-  setRandomOutput = (game, action) => {
-    action.shuffled = shuffle(game.huntCardsDiscard)
-  }
+class ShuffleHuntCards extends RandomAction {
+  prepare = (action, playerId, game) => ({...action, shuffled: shuffle(game.huntCardsDiscard)})
 
   execute = (game, action) => {
     game.huntCardsDeck.push(...action.shuffled)
