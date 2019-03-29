@@ -2,7 +2,6 @@ import React from "react"
 import {connect} from 'react-redux'
 import GameLegalActions from "./legal-actions/GameLegalActions"
 import {Button, Typography} from '@material-ui/core'
-import GamePropType from "./GamePropType"
 import * as PropTypes from "prop-types"
 
 const StudioToolsComponent = ({gameEngine, game}) => (
@@ -16,10 +15,7 @@ const StudioToolsComponent = ({gameEngine, game}) => (
 const StudioTools = connect((state) => ({game: state.game}))(StudioToolsComponent)
 
 StudioTools.propTypes = {
-  gameEngine: PropTypes.shape({
-    Game: GamePropType.isRequired,
-    store: PropTypes.object.isRequired
-  }).isRequired,
-}
+  gameEngine: PropTypes.object.isRequired
+}.isRequired
 
 export default StudioTools

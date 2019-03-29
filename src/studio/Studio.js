@@ -5,6 +5,7 @@ import StudioTools from './StudioTools'
 import PlayerViews from "./PlayerViews"
 import './studio.css'
 import GameEngine from "../game-engine/GameEngine"
+import * as PropTypes from "prop-types"
 
 const Studio = ({Game, GameUI}) => {
   const gameEngine = new GameEngine(Game)
@@ -17,7 +18,8 @@ const Studio = ({Game, GameUI}) => {
 }
 
 Studio.propTypes = {
-  Game: GamePropType.isRequired
+  Game: GamePropType.isRequired,
+  GameUI: PropTypes.func.isRequired
 }
 
 export default Studio
