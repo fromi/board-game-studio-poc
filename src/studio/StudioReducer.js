@@ -14,7 +14,7 @@ const createStudioReducer = (Game, GameEngine) => {
   }
 
   const executeGameAction = (state, action) => produce(state, draft => {
-    const Action = GameEngine.actions[action.type]
+    const Action = GameEngine.getAction(action.type)
     Action.execute(draft.game, action)
     Game.getPlayerIds(draft.game).forEach(playerId => {
       Action.reportInPlayerView(draft.playerViews[playerId], Action.getPlayerView(action, playerId, draft.game), playerId)

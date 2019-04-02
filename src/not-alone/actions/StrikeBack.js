@@ -2,8 +2,8 @@ import Action from "../../game-api/Action"
 import {getRandom} from "../../game-api/Random"
 
 class StrikeBack extends Action {
-  prepare = (action, playerId, game) => ({
-    ...action, playerId, cards: game.creature.hand.length > 2 ? getRandom(game.creature.hand, 2) : game.creature.hand
+  prepare = (action, game) => ({
+    ...action, cards: game.creature.hand.length > 2 ? getRandom(game.creature.hand, 2) : game.creature.hand
   })
 
   execute = (game, action) => {

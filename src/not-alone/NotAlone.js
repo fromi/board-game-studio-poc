@@ -7,8 +7,11 @@ import DrawHuntCards from "./actions/DrawHuntCards"
 import DrawSurvivalCard from "./actions/DrawSurvivalCard"
 import StrikeBack from "./actions/StrikeBack"
 import ShuffleHuntCards from "./actions/ShuffleHuntCards"
+import PlayPlaceCard from "./actions/PlayPlaceCard"
+import CancelPlayPlaceCard from "./actions/CancelPlayPlaceCard"
+import StartPhase from "./actions/StartPhase"
 
-const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted '
+export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted '
 
 /**
  * Setup a new Game.
@@ -24,13 +27,14 @@ export const setup = options => ({
   reserve: setupReserve(options.numberOfPlayers),
   survivalCardsDeck: shuffle(SurvivalCards),
   huntCardsDeck: shuffle(HuntCards),
-  huntCardsDiscard: []
+  huntCardsDiscard: [],
+  pendingActions: []
 })
 
 function setupHunted(numberOfPlayers) {
   const hunted = []
   for (let playerNumber = 1; playerNumber < numberOfPlayers; playerNumber++) {
-    hunted.push({willCounters: 3, handPlaceCards: [1, 2, 3, 4, 5], handSurvivalCards: [], pendingActions: []})
+    hunted.push({willCounters: 3, handPlaceCards: [1, 2, 3, 4, 5], handSurvivalCards: [], playedPlaceCards:[], pendingActions: []})
   }
   return hunted
 }
@@ -49,7 +53,13 @@ export function getPlayerIds(game) {
   return [CREATURE].concat(game.hunted.map((hunted, index) => HUNTED_PREFIX + (index + 1)))
 }
 
-export const actions = [ChooseBoardSide, DrawHuntCards, DrawSurvivalCard, ShuffleHuntCards, StrikeBack]
+export const actions = [ChooseBoardSide, DrawHuntCards, DrawSurvivalCard, StartPhase, PlayPlaceCard, CancelPlayPlaceCard, ShuffleHuntCards, StrikeBack]
+
+export function getAutomaticAction(game) {
+  if (!game.phase && game.creature.pendingActions.length === 0 && game.hunted.every(hunted => hunted.pendingActions.length === 0)) {
+    return {...StartPhase.action, phase: 1}
+  }
+}
 
 /**
  * Get all legal actions for a given player at a given state of his game
@@ -57,15 +67,25 @@ export const actions = [ChooseBoardSide, DrawHuntCards, DrawSurvivalCard, Shuffl
  * @param playerId Identifier of the player
  * @return {[]} The player legal actions at this state of the game
  */
-export function getLegalActions(game, playerId) {
+export function getMandatoryActions(game, playerId) {
   const player = getPlayer(game, playerId)
   if (player.pendingActions.length > 0) {
     return player.pendingActions[0]
+  }
+  if (playerId !== CREATURE && game.phase === 1 && !explorationDone(player)) {
+    return player.handPlaceCards.map(place => ({...PlayPlaceCard.action, place}))
   }
   if (playerId === CREATURE) {
     return [{...DrawHuntCards.action, numberOfCards: 3}]
   }
   return [StrikeBack.action]
+}
+
+export function getOptionalActions(game, playerId) {
+  const player = getPlayer(game, playerId)
+  if (playerId !== CREATURE && game.phase === 1) {
+    return player.playedPlaceCards.map(place => ({...CancelPlayPlaceCard.action, place}))
+  }
 }
 
 export function getPlayer(game, playerId) {
@@ -74,6 +94,10 @@ export function getPlayer(game, playerId) {
   } else {
     return game.hunted[getHuntedNumber(playerId) - 1]
   }
+}
+
+export function explorationDone(hunted) {
+  return hunted.playedPlaceCards.length === 1
 }
 
 function getHuntedNumber(playerId) {

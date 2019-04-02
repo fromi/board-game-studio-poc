@@ -6,7 +6,7 @@ import PlayableAction from "./PlayableAction"
 import * as PropTypes from "prop-types"
 
 const PlayerLegalActionsComponent = ({gameEngine, game, playerId}) => {
-  const actions = gameEngine.getLegalActions(game, playerId)
+  const actions = gameEngine.getMandatoryActions(game, playerId)
   if (actions.length === 0) {
     return null
   } else {
@@ -16,7 +16,7 @@ const PlayerLegalActionsComponent = ({gameEngine, game, playerId}) => {
           <ListSubheader component="div">{playerId}:</ListSubheader>
         }>
           {actions.map((action, index) =>
-            <PlayableAction key={index} text={JSON.stringify(action)} onPlay={() => gameEngine.playAction(game, playerId, action)}/>
+            <PlayableAction key={index} text={JSON.stringify(action)} onPlay={() => gameEngine.playAction(action, game, playerId)}/>
           )}
         </List>
       </ListItem>
