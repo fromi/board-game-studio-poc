@@ -12,6 +12,12 @@ export default class Action {
     throw new Error("You must implement function execute for action " + action.type)
   }
 
+  cancelable = () => false
+
+  cancel = (game, action) => {
+    throw new Error("You must implement function cancel for cancelable action " + action.type)
+  }
+
   getView = (action) => action
 
   getPlayerView = (action, playerId, game) => {
@@ -37,4 +43,16 @@ export default class Action {
   reportInOwnView = (gameView, actionView) => this.execute(gameView, actionView)
 
   reportInSpectatorView = (gameView, actionView) => this.execute(gameView, actionView)
+
+  cancelInPlayerView = (gameView, actionView, playerId) => {
+    if (actionView.playerId === playerId) {
+      this.cancelInOwnView(gameView, actionView)
+    } else {
+      this.cancel(gameView, actionView)
+    }
+  }
+
+  cancelInOwnView = (gameView, actionView) => this.cancel(gameView, actionView)
+
+  cancelInSpectatorView = (gameView, actionView) => this.cancel(gameView, actionView)
 }

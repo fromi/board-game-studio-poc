@@ -5,6 +5,7 @@ export default class GameEngine {
   constructor(Game) {
     this.getPlayerIds = Game.getPlayerIds
     this.getMandatoryActions = Game.getMandatoryActions
+    this.getOptionalActions = Game.getOptionalActions
     this.getAutomaticAction = Game.getAutomaticAction
     this.actions = Game.actions.reduce((map, action) => {
       map[action.constructor.name] = action
@@ -12,6 +13,10 @@ export default class GameEngine {
     }, {})
     this.store = createStore(createStudioReducer(Game, this))
     this.store.subscribe(this.playAutomaticAction)
+  }
+
+  getPlayerActions = (game, playerId) => {
+    return this.getMandatoryActions(game, playerId).concat(this.getOptionalActions(game, playerId))
   }
 
   getAction = (type) => {

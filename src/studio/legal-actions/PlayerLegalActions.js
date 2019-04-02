@@ -6,7 +6,7 @@ import PlayableAction from "./PlayableAction"
 import * as PropTypes from "prop-types"
 
 const PlayerLegalActionsComponent = ({gameEngine, game, playerId}) => {
-  const actions = gameEngine.getMandatoryActions(game, playerId)
+  const actions = gameEngine.getPlayerActions(game, playerId)
   if (actions.length === 0) {
     return null
   } else {

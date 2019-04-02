@@ -8,7 +8,6 @@ import DrawSurvivalCard from "./actions/DrawSurvivalCard"
 import StrikeBack from "./actions/StrikeBack"
 import ShuffleHuntCards from "./actions/ShuffleHuntCards"
 import PlayPlaceCard from "./actions/PlayPlaceCard"
-import CancelPlayPlaceCard from "./actions/CancelPlayPlaceCard"
 import StartPhase from "./actions/StartPhase"
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted '
@@ -53,7 +52,7 @@ export function getPlayerIds(game) {
   return [CREATURE].concat(game.hunted.map((hunted, index) => HUNTED_PREFIX + (index + 1)))
 }
 
-export const actions = [ChooseBoardSide, DrawHuntCards, DrawSurvivalCard, StartPhase, PlayPlaceCard, CancelPlayPlaceCard, ShuffleHuntCards, StrikeBack]
+export const actions = [ChooseBoardSide, DrawHuntCards, DrawSurvivalCard, StartPhase, PlayPlaceCard, ShuffleHuntCards, StrikeBack]
 
 export function getAutomaticAction(game) {
   if (!game.phase && game.creature.pendingActions.length === 0 && game.hunted.every(hunted => hunted.pendingActions.length === 0)) {
@@ -82,10 +81,7 @@ export function getMandatoryActions(game, playerId) {
 }
 
 export function getOptionalActions(game, playerId) {
-  const player = getPlayer(game, playerId)
-  if (playerId !== CREATURE && game.phase === 1) {
-    return player.playedPlaceCards.map(place => ({...CancelPlayPlaceCard.action, place}))
-  }
+  return []
 }
 
 export function getPlayer(game, playerId) {
