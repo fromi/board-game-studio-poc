@@ -124,5 +124,9 @@ function hideCreatureSecrets(game) {
 }
 
 function hideHuntedSecrets(hunted) {
-  return {...hunted, handPlaceCards: hideItemsDetail(hunted.handPlaceCards), handSurvivalCards: hideItemsDetail(hunted.handSurvivalCards)}
+  return {...hunted,
+    handPlaceCards: hideItemsDetail(hunted.handPlaceCards),
+    handSurvivalCards: hideItemsDetail(hunted.handSurvivalCards),
+    playedPlaceCards: hideItemsDetail(hunted.playedPlaceCards)
+  }
 }

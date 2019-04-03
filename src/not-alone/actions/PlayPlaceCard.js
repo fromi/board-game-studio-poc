@@ -18,6 +18,12 @@ class PlayPlaceCard extends Action {
     hunted.playedPlaceCards.splice(hunted.playedPlaceCards.indexOf(action.place), 1)
     hunted.handPlaceCards.push(action.place)
   }
+
+  getOwnView = (action) => action
+
+  getView = (action) => {
+    return {...action, place: {}}
+  }
 }
 
 export default new PlayPlaceCard()
