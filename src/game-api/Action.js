@@ -6,7 +6,7 @@ export default class Action {
     throw new Error("You must implement getPriorAction alongside hasPriorAction")
   }
 
-  prepare = (action, game, playerId) => ({...action, playerId})
+  prepare = (action, game, playerId) => playerId ? ({...action, playerId}) : action
 
   execute = (game, action) => {
     throw new Error("You must implement function execute for action " + action.type)

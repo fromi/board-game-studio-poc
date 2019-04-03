@@ -55,9 +55,7 @@ export function getPlayerIds(game) {
 export const actions = [ChooseBoardSide, DrawHuntCards, DrawSurvivalCard, StartPhase, PlayPlaceCard, ShuffleHuntCards, StrikeBack]
 
 export function getAutomaticAction(game) {
-  if (!game.phase && game.creature.pendingActions.length === 0 && game.hunted.every(hunted => hunted.pendingActions.length === 0)) {
-    return {...StartPhase.action, phase: 1}
-  }
+  return game.pendingActions[0]
 }
 
 /**

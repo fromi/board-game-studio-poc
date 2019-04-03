@@ -1,5 +1,6 @@
 import Action from "../../game-api/Action"
 import ShuffleHuntCards from "./ShuffleHuntCards"
+import {CREATURE} from "../NotAlone"
 
 class DrawHuntCards extends Action {
   hasPriorAction = (action, game) => action.numberOfCards > game.huntCardsDeck.length
@@ -9,14 +10,22 @@ class DrawHuntCards extends Action {
     for (let i = 0; i < action.numberOfCards; i++) {
       game.creature.hand.push(game.huntCardsDeck.shift())
     }
-    game.creature.pendingActions.shift()
+    game.pendingActions.shift()
   }
 
-  getOwnView = (action, game) => ({...action, huntCardsDrawn: game.creature.hand.slice(-action.numberOfCards)})
+  getPlayerView = (action, playerId, game) => {
+    if (playerId === CREATURE) {
+      return {...action, huntCardsDrawn: game.creature.hand.slice(-action.numberOfCards)}
+    } else {
+      return action
+    }
+  }
 
-  reportInOwnView = (game, action) => {
-    this.execute(game, action)
-    game.creature.hand.splice(-action.numberOfCards, action.numberOfCards, ...action.huntCardsDrawn)
+  reportInPlayerView = (gameView, actionView, playerId) => {
+    this.execute(gameView, actionView)
+    if (playerId === CREATURE) {
+      gameView.creature.hand.splice(-actionView.numberOfCards, actionView.numberOfCards, ...actionView.huntCardsDrawn)
+    }
   }
 }
 

@@ -5,7 +5,7 @@ class DrawSurvivalCard extends Action {
   execute = (game, action) => {
     const hunted = getPlayer(game, action.playerId)
     hunted.handSurvivalCards.push(game.survivalCardsDeck.shift())
-    hunted.pendingActions.shift()
+    game.pendingActions.shift()
   }
 
   getOwnView = (action, game) => ({...action, survivalCardDrawn: getPlayer(game, action.playerId).handSurvivalCards.slice(-1)[0]})
