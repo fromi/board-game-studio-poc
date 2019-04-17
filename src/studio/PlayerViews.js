@@ -14,7 +14,7 @@ const PlayerViews = ({GameUI, tab, playerViews, spectatorView, dispatch}) => {
         )}
         <Tab value={SPECTATOR} label={SPECTATOR}/>
       </Tabs>
-      <GameUI game={view} player={tab !== SPECTATOR ? tab : undefined}/>
+      <GameUI game={view} player={tab !== SPECTATOR ? tab : undefined} play={dispatch}/>
     </div>
   )
 }

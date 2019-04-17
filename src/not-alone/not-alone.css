@@ -1,0 +1,15 @@
+.not-alone {
+  background: url(img/universe.jpg);
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.not-alone .information {
+  color: antiquewhite;
+  padding: 0.5em;
+  margin: 0.5em;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0.5em;
+}
