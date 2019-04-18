@@ -1,7 +1,7 @@
 import {Tab, Tabs} from "@material-ui/core"
 import React from "react"
 import {connect} from "react-redux"
-import {PLAY_ACTION, SELECT_TAB} from "./StudioActions"
+import {PLAY_MOVE, SELECT_TAB} from "./StudioActions"
 
 const SPECTATOR = 'Spectator'
 const PLAYER_PREFIX = 'Player: '
@@ -22,7 +22,7 @@ const PlayerViews = ({GameUI, tab, clients, dispatch}) => {
         )}
         <Tab value={SPECTATOR} label={SPECTATOR}/>
       </Tabs>
-      <GameUI game={game} player={playerId} play={(action) => dispatch({type: PLAY_ACTION, playerId, action})}/>
+      <GameUI game={game} player={playerId} play={(move) => dispatch({type: PLAY_MOVE, playerId, move})}/>
     </div>
   )
 }

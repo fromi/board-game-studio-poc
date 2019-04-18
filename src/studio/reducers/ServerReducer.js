@@ -1,4 +1,4 @@
-import {CANCEL_ACTION, NEW_GAME, PLAY_ACTION} from "../StudioActions"
+import {CANCEL_MOVE, NEW_GAME, PLAY_MOVE} from "../StudioActions"
 import produce from "immer"
 
 export function createServerReducer(Game) {
@@ -6,15 +6,15 @@ export function createServerReducer(Game) {
     switch (action.type) {
       case NEW_GAME:
         return {...state, game: action.game, moveHistory: []}
-      case PLAY_ACTION:
+      case PLAY_MOVE:
         return produce(state, draft => {
-          Game.actions[action.action.type].execute(draft.game, action.action)
-          draft.moveHistory.push(action.action)
+          Game.moves[action.move.type].execute(draft.game, action.move)
+          draft.moveHistory.push(action.move)
         })
-      case CANCEL_ACTION:
+      case CANCEL_MOVE:
         return produce(state, draft => {
-          Game.actions[action.action.type].cancel(draft.game, action.action)
-          draft.moveHistory.splice(draft.moveHistory.lastIndexOf(action), 1)
+          Game.moves[action.move.type].cancel(draft.game, action.move)
+          draft.moveHistory.splice(draft.moveHistory.lastIndexOf(action.move), 1)
         })
       default:
         return state
@@ -22,11 +22,11 @@ export function createServerReducer(Game) {
   }
 }
 
-export function automaticActionDispatchListener(Game, store) {
+export function automaticMovesListener(Game, store) {
   return () => {
-    const action = Game.getAutomaticAction(store.getState().server.game)
-    if (action) {
-      store.dispatch({type: PLAY_ACTION, action})
+    const move = Game.getAutomaticMove(store.getState().server.game)
+    if (move) {
+      store.dispatch({type: PLAY_MOVE, move})
     }
   }
 }

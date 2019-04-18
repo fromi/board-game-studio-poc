@@ -3,7 +3,7 @@ import * as PropTypes from "prop-types"
 import {ListItem, ListItemIcon, ListItemText} from '@material-ui/core'
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline"
 
-const PlayableAction = ({text, onPlay}) => (
+const PlayableMove = ({text, onPlay}) => (
   <ListItem button onClick={onPlay}>
     <ListItemIcon>
       <PlayCircleOutline/>
@@ -12,9 +12,9 @@ const PlayableAction = ({text, onPlay}) => (
   </ListItem>
 )
 
-PlayableAction.propTypes = {
+PlayableMove.propTypes = {
   text: PropTypes.string.isRequired,
   onPlay: PropTypes.func.isRequired
 }
 
-export default PlayableAction;
+export default PlayableMove;

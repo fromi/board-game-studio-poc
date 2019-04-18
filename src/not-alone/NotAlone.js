@@ -2,23 +2,23 @@ import {shuffle} from "../game-api/Random"
 import SurvivalCards from "./material/SurvivalCards"
 import HuntCards from "./material/HuntCards"
 import {hideItemsDetail} from "../game-api/Secrets"
-import ChooseBoardSide from "./actions/ChooseBoardSide"
-import DrawHuntCards from "./actions/DrawHuntCards"
-import DrawSurvivalCard from "./actions/DrawSurvivalCard"
-import StrikeBack from "./actions/StrikeBack"
-import ShuffleHuntCards from "./actions/ShuffleHuntCards"
-import PlayPlaceCard from "./actions/PlayPlaceCard"
-import StartPhase from "./actions/StartPhase"
+import {ChooseBoardSide, chooseBoardSide} from "./moves/ChooseBoardSide"
+import {DrawHuntCards} from "./moves/DrawHuntCards"
+import {DrawSurvivalCard} from "./moves/DrawSurvivalCard"
+import {StartPhase} from "./moves/StartPhase"
+import {PlayPlaceCard, playPlaceCard} from "./moves/PlayPlaceCard"
+import {strikeBack, StrikeBack} from "./moves/StrikeBack"
+import {ShuffleHuntCards} from "./moves/ShuffleHuntCards"
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted '
 
 /**
  * Setup a new Game.
  * @param options Game options (for example, number of players
- * @return {Object} Game state before the first player action
+ * @return {Object} Game state before the first player move
  */
 export const setup = options => ({
-  creature: {hand: [], pendingActions: [[{...ChooseBoardSide.action, side: 1}, {...ChooseBoardSide.action, side: 2}]]},
+  creature: {hand: []},
   hunted: setupHunted(options.numberOfPlayers),
   assimilationCounter: 5 + options.numberOfPlayers,
   rescueCounter: 11 + options.numberOfPlayers,
@@ -27,13 +27,13 @@ export const setup = options => ({
   survivalCardsDeck: shuffle(SurvivalCards),
   huntCardsDeck: shuffle(HuntCards),
   huntCardsDiscard: [],
-  pendingActions: []
+  nextMoves: []
 })
 
 function setupHunted(numberOfPlayers) {
   const hunted = []
   for (let playerNumber = 1; playerNumber < numberOfPlayers; playerNumber++) {
-    hunted.push({willCounters: 3, handPlaceCards: [1, 2, 3, 4, 5], handSurvivalCards: [], playedPlaceCards:[], pendingActions: []})
+    hunted.push({willCounters: 3, handPlaceCards: [1, 2, 3, 4, 5], handSurvivalCards: [], playedPlaceCards:[]})
   }
   return hunted
 }
@@ -52,33 +52,37 @@ export function getPlayerIds(game) {
   return [CREATURE].concat(game.hunted.map((hunted, index) => HUNTED_PREFIX + (index + 1)))
 }
 
-export const actions = {ChooseBoardSide, DrawHuntCards, DrawSurvivalCard, StartPhase, PlayPlaceCard, ShuffleHuntCards, StrikeBack}
+export const moves = {ChooseBoardSide, DrawHuntCards, DrawSurvivalCard, StartPhase, PlayPlaceCard, ShuffleHuntCards, StrikeBack}
 
-export function getAutomaticAction(game) {
-  return game.pendingActions[0]
+export function getAutomaticMove(game) {
+  return game.nextMoves[0]
 }
 
 /**
- * Get all legal actions for a given player at a given state of his game
+ * Get all legal moves for a given player at a given state of his game
  * @param game Current state of a game
  * @param playerId Identifier of the player
- * @return {[]} The player legal actions at this state of the game
+ * @return {[]} The player legal moves at this state of the game
  */
-export function getMandatoryActions(game, playerId) {
-  const player = getPlayer(game, playerId)
-  if (player.pendingActions.length > 0) {
-    return player.pendingActions[0]
-  }
-  if (playerId !== CREATURE && game.phase === 1 && !explorationDone(player)) {
-    return player.handPlaceCards.map(place => ({...PlayPlaceCard.action, place}))
-  }
-  if (playerId === CREATURE) {
-    return [{...DrawHuntCards.action, numberOfCards: 3}]
-  }
-  return [StrikeBack.action]
+export function getMandatoryMoves(game, playerId) {
+  return playerId === CREATURE ? getCreatureMandatoryMoves(game) : getHuntedMandatoryMoves(game, getPlayer(game, playerId))
 }
 
-export function getOptionalActions(game, playerId) {
+function getCreatureMandatoryMoves(game) {
+  if (!game.boardSide) {
+    return [chooseBoardSide(1), chooseBoardSide(2)]
+  }
+  return []
+}
+
+function getHuntedMandatoryMoves(game, hunted) {
+  if (game.phase === 1 && !explorationDone(hunted)) {
+    return hunted.handPlaceCards.map(place => playPlaceCard(place))
+  }
+  return [strikeBack]
+}
+
+export function getOptionalMoves(game, playerId) {
   return []
 }
 
@@ -86,8 +90,12 @@ export function getPlayer(game, playerId) {
   if (playerId === CREATURE) {
     return game.creature
   } else {
-    return game.hunted[getHuntedNumber(playerId) - 1]
+    return getHunted(game, playerId)
   }
+}
+
+export function getHunted(game, huntedPlayerId) {
+  return game.hunted[getHuntedNumber(huntedPlayerId) - 1]
 }
 
 export function explorationDone(hunted) {
