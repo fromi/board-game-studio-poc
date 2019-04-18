@@ -1,22 +1,30 @@
 import {Tab, Tabs} from "@material-ui/core"
 import React from "react"
 import {connect} from "react-redux"
+import {PLAY_ACTION, SELECT_TAB} from "./StudioActions"
 
 const SPECTATOR = 'Spectator'
+const PLAYER_PREFIX = 'Player: '
 
-const PlayerViews = ({GameUI, tab, playerViews, spectatorView, dispatch}) => {
-  const view = tab === SPECTATOR ? spectatorView : playerViews[tab]
+const PlayerViews = ({GameUI, tab, clients, dispatch}) => {
+  const playerIds = Object.keys(clients.players)
+  if (!tab) {
+    dispatch({type: SELECT_TAB, tab: PLAYER_PREFIX + playerIds[0]})
+    return null
+  }
+  const playerId = tab !== SPECTATOR && tab.slice(PLAYER_PREFIX.length)
+  const game = playerId ? clients.players[playerId] : clients.spectator
   return (
     <div className="player-game-tabs">
-      <Tabs value={tab} onChange={(event, tab) => dispatch({type: 'SELECT_TAB', tab})}>
-        {Object.keys(playerViews).map((player) =>
-          <Tab key={player} value={player} label={player}/>
+      <Tabs value={tab} onChange={(event, tab) => dispatch({type: SELECT_TAB, tab})}>
+        {playerIds.map((player) =>
+          <Tab key={player} value={PLAYER_PREFIX + player} label={player}/>
         )}
         <Tab value={SPECTATOR} label={SPECTATOR}/>
       </Tabs>
-      <GameUI game={view} player={tab !== SPECTATOR ? tab : undefined} play={dispatch}/>
+      <GameUI game={game} player={playerId} play={(action) => dispatch({type: PLAY_ACTION, playerId, action})}/>
     </div>
   )
 }
 
-export default connect(state => ({...state}))(PlayerViews)
+export default connect(state => ({tab: state.studio.tab, clients: state.clients}))(PlayerViews)
