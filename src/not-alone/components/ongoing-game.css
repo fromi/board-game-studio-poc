@@ -1,17 +1,9 @@
 .ongoing-game {
   flex: 1;
   overflow: hidden;
-  display: flex;
-}
-
-.ongoing-game .game-zone {
-  flex: 1;
-}
-
-.ongoing-game .board-wrapper {
 }
 
 .ongoing-game .board {
-  overflow: hidden;
   height: 100%;
+  float: right;
 }
