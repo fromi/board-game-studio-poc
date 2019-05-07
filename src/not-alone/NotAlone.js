@@ -65,7 +65,7 @@ export function getAutomaticMove(game) {
  * @return {[]} The player legal moves at this state of the game
  */
 export function getMandatoryMoves(game, playerId) {
-  return playerId === CREATURE ? getCreatureMandatoryMoves(game) : getHuntedMandatoryMoves(game, getPlayer(game, playerId))
+  return playerId === CREATURE ? getCreatureMandatoryMoves(game) : getHuntedMandatoryMoves(game, getHunted(game, playerId))
 }
 
 function getCreatureMandatoryMoves(game) {
@@ -84,14 +84,6 @@ function getHuntedMandatoryMoves(game, hunted) {
 
 export function getOptionalMoves(game, playerId) {
   return []
-}
-
-export function getPlayer(game, playerId) {
-  if (playerId === CREATURE) {
-    return game.creature
-  } else {
-    return getHunted(game, playerId)
-  }
 }
 
 export function getHunted(game, huntedPlayerId) {
