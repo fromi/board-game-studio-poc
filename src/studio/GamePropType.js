@@ -4,6 +4,7 @@ export default PropTypes.shape({
   setup: PropTypes.func.isRequired,
   getPlayerIds: PropTypes.func.isRequired,
   getMandatoryMoves: PropTypes.func.isRequired,
+  getOptionalMoves: PropTypes.func.isRequired,
   getPlayerView: PropTypes.func.isRequired,
   getSpectatorView: PropTypes.func.isRequired
 })
