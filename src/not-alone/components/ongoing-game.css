@@ -1,9 +1,0 @@
-.ongoing-game {
-  flex: 1;
-  min-height: 0;
-}
-
-.ongoing-game .board {
-  height: 100%;
-  float: right;
-}

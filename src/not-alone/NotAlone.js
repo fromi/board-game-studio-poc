@@ -10,7 +10,7 @@ import {PlayPlaceCard, playPlaceCard} from "./moves/PlayPlaceCard"
 import {strikeBack, StrikeBack} from "./moves/StrikeBack"
 import {ShuffleHuntCards} from "./moves/ShuffleHuntCards"
 
-export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted '
+export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2]
 
 /**
  * Setup a new Game.
@@ -70,7 +70,7 @@ export function getMandatoryMoves(game, playerId) {
 
 function getCreatureMandatoryMoves(game) {
   if (!game.boardSide) {
-    return [chooseBoardSide(1), chooseBoardSide(2)]
+    return BOARD_SIDES.map(side => chooseBoardSide(side))
   }
   return []
 }

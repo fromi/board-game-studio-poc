@@ -1,0 +1,35 @@
+.board {
+  position: absolute;
+  transition: all 1s ease-in-out;
+}
+.creature .board:not(.choice) {
+  transform: rotate(90deg) translate(-100%, 100%);
+  transform-origin: bottom left;
+  left: 100vw;
+  bottom: 0;
+  width: calc(100vh - 3.53rem);
+}
+.board.choice {
+  transform: translateX(-50%);
+  width: calc(4606 / 886 * (100vh - 3.53rem) / 3);
+  left: 50%;
+  margin: auto;
+}
+.board.board1.choice {
+  bottom: calc((100vh - 3rem) * 5 / 9);
+}
+.board.board2.choice {
+  bottom: calc((100vh - 3rem) / 9);
+}
+.creature .board.selectable {
+  transition: all 0.3s ease-in-out;
+  transform-origin: left center;
+  cursor: pointer;
+}
+.board.selectable:hover {
+  transform: scale(1.05) translateX(-50%);
+  filter: drop-shadow(0 0 0.4rem white);
+}
+.board.selectable:active {
+  filter: drop-shadow(0 0 0.6rem white);
+}
