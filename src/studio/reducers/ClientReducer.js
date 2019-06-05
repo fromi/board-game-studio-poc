@@ -76,17 +76,20 @@ export function createClientReducer(Game) {
   }
 }
 
-let animationTimeout;
-
 export function movesAnimationListener(getMoveAnimationDelay, store) {
+  let animationTimeout;
   return () => {
     const transitions = store.getState().client.transitions
     if (transitions.length > 0 && !animationTimeout) {
-      animationTimeout = setTimeout(() => {
-        animationTimeout = undefined
+      const moveAnimationDelay = getMoveAnimationDelay({move: transitions[0].move})
+      if (moveAnimationDelay) {
+        animationTimeout = setTimeout(() => {
+          animationTimeout = undefined
+          store.dispatch({type: END_TRANSITION})
+        }, moveAnimationDelay * 1000)
+      } else {
         store.dispatch({type: END_TRANSITION})
-      }, getMoveAnimationDelay({move: transitions[0].move}) * 1000)
-
+      }
     }
   }
 }
