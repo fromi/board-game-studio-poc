@@ -2,6 +2,7 @@
   position: absolute;
   transition: all 1s ease-in-out;
 }
+
 .creature .board:not(.choice) {
   transform: rotate(90deg) translate(-100%, 100%);
   transform-origin: bottom left;
@@ -9,6 +10,15 @@
   bottom: 0;
   width: calc(100vh - 3.53rem);
 }
+
+.not-alone:not(.creature) .board:not(.choice) {
+  transform: rotate(-90deg) translateY(100%);
+  transform-origin: bottom left;
+  left: 0;
+  bottom: 0;
+  width: calc(100vh - 3.53rem);
+}
+
 .board.choice {
   transform: translateX(-50%);
   width: calc(4606 / 886 * (100vh - 3.53rem) / 3);
