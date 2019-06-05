@@ -21,6 +21,10 @@
 .board.board2.choice {
   bottom: calc((100vh - 3rem) / 9);
 }
+.board.not-chosen {
+  opacity: 0;
+  z-index: -1;
+}
 .creature .board.selectable {
   transition: all 0.3s ease-in-out;
   transform-origin: left center;

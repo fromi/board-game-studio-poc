@@ -1,10 +1,9 @@
 import React from 'react'
 import {connect, Provider} from 'react-redux'
-import GamePropType from "./GamePropType"
 import * as PropTypes from "prop-types"
 import {applyMiddleware, combineReducers, createStore} from "redux"
 import {automaticMovesListener, createServerReducer} from "./reducers/ServerReducer"
-import {createClientReducer} from "./reducers/ClientReducer"
+import {createClientReducer, movesAnimationListener} from "./reducers/ClientReducer"
 import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, PLAY_MOVE} from "./StudioActions"
 import {priorMoveMiddleware} from "./middleware/PriorMoveMiddleware"
 import {prepareMoveMiddleware} from "./middleware/PrepareMoveMiddleware"
@@ -15,14 +14,15 @@ const Studio = ({Game, GameUI}) => {
   const store = createStore(combineReducers({server, client}),
     applyMiddleware(priorMoveMiddleware(Game), prepareMoveMiddleware(Game)))
   store.subscribe(automaticMovesListener(Game, store))
+  store.subscribe(movesAnimationListener(GameUI.getMoveAnimationDelay, store))
   store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers: 3})})
   const GameView = connect(state => ({
-    game: state.client.game,
-    player: state.client.playerId,
-    play: (move) => store.dispatch({type: PLAY_MOVE, playerId: state.client.playerId, move})}))(GameUI)
+    ...state.client,
+    play: (move) => store.dispatch({type: PLAY_MOVE, playerId: state.client.playerId, move})
+  }))(GameUI.Interface)
 
   // Tools for console control
-  window.Game = Game;
+  window.Game = Game
   window.game = {
     get state() {
       return store.getState().server.game
@@ -55,8 +55,19 @@ const Studio = ({Game, GameUI}) => {
 }
 
 Studio.propTypes = {
-  Game: GamePropType.isRequired,
-  GameUI: PropTypes.func.isRequired
+  Game: PropTypes.shape({
+    setup: PropTypes.func.isRequired,
+    getPlayerIds: PropTypes.func.isRequired,
+    getMandatoryMoves: PropTypes.func.isRequired,
+    getOptionalMoves: PropTypes.func.isRequired,
+    getPlayerView: PropTypes.func.isRequired,
+    getSpectatorView: PropTypes.func.isRequired,
+    getAutomaticMove: PropTypes.func.isRequired
+  }).isRequired,
+  GameUI: PropTypes.shape({
+    Interface: PropTypes.func.isRequired,
+    getMoveAnimationDelay: PropTypes.func.isRequired
+  }).isRequired
 }
 
 export default Studio

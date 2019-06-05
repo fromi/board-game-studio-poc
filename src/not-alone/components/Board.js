@@ -3,23 +3,31 @@ import board1 from "../img/board_1.jpg"
 import board2 from "../img/board_2.jpg"
 import {CREATURE} from "../NotAlone"
 import "./board.css"
+import {CHOOSE_BOARD_SIDE} from "../moves/ChooseBoardSide"
 
-const Board = ({game, player, side, play}) => {
+const Board = ({game, playerId, transitions, side, play}) => {
+  if (game.boardSide && game.boardSide !== side) {
+    return null;
+  }
+  const chosenSide = transitions.length && transitions[0].move.type === CHOOSE_BOARD_SIDE && transitions[0].move.side
   const alt = side === 1 ?
     "The Creature will have the Artemia token when Rescue counter is 6 spaces or less from victory." :
     "The Creature will have the Artemia token when Rescue counter is 1, 3, 5, 7, 9 or 11 spaces away from victory."
-  if (game.boardSide === side) {
-    return <img className="board" src={side === 1 ? board1 : board2} alt={alt}/>
-  } else if (!game.boardSide) {
-    if (player === CREATURE) {
-      return <img className={`board board${side} choice selectable`} alt={alt}
-                  onClick={() => play({type: 'ChooseBoardSide', side})} src={side === 1 ? board1 : board2}/>
-    } else {
-      return <img className="board choice" src={side === 1 ? board1 : board2} alt={alt}/>
+  let classes = ['board']
+  const onClick = () => {
+    if (!game.boardSide && !chosenSide && playerId === CREATURE) {
+      play({type: 'ChooseBoardSide', side})
     }
-  } else {
-    return null
   }
+  if (!game.boardSide && chosenSide !== side) {
+    classes.push('board' + side, 'choice')
+    if (playerId === CREATURE && !chosenSide) {
+      classes.push('selectable')
+    } else if (chosenSide) {
+      classes.push('not-chosen')
+    }
+  }
+  return <img className={classes.join(' ')} onClick={onClick} src={side === 1 ? board1 : board2} alt={alt}/>
 }
 
 export default Board

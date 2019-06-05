@@ -1,4 +1,4 @@
-import {CANCEL_MOVE, DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, PLAY_MOVE} from "../StudioActions"
+import {CANCEL_MOVE, DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, END_TRANSITION, NEW_GAME, PLAY_MOVE} from "../StudioActions"
 import produce from "immer"
 
 function getMoveView(Move, move, playerId, game) {
@@ -52,21 +52,41 @@ export function createClientReducer(Game) {
     switch (action.type) {
       case NEW_GAME:
         const playerId = Game.getPlayerIds(action.game)[0]
-        return {game: Game.getPlayerView(action.game, playerId), playerId}
+        return {game: Game.getPlayerView(action.game, playerId), playerId, transitions: []}
       case PLAY_MOVE:
-        return produce(state, draft => {
-          reportMove(Game.moves[action.move.type], state.playerId, draft.game, action.move)
+        const {move} = action
+        const previousState = state.transitions.length > 0 ? state.transitions[state.transitions.length - 1].newState : state.game
+        const newState = produce(previousState, draft => {
+          reportMove(Game.moves[move.type], state.playerId, draft, move)
         })
+        return {...state, transitions: [...state.transitions, {move, newState}]}
       case CANCEL_MOVE:
         return produce(state, draft => {
           cancelMove(Game.moves[action.move.type], state.playerId, draft.game, action.move)
         })
       case DISPLAY_PLAYER_VIEW:
-        return {game: Game.getPlayerView(action.game, action.playerId), playerId: action.playerId}
+        return {game: Game.getPlayerView(action.game, action.playerId), playerId: action.playerId, transitions: []}
       case DISPLAY_SPECTATOR_VIEW:
-        return {game: Game.getSpectatorView(action.game)}
+        return {game: Game.getSpectatorView(action.game), transitions: []}
+      case END_TRANSITION:
+        return {...state, game: state.transitions[0].newState, transitions: state.transitions.slice(1)}
       default:
         return state
+    }
+  }
+}
+
+let animationTimeout;
+
+export function movesAnimationListener(getMoveAnimationDelay, store) {
+  return () => {
+    const transitions = store.getState().client.transitions
+    if (transitions.length > 0 && !animationTimeout) {
+      animationTimeout = setTimeout(() => {
+        animationTimeout = undefined
+        store.dispatch({type: END_TRANSITION})
+      }, getMoveAnimationDelay({move: transitions[0].move}) * 1000)
+
     }
   }
 }

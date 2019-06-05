@@ -3,7 +3,9 @@ import {drawSurvivalCard} from "./DrawSurvivalCard"
 import {CREATURE, getPlayerIds} from "../NotAlone"
 import {startPhase} from "./StartPhase"
 
-export const chooseBoardSide = (side) => ({type: 'ChooseBoardSide', side})
+export const CHOOSE_BOARD_SIDE = 'ChooseBoardSide'
+
+export const chooseBoardSide = (side) => ({type: CHOOSE_BOARD_SIDE, side})
 
 export const ChooseBoardSide = {
   execute: (game, move) => {

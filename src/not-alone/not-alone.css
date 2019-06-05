@@ -3,6 +3,7 @@
   height: 100vh;
   background: url(img/universe.jpg);
   overflow: hidden;
+  z-index: 0;
 }
 
 .not-alone .information {
