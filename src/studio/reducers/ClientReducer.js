@@ -1,4 +1,4 @@
-import {CANCEL_MOVE, DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, END_TRANSITION, NEW_GAME, PLAY_MOVE} from "../StudioActions"
+import {CANCEL_MOVE, DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, END_TRANSITION, NEW_GAME, NOTIFY_MOVES} from "../StudioActions"
 import produce from "immer"
 
 function getMoveView(Move, move, playerId, game) {
@@ -18,7 +18,6 @@ function getMoveView(Move, move, playerId, game) {
 }
 
 function reportMove(Move, playerId, game, move) {
-  move = getMoveView(Move, move, playerId, game)
   if (Move.reportInOwnView && move.playerId === playerId) {
     Move.reportInOwnView(game, move)
   } else if (Move.reportInSpectatorView && !playerId) {
@@ -53,13 +52,15 @@ export function createClientReducer(Game) {
       case NEW_GAME:
         const playerId = Game.getPlayerIds(action.game)[0]
         return {game: Game.getPlayerView(action.game, playerId), playerId, transitions: []}
-      case PLAY_MOVE:
-        const {move} = action
-        const previousState = state.transitions.length > 0 ? state.transitions[state.transitions.length - 1].newState : state.game
-        const newState = produce(previousState, draft => {
-          reportMove(Game.moves[move.type], state.playerId, draft, move)
+      case NOTIFY_MOVES:
+        let newState = state.transitions.length > 0 ? state.transitions[state.transitions.length - 1].newState : state.game
+        const newTransitions = action.moves.map(move => {
+          newState = produce(newState, draft => {
+            reportMove(Game.moves[move.type], state.playerId, draft, move)
+          })
+          return {move, newState}
         })
-        return {...state, transitions: [...state.transitions, {move, newState}]}
+        return {...state, transitions: state.transitions.concat(newTransitions)}
       case CANCEL_MOVE:
         return produce(state, draft => {
           cancelMove(Game.moves[action.move.type], state.playerId, draft.game, action.move)

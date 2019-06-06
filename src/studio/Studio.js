@@ -2,7 +2,7 @@ import React from 'react'
 import {connect, Provider} from 'react-redux'
 import * as PropTypes from "prop-types"
 import {applyMiddleware, combineReducers, createStore} from "redux"
-import {automaticMovesListener, createServerReducer} from "./reducers/ServerReducer"
+import {pendingNotificationsListener, createServerReducer} from "./reducers/ServerReducer"
 import {createClientReducer, movesAnimationListener} from "./reducers/ClientReducer"
 import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, PLAY_MOVE} from "./StudioActions"
 import {priorMoveMiddleware} from "./middleware/PriorMoveMiddleware"
@@ -13,7 +13,7 @@ const Studio = ({Game, GameUI}) => {
   const client = createClientReducer(Game)
   const store = createStore(combineReducers({server, client}),
     applyMiddleware(priorMoveMiddleware(Game), prepareMoveMiddleware(Game)))
-  store.subscribe(automaticMovesListener(Game, store))
+  store.subscribe(pendingNotificationsListener(Game, store))
   store.subscribe(movesAnimationListener(GameUI.getMoveAnimationDelay, store))
   store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers: 3})})
   const GameView = connect(state => ({
