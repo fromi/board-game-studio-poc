@@ -1,0 +1,56 @@
+.artemia {
+  display: grid;
+  grid-gap: 0.3vh;
+  width: fit-content;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 25vh;
+}
+.artemia .place-card {
+  position: relative;
+  top: 0;
+  left: 0;
+  transition: all 1s ease-out;
+}
+.artemia .place1, .artemia .place2, .artemia .place3, .artemia .place4, .artemia .place5 {
+  grid-row: 1;
+}
+.artemia .place6, .artemia .place7, .artemia .place8, .artemia .place9, .artemia .place10 {
+  grid-row: 2;
+}
+.artemia .place1, .artemia .place6 {
+  grid-column: 1;
+}
+.artemia .place2, .artemia .place7 {
+  grid-column: 2;
+}
+.artemia .place3, .artemia .place8 {
+  grid-column: 3;
+}
+.artemia .place4, .artemia .place9 {
+  grid-column: 4;
+}
+.artemia .place5, .artemia .place10 {
+  grid-column: 5;
+}
+
+.artemia.creation .place1, .artemia.creation .place2, .artemia.creation .place3, .artemia.creation .place4, .artemia.creation .place5 {
+  top: -50vh;
+}
+.artemia.creation .place6, .artemia.creation .place7, .artemia.creation .place8, .artemia.creation .place9, .artemia.creation .place10 {
+  top: 60vh;
+}
+.artemia.creation .place1, .artemia.creation .place6 {
+  left: -40vw;
+}
+.artemia.creation .place2, .artemia.creation .place7 {
+  left: -20vw;
+}
+.artemia.creation .place4, .artemia.creation .place9 {
+  left: 20vw;
+}
+.artemia.creation .place5, .artemia.creation .place10 {
+  left: 40vw;
+}

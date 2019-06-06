@@ -4,10 +4,12 @@ import "./not-alone.css"
 import {BOARD_SIDES, CREATURE} from "./NotAlone"
 import Board from "./components/Board"
 import {CHOOSE_BOARD_SIDE} from "./moves/ChooseBoardSide"
+import Artemia from "./components/Artemia"
 
 export const Interface = (props) => {
-  const {playerId} = props
+  const {playerId, game, transitions} = props
   const userType = playerId ? (playerId === CREATURE ? 'creature' : 'hunted') : 'spectator'
+  const boardSideChosen = game.boardSide || (transitions.length && transitions[0].move.type === CHOOSE_BOARD_SIDE)
   return (
     <div className={`not-alone ${userType}`}>
       <Typography className="information" align="center" variant="title">{
@@ -16,6 +18,7 @@ export const Interface = (props) => {
       {BOARD_SIDES.map(side =>
         <Board side={side} key={side} {...props}/>
       )}
+      {boardSideChosen && <Artemia {...props}/>}
     </div>
   )
 }

@@ -27,7 +27,7 @@ const Board = ({game, playerId, transitions, side, play}) => {
       classes.push('not-chosen')
     }
   }
-  return <img className={classes.join(' ')} onClick={onClick} src={side === 1 ? board1 : board2} alt={alt}/>
+  return <img className={classes.join(' ')} onClick={onClick} src={side === 1 ? board1 : board2} alt={alt} draggable="false"/>
 }
 
 export default Board
