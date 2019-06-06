@@ -10,7 +10,7 @@ export const priorMoveMiddleware = Game => store => next => action => {
   if (action.type === PLAY_MOVE) {
     const Move = Game.moves[action.move.type]
     const game = store.getState().server.game
-    if (Move.hasPriorMove && Move.hasPriorMove(action.move, game)) {
+    if (Move.hasPriorMove && Move.hasPriorMove(game, action.move)) {
       action.move = Move.getPriorMove(game, action.move)
     }
   }

@@ -3,7 +3,7 @@ import SurvivalCards from "./material/SurvivalCards"
 import HuntCards from "./material/HuntCards"
 import {hideItemsDetail} from "../game-api/Secrets"
 import {ChooseBoardSide, chooseBoardSide} from "./moves/ChooseBoardSide"
-import {DrawHuntCards} from "./moves/DrawHuntCards"
+import {DrawHuntCard} from "./moves/DrawHuntCard"
 import {DrawSurvivalCard} from "./moves/DrawSurvivalCard"
 import {StartPhase} from "./moves/StartPhase"
 import {PlayPlaceCard, playPlaceCard} from "./moves/PlayPlaceCard"
@@ -52,7 +52,7 @@ export function getPlayerIds(game) {
   return [CREATURE].concat(game.hunted.map((hunted, index) => HUNTED_PREFIX + (index + 1)))
 }
 
-export const moves = {ChooseBoardSide, DrawHuntCards, DrawSurvivalCard, StartPhase, PlayPlaceCard, ShuffleHuntCards, StrikeBack}
+export const moves = {ChooseBoardSide, DrawHuntCard, DrawSurvivalCard, StartPhase, PlayPlaceCard, ShuffleHuntCards, StrikeBack}
 
 export function getAutomaticMove(game) {
   return game.nextMoves[0]
