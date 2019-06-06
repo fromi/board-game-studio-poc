@@ -1,11 +1,2 @@
 .place-card {
-  overflow:hidden;
-  height: 20vh;
-  width: calc(20vh * 5 / 7);
-  border: 0.5vh solid;
-  border-radius: 1vh;
-}
-.place-card img {
-  height: 100%;
-  width:100%;
 }

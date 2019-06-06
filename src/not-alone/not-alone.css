@@ -14,3 +14,15 @@
   background: rgba(255, 255, 255, 0.2);
   border-radius: 0.5em;
 }
+
+.not-alone .card {
+  overflow:hidden;
+  height: 20vh;
+  width: calc(20vh * 5 / 7);
+  border: 0.5vh solid;
+  border-radius: 1vh;
+}
+.not-alone .card img {
+  height: 100%;
+  width:100%;
+}

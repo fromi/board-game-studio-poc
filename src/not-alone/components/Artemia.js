@@ -5,7 +5,7 @@ import "./artemia.css"
 const Artemia = ({game}) => (
   <div className={`artemia ${!game.boardSide ? 'creation' : ''}`}>
     {[...Array(10).keys()].map(i =>
-      <PlaceCard place={i + 1}/>
+      <PlaceCard place={i + 1} key={i + 1}/>
     )}
   </div>
 )

@@ -1,0 +1,49 @@
+.hunt-cards-deck {
+  transition: all 1s ease-out;
+  position: absolute;
+  height: 21.8vh;
+  width: calc(20vh * 5 / 7 + 1.4vh);
+}
+
+.not-alone.creature .hunt-cards-deck {
+  bottom: 1vh;
+  left: 1vh;
+}
+
+.not-alone.creature .hunt-cards-deck.creation {
+  transform: translateX(-25vh);
+}
+
+.not-alone:not(.creature) .hunt-cards-deck {
+  top: calc(3.53rem);
+  right: 1vh;
+}
+
+.not-alone:not(.creature) .hunt-cards-deck.creation {
+  transform: translateX(25vh);
+}
+
+.hunt-cards-deck .card {
+  position: absolute;
+  filter: drop-shadow(0 0 0.05vh white);
+}
+.hunt-cards-deck .card:nth-child(1) {
+  bottom: 0;
+  right: 0;
+}
+.hunt-cards-deck .card:nth-child(2) {
+  bottom: 0.2vh;
+  right: 0.1vh;
+}
+.hunt-cards-deck .card:nth-child(3) {
+  bottom: 0.4vh;
+  right: 0.2vh;
+}
+.hunt-cards-deck .card:nth-child(4) {
+  bottom: 0.6vh;
+  right: 0.3vh;
+}
+.hunt-cards-deck .card:nth-child(5) {
+  bottom: 0.8vh;
+  right: 0.4vh;
+}

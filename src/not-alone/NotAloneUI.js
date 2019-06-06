@@ -5,6 +5,8 @@ import {BOARD_SIDES, CREATURE} from "./NotAlone"
 import Board from "./components/Board"
 import {CHOOSE_BOARD_SIDE} from "./moves/ChooseBoardSide"
 import Artemia from "./components/Artemia"
+import HuntCardsDeck from "./components/HuntCardsDeck"
+import Hand from "./components/Hand"
 
 export const Interface = (props) => {
   const {playerId, game, transitions} = props
@@ -18,7 +20,9 @@ export const Interface = (props) => {
       {BOARD_SIDES.map(side =>
         <Board side={side} key={side} {...props}/>
       )}
+      {boardSideChosen && <HuntCardsDeck {...props}/>}
       {boardSideChosen && <Artemia {...props}/>}
+      {boardSideChosen && playerId && <Hand {...props}/>}
     </div>
   )
 }

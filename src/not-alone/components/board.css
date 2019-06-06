@@ -3,7 +3,7 @@
   transition: all 1s ease-in-out;
 }
 
-.creature .board:not(.choice) {
+.not-alone.creature .board:not(.choice) {
   transform: rotate(90deg) translate(-100%, 100%);
   transform-origin: bottom left;
   left: 100vw;
