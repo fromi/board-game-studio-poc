@@ -56,7 +56,7 @@ export function pendingNotificationsListener(Game, store) {
   return () => {
     const pendingNotifications = store.getState().server.pendingNotifications
     if (pendingNotifications.length > 0) {
-      store.dispatch({type: NOTIFY_MOVES, moves: pendingNotifications})
+      setTimeout(() => store.dispatch({type: NOTIFY_MOVES, moves: pendingNotifications}), 50)
     }
   }
 }

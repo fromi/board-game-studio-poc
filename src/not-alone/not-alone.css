@@ -16,13 +16,20 @@
 }
 
 .not-alone .card {
-  overflow:hidden;
-  height: 20vh;
-  width: calc(20vh * 5 / 7);
-  border: 0.5vh solid;
-  border-radius: 1vh;
+  height: 21vh;
+  width: calc(20vh * 5 / 7 + 1vh);
+  transform-style: preserve-3d;
 }
 .not-alone .card img {
-  height: 100%;
-  width:100%;
+  border: 0.5vh solid;
+  border-radius: 1vh;
+  position: absolute;
+  height: 20vh;
+  width: calc(20vh * 5 / 7);
+}
+.not-alone .card .face {
+  backface-visibility: hidden;
+}
+.not-alone .card .face.back:nth-child(2) {
+  transform: rotateY(-180deg);
 }

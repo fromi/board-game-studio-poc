@@ -1,7 +1,9 @@
 import {shuffleHuntCards} from "./ShuffleHuntCards"
 import {CREATURE} from "../NotAlone"
 
-export const drawHuntCard = {type: 'DrawHuntCard'}
+export const DRAW_HUNT_CARD = 'DrawHuntCard'
+
+export const drawHuntCard = {type: DRAW_HUNT_CARD}
 
 const execute = (game) => {
   game.creature.hand.push(game.huntCardsDeck.shift())
@@ -15,12 +17,12 @@ export const DrawHuntCard = {
 
   execute,
 
-  getPlayerView: (move, playerId, game) => playerId === CREATURE ? {...move, huntCardDrawn: game.creature.hand.slice(-1)[0]} : move,
+  getPlayerView: (move, playerId, game) => playerId === CREATURE ? {...move, card: game.creature.hand.slice(-1)[0]} : move,
 
   reportInPlayerView: (game, move, playerId) => {
     execute(game, move)
     if (playerId === CREATURE) {
-      game.creature.hand.splice(-1, 1, move.huntCardDrawn)
+      game.creature.hand.splice(-1, 1, move.card)
     }
   }
 }

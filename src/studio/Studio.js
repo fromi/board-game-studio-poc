@@ -14,7 +14,7 @@ const Studio = ({Game, GameUI}) => {
   const store = createStore(combineReducers({server, client}),
     applyMiddleware(priorMoveMiddleware(Game), prepareMoveMiddleware(Game)))
   store.subscribe(pendingNotificationsListener(Game, store))
-  store.subscribe(movesAnimationListener(GameUI.getMoveAnimationDelay, store))
+  store.subscribe(movesAnimationListener(GameUI, store))
   store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers: 3})})
   const GameView = connect(state => ({
     ...state.client,
@@ -66,7 +66,8 @@ Studio.propTypes = {
   }).isRequired,
   GameUI: PropTypes.shape({
     Interface: PropTypes.func.isRequired,
-    getMoveAnimationDelay: PropTypes.func.isRequired
+    getPreAnimationDelay: PropTypes.func.isRequired,
+    getAnimationDelay: PropTypes.func.isRequired
   }).isRequired
 }
 

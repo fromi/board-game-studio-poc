@@ -1,5 +1,15 @@
-import {CANCEL_MOVE, DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, END_TRANSITION, NEW_GAME, NOTIFY_MOVES} from "../StudioActions"
+import {
+  APPLY_ANIMATING_MOVE,
+  CANCEL_MOVE,
+  DISPLAY_PLAYER_VIEW,
+  DISPLAY_SPECTATOR_VIEW,
+  END_ANIMATION,
+  NEW_GAME,
+  NOTIFY_MOVES,
+  START_ANIMATION
+} from "../StudioActions"
 import produce from "immer"
+import {getAnimationDelay, getPreAnimationDelay} from "../../not-alone/NotAloneUI"
 
 function getMoveView(Move, move, playerId, game) {
   if (Move.getOwnView && move.playerId === playerId) {
@@ -17,7 +27,8 @@ function getMoveView(Move, move, playerId, game) {
   }
 }
 
-function reportMove(Move, playerId, game, move) {
+function reportMove(Game, game, playerId, move) {
+  const Move = Game.moves[move.type]
   if (Move.reportInOwnView && move.playerId === playerId) {
     Move.reportInOwnView(game, move)
   } else if (Move.reportInSpectatorView && !playerId) {
@@ -48,49 +59,51 @@ function cancelMove(Move, playerId, game, move) {
 
 export function createClientReducer(Game) {
   return (state = {}, action) => {
+    console.log(action)
     switch (action.type) {
       case NEW_GAME:
         const playerId = Game.getPlayerIds(action.game)[0]
-        return {game: Game.getPlayerView(action.game, playerId), playerId, transitions: []}
+        return {game: Game.getPlayerView(action.game, playerId), playerId, pendingMoves: []}
       case NOTIFY_MOVES:
-        let newState = state.transitions.length > 0 ? state.transitions[state.transitions.length - 1].newState : state.game
-        const newTransitions = action.moves.map(move => {
-          newState = produce(newState, draft => {
-            reportMove(Game.moves[move.type], state.playerId, draft, move)
-          })
-          return {move, newState}
+        return {...state, pendingMoves: state.pendingMoves.concat(action.moves)}
+      case START_ANIMATION:
+        const animation = {move: state.pendingMoves[0], moveApplied: false}
+        return {...state, animation, pendingMoves: state.pendingMoves.slice(1)}
+      case APPLY_ANIMATING_MOVE:
+        return produce(state, draft => {
+          reportMove(Game, draft.game, draft.playerId, draft.animation.move)
+          draft.animation.moveApplied = true
         })
-        return {...state, transitions: state.transitions.concat(newTransitions)}
+      case END_ANIMATION:
+        return {...state, animation: null}
       case CANCEL_MOVE:
         return produce(state, draft => {
           cancelMove(Game.moves[action.move.type], state.playerId, draft.game, action.move)
         })
       case DISPLAY_PLAYER_VIEW:
-        return {game: Game.getPlayerView(action.game, action.playerId), playerId: action.playerId, transitions: []}
+        return {game: Game.getPlayerView(action.game, action.playerId), playerId: action.playerId, pendingMoves: []}
       case DISPLAY_SPECTATOR_VIEW:
-        return {game: Game.getSpectatorView(action.game), transitions: []}
-      case END_TRANSITION:
-        return {...state, game: state.transitions[0].newState, transitions: state.transitions.slice(1)}
+        return {game: Game.getSpectatorView(action.game), pendingMoves: []}
       default:
         return state
     }
   }
 }
 
-export function movesAnimationListener(getMoveAnimationDelay, store) {
-  let animationTimeout;
+export function movesAnimationListener(GameUI, store) {
+  const applyAnimatingMove = () => {
+    const move = store.getState().client.animation.move
+    store.dispatch({type: APPLY_ANIMATING_MOVE})
+    setTimeout(() => store.dispatch({type: END_ANIMATION}), getAnimationDelay(move) * 1000)
+  }
+
   return () => {
-    const transitions = store.getState().client.transitions
-    if (transitions.length > 0 && !animationTimeout) {
-      const moveAnimationDelay = getMoveAnimationDelay({move: transitions[0].move})
-      if (moveAnimationDelay) {
-        animationTimeout = setTimeout(() => {
-          animationTimeout = undefined
-          store.dispatch({type: END_TRANSITION})
-        }, moveAnimationDelay * 1000)
-      } else {
-        store.dispatch({type: END_TRANSITION})
-      }
+    const state = store.getState().client
+    console.log(state)
+    if (!state.animation && state.pendingMoves.length) {
+      const move = state.pendingMoves[0]
+      store.dispatch({type: START_ANIMATION})
+      setTimeout(applyAnimatingMove, getPreAnimationDelay(move) * 1000)
     }
   }
 }

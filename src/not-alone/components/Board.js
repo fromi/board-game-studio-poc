@@ -5,11 +5,11 @@ import {CREATURE} from "../NotAlone"
 import "./board.css"
 import {CHOOSE_BOARD_SIDE} from "../moves/ChooseBoardSide"
 
-const Board = ({game, playerId, transitions, side, play}) => {
+const Board = ({game, playerId, animation, side, play}) => {
   if (game.boardSide && game.boardSide !== side) {
     return null;
   }
-  const chosenSide = transitions.length && transitions[0].move.type === CHOOSE_BOARD_SIDE && transitions[0].move.side
+  const chosenSide = animation && animation.move.type === CHOOSE_BOARD_SIDE && animation.move.side
   const alt = side === 1 ?
     "The Creature will have the Artemia token when Rescue counter is 6 spaces or less from victory." :
     "The Creature will have the Artemia token when Rescue counter is 1, 3, 5, 7, 9 or 11 spaces away from victory."
