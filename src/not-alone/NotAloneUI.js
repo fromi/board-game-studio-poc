@@ -12,35 +12,26 @@ import {DRAW_HUNT_CARD} from "./moves/DrawHuntCard"
 export const Interface = (props) => {
   const {playerId, game, animation} = props
   const userType = playerId ? (playerId === CREATURE ? 'creature' : 'hunted') : 'spectator'
-  const boardSideChosen = game.boardSide || (animation && animation.move.type === CHOOSE_BOARD_SIDE)
+  const boardSideChosen = animation && animation.move.type === CHOOSE_BOARD_SIDE
   return (
-    <div className={`not-alone ${userType}`}>
+    <div className={`not-alone ${userType} ${!game.boardSide ? 'board-side-choice' : ''} ${boardSideChosen ? 'board-side-chosen' : ''}`}>
       <Typography className="information" align="center" variant="title">{
         playerId === CREATURE ? "You are the Creature. Please choose the board side." : "... is the Creature."
       }</Typography>
       {BOARD_SIDES.map(side =>
         <Board side={side} key={side} {...props}/>
       )}
-      {boardSideChosen && <HuntCardsDeck {...props}/>}
-      {boardSideChosen && <Artemia {...props}/>}
-      {boardSideChosen && playerId && <Hand {...props}/>}
+      {<HuntCardsDeck {...props}/>}
+      {<Artemia {...props}/>}
+      {playerId && <Hand {...props}/>}
     </div>
   )
-}
-
-export const getPreAnimationDelay = (move) => {
-  switch (move.type) {
-    case CHOOSE_BOARD_SIDE:
-      return 1
-    default:
-      return 0
-  }
 }
 
 export const getAnimationDelay = (move) => {
   switch (move.type) {
     case CHOOSE_BOARD_SIDE:
-      return 1
+      return 2
     case DRAW_HUNT_CARD:
       return 1
     default:

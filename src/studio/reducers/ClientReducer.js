@@ -9,7 +9,6 @@ import {
   START_ANIMATION
 } from "../StudioActions"
 import produce from "immer"
-import {getAnimationDelay, getPreAnimationDelay} from "../../not-alone/NotAloneUI"
 
 function getMoveView(Move, move, playerId, game) {
   if (Move.getOwnView && move.playerId === playerId) {
@@ -59,7 +58,6 @@ function cancelMove(Move, playerId, game, move) {
 
 export function createClientReducer(Game) {
   return (state = {}, action) => {
-    console.log(action)
     switch (action.type) {
       case NEW_GAME:
         const playerId = Game.getPlayerIds(action.game)[0]
@@ -93,17 +91,18 @@ export function createClientReducer(Game) {
 export function movesAnimationListener(GameUI, store) {
   const applyAnimatingMove = () => {
     const move = store.getState().client.animation.move
+    const animationDelay = GameUI.getAnimationDelay ? GameUI.getAnimationDelay(move) : 0
     store.dispatch({type: APPLY_ANIMATING_MOVE})
-    setTimeout(() => store.dispatch({type: END_ANIMATION}), getAnimationDelay(move) * 1000)
+    setTimeout(() => store.dispatch({type: END_ANIMATION}), animationDelay * 1000)
   }
 
   return () => {
     const state = store.getState().client
-    console.log(state)
     if (!state.animation && state.pendingMoves.length) {
       const move = state.pendingMoves[0]
+      const preAnimationDelay = GameUI.getPreAnimationDelay ? GameUI.getPreAnimationDelay(move) : 0
       store.dispatch({type: START_ANIMATION})
-      setTimeout(applyAnimatingMove, getPreAnimationDelay(move) * 1000)
+      setTimeout(applyAnimatingMove, preAnimationDelay * 1000)
     }
   }
 }

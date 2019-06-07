@@ -66,8 +66,8 @@ Studio.propTypes = {
   }).isRequired,
   GameUI: PropTypes.shape({
     Interface: PropTypes.func.isRequired,
-    getPreAnimationDelay: PropTypes.func.isRequired,
-    getAnimationDelay: PropTypes.func.isRequired
+    getPreAnimationDelay: PropTypes.func,
+    getAnimationDelay: PropTypes.func
   }).isRequired
 }
 

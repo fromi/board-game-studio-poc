@@ -1,5 +1,4 @@
 .hunt-cards-deck {
-  transition: all 1s ease-out;
   position: absolute;
   height: 21.8vh;
   width: calc(20vh * 5 / 7 + 1.4vh);
@@ -10,7 +9,7 @@
   left: 1vh;
 }
 
-.not-alone.creature .hunt-cards-deck.creation {
+.not-alone.board-side-choice.creature .hunt-cards-deck {
   transform: translateX(-25vh);
 }
 
@@ -19,8 +18,12 @@
   right: 1vh;
 }
 
-.not-alone:not(.creature) .hunt-cards-deck.creation {
+.not-alone.board-side-choice:not(.creature) .hunt-cards-deck {
   transform: translateX(25vh);
+}
+
+.not-alone.board-side-chosen .hunt-cards-deck {
+  transition: all 1s 1s ease-out;
 }
 
 .hunt-cards-deck .card {

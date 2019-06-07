@@ -3,7 +3,7 @@
   transition: all 1s ease-in-out;
 }
 
-.not-alone.creature .board:not(.choice) {
+.not-alone.creature .board {
   transform: rotate(90deg) translate(-100%, 100%);
   transform-origin: bottom left;
   left: 100vw;
@@ -11,7 +11,7 @@
   width: calc(100vh - 3.53rem);
 }
 
-.not-alone:not(.creature) .board:not(.choice) {
+.not-alone:not(.creature) .board {
   transform: rotate(-90deg) translateY(100%);
   transform-origin: bottom left;
   left: 0;
@@ -19,31 +19,31 @@
   width: calc(100vh - 3.53rem);
 }
 
-.board.choice {
+.not-alone.board-side-choice .board, .not-alone .board.not-chosen {
   transform: translateX(-50%);
   width: calc(4606 / 886 * (100vh - 3.53rem) / 3);
   left: 50%;
   margin: auto;
 }
-.board.board1.choice {
+.not-alone.board-side-choice .board.board1, .board.board1.not-chosen {
   bottom: calc((100vh - 3rem) * 5 / 9);
 }
-.board.board2.choice {
+.not-alone.board-side-choice .board.board2, .board.board2.not-chosen {
   bottom: calc((100vh - 3rem) / 9);
 }
 .board.not-chosen {
   opacity: 0;
   z-index: -1;
 }
-.creature .board.selectable {
+.not-alone.board-side-choice.creature .board {
   transition: all 0.3s ease-in-out;
   transform-origin: left center;
   cursor: pointer;
 }
-.board.selectable:hover {
+.not-alone.board-side-choice.creature .board:hover {
   transform: scale(1.05) translateX(-50%);
   filter: drop-shadow(0 0 0.4rem white);
 }
-.board.selectable:active {
+.not-alone.board-side-choice.creature .board:active {
   filter: drop-shadow(0 0 0.6rem white);
 }
