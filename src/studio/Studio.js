@@ -2,13 +2,16 @@ import React from 'react'
 import {connect, Provider} from 'react-redux'
 import * as PropTypes from "prop-types"
 import {applyMiddleware, combineReducers, createStore} from "redux"
-import {pendingNotificationsListener, createServerReducer} from "./reducers/ServerReducer"
+import {createServerReducer, pendingNotificationsListener} from "./reducers/ServerReducer"
 import {createClientReducer, movesAnimationListener} from "./reducers/ClientReducer"
 import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, PLAY_MOVE} from "./StudioActions"
 import {priorMoveMiddleware} from "./middleware/PriorMoveMiddleware"
 import {prepareMoveMiddleware} from "./middleware/PrepareMoveMiddleware"
+import {useTranslation} from "react-i18next";
+import "./i18n"
 
 const Studio = ({Game, GameUI}) => {
+  const {i18n} = useTranslation();
   const server = createServerReducer(Game)
   const client = createClientReducer(Game)
   const store = createStore(combineReducers({server, client}),
@@ -44,7 +47,8 @@ const Studio = ({Game, GameUI}) => {
     getPlayerMoves: (playerId) => Game.getMandatoryMoves(window.game.state, playerId).concat(Game.getOptionalMoves(window.game.state, playerId)),
     play: (playerId, move) => store.dispatch({type: PLAY_MOVE, playerId, move}),
     displayPlayerView: (playerId) => store.dispatch({type: DISPLAY_PLAYER_VIEW, playerId, game: window.game.state}),
-    displaySpectatorView: () => store.dispatch({type: DISPLAY_SPECTATOR_VIEW, game: window.game.state})
+    displaySpectatorView: () => store.dispatch({type: DISPLAY_SPECTATOR_VIEW, game: window.game.state}),
+    changeLanguage: (language) => i18n.changeLanguage(language)
   }
 
   return (

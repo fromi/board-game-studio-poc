@@ -1,5 +1,6 @@
 import React from "react"
 import './place-card.css'
+import {Trans} from 'react-i18next';
 
 const images = require.context('../img/places');
 const getImage = (place) => images('./place_' + place + '.jpg')
@@ -7,9 +8,9 @@ const getImage = (place) => images('./place_' + place + '.jpg')
 const PlaceCard = ({place}) => (
   <div className={`card place-card place${place}`}>
     <img src={getImage(place)} alt={'Place ' + place} draggable="false"/>
-    <h3>{places[place].name}</h3>
+    <h3><Trans>{places[place].name}</Trans></h3>
     <div className="description">
-      {places[place].description.map(description => <p>{description}</p>)}
+      {places[place].description.map((description, index) => <p key={index}>{description}</p>)}
     </div>
   </div>
 )
