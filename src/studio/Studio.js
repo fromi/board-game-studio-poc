@@ -14,12 +14,13 @@ const Studio = ({Game, GameUI}) => {
   const {i18n} = useTranslation();
   const server = createServerReducer(Game)
   const client = createClientReducer(Game)
-  const savedState = JSON.parse(localStorage.getItem('state')) || undefined
+  const localStorageKey = 'state'
+  const savedState = JSON.parse(localStorage.getItem(localStorageKey)) || undefined
   const store = createStore(combineReducers({server, client}), savedState,
     applyMiddleware(priorMoveMiddleware(Game), prepareMoveMiddleware(Game)))
   store.subscribe(pendingNotificationsListener(Game, store))
   store.subscribe(movesAnimationListener(GameUI, store))
-  store.subscribe(() => localStorage.setItem('state', JSON.stringify(store.getState())))
+  store.subscribe(() => localStorage.setItem(localStorageKey, JSON.stringify(store.getState())))
   if (!savedState) {
     store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers: 3})})
   }

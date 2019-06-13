@@ -10,7 +10,7 @@ const PlaceCard = ({place}) => (
     <img src={getImage(place)} alt={'Place ' + place} draggable="false"/>
     <h3><Trans>{places[place].name}</Trans></h3>
     <div className="description">
-      {places[place].description.map((description, index) => <p key={index}>{description}</p>)}
+      {places[place].description.map((description, index) => <p key={index}><Trans>{description}</Trans></p>)}
     </div>
   </div>
 )
@@ -31,8 +31,7 @@ const places = {
   },
   4: {
     name: 'The Beach',
-    description: ['Place the Marker counter on the Beach OR remove it to move the Rescue counter forward 1 space.',
-      '(max 1x/turn)']
+    description: ['Place the Marker counter on the Beach OR remove it to move the Rescue counter forward 1 space.', '(max 1x/turn)']
   },
   5: {
     name: 'The Rover',
@@ -48,8 +47,7 @@ const places = {
   },
   8: {
     name: 'The Wreck',
-    description: ['Move the Rescue counter forward 1 space.',
-      '(max 1x/turn)']
+    description: ['Move the Rescue counter forward 1 space.', '(max 1x/turn)']
   },
   9: {
     name: 'The Source',
@@ -57,7 +55,7 @@ const places = {
   },
   10: {
     name: 'The Artefact',
-    description: ['Next turn, play 2 Place cards. Resolve both places. You may not copy the Artefact.']
+    description: ['Next turn, play 2 Place cards. Resolve both places.', 'You may not copy the Artefact.']
   }
 }
 
