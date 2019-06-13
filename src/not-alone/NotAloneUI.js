@@ -8,6 +8,7 @@ import Artemia from "./components/Artemia"
 import HuntCardsDeck from "./components/HuntCardsDeck"
 import Hand from "./components/Hand"
 import {DRAW_HUNT_CARD} from "./moves/DrawHuntCard"
+import SurvivalCardsDeck from "./components/SurvivalCardsDeck"
 
 export const Interface = (props) => {
   const {playerId, game, animation} = props
@@ -22,6 +23,7 @@ export const Interface = (props) => {
         <Board side={side} key={side} {...props}/>
       )}
       {<HuntCardsDeck {...props}/>}
+      {<SurvivalCardsDeck {...props}/>}
       {<Artemia {...props}/>}
       {playerId && <Hand {...props}/>}
     </div>

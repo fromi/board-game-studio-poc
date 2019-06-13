@@ -1,5 +1,8 @@
 .board {
   position: absolute;
+}
+
+.not-alone.board-side-chosen .board {
   transition: all 1s ease-in-out;
 }
 

@@ -46,11 +46,11 @@ i18n.use(initReactI18next).init({
         'Hunt cards ({{count}} card(s) left)_plural': 'Cartes Traque ({{count}} cartes restantes)',
 
         'Despair': 'Désespoir',
-        'Force Field': 'Champ de force',
+        'Force Field': 'Champ de Force',
         'Anticipation': 'Anticipation',
         'Ascendancy': 'Emprise',
         'Fierceness': 'Acharnement',
-        'Forbidden Zone': 'Zone interdite',
+        'Forbidden Zone': 'Zone Interdite',
         'Interference': 'Interférences',
         'Persecution': 'Harcèlement',
         'Mutation': 'Mutation',
@@ -106,6 +106,56 @@ i18n.use(initReactI18next).init({
           'Au prochain tour, vous pouvez jouer jusqu’à 2 cartes Traque.',
         'Copy the last Hunt card you discarded.':
           'Copiez la dernière carte Traque défaussée.',
+
+        'Survival cards ({{count}} card(s) left)': 'Cartes Survie ({{count}} carte restante)',
+        'Survival cards ({{count}} card(s) left)_plural': 'Cartes Survie ({{count}} cartes restantes)',
+
+        'Adrenaline': 'Adénaline',
+        'Ingenuity': 'Système D',
+        'Sacrifice': 'Sacrifice',
+        'Sixth Sense': 'Sixième Sens',
+        'Smokescreen': 'Brouillage',
+        'Strike Back': 'Riposte',
+        'Vortex': 'Vortex',
+        'Detector': 'Détecteur',
+        'Dodge': 'Esquive',
+        'Drone': 'Drone',
+        'Gate': 'Portail',
+        'Hologram': 'Hologramme',
+        'Wrong Track': 'Fausse Piste',
+        'Amplifier': 'Amplificateur',
+        'Double Back': 'Volte-Face',
+
+        'Regain 1 Will.':
+          'Récupérez 1 Volonté.',
+        'Place the Marker counter on the Beach.':
+          'Placez le pion Balise sur la Plage.',
+        'Discard 1 Place card. No Hunt card may be played this turn.':
+          'Défaussez 1 carte Lieu. Aucune carte Traque ne peut être jouée ce tour-ci.',
+        'Take back to your hand 2 Place cards from your discard pile.':
+          'Reprenez en main 2 cartes Lieu de votre défausse.',
+        'All the Hunted hide their discarded Place cards until the end of the turn.':
+          'Tous les Traqués cachent les cartes Lieu de leur défausse jusqu’à la fin du tour.',
+        'Take 2 random Hunt cards from the Creature’s hand and put them at the bottom of the Hunt deck.':
+          'Tirez 2 cartes Traque au hasard de la main de la Créature et placez-les sous la pioche Traque.',
+        'Swap your played Place card for one Place card from your discard pile.':
+          'Échangez votre carte Lieu jouée contre une carte Lieu de votre défausse.',
+        'Avoid the effects of the Artemia token.':
+          'Évitez les effets du jeton Artemia.',
+        'Avoid the effects of the Creature token.':
+          'Évitez les effets du jeton Créature. ',
+        'Instead of using the power of your Place card, copy the power of the Rover.':
+          'A la place d’utiliser le pouvoir de votre carte Lieu, copiez le pouvoir du Rover.',
+        'Instead of using the power of your Place card, copy the power of an adjacent place.':
+          'A la place d’utiliser le pouvoir de votre carte Lieu, copiez le pouvoir d’un lieu adjacent.',
+        'Move the Artemia token to an adjacent place.':
+          'Déplacez le jeton Artemia sur un lieu adjacent.',
+        'Move the Creature token to an adjacent place.':
+          'Déplacez le jeton Créature sur un lieu adjacent.',
+        'Remove the Marker counter from the Beach to immediately move the Rescue counter forward 1 space.':
+          'Retirez le pion Balise de la Plage pour avancer immédiatement le pion Secours de 1 case.',
+        'Take back the Place card you just played.':
+          'Reprenez en main votre carte Lieu jouée.'
       }
     }
   },

@@ -17,7 +17,7 @@ import {
   VIRUS
 } from "../material/HuntCards"
 
-const HuntCard = ({cardName, state}) => (
+const HuntCard = ({cardName, state = ''}) => (
   <div className={`card hunt-card ${state}`}>
     {cardName && <img className="face front" src={huntCard} alt="" draggable="false"/>}
     <img className="face back" src={huntCardBack} alt="" draggable="false"/>
