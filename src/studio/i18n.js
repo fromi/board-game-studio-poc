@@ -40,7 +40,10 @@ i18n.use(initReactI18next).init({
         'Next turn, play 2 Place cards. Resolve both places.':
           'Au prochain tour, jouez 2 cartes Lieu. Résolvez les 2 lieux.',
         'You may not copy the Artefact.':
-          'L’Artefact ne peut être copié.'
+          'L’Artefact ne peut être copié.',
+
+        'Hunt cards ({{count}} card(s) left)': 'Cartes Traque ({{count}} carte restante)',
+        'Hunt cards ({{count}} card(s) left)_plural': 'Cartes Traque ({{count}} cartes restantes)'
       }
     }
   },

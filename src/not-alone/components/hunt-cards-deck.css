@@ -2,6 +2,7 @@
   position: absolute;
   height: 21.8vh;
   width: calc(20vh * 5 / 7 + 1.4vh);
+  cursor: help;
 }
 
 .not-alone.creature .hunt-cards-deck {
