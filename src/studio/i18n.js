@@ -43,7 +43,69 @@ i18n.use(initReactI18next).init({
           'L’Artefact ne peut être copié.',
 
         'Hunt cards ({{count}} card(s) left)': 'Cartes Traque ({{count}} carte restante)',
-        'Hunt cards ({{count}} card(s) left)_plural': 'Cartes Traque ({{count}} cartes restantes)'
+        'Hunt cards ({{count}} card(s) left)_plural': 'Cartes Traque ({{count}} cartes restantes)',
+
+        'Despair': 'Désespoir',
+        'Force Field': 'Champ de force',
+        'Anticipation': 'Anticipation',
+        'Ascendancy': 'Emprise',
+        'Fierceness': 'Acharnement',
+        'Forbidden Zone': 'Zone interdite',
+        'Interference': 'Interférences',
+        'Persecution': 'Harcèlement',
+        'Mutation': 'Mutation',
+        'Phobia': 'Psychose',
+        'Virus': 'Virus',
+        'Clone': 'Clone',
+        'Mirage': 'Mirage',
+        'Scream': 'Hurlements',
+        'Toxin': 'Toxine',
+        'Cataclysm': 'Cataclysme',
+        'Detour': 'Détour',
+        'Stasis': 'Stase',
+        'Tracking': 'Repérage',
+        'Flashback': 'Flashback',
+
+        'No Survival cards may be played or drawn for the remainder of the turn.':
+          'Aucune carte Survie ne peut être jouée ou piochée pour le reste du tour.',
+        'Before the Hunted play, target 2 adjacent places. Neither may be played this turn.':
+          'Avant que les Traqués ne jouent, ciblez 2 lieux adjacents. Ces lieux sont inaccessibles pour le tour.',
+        'Choose one Hunted. If you catch him with the Creature token, move the Assimilation counter forward 1 extra space.':
+          'Désignez un Traqué. Si vous l’attrapez avec le jeton Créature, le pion Assimilation avance de 1 case supplémentaire.',
+        'Force one Hunted to discard all but 2 Place cards from his hand.':
+          'Le Traqué de votre choix défausse toutes les cartes Lieu de sa main sauf 2.',
+        'Hunted caught by the Creature token lose 1 extra Will.':
+          'Le jeton Créature fait perdre 1 Volonté supplémentaire.',
+        'All Hunted discard 1 Place card simultaneously.':
+          'Les Traqués défaussent simultanément 1 carte Lieu.',
+        'The powers of the Beach and the Wreck are ineffective.':
+          'Les pouvoirs de la Plage et de l’Epave sont inutilisables.',
+        'Each Hunted may only take back 1 Place card when using the power of a Place card.':
+          'Chaque Traqué ne peut récupérer que 1 seule carte Lieu quand il utilise le pouvoir d’un lieu.',
+        'In addition to its effects, the Artemia token inflicts the loss of 1 Will.':
+          'En plus de ses effets, le jeton Artemia fait perdre 1 Volonté.',
+        'Force one Hunted to show you all but 2 Place cards from his hand.':
+          'Le Traqué de votre choix vous révèle toutes les cartes Lieu de sa main sauf 2.',
+        'Target 2 adjacent places. Apply the effects of the Artemia token on both places.':
+          'Ciblez 2 lieux adjacents. Les effets du jeton Artemia s’appliquent sur ces 2 lieux.',
+        'Consider the Target token as a second Creature token.':
+          'Considérez le jeton Cible comme un second jeton Créature.',
+        'Target 2 adjacent places. Both are ineffective.':
+          'Ciblez 2 lieux adjacents. Leurs pouvoirs sont inutilisables.',
+        'Each Hunted on the targeted place must discard 2 Place cards or lose 1 Will.':
+          'Chaque Traqué présent sur le lieu ciblé doit défausser 2 cartes Lieu ou perdre 1 Volonté.',
+        'Each Hunted on the targeted place discards 1 Survival card. The power of the place is ineffective.':
+          'Chaque Traqué présent sur le lieu ciblé défausse 1 carte Survie. Le pouvoir du lieu est inutilisable.',
+        'The place’s power of your choice is ineffective.':
+          'Le pouvoir du lieu de votre choix est inutilisable.',
+        'After the Hunted reveal their Place cards, move one Hunted to an adjacent place.':
+          'Avant de résoudre les lieux, déplacez 1 Traqué vers un lieu adjacent.',
+        'Prevent the Rescue counter moving forward during this phase.':
+          'Le pion Secours n’avance pas lors de cette phase.',
+        'Next turn, you may play up to 2 Hunt cards.':
+          'Au prochain tour, vous pouvez jouer jusqu’à 2 cartes Traque.',
+        'Copy the last Hunt card you discarded.':
+          'Copiez la dernière carte Traque défaussée.',
       }
     }
   },

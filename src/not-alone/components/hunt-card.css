@@ -1,0 +1,29 @@
+.hunt-card h3 {
+  position: absolute;
+  left: 0.5vh;
+  right: 0.5vh;
+  top: 1.5vh;
+  margin: auto;
+  text-align: center;
+  font-size: 1.3vh;
+  text-transform: uppercase;
+  font-weight: bold;
+  -webkit-backface-visibility: hidden;
+}
+.hunt-card .description {
+  overflow: hidden;
+  position: absolute;
+  top: 12vh;
+  left: 1vh;
+  right: 1vh;
+  bottom: 1.7vh;
+  font-size: 1.2vh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.hunt-card .description p {
+  -webkit-backface-visibility: hidden;
+}
