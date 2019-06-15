@@ -161,6 +161,7 @@ i18n.use(initReactI18next).init({
         '{{count}} place card(s)_plural': '{{count}} cartes Lieu',
         '{{count}} survival card(s)': '{{count}} carte Survie',
         '{{count}} survival card(s)_plural': '{{count}} cartes Survie',
+        'A Will counter': 'Un pion Volonté',
         '{{count}} Will counter(s)': '{{count}} pion Volonté',
         '{{count}} Will counter(s)_plural': '{{count}} pions Volonté'
       }

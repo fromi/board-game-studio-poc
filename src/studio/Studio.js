@@ -49,6 +49,7 @@ const Studio = ({Game, GameUI}) => {
         return map
       }, {})
     },
+    new: (numberOfPlayers = 3) => store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers})}),
     getPlayerMoves: (playerId) => Game.getMandatoryMoves(window.game.state, playerId).concat(Game.getOptionalMoves(window.game.state, playerId)),
     play: (playerId, move) => store.dispatch({type: PLAY_MOVE, playerId, move}),
     displayPlayerView: (playerId) => store.dispatch({type: DISPLAY_PLAYER_VIEW, playerId, game: window.game.state}),
