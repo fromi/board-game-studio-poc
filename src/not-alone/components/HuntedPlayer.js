@@ -6,11 +6,11 @@ import Tooltip from "@material-ui/core/Tooltip"
 import {useTranslation} from 'react-i18next';
 import willCounter from '../img/will-counter.png'
 
-const HuntedPlayer = ({hunted, game}) => {
+const HuntedPlayer = ({hunted, huntedId, playersMap}) => {
   const {t} = useTranslation()
   return (
     <div className="hunted-player">
-      <h3>Player name</h3>
+      <h3>{playersMap[huntedId].name}</h3>
       <Tooltip title={t('{{count}} place card(s)', {count: hunted.handPlaceCards.length}) + ' / ' + t('{{count}} survival card(s)', {count: hunted.handSurvivalCards.length})}>
         <div className="hand">
           {hunted.handPlaceCards.map((card, index) => <PlaceCard key={index}/>)}

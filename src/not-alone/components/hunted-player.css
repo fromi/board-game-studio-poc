@@ -4,29 +4,33 @@
   width: 30vh;
   top: 8vh;
   background-color: rgba(255, 255, 255, 0.3);
-  transition: all 1s 1s ease-out;
 }
 
 .not-alone.board-side-choice .hunted-player {
   opacity: 0;
 }
 
+.not-alone.board-side-chosen .hunted-player {
+  transition: all 1s 1s ease-out;
+}
+
 .hunted-player h3 {
   font-size: 2vh;
   margin: 1vh;
+  text-align: center;
 }
 
 .hunted-player .hand {
   transform: scale(0.2) rotate(180deg);
   position: absolute;
-  top: 10vh;
-  left: 10vh;
+  top: 9vh;
+  left: 50%;
 }
 
 .hunted-player .will-counters {
   position: absolute;
   top: 1vh;
-  right: 1vh;
+  left: 1vh;
   display: flex;
   flex-direction: column;
 }

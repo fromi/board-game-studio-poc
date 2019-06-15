@@ -7,7 +7,7 @@ import {DrawHuntCard} from "./moves/DrawHuntCard"
 import {DrawSurvivalCard} from "./moves/DrawSurvivalCard"
 import {StartPhase} from "./moves/StartPhase"
 import {PlayPlaceCard, playPlaceCard} from "./moves/PlayPlaceCard"
-import {strikeBack, StrikeBack} from "./moves/StrikeBack"
+import {StrikeBack} from "./moves/StrikeBack"
 import {ShuffleHuntCards} from "./moves/ShuffleHuntCards"
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2]
@@ -79,7 +79,7 @@ function getHuntedMandatoryMoves(game, hunted) {
   if (game.phase === 1 && !explorationDone(hunted)) {
     return hunted.handPlaceCards.map(place => playPlaceCard(place))
   }
-  return [strikeBack]
+  return []
 }
 
 export function getOptionalMoves(game, playerId) {

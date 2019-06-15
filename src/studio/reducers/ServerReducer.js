@@ -1,5 +1,6 @@
 import {CANCEL_MOVE, DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, NOTIFY_MOVES, PLAY_MOVE} from "../StudioActions"
 import produce from "immer"
+import {getRandom} from "../../game-api/Random"
 
 function executeMove(Game, state, move) {
   Game.moves[move.type].execute(state.game, move)
@@ -27,7 +28,13 @@ export function createServerReducer(Game) {
   return (state = {}, action) => {
     switch (action.type) {
       case NEW_GAME:
-        return {...state, game: action.game, moveHistory: [], pendingNotifications: [], playerId: Game.getPlayerIds(action.game)[0]}
+        const playerIds = Game.getPlayerIds(action.game)
+        const players = getRandom(fakePlayers, playerIds.length)
+        const playersMap = playerIds.reduce(function(map, playerId) {
+          map[playerId] = players.pop()
+          return map;
+        }, {});
+        return {...state, game: action.game, moveHistory: [], pendingNotifications: [], playerId: playerIds[0], playersMap}
       case PLAY_MOVE:
         return produce(state, draft => {
           executeMove(Game, draft, action.move)
@@ -60,3 +67,7 @@ export function pendingNotificationsListener(Game, store) {
     }
   }
 }
+
+const menNames = ['John', 'Bob', 'Vincent', 'Roger', 'Luck', 'Xavier', 'Stephen', 'Nicolas', 'Gregory']
+const womenNames = ['Alice', 'Clara', 'Debora', 'Elena', 'Fanny', 'Helen', 'Iris', 'Maria', 'Lila']
+const fakePlayers = menNames.map(name => ({name, gender: '♂'})).concat(womenNames.map(name => ({name, gender: '♀'})))

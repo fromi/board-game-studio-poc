@@ -163,7 +163,15 @@ i18n.use(initReactI18next).init({
         '{{count}} survival card(s)_plural': '{{count}} cartes Survie',
         'A Will counter': 'Un pion Volonté',
         '{{count}} Will counter(s)': '{{count}} pion Volonté',
-        '{{count}} Will counter(s)_plural': '{{count}} pions Volonté'
+        '{{count}} Will counter(s)_plural': '{{count}} pions Volonté',
+
+        'You are the Creature. Please choose the board side.': 'Vous êtes la Créature ! Veuillez choisir la face du plateau.',
+        '{{player}} is the Creature! They must choose the board side.': '{{player}} est la Creature! Elle·Il doit choisir la face du plateau.',
+        '{{player}} is the Creature! They must choose the board side._♂': '{{player}} est la Creature! Il doit choisir la face du plateau.',
+        '{{player}} is the Creature! They must choose the board side._♀': '{{player}} est la Creature! Elle doit choisir la face du plateau.',
+        'Board side is chosen! Creating Artemia...': 'La face du plateau est choisie ! Création d’Artemia...',
+        'You draw 3 Hunt cards': 'Vous piochez 3 cartes Traque',
+        '{{player}} draws 3 Hunt cards': '{{player}} pioche 3 cartes Traque'
       }
     }
   },

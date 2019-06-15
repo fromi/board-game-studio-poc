@@ -10,11 +10,14 @@
   border-radius: 1vh;
   padding: 0.3vh;
   background-color: rgba(255, 255, 255, 0.3);
-  transition: all 1s 1s ease-out;
 }
 
 .not-alone.board-side-choice .artemia {
   opacity: 0;
+}
+
+.not-alone.board-side-chosen .artemia {
+  transition: all 1s 1s ease-out;
 }
 
 .artemia .place-card {

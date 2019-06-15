@@ -4,6 +4,10 @@
   left: 50%;
 }
 
+.not-alone.board-side-choice > .hand {
+  transform: translateY(50vh);
+}
+
 /* Default behavior: unique card, or card in the middle of the hand (odd number of cards) */
 .hand .card {
   position: absolute;

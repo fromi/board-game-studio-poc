@@ -25,7 +25,7 @@ const Studio = ({Game, GameUI}) => {
     store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers: 3})})
   }
   const GameView = connect(state => ({
-    ...state.client,
+    ...state.client, playersMap: state.server.playersMap,
     play: (move) => store.dispatch({type: PLAY_MOVE, playerId: state.client.playerId, move})
   }))(GameUI.Interface)
 
