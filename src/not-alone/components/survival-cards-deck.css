@@ -6,7 +6,7 @@
 }
 
 .not-alone.creature .survival-cards-deck {
-  top: 3.53rem;
+  top: 8vh;
   left: 1vh;
 }
 
@@ -15,7 +15,7 @@
 }
 
 .not-alone:not(.creature) .survival-cards-deck {
-  top: calc(3.53rem);
+  bottom: 1vh;
   right: 1vh;
 }
 

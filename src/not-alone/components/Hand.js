@@ -4,6 +4,7 @@ import PlaceCard from "./PlaceCard"
 import HuntCard from "./HuntCard"
 import "./hand.css"
 import {DRAW_HUNT_CARD} from "../moves/DrawHuntCard"
+import SurvivalCard from "./SurvivalCard"
 
 const Hand = ({game, playerId, animation}) => {
   if (playerId === CREATURE) {
@@ -26,6 +27,9 @@ const Hand = ({game, playerId, animation}) => {
       <div className="hand">
         {hunted.handPlaceCards.map(place => (
           <PlaceCard place={place} key={place}/>
+        ))}
+        {hunted.handSurvivalCards.map(card => (
+          <SurvivalCard cardName={card} key={card}/>
         ))}
       </div>
     )

@@ -1,5 +1,4 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
 import "./not-alone.css"
 import {BOARD_SIDES, CREATURE} from "./NotAlone"
 import Board from "./components/Board"
@@ -9,6 +8,7 @@ import HuntCardsDeck from "./components/HuntCardsDeck"
 import Hand from "./components/Hand"
 import {DRAW_HUNT_CARD} from "./moves/DrawHuntCard"
 import SurvivalCardsDeck from "./components/SurvivalCardsDeck"
+import HuntedPlayer from "./components/HuntedPlayer"
 
 export const Interface = (props) => {
   const {playerId, game, animation} = props
@@ -16,15 +16,16 @@ export const Interface = (props) => {
   const boardSideChosen = animation && animation.move.type === CHOOSE_BOARD_SIDE
   return (
     <div className={`not-alone ${userType} ${!game.boardSide ? 'board-side-choice' : ''} ${boardSideChosen ? 'board-side-chosen' : ''}`}>
-      <Typography className="information" align="center" variant="title">{
+      <h2 className="information">{
         playerId === CREATURE ? "You are the Creature. Please choose the board side." : "... is the Creature."
-      }</Typography>
+      }</h2>
       {BOARD_SIDES.map(side =>
         <Board side={side} key={side} {...props}/>
       )}
       {<HuntCardsDeck {...props}/>}
       {<SurvivalCardsDeck {...props}/>}
       {<Artemia {...props}/>}
+      <div>{game.hunted.map((hunted, index) => <HuntedPlayer hunted={hunted} key={index} {...props}/>)}</div>
       {playerId && <Hand {...props}/>}
     </div>
   )

@@ -15,7 +15,7 @@
 }
 
 .not-alone:not(.creature) .hunt-cards-deck {
-  top: calc(3.53rem);
+  top: 8vh;
   right: 1vh;
 }
 

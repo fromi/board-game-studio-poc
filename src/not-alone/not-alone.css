@@ -10,10 +10,12 @@
 
 .not-alone .information {
   color: antiquewhite;
-  padding: 0.5rem;
-  margin: 0.5rem;
+  font-size: 4vh;
+  line-height: 1;
+  padding: 1.5vh;
+  text-align: center;
+  margin: 0;
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 0.5em;
 }
 
 .not-alone .card {
@@ -27,10 +29,11 @@
   position: absolute;
   height: 20vh;
   width: calc(20vh * 5 / 7);
+  -webkit-backface-visibility: hidden;
 }
 .not-alone .card .face {
   backface-visibility: hidden;
 }
-.not-alone .card .face.back:nth-child(2) {
+.not-alone .card .face.back:not(:only-child) {
   transform: rotateY(-180deg);
 }

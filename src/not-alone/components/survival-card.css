@@ -2,7 +2,7 @@
   position: absolute;
   left: 0.5vh;
   right: 0.5vh;
-  top: 1.5vh;
+  top: 2vh;
   margin: auto;
   text-align: center;
   font-size: 1.3vh;
@@ -13,10 +13,10 @@
 .survival-card .description {
   overflow: hidden;
   position: absolute;
-  top: 12vh;
+  top: 6vh;
   left: 1vh;
   right: 1vh;
-  bottom: 1.7vh;
+  bottom: 4.7vh;
   font-size: 1.2vh;
   text-align: center;
   display: flex;

@@ -11,7 +11,7 @@
   transform-origin: bottom left;
   left: 100vw;
   bottom: 0;
-  width: calc(100vh - 3.53rem);
+  width: 93vh;
 }
 
 .not-alone:not(.creature) .board {
@@ -19,7 +19,7 @@
   transform-origin: bottom left;
   left: 0;
   bottom: 0;
-  width: calc(100vh - 3.53rem);
+  width: 93vh;
 }
 
 .not-alone.board-side-choice .board, .not-alone .board.not-chosen {

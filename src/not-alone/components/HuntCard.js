@@ -19,12 +19,14 @@ import {
 
 const HuntCard = ({cardName, state = ''}) => (
   <div className={`card hunt-card ${state}`}>
-    {cardName && <img className="face front" src={huntCard} alt="" draggable="false"/>}
+    {cardName && [
+      <img className="face front" src={huntCard} alt="" draggable="false" key="img"/>,
+      <h3 key="name"><Trans>{cardName}</Trans></h3>,
+      <div className="description" key="description">
+        <p><Trans>{descriptions[cardName]}</Trans></p>
+      </div>
+    ]}
     <img className="face back" src={huntCardBack} alt="" draggable="false"/>
-    <h3><Trans>{cardName}</Trans></h3>
-    <div className="description">
-      <p><Trans>{descriptions[cardName]}</Trans></p>
-    </div>
   </div>
 )
 

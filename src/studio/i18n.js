@@ -155,7 +155,14 @@ i18n.use(initReactI18next).init({
         'Remove the Marker counter from the Beach to immediately move the Rescue counter forward 1 space.':
           'Retirez le pion Balise de la Plage pour avancer immédiatement le pion Secours de 1 case.',
         'Take back the Place card you just played.':
-          'Reprenez en main votre carte Lieu jouée.'
+          'Reprenez en main votre carte Lieu jouée.',
+
+        '{{count}} place card(s)': '{{count}} carte Lieu',
+        '{{count}} place card(s)_plural': '{{count}} cartes Lieu',
+        '{{count}} survival card(s)': '{{count}} carte Survie',
+        '{{count}} survival card(s)_plural': '{{count}} cartes Survie',
+        '{{count}} Will counter(s)': '{{count}} pion Volonté',
+        '{{count}} Will counter(s)_plural': '{{count}} pions Volonté'
       }
     }
   },

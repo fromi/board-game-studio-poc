@@ -2,6 +2,7 @@
   transition: all 0.3s ease-in-out;
   z-index: 0;
 }
+
 .place-card h3 {
   position: absolute;
   left: 2vh;
@@ -13,6 +14,7 @@
   text-transform: uppercase;
   font-weight: bold;
 }
+
 .place-card .description {
   overflow: hidden;
   position: absolute;
@@ -27,15 +29,11 @@
   justify-content: center;
   flex-direction: column;
 }
+
 .place-card .description p {
   margin: 0 0 0.1vh;
 }
 
-.place-card:hover {
-  transition-delay: 0.5s;
-  transform: scale(3);
-  z-index: 100;
-}
 .place-card.place1 .description {
   font-size: 0.7vh;
 }

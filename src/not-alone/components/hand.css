@@ -110,10 +110,41 @@
 }
 
 /* card 1/4, 2/6, 3/8... */
-/* TODO */
+.hand .card:nth-child(1):nth-last-child(4),
+.hand .card:nth-child(2):nth-last-child(5),
+.hand .card:nth-child(3):nth-last-child(6),
+.hand .card:nth-child(4):nth-last-child(7),
+.hand .card:nth-child(5):nth-last-child(8),
+.hand .card:nth-child(6):nth-last-child(9) {
+  transform: translate(-150%, 10%) rotate(-13deg);
+}
+.hand .card:nth-child(1):nth-last-child(4):hover,
+.hand .card:nth-child(2):nth-last-child(5):hover,
+.hand .card:nth-child(3):nth-last-child(6):hover,
+.hand .card:nth-child(4):nth-last-child(7):hover,
+.hand .card:nth-child(5):nth-last-child(8):hover,
+.hand .card:nth-child(6):nth-last-child(9):hover {
+  transform: translate(-160%, -13%) scale(1.1) rotate(-13deg);
+}
+
 
 /* card 4/4, 5/6, 6/8... */
-/* TODO */
+.hand .card:nth-child(4):nth-last-child(1),
+.hand .card:nth-child(5):nth-last-child(2),
+.hand .card:nth-child(6):nth-last-child(3),
+.hand .card:nth-child(7):nth-last-child(4),
+.hand .card:nth-child(8):nth-last-child(5),
+.hand .card:nth-child(9):nth-last-child(6) {
+  transform: translate(50%, 8%) rotate(13deg);
+}
+.hand .card:nth-child(4):nth-last-child(1):hover,
+.hand .card:nth-child(5):nth-last-child(2):hover,
+.hand .card:nth-child(6):nth-last-child(3):hover,
+.hand .card:nth-child(7):nth-last-child(4):hover,
+.hand .card:nth-child(8):nth-last-child(5):hover,
+.hand .card:nth-child(9):nth-last-child(6):hover {
+  transform: translate(60%, -8%) scale(1.1) rotate(13deg);
+}
 
 /* card 1/5, 2/7, 3/9... */
 .hand .card:nth-child(1):nth-last-child(5),
@@ -145,4 +176,32 @@
 .hand .card:nth-child(8):nth-last-child(4):hover,
 .hand .card:nth-child(9):nth-last-child(5):hover {
   transform: translate(120%, -5%) scale(1.1) rotate(20deg);
+}
+
+/* card 1/6, 2/8, 3/10... */
+.hand .card:nth-child(1):nth-last-child(6),
+.hand .card:nth-child(2):nth-last-child(7),
+.hand .card:nth-child(3):nth-last-child(8),
+.hand .card:nth-child(4):nth-last-child(9) {
+  transform: translate(-210%, 25%) rotate(-25deg);
+}
+.hand .card:nth-child(1):nth-last-child(6):hover,
+.hand .card:nth-child(2):nth-last-child(7):hover,
+.hand .card:nth-child(3):nth-last-child(8):hover,
+.hand .card:nth-child(4):nth-last-child(9):hover {
+  transform: translate(-220%, 0%) scale(1.1) rotate(-25deg);
+}
+
+/* card 6/6, 7/8, 8/10... */
+.hand .card:nth-child(6):nth-last-child(1),
+.hand .card:nth-child(7):nth-last-child(2),
+.hand .card:nth-child(8):nth-last-child(3),
+.hand .card:nth-child(9):nth-last-child(4) {
+  transform: translate(120%, 25%) rotate(25deg);
+}
+.hand .card:nth-child(6):nth-last-child(1):hover,
+.hand .card:nth-child(7):nth-last-child(2):hover,
+.hand .card:nth-child(8):nth-last-child(3):hover,
+.hand .card:nth-child(9):nth-last-child(4):hover {
+  transform: translate(130%, 0%) scale(1.1) rotate(25deg);
 }

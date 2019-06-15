@@ -1,0 +1,37 @@
+.hunted-player {
+  position:absolute;
+  height: 20vh;
+  width: 30vh;
+  top: 8vh;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.hunted-player h3 {
+  font-size: 2vh;
+  margin: 1vh;
+}
+
+.hunted-player .hand {
+  transform: scale(0.2) rotate(180deg);
+  position: absolute;
+  top: 10vh;
+  left: 10vh;
+}
+
+.hunted-player .will-counters {
+  position: absolute;
+  top: 1vh;
+  right: 1vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hunted 1/2 */
+.hunted-player:nth-child(1):nth-last-child(2) {
+  right: 51%;
+}
+
+/* Hunted 2/2 */
+.hunted-player:nth-child(2):nth-last-child(1) {
+  left: 51%;
+}

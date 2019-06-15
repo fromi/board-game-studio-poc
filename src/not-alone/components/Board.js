@@ -1,6 +1,6 @@
 import React from "react"
-import board1 from "../img/board_1.jpg"
-import board2 from "../img/board_2.jpg"
+import board1 from "../img/board-1.jpg"
+import board2 from "../img/board-2.jpg"
 import {CREATURE} from "../NotAlone"
 import "./board.css"
 import {CHOOSE_BOARD_SIDE} from "../moves/ChooseBoardSide"
