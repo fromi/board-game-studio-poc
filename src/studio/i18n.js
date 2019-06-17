@@ -157,10 +157,12 @@ i18n.use(initReactI18next).init({
         'Take back the Place card you just played.':
           'Reprenez en main votre carte Lieu jouée.',
 
-        '{{count}} place card(s)': '{{count}} carte Lieu',
-        '{{count}} place card(s)_plural': '{{count}} cartes Lieu',
-        '{{count}} survival card(s)': '{{count}} carte Survie',
-        '{{count}} survival card(s)_plural': '{{count}} cartes Survie',
+        '{{count}} Place card(s)': '{{count}} carte Lieu',
+        '{{count}} Place card(s)_plural': '{{count}} cartes Lieu',
+        '{{count}} Survival card(s)': '{{count}} carte Survie',
+        '{{count}} Survival card(s)_plural': '{{count}} cartes Survie',
+        '{{count}} Hunt card(s)': '{{count}} carte Traque',
+        '{{count}} Hunt card(s)_plural': '{{count}} cartes Traque',
         'A Will counter': 'Un pion Volonté',
         '{{count}} Will counter(s)': '{{count}} pion Volonté',
         '{{count}} Will counter(s)_plural': '{{count}} pions Volonté',
@@ -171,7 +173,9 @@ i18n.use(initReactI18next).init({
         '{{player}} is the Creature! They must choose the board side._♀': '{{player}} est la Creature! Elle doit choisir la face du plateau.',
         'Board side is chosen! Creating Artemia...': 'La face du plateau est choisie ! Création d’Artemia...',
         'You draw 3 Hunt cards': 'Vous piochez 3 cartes Traque',
-        '{{player}} draws 3 Hunt cards': '{{player}} pioche 3 cartes Traque'
+        '{{player}} draws 3 Hunt cards': '{{player}} pioche 3 cartes Traque',
+        'Hunted players must play a Place card': 'Les Traqués doivent jouer une carte Lieu',
+        'You must play a Place card': 'Vous devez jouer une carte lieu'
       }
     }
   },

@@ -31,9 +31,11 @@ export const setup = options => ({
 })
 
 function setupHunted(numberOfPlayers) {
+  if (numberOfPlayers < 2) throw new Error('Not Alone requires at least 2 players')
+  if (numberOfPlayers > 7) throw new Error('Not Alone cannot be played with more that 7 players')
   const hunted = []
   for (let playerNumber = 1; playerNumber < numberOfPlayers; playerNumber++) {
-    hunted.push({willCounters: 3, handPlaceCards: [1, 2, 3, 4, 5], handSurvivalCards: [], playedPlaceCards:[]})
+    hunted.push({willCounters: 3, handPlaceCards: [1, 2, 3, 4, 5], handSurvivalCards: [], playedPlaceCards: []})
   }
   return hunted
 }
@@ -94,7 +96,7 @@ export function explorationDone(hunted) {
   return hunted.playedPlaceCards.length === 1
 }
 
-function getHuntedNumber(playerId) {
+export function getHuntedNumber(playerId) {
   return parseInt(playerId.slice(HUNTED_PREFIX.length))
 }
 
@@ -124,7 +126,8 @@ function hideCreatureSecrets(game) {
 }
 
 function hideHuntedSecrets(hunted) {
-  return {...hunted,
+  return {
+    ...hunted,
     handPlaceCards: hideItemsDetail(hunted.handPlaceCards),
     handSurvivalCards: hideItemsDetail(hunted.handSurvivalCards),
     playedPlaceCards: hideItemsDetail(hunted.playedPlaceCards)

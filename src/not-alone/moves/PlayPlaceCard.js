@@ -1,6 +1,7 @@
 import {getHunted} from "../NotAlone"
 
-export const playPlaceCard = (place) => ({type: 'PlayPlaceCard', place})
+export const PLAY_PLACE_CARD = 'PlayPlaceCard'
+export const playPlaceCard = (place) => ({type: PLAY_PLACE_CARD, place})
 
 const execute = (hunted, place) => {
   hunted.handPlaceCards.splice(hunted.handPlaceCards.indexOf(place), 1)

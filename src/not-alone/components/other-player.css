@@ -1,0 +1,70 @@
+.other-player {
+  position:absolute;
+  height: 20vh;
+  width: 30vh;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 1vh;
+}
+
+.not-alone.board-side-choice .other-player {
+  opacity: 0;
+}
+
+.not-alone.board-side-chosen .other-player {
+  transition: all 1s 1s ease-out;
+}
+
+.other-player h3 {
+  font-size: 2vh;
+  margin: 1vh;
+  text-align: center;
+}
+
+.other-player .hand {
+  transform: scale(0.2) rotate(180deg);
+  position: absolute;
+  top: 9vh;
+  left: 50%;
+}
+
+.other-player.front-left, .other-player.front-middle, .other-player.front-right {
+  top: 8vh;
+}
+
+.other-player.front-left {
+  left: calc(50% - 33vh);
+}
+
+.other-player.front-right {
+  right: calc(50% - 33vh);
+}
+
+.other-player.front-middle, .other-player.bottom {
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.other-player.left-top, .other-player.left-middle, .other-player.left-bottom {
+  left: calc(50% - 70vh);
+}
+
+.other-player.right-top, .other-player.right-middle, .other-player.right-bottom {
+  right: calc(50% - 70vh);
+}
+
+.other-player.left-top, .other-player.right-top {
+  top: 29vh;
+}
+
+.other-player.left-middle, .other-player.right-middle {
+  top: 41vh;
+}
+
+.other-player.left-bottom, .other-player.right-bottom {
+  top: 52vh;
+}
+
+.other-player.bottom {
+  bottom: 3vh;
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 import "./not-alone.css"
-import {BOARD_SIDES, CREATURE, getMandatoryMoves, HUNTED_PREFIX} from "./NotAlone"
+import {BOARD_SIDES, CREATURE, getMandatoryMoves} from "./NotAlone"
 import Board from "./components/Board"
 import {CHOOSE_BOARD_SIDE} from "./moves/ChooseBoardSide"
 import Artemia from "./components/Artemia"
@@ -8,8 +8,9 @@ import HuntCardsDeck from "./components/HuntCardsDeck"
 import Hand from "./components/Hand"
 import {DRAW_HUNT_CARD} from "./moves/DrawHuntCard"
 import SurvivalCardsDeck from "./components/SurvivalCardsDeck"
-import HuntedPlayer from "./components/HuntedPlayer"
 import {useTranslation} from 'react-i18next';
+import {PLAY_PLACE_CARD} from "./moves/PlayPlaceCard"
+import OtherPlayers from "./components/OtherPlayers"
 
 export const Interface = (props) => {
   const {playerId, game, animation} = props
@@ -24,7 +25,7 @@ export const Interface = (props) => {
       {<HuntCardsDeck {...props}/>}
       {<SurvivalCardsDeck {...props}/>}
       {<Artemia {...props}/>}
-      <div>{game.hunted.map((hunted, index) => <HuntedPlayer hunted={hunted} huntedId={HUNTED_PREFIX + (index + 1)} key={index} {...props}/>)}</div>
+      {<OtherPlayers {...props}/>}
       {playerId && <Hand {...props}/>}
     </div>
   )
@@ -47,11 +48,13 @@ const getInformation = ({game, playerId, animation, playersMap}) => {
   }
   const mandatoryMoves = playerId ? getMandatoryMoves(game, playerId) : []
   if (mandatoryMoves.length) {
-    return getMandatoryMoveInformation(mandatoryMoves);
+    return getMandatoryMoveInformation(game, mandatoryMoves);
   }
   const {t} = useTranslation()
   if (!game.boardSide) {
     return t('{{player}} is the Creature! They must choose the board side.', {player: playersMap[CREATURE].name, context: playersMap[CREATURE].gender})
+  } else if (game.phase === 1) {
+    return t('Hunted players must play a Place card')
   }
   return 'Someone else must do something'
 }
@@ -76,6 +79,9 @@ const getMandatoryMoveInformation = (game, mandatoryMoves) => {
   const {t} = useTranslation()
   if (!game.boardSide) {
     return t('You are the Creature. Please choose the board side.')
+  }
+  if (mandatoryMoves.some(move => move.type === PLAY_PLACE_CARD)) {
+    return t('You must play a Place card')
   }
   return 'You must do something'
 }

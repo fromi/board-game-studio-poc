@@ -6,7 +6,7 @@
   transition: all 1s ease-in-out;
 }
 
-.not-alone.creature .board {
+.not-alone:not(.hunted) .board {
   transform: rotate(90deg) translate(-100%, 100%);
   transform-origin: bottom left;
   left: 100vw;
@@ -14,7 +14,7 @@
   width: 93vh;
 }
 
-.not-alone:not(.creature) .board {
+.not-alone.hunted .board {
   transform: rotate(-90deg) translateY(100%);
   transform-origin: bottom left;
   left: 0;

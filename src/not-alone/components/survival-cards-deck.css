@@ -5,21 +5,21 @@
   cursor: help;
 }
 
-.not-alone.creature .survival-cards-deck {
+.not-alone:not(.hunted) .survival-cards-deck {
   top: 8vh;
   left: 1vh;
 }
 
-.not-alone.board-side-choice.creature .survival-cards-deck {
+.not-alone.board-side-choice:not(.hunted) .survival-cards-deck {
   transform: translateX(-25vh);
 }
 
-.not-alone:not(.creature) .survival-cards-deck {
+.not-alone.hunted .survival-cards-deck {
   bottom: 1vh;
   right: 1vh;
 }
 
-.not-alone.board-side-choice:not(.creature) .survival-cards-deck {
+.not-alone.board-side-choice.hunted .survival-cards-deck {
   transform: translateX(25vh);
 }
 
