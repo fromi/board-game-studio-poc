@@ -6,7 +6,7 @@ import placeCardBack from "../img/place-card-back.jpg"
 const images = require.context('../img/places');
 const getImage = (place) => images('./place_' + place + '.jpg')
 
-const PlaceCard = ({place, onclick: onClick}) => (
+const PlaceCard = ({place, onClick}) => (
   <div className={`card place-card place${place}`} onClick={onClick}>
     {place && [
       <img src={getImage(place)} alt={'Place ' + place} draggable="false" key="img"/>,
