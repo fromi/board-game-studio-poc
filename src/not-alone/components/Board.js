@@ -19,7 +19,7 @@ const Board = ({game, playerId, animation, side, play}) => {
 
   const onClick = () => {
     if (playerId === CREATURE && !game.boardSide && !animating) {
-      play({type: 'ChooseBoardSide', side})
+      play({type: CHOOSE_BOARD_SIDE, side})
     }
   }
 

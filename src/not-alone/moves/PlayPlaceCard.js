@@ -1,4 +1,5 @@
 import {getHunted} from "../NotAlone"
+import {START_PHASE} from "./StartPhase"
 
 export const PLAY_PLACE_CARD = 'PlayPlaceCard'
 export const playPlaceCard = (place) => ({type: PLAY_PLACE_CARD, place})
@@ -8,18 +9,10 @@ const execute = (hunted, place) => {
   hunted.playedPlaceCards.push(place)
 }
 
-const cancel = (hunted, place) => {
-  hunted.playedPlaceCards.splice(hunted.playedPlaceCards.indexOf(place), 1)
-  hunted.handPlaceCards.push(place)
-  hunted.handPlaceCards.sort()
-}
-
 export const PlayPlaceCard = {
   execute: (game, move) => execute(getHunted(game, move.playerId), move.place),
 
   getOthersView: (move) => ({...move, place: {}}),
 
-  cancelable: (game, move) => game.phase === 1 && getHunted(game, move.playerId).playedPlaceCards.includes(move.place),
-
-  cancel: (game, move) => cancel(getHunted(game, move.playerId), move.place)
+  undoable: (nextMoves) => nextMoves.every(move => move.type !== START_PHASE)
 }

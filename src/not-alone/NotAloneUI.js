@@ -5,12 +5,12 @@ import Board from "./components/Board"
 import {CHOOSE_BOARD_SIDE} from "./moves/ChooseBoardSide"
 import Artemia from "./components/Artemia"
 import HuntCardsDeck from "./components/HuntCardsDeck"
-import Hand from "./components/Hand"
 import {DRAW_HUNT_CARD} from "./moves/DrawHuntCard"
 import SurvivalCardsDeck from "./components/SurvivalCardsDeck"
 import {useTranslation} from 'react-i18next';
 import {PLAY_PLACE_CARD} from "./moves/PlayPlaceCard"
 import OtherPlayers from "./components/OtherPlayers"
+import PlayerMaterial from "./components/PlayerMaterial"
 
 export const Interface = (props) => {
   const {playerId, game, animation} = props
@@ -25,14 +25,14 @@ export const Interface = (props) => {
       {<HuntCardsDeck {...props}/>}
       {<SurvivalCardsDeck {...props}/>}
       {<Artemia {...props}/>}
+      {playerId && <PlayerMaterial {...props}/>}
       {<OtherPlayers {...props}/>}
-      {playerId && <Hand {...props}/>}
     </div>
   )
 }
 
-export const getAnimationDelay = (move) => {
-  switch (move.type) {
+export const getAnimationDelay = (animation) => {
+  switch (animation.move.type) {
     case CHOOSE_BOARD_SIDE:
       return 2
     case DRAW_HUNT_CARD:

@@ -2,9 +2,9 @@ import React from 'react'
 import {connect, Provider} from 'react-redux'
 import * as PropTypes from "prop-types"
 import {applyMiddleware, combineReducers, createStore} from "redux"
-import {createServerReducer, pendingNotificationsListener} from "./reducers/ServerReducer"
-import {createClientReducer, movesAnimationListener} from "./reducers/ClientReducer"
-import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, PLAY_MOVE} from "./StudioActions"
+import {createServerReducer, getMoveView, pendingNotificationsListener} from "./reducers/ServerReducer"
+import {createClientReducer, notificationsAnimationListener} from "./reducers/ClientReducer"
+import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, PLAY_MOVE, UNDO_MOVE} from "./StudioActions"
 import {priorMoveMiddleware} from "./middleware/PriorMoveMiddleware"
 import {prepareMoveMiddleware} from "./middleware/PrepareMoveMiddleware"
 import {useTranslation} from "react-i18next";
@@ -19,14 +19,15 @@ const Studio = ({Game, GameUI}) => {
   const store = createStore(combineReducers({server, client}), savedState,
     applyMiddleware(priorMoveMiddleware(Game), prepareMoveMiddleware(Game)))
   store.subscribe(pendingNotificationsListener(Game, store))
-  store.subscribe(movesAnimationListener(GameUI, store))
+  store.subscribe(notificationsAnimationListener(GameUI, store))
   store.subscribe(() => localStorage.setItem(localStorageKey, JSON.stringify(store.getState())))
   if (!savedState) {
     store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers: 3})})
   }
   const GameView = connect(state => ({
     ...state.client, playersMap: state.server.playersMap,
-    play: (move) => store.dispatch({type: PLAY_MOVE, playerId: state.client.playerId, move})
+    play: (move) => store.dispatch({type: PLAY_MOVE, playerId: state.client.playerId, move}),
+    undo: (move) => store.dispatch({type: UNDO_MOVE, playerId: state.client.playerId, move})
   }))(GameUI.Interface)
 
   // Tools for console control
@@ -52,8 +53,16 @@ const Studio = ({Game, GameUI}) => {
     new: (numberOfPlayers = 3) => store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers})}),
     getPlayerMoves: (playerId) => Game.getMandatoryMoves(window.game.state, playerId).concat(Game.getOptionalMoves(window.game.state, playerId)),
     play: (playerId, move) => store.dispatch({type: PLAY_MOVE, playerId, move}),
-    displayPlayerView: (playerId) => store.dispatch({type: DISPLAY_PLAYER_VIEW, playerId, game: window.game.state}),
-    displaySpectatorView: () => store.dispatch({type: DISPLAY_SPECTATOR_VIEW, game: window.game.state}),
+    displayPlayerView: (playerId) => {
+      const moveHistory = store.getState().server.moveHistory.map(move => getMoveView(Game.moves[move.type], move, playerId, window.game.state))
+      const initialState = Game.getPlayerView(store.getState().server.initialState, playerId)
+      store.dispatch({type: DISPLAY_PLAYER_VIEW, playerId, game: Game.getPlayerView(window.game.state, playerId), moveHistory, initialState})
+    },
+    displaySpectatorView: () => {
+      const moveHistory = store.getState().server.moveHistory.map(move => getMoveView(Game.moves[move.type], move, undefined, window.game.state))
+      const initialState = Game.getPlayerView(store.getState().server.initialState)
+      store.dispatch({type: DISPLAY_SPECTATOR_VIEW, game: Game.getSpectatorView(window.game.state), moveHistory, initialState})
+    },
     changeLanguage: (language) => i18n.changeLanguage(language)
   }
 

@@ -1,30 +1,16 @@
 import {
   APPLY_ANIMATING_MOVE,
-  CANCEL_MOVE,
   DISPLAY_PLAYER_VIEW,
   DISPLAY_SPECTATOR_VIEW,
   END_ANIMATION,
   NEW_GAME,
-  NOTIFY_MOVES,
+  SERVER_NOTIFICATION,
   START_ANIMATION
 } from "../StudioActions"
 import produce from "immer"
+import {MOVE_PLAYED} from "./ServerReducer"
 
-function getMoveView(Move, move, playerId, game) {
-  if (Move.getOwnView && move.playerId === playerId) {
-    return Move.getOwnView(move, game)
-  } else if (Move.getSpectatorView && !playerId) {
-    return Move.getSpectatorView(move, game)
-  } else if (Move.getOthersView && move.playerId !== playerId) {
-    return Move.getOthersView(move, game)
-  } else if (Move.getPlayerView) {
-    return Move.getPlayerView(move, playerId, game)
-  } else if (Move.getView) {
-    return Move.getView(move, game)
-  } else {
-    return move
-  }
-}
+const isEqual = require("react-fast-compare");
 
 function reportMove(Game, game, playerId, move) {
   const Move = Game.moves[move.type]
@@ -41,68 +27,65 @@ function reportMove(Game, game, playerId, move) {
   }
 }
 
-function cancelMove(Move, playerId, game, move) {
-  move = getMoveView(Move, move, playerId, game)
-  if (Move.cancelInOwnView && move.playerId === playerId) {
-    Move.cancelInOwnView(game, move)
-  } else if (Move.cancelInSpectatorView && !playerId) {
-    Move.cancelInSpectatorView(game, move)
-  } else if (Move.cancelInPlayerView) {
-    Move.cancelInPlayerView(game, move, playerId)
-  } else if (Move.cancelInView) {
-    Move.cancelInView(game, move)
-  } else {
-    Move.cancel(game, move)
-  }
-}
-
 export function createClientReducer(Game) {
   return (state = {}, action) => {
     switch (action.type) {
       case NEW_GAME:
         const playerId = Game.getPlayerIds(action.game)[0]
-        return {game: Game.getPlayerView(action.game, playerId), playerId, pendingMoves: []}
-      case NOTIFY_MOVES:
-        return {...state, pendingMoves: state.pendingMoves.concat(action.moves)}
+        const game = Game.getPlayerView(action.game, playerId)
+        return {game, initialState: game, playerId, pendingNotifications: [], moveHistory: []}
+      case SERVER_NOTIFICATION:
+        // TODO: if we have both similar PLAY_MOVE and UNDO_MOVE pending notifications, we can delete both instead of play them both.
+        return {...state, pendingNotifications: state.pendingNotifications.concat(action.notifications)}
       case START_ANIMATION:
-        const animation = {move: state.pendingMoves[0], moveApplied: false}
-        return {...state, animation, pendingMoves: state.pendingMoves.slice(1)}
+        const animation = {...state.pendingNotifications[0], moveApplied: false}
+        return {...state, animation, pendingNotifications: state.pendingNotifications.slice(1)}
       case APPLY_ANIMATING_MOVE:
         return produce(state, draft => {
-          reportMove(Game, draft.game, draft.playerId, draft.animation.move)
+          if (draft.animation.type === MOVE_PLAYED) {
+            reportMove(Game, draft.game, draft.playerId, draft.animation.move)
+            draft.moveHistory.push(draft.animation.move)
+          } else {
+            const moveIndex = draft.moveHistory.reverse().findIndex(move => isEqual(move, draft.animation.move))
+            draft.moveHistory.splice(moveIndex, 1)
+            draft.moveHistory.reverse()
+            draft.game = draft.moveHistory.reduce((state, move) => {
+              reportMove(Game, state, draft.playerId, move)
+              return state
+            }, draft.initialState)
+            draft.initialState = state.initialState
+          }
           draft.animation.moveApplied = true
         })
       case END_ANIMATION:
         return {...state, animation: null}
-      case CANCEL_MOVE:
-        return produce(state, draft => {
-          cancelMove(Game.moves[action.move.type], state.playerId, draft.game, action.move)
-        })
       case DISPLAY_PLAYER_VIEW:
-        return {game: Game.getPlayerView(action.game, action.playerId), playerId: action.playerId, pendingMoves: []}
+        return {game: action.game, playerId: action.playerId, pendingNotifications: [], moveHistory: action.moveHistory, initialState: action.initialState}
       case DISPLAY_SPECTATOR_VIEW:
-        return {game: Game.getSpectatorView(action.game), pendingMoves: []}
+        return {game: action.game, pendingNotifications: [], moveHistory: action.moveHistory, initialState: action.initialState}
       default:
         return state
     }
   }
 }
 
-export function movesAnimationListener(GameUI, store) {
-  const applyAnimatingMove = () => {
-    const move = store.getState().client.animation.move
-    const animationDelay = GameUI.getAnimationDelay ? GameUI.getAnimationDelay(move) : 0
-    store.dispatch({type: APPLY_ANIMATING_MOVE})
-    setTimeout(() => store.dispatch({type: END_ANIMATION}), animationDelay * 1000)
+export function notificationsAnimationListener(GameUI, store) {
+  const applyAnimatingNotification = () => {
+    const animation = store.getState().client.animation
+    if (animation) {
+      const animationDelay = GameUI.getAnimationDelay ? GameUI.getAnimationDelay(animation) : 0
+      store.dispatch({type: APPLY_ANIMATING_MOVE})
+      setTimeout(() => store.dispatch({type: END_ANIMATION}), animationDelay * 1000)
+    }
   }
 
   return () => {
     const state = store.getState().client
-    if (!state.animation && state.pendingMoves.length) {
-      const move = state.pendingMoves[0]
-      const preAnimationDelay = GameUI.getPreAnimationDelay ? GameUI.getPreAnimationDelay(move) : 0
+    if (!state.animation && state.pendingNotifications.length) {
+      const animation = state.pendingNotifications[0]
+      const preAnimationDelay = GameUI.getPreAnimationDelay ? GameUI.getPreAnimationDelay(animation) : 0
       store.dispatch({type: START_ANIMATION})
-      setTimeout(applyAnimatingMove, preAnimationDelay * 1000)
+      setTimeout(applyAnimatingNotification, preAnimationDelay * 1000)
     }
   }
 }

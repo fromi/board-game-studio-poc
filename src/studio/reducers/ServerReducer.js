@@ -1,14 +1,18 @@
-import {CANCEL_MOVE, DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, NOTIFY_MOVES, PLAY_MOVE} from "../StudioActions"
+import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, SERVER_NOTIFICATION, PLAY_MOVE, UNDO_MOVE} from "../StudioActions"
 import produce from "immer"
 import {getRandom} from "../../game-api/Random"
+
+const isEqual = require("react-fast-compare");
+
+export const MOVE_PLAYED = 'MOVE_PLAYED', MOVE_UNDONE = 'MOVE_UNDONE'
 
 function executeMove(Game, state, move) {
   Game.moves[move.type].execute(state.game, move)
   state.moveHistory.push(move)
-  state.pendingNotifications.push(getMoveView(Game.moves[move.type], move, state.playerId, state.game))
+  state.pendingNotifications.push({type: MOVE_PLAYED, move: getMoveView(Game.moves[move.type], move, state.playerId, state.game)})
 }
 
-function getMoveView(Move, move, playerId, game) {
+export function getMoveView(Move, move, playerId, game) {
   if (Move.getOwnView && move.playerId === playerId) {
     return Move.getOwnView(move, game)
   } else if (Move.getSpectatorView && !playerId) {
@@ -30,11 +34,11 @@ export function createServerReducer(Game) {
       case NEW_GAME:
         const playerIds = Game.getPlayerIds(action.game)
         const players = getRandom(fakePlayers, playerIds.length)
-        const playersMap = playerIds.reduce(function(map, playerId) {
+        const playersMap = playerIds.reduce((map, playerId) => {
           map[playerId] = players.pop()
           return map;
         }, {});
-        return {...state, game: action.game, moveHistory: [], pendingNotifications: [], playerId: playerIds[0], playersMap}
+        return {...state, initialState: action.game, game: action.game, moveHistory: [], pendingNotifications: [], playerId: playerIds[0], playersMap}
       case PLAY_MOVE:
         return produce(state, draft => {
           executeMove(Game, draft, action.move)
@@ -42,12 +46,19 @@ export function createServerReducer(Game) {
             executeMove(Game, draft, Game.getAutomaticMove(draft.game))
           }
         })
-      case NOTIFY_MOVES:
+      case SERVER_NOTIFICATION:
         return {...state, pendingNotifications: []}
-      case CANCEL_MOVE:
+      case UNDO_MOVE:
         return produce(state, draft => {
-          Game.moves[action.move.type].cancel(draft.game, action.move)
-          draft.moveHistory.splice(draft.moveHistory.lastIndexOf(action.move), 1)
+          const moveIndex = draft.moveHistory.reverse().findIndex(move => isEqual(move, action.move))
+          draft.moveHistory.splice(moveIndex, 1)
+          draft.moveHistory.reverse()
+          draft.game = draft.moveHistory.reduce((state, move) => {
+            Game.moves[move.type].execute(state, move)
+            return state
+          }, draft.initialState)
+          draft.initialState = state.initialState
+          draft.pendingNotifications.push({type: MOVE_UNDONE, move: getMoveView(Game.moves[action.move.type], action.move, state.playerId, draft.game)})
         })
       case DISPLAY_PLAYER_VIEW:
         return {...state, pendingNotifications: [], playerId: action.playerId}
@@ -63,7 +74,7 @@ export function pendingNotificationsListener(Game, store) {
   return () => {
     const pendingNotifications = store.getState().server.pendingNotifications
     if (pendingNotifications.length > 0) {
-      setTimeout(() => store.dispatch({type: NOTIFY_MOVES, moves: pendingNotifications}), 50)
+      setTimeout(() => store.dispatch({type: SERVER_NOTIFICATION, notifications: pendingNotifications}), 50)
     }
   }
 }
