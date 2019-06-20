@@ -18,6 +18,7 @@ const PlaceCard = ({place, faceDown, onClick, draggable}) => {
   if (faceDown) classes.push('faceDown')
 
   if (draggable) {
+    classes.push('draggable')
     const [{isDragging, dragOffsetDiff}, drag] = useDrag({
       item: {type: PLACE_CARD, place},
       collect: monitor => ({

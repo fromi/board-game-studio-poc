@@ -20,9 +20,12 @@
 }
 
 .card {
+  border-radius: 1vh;
   height: 21vh;
   width: calc(20vh * 5 / 7 + 1vh);
   transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 .card img {
   border: 0.5vh solid;
