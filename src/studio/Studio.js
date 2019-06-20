@@ -2,12 +2,14 @@ import React from 'react'
 import {connect, Provider} from 'react-redux'
 import * as PropTypes from "prop-types"
 import {applyMiddleware, combineReducers, createStore} from "redux"
+import {DndProvider} from "react-dnd"
+import TouchBackend from 'react-dnd-touch-backend'
 import {createServerReducer, getMoveView, pendingNotificationsListener} from "./reducers/ServerReducer"
 import {createClientReducer, notificationsAnimationListener} from "./reducers/ClientReducer"
 import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, PLAY_MOVE, UNDO_MOVE} from "./StudioActions"
 import {priorMoveMiddleware} from "./middleware/PriorMoveMiddleware"
 import {prepareMoveMiddleware} from "./middleware/PrepareMoveMiddleware"
-import {useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next"
 import "./i18n"
 
 const Studio = ({Game, GameUI}) => {
@@ -67,9 +69,11 @@ const Studio = ({Game, GameUI}) => {
   }
 
   return (
-    <Provider store={store}>
-      <GameView/>
-    </Provider>
+    <DndProvider backend={TouchBackend}>
+      <Provider store={store}>
+        <GameView/>
+      </Provider>
+    </DndProvider>
   )
 }
 

@@ -27,7 +27,7 @@ const Hand = ({game, playerId, animation, play}) => {
     return (
       <div className="hand">
         {hunted.handPlaceCards.map(place => (
-          <PlaceCard place={place} key={place} onClick={() => play({type: PLAY_PLACE_CARD, place})}/>
+          <PlaceCard place={place} key={place} onClick={() => play({type: PLAY_PLACE_CARD, place})} draggable/>
         ))}
         {hunted.handSurvivalCards.map(card => (
           <SurvivalCard cardName={card} key={card}/>

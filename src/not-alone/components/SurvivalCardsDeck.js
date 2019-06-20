@@ -7,7 +7,7 @@ import {useTranslation} from 'react-i18next';
 const SurvivalCardsDeck = ({game}) => {
   const {t} = useTranslation()
   return (
-    <Tooltip title={t('Survival cards ({{count}} card(s) left)', {count: game.survivalCardsDeck.length})}>
+    <Tooltip title={t('Survival cards ({{count}} card(s) left)', {count: game.survivalCardsDeck.length})} enterTouchDelay={0}>
       <div className="survival-cards-deck">
         {game.survivalCardsDeck.slice(0, 5).map((card, index) => (
           <SurvivalCard key={index}/>

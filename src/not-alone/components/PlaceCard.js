@@ -1,25 +1,62 @@
 import React from "react"
 import './place-card.css'
-import {Trans} from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import placeCardBack from "../img/place-card-back.jpg"
+import {useDrag} from "react-dnd"
 
 const images = require.context('../img/places');
-const getImage = (place) => images('./place_' + place + '.jpg')
+const getImage = (place) => images('./place-' + place + '.jpg')
 
-const PlaceCard = ({place, onClick}) => (
-  <div className={`card place-card place${place}`} onClick={onClick}>
-    {place && [
-      <img src={getImage(place)} alt={'Place ' + place} draggable="false" key="img"/>,
-      <h3 key="name"><Trans>{places[place].name}</Trans></h3>,
-      <div className="description" key="description">
-        {places[place].description.map((description, index) => <p key={index}><Trans>{description}</Trans></p>)}
-      </div>
-    ]}
-    <img className="face back" src={placeCardBack} alt="" draggable="false"/>
-  </div>
-)
+export const PLACE_CARD = 'place card'
 
-const places = {
+const PlaceCard = ({place, faceDown, onClick, draggable}) => {
+
+  const classes = ['card', 'place-card', 'place' + place]
+  const style = {}
+  let ref
+
+  if (faceDown) classes.push('faceDown')
+
+  if (draggable) {
+    const [{isDragging, dragOffsetDiff}, drag] = useDrag({
+      item: {type: PLACE_CARD, place},
+      collect: monitor => ({
+        dragOffsetDiff: monitor.getDifferenceFromInitialOffset(),
+        isDragging: monitor.isDragging()
+      })
+    })
+    ref = drag
+    if (isDragging) {
+      classes.push('isDragging')
+      style['left'] = dragOffsetDiff.x + 'px'
+      style['top'] = dragOffsetDiff.y + 'px'
+    }
+  }
+
+  return (
+    <div className={classes.join(' ')} onClick={onClick} onTouchEnd={event => event.preventDefault()} ref={ref} style={style}>
+      <PlaceCardDetailsOptimized place={place}/>
+    </div>
+  )
+}
+
+const PlaceCardDetailsOptimized = React.memo(({place}) => {
+  const {t} = useTranslation()
+  return (
+    <React.Fragment>
+      <img className="face back" src={placeCardBack} alt="" draggable="false"/>
+      {place && [
+        <img src={getImage(place)} alt={'Place ' + place} draggable="false" key="img"/>,
+        <h3 key="name">{t(places[place].name)}</h3>,
+        <div className="description" key="description">
+          {places[place].description.map((description, index) => <p key={index}>{t(description)}</p>)}
+        </div>
+      ]}
+    </React.Fragment>
+  )
+})
+
+export const places = {
   1: {
     name: 'The Lair',
     description: ['Take back to your hand the Place cards from your discard pile OR copy the power of the place with the Creature token.',

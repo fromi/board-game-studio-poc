@@ -4,13 +4,13 @@ import {START_PHASE} from "./StartPhase"
 export const PLAY_PLACE_CARD = 'PlayPlaceCard'
 export const playPlaceCard = (place) => ({type: PLAY_PLACE_CARD, place})
 
-const execute = (hunted, place) => {
-  hunted.handPlaceCards.splice(hunted.handPlaceCards.indexOf(place), 1)
-  hunted.playedPlaceCards.push(place)
-}
-
 export const PlayPlaceCard = {
-  execute: (game, move) => execute(getHunted(game, move.playerId), move.place),
+  execute: (game, move) => {
+    const hunted = getHunted(game, move.playerId)
+    const place = move.place
+    hunted.handPlaceCards.splice(hunted.handPlaceCards.indexOf(place), 1)
+    hunted.playedPlaceCards.push({place, revealed: false})
+  },
 
   getOthersView: (move) => ({...move, place: {}}),
 

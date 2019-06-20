@@ -10,7 +10,7 @@ const CreaturePlayer = ({game, position, playersMap}) => {
   return (
     <div className={`other-player creature ${position}`}>
       <h3>{playersMap[CREATURE].name}</h3>
-      <Tooltip title={t('{{count}} Hunt card(s)', {count: game.creature.hand.length})}>
+      <Tooltip title={t('{{count}} Hunt card(s)', {count: game.creature.hand.length})} enterTouchDelay={0}>
         <div className="hand">
           {game.creature.hand.map((card, index) => <HuntCard key={index}/>)}
         </div>

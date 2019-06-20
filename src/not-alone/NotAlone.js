@@ -5,7 +5,7 @@ import {hideItemsDetail} from "../game-api/Secrets"
 import {ChooseBoardSide, chooseBoardSide} from "./moves/ChooseBoardSide"
 import {DrawHuntCard} from "./moves/DrawHuntCard"
 import {DrawSurvivalCard} from "./moves/DrawSurvivalCard"
-import {StartPhase} from "./moves/StartPhase"
+import {startPhase, StartPhase} from "./moves/StartPhase"
 import {PlayPlaceCard, playPlaceCard} from "./moves/PlayPlaceCard"
 import {StrikeBack} from "./moves/StrikeBack"
 import {ShuffleHuntCards} from "./moves/ShuffleHuntCards"
@@ -57,7 +57,15 @@ export function getPlayerIds(game) {
 export const moves = {ChooseBoardSide, DrawHuntCard, DrawSurvivalCard, StartPhase, PlayPlaceCard, ShuffleHuntCards, StrikeBack}
 
 export function getAutomaticMove(game) {
-  return game.nextMoves[0]
+  if (game.nextMoves.length) {
+    return game.nextMoves[0]
+  }
+  if (getPlayerIds(game).every(playerId => !getMandatoryMoves(game, playerId))) {
+    if (game.phase === 1) {
+      return startPhase(2)
+    }
+  }
+  return null
 }
 
 /**

@@ -37,3 +37,17 @@
 .place-card.place1 .description {
   font-size: 0.7vh;
 }
+
+.place-card.faceDown {
+  transform: rotateY(-180deg);
+  transition: all 0.8s ease-in-out;
+  transform-origin: bottom;
+}
+
+.place-card.faceDown:hover {
+  transform: scale(1.5);
+}
+
+.place-card.isDragging {
+  transform: none !important;
+}

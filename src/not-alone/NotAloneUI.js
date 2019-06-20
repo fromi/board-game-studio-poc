@@ -24,9 +24,9 @@ export const Interface = (props) => {
       )}
       {<HuntCardsDeck {...props}/>}
       {<SurvivalCardsDeck {...props}/>}
+      {<OtherPlayers {...props}/>}
       {<Artemia {...props}/>}
       {playerId && <PlayerMaterial {...props}/>}
-      {<OtherPlayers {...props}/>}
     </div>
   )
 }

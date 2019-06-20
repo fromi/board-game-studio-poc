@@ -175,7 +175,8 @@ i18n.use(initReactI18next).init({
         'You draw 3 Hunt cards': 'Vous piochez 3 cartes Traque',
         '{{player}} draws 3 Hunt cards': '{{player}} pioche 3 cartes Traque',
         'Hunted players must play a Place card': 'Les Traqués doivent jouer une carte Lieu',
-        'You must play a Place card': 'Vous devez jouer une carte lieu'
+        'You must play a Place card': 'Vous devez jouer une carte lieu',
+        'You played {{place}}': 'Vous avez joué {{place}}'
       }
     }
   },
