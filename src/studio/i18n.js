@@ -176,7 +176,16 @@ i18n.use(initReactI18next).init({
         '{{player}} draws 3 Hunt cards': '{{player}} pioche 3 cartes Traque',
         'Hunted players must play a Place card': 'Les Traqués doivent jouer une carte Lieu',
         'You must play a Place card': 'Vous devez jouer une carte lieu',
-        'You played {{place}}': 'Vous avez joué {{place}}'
+        'You played {{place}}': 'Vous avez joué {{place}}',
+
+        'The Creature will have the Artemia token when Rescue counter is 6 spaces or less from victory.':
+          'La Créature pourra placer le jeton Artemia lorsque le jeton Secours sera à 6 cases ou moins de la victoire.',
+        'The Creature will have the Artemia token when Rescue counter is 1, 3, 5, 7, 9 or 11 spaces away from victory.':
+          'La Créature pourra placer le jeton Artemia lorsque le jeton Secours sera à 1, 3, 5, 7, 9 or 11 cases de la victoire.',
+        'Reach the star with the Assimilation counter before the Rescue counter does!':
+          'Atteignez l’étoile avec le jeton Assimilation avant le jeton Secours !',
+        'Reach the star with the Rescue counter before the Assimilation counter does!':
+          'Atteignez l’étoile avec le jeton Secours avant le jeton Assimilation !'
       }
     }
   },
