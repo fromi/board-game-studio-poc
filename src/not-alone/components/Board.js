@@ -27,7 +27,7 @@ const Board = ({game, playerId, animation, side, play}) => {
   }
 
   let tooltip = ''
-  if (!sideNotChosen && !animation) {
+  if (game.boardSide && !animation) {
     if (playerId === CREATURE) {
       tooltip = t('Reach the star with the Assimilation counter before the Rescue counter does!')
     } else {
