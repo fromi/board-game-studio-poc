@@ -1,5 +1,5 @@
 import React from "react"
-import "./hunted-player.css"
+import "./hunted-player.scss"
 import PlaceCard from "./PlaceCard"
 import SurvivalCard from "./SurvivalCard"
 import Tooltip from "@material-ui/core/Tooltip"
@@ -12,7 +12,7 @@ const HuntedPlayer = ({hunted, huntedId, position, playersMap}) => {
     <div className={`other-player hunted ${position}`}>
       <h3>{playersMap[huntedId].name}</h3>
       <Tooltip title={t('{{count}} Place card(s)', {count: hunted.handPlaceCards.length}) + ' / ' + t('{{count}} Survival card(s)', {count: hunted.handSurvivalCards.length})} enterTouchDelay={0}>
-        <div className="hand">
+        <div className="player-hand">
           {hunted.handPlaceCards.map((card, index) => <PlaceCard key={index}/>)}
           {hunted.handSurvivalCards.map((card, index) => <SurvivalCard key={index}/>)}
         </div>

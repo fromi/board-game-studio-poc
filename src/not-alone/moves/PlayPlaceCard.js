@@ -9,7 +9,7 @@ export const PlayPlaceCard = {
     const hunted = getHunted(game, move.playerId)
     const place = move.place
     hunted.handPlaceCards.splice(hunted.handPlaceCards.indexOf(place), 1)
-    hunted.playedPlaceCards.push({place, revealed: false})
+    hunted.playedPlaceCards.push(place)
   },
 
   getOthersView: (move) => ({...move, place: {}}),

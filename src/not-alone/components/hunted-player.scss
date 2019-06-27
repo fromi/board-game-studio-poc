@@ -1,0 +1,13 @@
+.other-player.hunted {
+  .will-counters {
+    position: absolute;
+    top: 1vh;
+    left: 1vh;
+    display: flex;
+    flex-direction: column;
+
+    img {
+      width: 3vh;
+    }
+  }
+}

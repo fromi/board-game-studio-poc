@@ -1,0 +1,59 @@
+@import "setup";
+@import "card";
+
+.not-alone {
+  position: relative;
+  height: 100%;
+  min-width: calc(1600vh / 9);
+  background: url(img/universe.jpg);
+  overflow: hidden;
+  z-index: 0;
+  user-select: none;
+  font-family: Arial, Helvetica, sans-serif;
+
+  .information {
+    color: antiquewhite;
+    font-size: 4vh;
+    line-height: 1;
+    padding: 1.5vh;
+    text-align: center;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .board {
+    position: absolute;
+    bottom: 0;
+    width: 93vh;
+  }
+
+  &.hunted {
+    .board {
+      transform: rotate(-90deg) translate(37.6vh, -37.5vh);
+      left: 0;
+    }
+    .hunt-cards-deck {
+      top: 8vh;
+      right: 1vh;
+    }
+    .survival-cards-deck {
+      bottom: 1vh;
+      right: 1vh;
+    }
+  }
+
+  &:not(.hunted) {
+    .board {
+      transform: rotate(90deg) translate(-37.6vh, -37.5vh);
+      right: 0;
+    }
+    .hunt-cards-deck {
+      bottom: 1vh;
+      left: 1vh;
+    }
+    .survival-cards-deck {
+      top: 8vh;
+      left: 1vh;
+    }
+  }
+}

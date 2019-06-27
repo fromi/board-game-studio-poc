@@ -2,7 +2,7 @@ import React from "react"
 import survivalCard from '../img/survival-card.jpg'
 import survivalCardBack from "../img/survival-card-back.jpg"
 import {Trans} from "react-i18next"
-import './survival-card.css'
+import './survival-card.scss'
 import {
   ADRENALINE, AMPLIFIER,
   DETECTOR,

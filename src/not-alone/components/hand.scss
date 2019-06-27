@@ -1,0 +1,62 @@
+@import "../../util/hand-of-cards";
+
+$card-width: calc(20vh * 5 / 7 + 1vh);
+$card-height: 21vh;
+
+.hand {
+  position: absolute;
+  bottom: 1vh;
+  height: $card-height;
+  width: 78vh;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  @include handOfCards($card-width, $card-height);
+
+  .card img {
+    filter: drop-shadow(0.5vh 0.5vh 0.5vh black);
+  }
+
+  .card-wrapper-outer {
+    &.will-draw {
+      &:before, .card-wrapper-inner {
+        opacity: 0;
+        transform: translate(calc(-50vw + #{$card-width} / 2 + 1vh), -0.8vh);
+      }
+      .card {
+        transform: rotateY(-180deg);
+      }
+    }
+    &.drawing {
+      &:before, > .card-wrapper-inner, .card {
+        transition: transform 1s ease-in-out;
+      }
+    }
+  }
+
+  .card.playable {
+    box-shadow: 0 0 0.1vh 0.1vh deepskyblue;
+    outline: 1px solid transparent;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0 0 0.8vh 0.2vh deepskyblue;
+      animation: opacity 1.5s ease-in-out infinite alternate;
+      outline: 1px solid transparent;
+      border-radius: 1vh;
+    }
+  }
+}
+
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

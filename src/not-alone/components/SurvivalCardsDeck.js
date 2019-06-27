@@ -1,5 +1,5 @@
 import React from "react"
-import "./survival-cards-deck.css"
+import "./survival-cards-deck.scss"
 import SurvivalCard from "./SurvivalCard"
 import Tooltip from '@material-ui/core/Tooltip';
 import {useTranslation} from 'react-i18next';

@@ -1,0 +1,70 @@
+@import "../../util/hand-of-cards";
+
+$card-width: calc(20vh * 5 / 7 + 1vh);
+$card-height: 21vh;
+
+.other-player {
+  position:absolute;
+  height: 20vh;
+  width: 30vh;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 1vh;
+
+  h3 {
+    font-size: 2.5vh;
+    margin: 1vh;
+    text-align: center;
+  }
+
+  .player-hand {
+    position: absolute;
+    left: 0;
+    right: 2vh;
+    top: 10vh;
+    transform: scale(0.2) rotate(180deg);
+
+    @include handOfCards($card-width, $card-height, false, 20, 35deg);
+  }
+
+  &.front-left, &.front-middle, &.front-right {
+    top: 8vh;
+  }
+
+  &.front-left {
+    left: calc(50% - 33vh);
+  }
+
+  &.front-right {
+    right: calc(50% - 33vh);
+  }
+
+  &.front-middle, &.bottom {
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  &.left-top, &.left-middle, &.left-bottom {
+    left: calc(50% - 70vh);
+  }
+
+  &.right-top, &.right-middle, &.right-bottom {
+    right: calc(50% - 70vh);
+  }
+
+  &.left-top, &.right-top {
+    top: 29vh;
+  }
+
+  &.left-middle, &.right-middle {
+    top: 41vh;
+  }
+
+  &.left-bottom, &.right-bottom {
+    top: 52vh;
+  }
+
+  &.bottom {
+    bottom: 3vh;
+  }
+}

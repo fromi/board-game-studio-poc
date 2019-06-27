@@ -1,40 +1,51 @@
 import React from "react"
 import {CREATURE, getHunted} from "../NotAlone"
-import PlaceCard from "./PlaceCard"
+import PlaceCard, {PLACE_CARD} from "./PlaceCard"
 import HuntCard from "./HuntCard"
-import "./hand.css"
+import "./hand.scss"
 import {DRAW_HUNT_CARD} from "../moves/DrawHuntCard"
 import SurvivalCard from "./SurvivalCard"
 import {PLAY_PLACE_CARD} from "../moves/PlayPlaceCard"
+import CardInHand from "../../util/CardInHand"
 
 const Hand = ({game, playerId, animation, play}) => {
+  const cards = []
+
   if (playerId === CREATURE) {
     const isDrawingHuntCard = animation && animation.move.type === DRAW_HUNT_CARD
-    const hand = isDrawingHuntCard && !animation.moveApplied ? [...game.creature.hand, animation.move.card] : game.creature.hand
-    return (
-      <div className="hand">
-        {hand.map(huntCard => {
-          let state = 'hand'
-          if (isDrawingHuntCard && animation.move.card === huntCard) {
-            state = animation.moveApplied ? 'drawing' : 'will-draw'
-          }
-          return <HuntCard cardName={huntCard} key={huntCard} state={state}/>
-        })}
-      </div>
-    )
+    game.creature.hand.forEach((huntCard) => {
+      const classes = []
+      if (isDrawingHuntCard && animation.move.card === huntCard) {
+        classes.push('drawing')
+      }
+      cards.push(<CardInHand key={huntCard} classes={classes}><HuntCard cardName={huntCard}/></CardInHand>)
+    })
+    if (isDrawingHuntCard && !animation.moveApplied) {
+      cards.push(<CardInHand key={animation.move.card} classes={['will-draw']}><HuntCard cardName={animation.move.card}/></CardInHand>)
+    }
   } else {
     const hunted = getHunted(game, playerId)
-    return (
-      <div className="hand">
-        {hunted.handPlaceCards.map(place => (
-          <PlaceCard place={place} key={place} onClick={() => play({type: PLAY_PLACE_CARD, place})} draggable/>
-        ))}
-        {hunted.handSurvivalCards.map(card => (
-          <SurvivalCard cardName={card} key={card}/>
-        ))}
-      </div>
-    )
+    hunted.handPlaceCards.forEach((place) => {
+      cards.push((
+        <CardInHand useDragItem={{type: PLACE_CARD, place}} key={place} onClick={() => play({type: PLAY_PLACE_CARD, place})}>
+          <PlaceCard place={place} classes={['playable']}/>
+        </CardInHand>
+      ))
+    })
+    hunted.handSurvivalCards.forEach((survivalCard) => {
+      cards.push((
+        <CardInHand key={survivalCard}>
+          <SurvivalCard cardName={survivalCard}/>
+        </CardInHand>
+      ))
+    })
   }
+
+  return (
+    <div className="hand">
+      {cards}
+    </div>
+  )
 }
 
 export default Hand

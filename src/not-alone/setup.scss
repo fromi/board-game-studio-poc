@@ -1,0 +1,58 @@
+.not-alone.setup {
+
+  .board:not(.chosen) {
+    transform: none;
+    width: calc(4606 / 886 * (100vh - 3.53rem) / 3);
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    &.board1 {
+      bottom: calc((100vh - 3rem) * 5 / 9);
+    }
+    &.board2 {
+      bottom: calc((100vh - 3rem) / 9);
+    }
+  }
+
+  &.board-side-choice {
+    > *:not(.information):not(.board) {
+      display: none;
+      opacity: 0;
+    }
+
+    &.creature .board {
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 0.4rem white);
+      }
+
+      &:active {
+        filter: drop-shadow(0 0 0.6rem white);
+      }
+    }
+  }
+
+  > *:not(.information):not(.board) {
+    transition: opacity 1s ease;
+  }
+
+  &.board-side-animation {
+    > *:not(.information):not(.board) {
+      opacity: 0;
+    }
+
+    .board {
+      transition: all 1s ease-in-out;
+
+      &:not(.chosen) {
+        opacity: 0;
+        z-index: -1;
+      }
+    }
+  }
+}
+

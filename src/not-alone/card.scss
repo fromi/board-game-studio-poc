@@ -1,0 +1,23 @@
+.not-alone .card {
+  border-radius: 1vh;
+  height: 21vh;
+  width: calc(20vh * 5 / 7 + 1vh);
+  transform-style: preserve-3d;
+
+  img {
+    border: 0.5vh solid;
+    border-radius: 1vh;
+    position: absolute;
+    height: 20vh;
+    width: calc(20vh * 5 / 7);
+    -webkit-backface-visibility: hidden;
+  }
+
+  .face {
+    backface-visibility: hidden;
+
+    &.back:not(:only-child) {
+      transform: rotateY(-180deg);
+    }
+  }
+}

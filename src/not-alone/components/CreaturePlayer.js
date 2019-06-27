@@ -1,5 +1,4 @@
 import React from "react"
-import "./hunted-player.css"
 import Tooltip from "@material-ui/core/Tooltip"
 import {useTranslation} from 'react-i18next';
 import {CREATURE} from "../NotAlone"
@@ -11,7 +10,7 @@ const CreaturePlayer = ({game, position, playersMap}) => {
     <div className={`other-player creature ${position}`}>
       <h3>{playersMap[CREATURE].name}</h3>
       <Tooltip title={t('{{count}} Hunt card(s)', {count: game.creature.hand.length})} enterTouchDelay={0}>
-        <div className="hand">
+        <div className="player-hand">
           {game.creature.hand.map((card, index) => <HuntCard key={index}/>)}
         </div>
       </Tooltip>

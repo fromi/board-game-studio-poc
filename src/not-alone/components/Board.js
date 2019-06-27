@@ -2,18 +2,21 @@ import React from "react"
 import board1 from "../img/board-1.jpg"
 import board2 from "../img/board-2.jpg"
 import {CREATURE} from "../NotAlone"
-import "./board.css"
 import {CHOOSE_BOARD_SIDE} from "../moves/ChooseBoardSide"
 import {Tooltip} from "@material-ui/core"
 import {useTranslation} from "react-i18next"
 
 const Board = ({game, playerId, animation, side, play}) => {
+  if (game.boardSide && game.boardSide !== side) {
+    return null;
+  }
+
   const {t} = useTranslation()
   const animating = animation && animation.move.type === CHOOSE_BOARD_SIDE
-  const sideNotChosen = game.boardSide && game.boardSide !== side
 
-  if (sideNotChosen && !animating) {
-    return null;
+  const classes = ['board', 'board' + side]
+  if (animating && animation.move.side === side) {
+    classes.push('chosen')
   }
 
   const alt = side === 1 ?
@@ -35,10 +38,12 @@ const Board = ({game, playerId, animation, side, play}) => {
     }
   }
 
-  return <Tooltip title={tooltip} enterTouchDelay={0}>
-    <img className={`board board${side} ${sideNotChosen ? 'not-chosen' : ''}`}
-              onClick={onClick} src={side === 1 ? board1 : board2} alt={alt} draggable="false"/>
-  </Tooltip>
+  return (
+    <Tooltip title={tooltip} enterTouchDelay={0}>
+      <img className={classes.join(' ')}
+           onClick={onClick} src={side === 1 ? board1 : board2} alt={alt} draggable="false"/>
+    </Tooltip>
+  )
 }
 
 export default Board

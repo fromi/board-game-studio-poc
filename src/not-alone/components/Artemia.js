@@ -1,6 +1,6 @@
 import React from "react"
 import PlaceCard from "./PlaceCard"
-import "./artemia.css"
+import "./artemia.scss"
 
 const Artemia = () => (
   <div className="artemia">

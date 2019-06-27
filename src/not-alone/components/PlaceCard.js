@@ -1,5 +1,5 @@
 import React from "react"
-import './place-card.css'
+import './place-card.scss'
 import {useTranslation} from 'react-i18next';
 import placeCardBack from "../img/place-card-back.jpg"
 import {useDrag} from "react-dnd"
@@ -9,42 +9,17 @@ const getImage = (place) => images('./place-' + place + '.jpg')
 
 export const PLACE_CARD = 'place card'
 
-const PlaceCard = ({place, faceDown, onClick, draggable}) => {
+const PlaceCard = ({place, onClick, classes = []}) => {
 
-  const classes = ['card', 'place-card', 'place' + place]
-  const style = {}
-  let ref
-
-  if (faceDown) classes.push('faceDown')
-
-  if (draggable) {
-    classes.push('draggable')
-    const [{isDragging, dragOffsetDiff}, drag] = useDrag({
-      item: {type: PLACE_CARD, place},
-      collect: monitor => ({
-        dragOffsetDiff: monitor.getDifferenceFromInitialOffset(),
-        isDragging: monitor.isDragging()
-      })
-    })
-    ref = drag
-    if (isDragging) {
-      classes.push('isDragging')
-      style['left'] = dragOffsetDiff.x + 'px'
-      style['top'] = dragOffsetDiff.y + 'px'
-    }
+  classes.push('card', 'place-card')
+  if (place) {
+    classes.push('place' + place)
   }
 
-  return (
-    <div className={classes.join(' ')} onClick={onClick} onTouchEnd={event => event.preventDefault()} ref={ref} style={style}>
-      <PlaceCardDetailsOptimized place={place}/>
-    </div>
-  )
-}
-
-const PlaceCardDetailsOptimized = React.memo(({place}) => {
   const {t} = useTranslation()
+
   return (
-    <React.Fragment>
+    <div className={classes.join(' ')} onClick={onClick} onTouchEnd={event => event.preventDefault()}>
       <img className="face back" src={placeCardBack} alt="" draggable="false"/>
       {place && [
         <img src={getImage(place)} alt={'Place ' + place} draggable="false" key="img"/>,
@@ -53,9 +28,9 @@ const PlaceCardDetailsOptimized = React.memo(({place}) => {
           {places[place].description.map((description, index) => <p key={index}>{t(description)}</p>)}
         </div>
       ]}
-    </React.Fragment>
+    </div>
   )
-})
+}
 
 export const places = {
   1: {

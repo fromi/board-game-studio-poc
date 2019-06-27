@@ -2,7 +2,7 @@ import React from "react"
 import huntCard from '../img/hunt-card.jpg'
 import huntCardBack from "../img/hunt-card-back.jpg"
 import {Trans} from "react-i18next"
-import './hunt-card.css'
+import './hunt-card.scss'
 import {
   ANTICIPATION,
   ASCENDANCY, CATACLYSM, CLONE,
@@ -17,8 +17,8 @@ import {
   VIRUS
 } from "../material/HuntCards"
 
-const HuntCard = ({cardName, state = ''}) => (
-  <div className={`card hunt-card ${state}`}>
+const HuntCard = ({cardName}) => (
+  <div className="card hunt-card">
     {cardName && [
       <img className="face front" src={huntCard} alt="" draggable="false" key="img"/>,
       <h3 key="name"><Trans>{cardName}</Trans></h3>,

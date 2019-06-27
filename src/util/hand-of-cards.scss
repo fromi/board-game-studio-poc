@@ -1,0 +1,87 @@
+@import "trigonometry";
+
+@mixin showCompleteCardInHand($card-rotation, $rotation-origin) {
+  .card-wrapper-inner {
+    transform: translateX(sin($card-rotation) * $rotation-origin);
+    z-index: 1;
+  }
+}
+
+@mixin handOfCards($card-width, $card-height, $hoverEffect: true, $max-hand-size: 20, $maximum-rotation: 25deg, $nearby-maximum-rotation: 10deg, $rotation-origin: 400%) {
+  @if ($hoverEffect) {
+    > .card-wrapper-outer {
+      height: 0;
+      width: $card-width;
+      margin: auto;
+      cursor: pointer;
+
+      &:before {
+        content: '';
+        position: absolute;
+        height: $card-height;
+        width: $card-width;
+        z-index: 2;
+      }
+
+      .card-wrapper-inner {
+        position: relative;
+      }
+
+      &:before, .card-wrapper-inner {
+        transform-origin: center $rotation-origin;
+      }
+
+      &:before, .card-wrapper-inner, .card-wrapper-inner > * {
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .card-wrapper-inner > * {
+        transition: all 0.3s ease-in-out;
+        transform-origin: bottom;
+      }
+
+      @media (hover) {
+        &:hover .card-wrapper-inner > * {
+          transform: scale(2);
+        }
+      }
+
+      &.hover .card-wrapper-inner > * {
+        transform: scale(2);
+      }
+    }
+  } @else {
+    > * {
+      position: absolute;
+      transform-origin: center $rotation-origin;
+    }
+  }
+
+
+  @for $cards-in-hand from 1 through ($max-hand-size) {
+    @for $card-index from 1 through ($cards-in-hand) {
+      > :nth-child(#{$card-index}):nth-last-child(#{$cards-in-hand - $card-index + 1}) {
+        $nearby-rotation: min($maximum-rotation * 2 / $cards-in-hand, $nearby-maximum-rotation);
+        $card-rotation: ($card-index - ($cards-in-hand + 1) / 2) * $nearby-rotation;
+
+        @if ($hoverEffect) {
+          &:before, > .card-wrapper-inner {
+            transform: rotate($card-rotation);
+          }
+
+          @media (hover) {
+            &:hover {
+              @include showCompleteCardInHand($card-rotation, $rotation-origin);
+            }
+          }
+
+          &.hover {
+            @include showCompleteCardInHand($card-rotation, $rotation-origin);
+          }
+        } @else {
+          transform: rotate($card-rotation);
+        }
+      }
+    }
+  }
+}

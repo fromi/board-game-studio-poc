@@ -2,7 +2,7 @@ import React from 'react'
 import HuntedPlayer from "./HuntedPlayer"
 import {CREATURE, getHuntedNumber, HUNTED_PREFIX} from "../NotAlone"
 import CreaturePlayer from "./CreaturePlayer"
-import "./other-player.css"
+import "./other-player.scss"
 
 const OtherPlayers = (props) => {
   const {playerId, game} = props
