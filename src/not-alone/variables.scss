@@ -1,16 +1,18 @@
 $header-height: 7vh;
+$default-margin: 1vh;
 
 $board-width: 100vh - $header-height;
 $board-height: $board-width * 886 / 4606;
 
 $card-border: 0.5vh;
 $card-image-ratio: 5 / 7;
-$card-image-height: 20vh;
+$card-image-height: 21vh;
 $card-image-width: $card-image-height * $card-image-ratio;
 $card-height: $card-image-height + $card-border * 2;
 $card-width: $card-image-width + $card-border * 2;
 
-$decks-margin: 1vh;
-$decks-max-cards-displayed: 5;
+$decks-max-cards-displayed: 8;
 $decks-card-shift-x: 0.1vh;
-$decks-card-shift-y: 0.2vh
+$decks-card-shift-y: 0.2vh;
+
+$artemia-grid-gap: 0.5vh;

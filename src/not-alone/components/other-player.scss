@@ -1,10 +1,14 @@
 @import "../../util/hand-of-cards";
 @import "../variables";
 
+$artemia-width: $card-width * 5 + 6 * $artemia-grid-gap;
+$player-panel-height: 21vh;
+$outer-column-width: $card-width + $decks-card-shift-x * ($decks-max-cards-displayed) + $default-margin * 2;
+
 .other-player {
   position:absolute;
-  height: 20vh;
-  width: 30vh;
+  height: $player-panel-height;
+  width: calc(50% - #{$outer-column-width + $artemia-width / 2 + $default-margin});
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 1vh;
 
@@ -24,45 +28,23 @@
     @include handOfCards($card-width, $card-height, false, 20, 35deg);
   }
 
-  &.front-left, &.front-middle, &.front-right {
-    top: 8vh;
+  &.seat-left {
+    left: $outer-column-width;
   }
 
-  &.front-left {
-    left: calc(50% - 33vh);
+  &.seat-right {
+    right: $outer-column-width;
   }
 
-  &.front-right {
-    right: calc(50% - 33vh);
+  &.seat-top {
+    top: $header-height + $default-margin;
   }
 
-  &.front-middle, &.bottom {
-    left: 0;
-    right: 0;
-    margin: auto;
+  &.seat-middle {
+    top: $header-height + $player-panel-height + $default-margin * 2;
   }
 
-  &.left-top, &.left-middle, &.left-bottom {
-    left: calc(50% - 70vh);
-  }
-
-  &.right-top, &.right-middle, &.right-bottom {
-    right: calc(50% - 70vh);
-  }
-
-  &.left-top, &.right-top {
-    top: 29vh;
-  }
-
-  &.left-middle, &.right-middle {
-    top: 41vh;
-  }
-
-  &.left-bottom, &.right-bottom {
-    top: 52vh;
-  }
-
-  &.bottom {
-    bottom: 3vh;
+  &.seat-bottom {
+    top: $header-height + $player-panel-height * 2 + $default-margin * 3;
   }
 }

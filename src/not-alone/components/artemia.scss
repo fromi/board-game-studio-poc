@@ -1,15 +1,33 @@
+@import "../variables";
+
 .artemia {
   display: grid;
-  grid-gap: 0.3vh;
+  grid-gap: $artemia-grid-gap;
   width: fit-content;
   position: absolute;
   left: 0;
   right: 0;
   margin: auto;
-  top: 29vh;
+  top: 18vh;
   border-radius: 1vh;
-  padding: 0.3vh;
+  padding: $artemia-grid-gap;
   background-color: rgba(255, 255, 255, 0.3);
+
+  > h3 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: auto;
+    top: -4vh;
+    font-size: 3vh;
+    color: antiquewhite;
+    height: 4vh;
+    line-height: 4vh;
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 0 1vh;
+    border-top-left-radius: 1vh;
+    border-top-right-radius: 1vh;
+  }
 
   .place-card {
     position: relative;

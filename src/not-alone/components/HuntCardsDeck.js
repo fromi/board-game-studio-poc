@@ -8,7 +8,7 @@ const HuntCardsDeck = ({game}) => {
   return (
     <Tooltip title={t('Hunt cards ({{count}} card(s) left)', {count: game.huntCardsDeck.length})} enterTouchDelay={0}>
       <div className="hunt-cards-deck">
-        {game.huntCardsDeck.slice(0, 5).map((card, index) => (
+        {game.huntCardsDeck.slice(0, 8).map((card, index) => (
           <HuntCard key={index}/>
         ))}
       </div>

@@ -8,7 +8,7 @@ const SurvivalCardsDeck = ({game}) => {
   return (
     <Tooltip title={t('Survival cards ({{count}} card(s) left)', {count: game.survivalCardsDeck.length})} enterTouchDelay={0}>
       <div className="survival-cards-deck">
-        {game.survivalCardsDeck.slice(0, 5).map((card, index) => (
+        {game.survivalCardsDeck.slice(0, 8).map((card, index) => (
           <SurvivalCard key={index}/>
         ))}
       </div>

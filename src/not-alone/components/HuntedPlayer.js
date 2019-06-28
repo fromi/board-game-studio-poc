@@ -6,10 +6,11 @@ import Tooltip from "@material-ui/core/Tooltip"
 import {useTranslation} from 'react-i18next';
 import willCounter from '../img/will-counter.png'
 
-const HuntedPlayer = ({hunted, huntedId, position, playersMap}) => {
+const HuntedPlayer = ({hunted, huntedId, classes, playersMap}) => {
   const {t} = useTranslation()
+  classes.push('other-player', 'hunted')
   return (
-    <div className={`other-player hunted ${position}`}>
+    <div className={classes.join(' ')}>
       <h3>{playersMap[huntedId].name}</h3>
       <Tooltip title={t('{{count}} Place card(s)', {count: hunted.handPlaceCards.length}) + ' / ' + t('{{count}} Survival card(s)', {count: hunted.handSurvivalCards.length})} enterTouchDelay={0}>
         <div className="player-hand">

@@ -8,86 +8,87 @@ const OtherPlayers = (props) => {
   const {playerId, game} = props
   if (playerId && playerId !== CREATURE) {
     const huntedNumber = getHuntedNumber(playerId)
-    const tablePosition = numberOfHuntedAndHuntedPositionToTablePositions[game.hunted.length][huntedNumber]
+    const tableSeats = numberOfHuntedAndHuntedPositionToTableSeats[game.hunted.length][huntedNumber]
     return (
       <React.Fragment>
         {game.hunted.filter((hunted, index) => index + 1 !== huntedNumber).map((hunted, index) => {
           const otherHuntedNumber = index + 1 < huntedNumber ? index + 1 : index + 2
           if (otherHuntedNumber !== huntedNumber) {
-            return <HuntedPlayer hunted={hunted} huntedId={HUNTED_PREFIX + otherHuntedNumber} position={tablePosition[index + 1]} key={index} {...props}/>
+            return <HuntedPlayer hunted={hunted} huntedId={HUNTED_PREFIX + otherHuntedNumber} classes={tableSeats[index + 1]} key={index} {...props}/>
           } else {
             return null
           }
         })}
-        <CreaturePlayer position={tablePosition[0]} {...props}/>
+        <CreaturePlayer classes={tableSeats[0]} {...props}/>
       </React.Fragment>
     )
   } else {
-    const tablePosition = numberOfHuntedToTablePositionsForCreature[game.hunted.length]
+    const tableSeats = numberOfHuntedToTableSeatsForCreature[game.hunted.length]
     return (
       <React.Fragment>
         {game.hunted.map((hunted, index) =>
-          <HuntedPlayer hunted={hunted} huntedId={HUNTED_PREFIX + (index + 1)} position={tablePosition[index]} key={index} {...props}/>
+          <HuntedPlayer hunted={hunted} huntedId={HUNTED_PREFIX + (index + 1)} classes={tableSeats[index]} key={index} {...props}/>
         )}
-        {!playerId && <CreaturePlayer position={BOTTOM} {...props}/>}
       </React.Fragment>
     )
   }
 }
 
-const FRONT_MIDDLE = 'front-middle'
-const FRONT_LEFT = 'front-left'
-const FRONT_RIGHT = 'front-right'
-const LEFT_MIDDLE = 'left-middle'
-const LEFT_BOTTOM = 'left-bottom'
-const LEFT_TOP = 'left-top'
-const RIGHT_MIDDLE = 'right-middle'
-const RIGHT_BOTTOM = 'right-bottom'
-const RIGHT_TOP = 'right-top'
-const BOTTOM = 'bottom'
+const SEAT_LEFT = 'seat-left'
+const SEAT_RIGHT = 'seat-right'
+const SEAT_TOP = 'seat-top'
+const SEAT_MIDDLE = 'seat-middle'
+const SEAT_BOTTOM = 'seat-bottom'
 
-const numberOfHuntedToTablePositionsForCreature = {
-  1: [FRONT_MIDDLE],
-  2: [FRONT_LEFT, FRONT_RIGHT],
-  3: [LEFT_TOP, FRONT_MIDDLE, RIGHT_TOP],
-  4: [LEFT_MIDDLE, FRONT_LEFT, FRONT_RIGHT, RIGHT_MIDDLE],
-  5: [LEFT_BOTTOM, LEFT_TOP, FRONT_MIDDLE, RIGHT_TOP, RIGHT_BOTTOM],
-  6: [LEFT_BOTTOM, LEFT_TOP, FRONT_LEFT, FRONT_RIGHT, RIGHT_TOP, RIGHT_BOTTOM]
+const TOP_LEFT = [SEAT_TOP, SEAT_LEFT]
+const TOP_RIGHT = [SEAT_TOP, SEAT_RIGHT]
+const MIDDLE_LEFT = [SEAT_MIDDLE, SEAT_LEFT]
+const MIDDLE_RIGHT = [SEAT_MIDDLE, SEAT_RIGHT]
+const BOTTOM_LEFT = [SEAT_BOTTOM, SEAT_LEFT]
+const BOTTOM_RIGHT = [SEAT_BOTTOM, SEAT_RIGHT]
+
+const numberOfHuntedToTableSeatsForCreature = {
+  1: [TOP_LEFT],
+  2: [TOP_LEFT, TOP_RIGHT],
+  3: [MIDDLE_LEFT, TOP_LEFT, TOP_RIGHT],
+  4: [MIDDLE_LEFT, TOP_LEFT, TOP_RIGHT, MIDDLE_RIGHT],
+  5: [BOTTOM_LEFT, MIDDLE_LEFT, TOP_LEFT, TOP_RIGHT, MIDDLE_RIGHT],
+  6: [BOTTOM_LEFT, MIDDLE_LEFT, TOP_LEFT, TOP_RIGHT, MIDDLE_RIGHT, BOTTOM_RIGHT]
 }
 
-const numberOfHuntedAndHuntedPositionToTablePositions = {
+const numberOfHuntedAndHuntedPositionToTableSeats = {
   1: {
-    1: [FRONT_MIDDLE]
+    1: [TOP_RIGHT]
   },
   2: {
-    1: [FRONT_MIDDLE, LEFT_MIDDLE],
-    2: [FRONT_MIDDLE, RIGHT_MIDDLE]
+    1: [TOP_RIGHT, BOTTOM_LEFT],
+    2: [TOP_LEFT, BOTTOM_RIGHT]
   },
   3: {
-    1: [RIGHT_MIDDLE, LEFT_MIDDLE, FRONT_MIDDLE],
-    2: [FRONT_MIDDLE, RIGHT_MIDDLE, LEFT_MIDDLE],
-    3: [LEFT_MIDDLE, FRONT_MIDDLE, RIGHT_MIDDLE]
+    1: [TOP_RIGHT, BOTTOM_LEFT, MIDDLE_LEFT],
+    2: [TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT],
+    3: [TOP_LEFT, MIDDLE_RIGHT, BOTTOM_RIGHT]
   },
   4: {
-    1: [RIGHT_MIDDLE, LEFT_BOTTOM, LEFT_TOP, FRONT_MIDDLE],
-    2: [FRONT_MIDDLE, RIGHT_MIDDLE, LEFT_BOTTOM, LEFT_TOP],
-    3: [FRONT_MIDDLE, RIGHT_TOP, RIGHT_BOTTOM, LEFT_MIDDLE],
-    4: [LEFT_MIDDLE, FRONT_MIDDLE, RIGHT_TOP, RIGHT_BOTTOM]
+    1: [TOP_RIGHT, BOTTOM_LEFT, MIDDLE_LEFT, TOP_LEFT],
+    2: [TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, MIDDLE_LEFT],
+    3: [TOP_LEFT, MIDDLE_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT],
+    4: [TOP_LEFT, TOP_RIGHT, MIDDLE_RIGHT, BOTTOM_RIGHT]
   },
   5: {
-    1: [RIGHT_MIDDLE, LEFT_BOTTOM, LEFT_TOP, FRONT_LEFT, FRONT_RIGHT],
-    2: [FRONT_RIGHT, RIGHT_MIDDLE, LEFT_BOTTOM, LEFT_TOP, FRONT_LEFT],
-    3: [FRONT_MIDDLE, RIGHT_TOP, RIGHT_BOTTOM, LEFT_BOTTOM, LEFT_TOP],
-    4: [FRONT_LEFT, FRONT_RIGHT, RIGHT_TOP, RIGHT_BOTTOM, LEFT_MIDDLE],
-    5: [LEFT_MIDDLE, FRONT_LEFT, FRONT_RIGHT, RIGHT_TOP, RIGHT_BOTTOM]
+    1: [BOTTOM_RIGHT, BOTTOM_LEFT, MIDDLE_LEFT, TOP_LEFT, TOP_RIGHT],
+    2: [TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, MIDDLE_LEFT, TOP_LEFT],
+    3: [TOP_RIGHT, MIDDLE_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, MIDDLE_LEFT],
+    4: [TOP_LEFT, TOP_RIGHT, MIDDLE_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT],
+    5: [BOTTOM_LEFT, TOP_LEFT, TOP_RIGHT, MIDDLE_RIGHT, BOTTOM_RIGHT]
   },
   6: {
-    1: [RIGHT_BOTTOM, LEFT_BOTTOM, LEFT_TOP, FRONT_LEFT, FRONT_RIGHT, RIGHT_TOP],
-    2: [RIGHT_TOP, RIGHT_BOTTOM, LEFT_BOTTOM, LEFT_TOP, FRONT_LEFT, FRONT_RIGHT],
-    3: [FRONT_RIGHT, RIGHT_TOP, RIGHT_BOTTOM, LEFT_BOTTOM, LEFT_TOP, FRONT_LEFT],
-    4: [FRONT_LEFT, FRONT_RIGHT, RIGHT_TOP, RIGHT_BOTTOM, LEFT_BOTTOM, LEFT_TOP],
-    5: [LEFT_TOP, FRONT_LEFT, FRONT_RIGHT, RIGHT_TOP, RIGHT_BOTTOM, LEFT_BOTTOM],
-    6: [LEFT_BOTTOM, LEFT_TOP, FRONT_LEFT, FRONT_RIGHT, RIGHT_TOP, RIGHT_BOTTOM]
+    1: [BOTTOM_RIGHT, BOTTOM_LEFT, MIDDLE_LEFT, TOP_LEFT, TOP_RIGHT, MIDDLE_RIGHT],
+    2: [MIDDLE_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, MIDDLE_LEFT, TOP_LEFT, TOP_RIGHT],
+    3: [TOP_RIGHT, MIDDLE_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, MIDDLE_LEFT, TOP_LEFT],
+    4: [TOP_LEFT, TOP_RIGHT, MIDDLE_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, MIDDLE_LEFT],
+    5: [MIDDLE_LEFT, TOP_LEFT, TOP_RIGHT, MIDDLE_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT],
+    6: [BOTTOM_LEFT, MIDDLE_LEFT, TOP_LEFT, TOP_RIGHT, MIDDLE_RIGHT, BOTTOM_RIGHT]
   }
 }
 

@@ -1,7 +1,7 @@
 @import "../../util/hand-of-cards";
 @import "../variables";
 
-$hand-bottom-margin: 1vh;
+$hand-bottom-margin: 2vh;
 $hand-card-y: 100vh - $card-height / 2 + $hand-bottom-margin;
 $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
 
@@ -20,7 +20,7 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
     &.will-draw {
       &:before, .card-wrapper-inner {
         opacity: 0;
-        transform: translate(calc(#{$decks-margin} - 50vw + #{$card-width} / 2), $hand-bottom-margin - $decks-margin - $deck-top-card-shift-y);
+        transform: translate(calc(#{$default-margin} - 50vw + #{$card-width} / 2), $hand-bottom-margin - $default-margin - $deck-top-card-shift-y);
       }
       .card {
         transform: rotateY(-180deg);
