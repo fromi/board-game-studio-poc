@@ -1,0 +1,15 @@
+@mixin deck($card-width, $card-height, $max-cards-displayed: 5, $card-shift-x: 0.1vh, $card-shift-y: 0.2vh) {
+  width: $card-width + ($max-cards-displayed - 1) * $card-shift-x;
+  height: $card-height + ($max-cards-displayed - 1) * $card-shift-y;
+
+  > * {
+    position: absolute;
+
+    @for $index from 1 through ($max-cards-displayed) {
+      &:nth-last-child(#{$index}) {
+        top: ($index - 1) * $card-shift-y;
+        left: ($index - 1) * $card-shift-x;
+      }
+    }
+  }
+}

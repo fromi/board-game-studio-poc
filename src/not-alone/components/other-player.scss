@@ -1,7 +1,5 @@
 @import "../../util/hand-of-cards";
-
-$card-width: calc(20vh * 5 / 7 + 1vh);
-$card-height: 21vh;
+@import "../variables";
 
 .other-player {
   position:absolute;

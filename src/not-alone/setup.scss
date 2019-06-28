@@ -1,17 +1,19 @@
+@import "variables";
+
 .not-alone.setup {
 
   .board:not(.chosen) {
     transform: none;
-    width: calc(4606 / 886 * (100vh - 3.53rem) / 3);
+    width: 4606 / 886 * $board-width / 3;
     left: 0;
     right: 0;
     margin: auto;
 
-    &.board1 {
-      bottom: calc((100vh - 3rem) * 5 / 9);
+    &.board-1 {
+      bottom: $board-width * 5 / 9;
     }
-    &.board2 {
-      bottom: calc((100vh - 3rem) / 9);
+    &.board-2 {
+      bottom: $board-width / 9;
     }
   }
 

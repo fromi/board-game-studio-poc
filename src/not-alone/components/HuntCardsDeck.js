@@ -1,5 +1,4 @@
 import React from "react"
-import "./hunt-cards-deck.scss"
 import HuntCard from "./HuntCard"
 import Tooltip from '@material-ui/core/Tooltip';
 import {useTranslation} from 'react-i18next';

@@ -1,16 +1,21 @@
+@import "variables";
+
 .not-alone .card {
-  border-radius: 1vh;
-  height: 21vh;
-  width: calc(20vh * 5 / 7 + 1vh);
+  $border-radius: $card-border * 2;
+
+  border-radius: $border-radius;
+  height: $card-height;
+  width: $card-width;
   transform-style: preserve-3d;
 
   img {
-    border: 0.5vh solid;
-    border-radius: 1vh;
+    border: $card-border solid;
+    border-radius: $border-radius;
     position: absolute;
-    height: 20vh;
-    width: calc(20vh * 5 / 7);
+    height: $card-image-height;
+    width: $card-image-width;
     -webkit-backface-visibility: hidden;
+    filter: drop-shadow($card-border $card-border $card-border black);
   }
 
   .face {

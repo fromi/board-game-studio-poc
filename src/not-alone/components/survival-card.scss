@@ -1,12 +1,14 @@
+@import "../variables";
+
 .survival-card {
   h3 {
     position: absolute;
-    left: 0.5vh;
-    right: 0.5vh;
-    top: 2vh;
+    left: $card-border * 2;
+    right: $card-border * 2;
+    top: $card-border + $card-image-height * 0.08;
     margin: auto;
     text-align: center;
-    font-size: 1.3vh;
+    font-size: $card-image-height / 15;
     text-transform: uppercase;
     font-weight: bold;
     -webkit-backface-visibility: hidden;
@@ -15,11 +17,11 @@
   .description {
     overflow: hidden;
     position: absolute;
-    top: 6vh;
-    left: 1vh;
-    right: 1vh;
-    bottom: 4.7vh;
-    font-size: 1.2vh;
+    top: $card-border + $card-image-height * 0.27;
+    left: $card-border * 2;
+    right: $card-border * 2;
+    bottom: $card-border + $card-image-height * 0.2;
+    font-size: $card-image-height / 16;
     text-align: center;
     display: flex;
     justify-content: center;

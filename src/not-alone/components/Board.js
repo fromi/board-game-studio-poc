@@ -14,7 +14,7 @@ const Board = ({game, playerId, animation, side, play}) => {
   const {t} = useTranslation()
   const animating = animation && animation.move.type === CHOOSE_BOARD_SIDE
 
-  const classes = ['board', 'board' + side]
+  const classes = ['board', 'board-' + side]
   if (animating && animation.move.side === side) {
     classes.push('chosen')
   }

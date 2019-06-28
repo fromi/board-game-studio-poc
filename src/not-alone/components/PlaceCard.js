@@ -2,7 +2,6 @@ import React from "react"
 import './place-card.scss'
 import {useTranslation} from 'react-i18next';
 import placeCardBack from "../img/place-card-back.jpg"
-import {useDrag} from "react-dnd"
 
 const images = require.context('../img/places');
 const getImage = (place) => images('./place-' + place + '.jpg')
@@ -13,7 +12,7 @@ const PlaceCard = ({place, onClick, classes = []}) => {
 
   classes.push('card', 'place-card')
   if (place) {
-    classes.push('place' + place)
+    classes.push('place-' + place)
   }
 
   const {t} = useTranslation()
