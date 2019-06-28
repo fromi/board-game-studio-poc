@@ -48,9 +48,12 @@ export const Interface = (props) => {
   )
 }
 
+// eslint-disable-next-line import/no-webpack-loader-syntax
+const style = require('sass-extract-loader!./variables.scss');
+
 export const getPreAnimationDelay = (animation) => {
   if (animation.move.type === CHOOSE_BOARD_SIDE) {
-    return 1
+    return style.global['$board-side-chosen-animation'].value
   } else {
     return 0
   }
@@ -59,9 +62,9 @@ export const getPreAnimationDelay = (animation) => {
 export const getAnimationDelay = (animation) => {
   switch (animation.move.type) {
     case CHOOSE_BOARD_SIDE:
-      return 1
+      return style.global['$setup-animation'].value
     case DRAW_HUNT_CARD:
-      return 1
+      return style.global['$draw-hunt-card-animation'].value
     default:
       return 0
   }

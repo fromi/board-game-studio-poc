@@ -3,8 +3,6 @@
 @import "variables";
 @import "../util/deck";
 
-$decks-margin: 1vh;
-
 .not-alone {
   position: relative;
   height: 100%;
@@ -49,12 +47,12 @@ $decks-margin: 1vh;
       left: 0;
     }
     .hunt-cards-deck {
-      top: $header-height + $decks-margin;
-      right: $decks-margin;
+      top: $header-height + $default-margin;
+      right: $default-margin;
     }
     .survival-cards-deck {
-      bottom: $decks-margin;
-      right: $decks-margin;
+      bottom: $default-margin;
+      right: $default-margin;
     }
   }
 
@@ -64,12 +62,12 @@ $decks-margin: 1vh;
       right: 0;
     }
     .hunt-cards-deck {
-      bottom: $decks-margin;
-      left: $decks-margin;
+      bottom: $default-margin;
+      left: $default-margin;
     }
     .survival-cards-deck {
-      top: $header-height + $decks-margin;
-      left: $decks-margin;
+      top: $header-height + $default-margin;
+      left: $default-margin;
     }
   }
 }

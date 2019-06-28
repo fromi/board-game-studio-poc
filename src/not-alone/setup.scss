@@ -39,7 +39,7 @@
   }
 
   > *:not(.information):not(.board) {
-    transition: opacity 1s ease;
+    transition: opacity $setup-animation ease;
   }
 
   &.board-side-animation {
@@ -48,7 +48,7 @@
     }
 
     .board {
-      transition: all 1s ease-in-out;
+      transition: all $board-side-chosen-animation ease-in-out;
 
       &:not(.chosen) {
         opacity: 0;

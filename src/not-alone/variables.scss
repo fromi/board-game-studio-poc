@@ -1,5 +1,5 @@
 $header-height: 7vh;
-$default-margin: 1vh;
+$default-margin: 1.5vh;
 
 $board-width: 100vh - $header-height;
 $board-height: $board-width * 886 / 4606;
@@ -16,3 +16,7 @@ $decks-card-shift-x: 0.1vh;
 $decks-card-shift-y: 0.2vh;
 
 $artemia-grid-gap: 0.5vh;
+
+$board-side-chosen-animation: 1s;
+$setup-animation: 1s;
+$draw-hunt-card-animation: 1s;

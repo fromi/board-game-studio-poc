@@ -23,7 +23,7 @@ $outer-column-width: $card-width + $decks-card-shift-x * ($decks-max-cards-displ
     left: 0;
     right: 2vh;
     top: 10vh;
-    transform: scale(0.2) rotate(180deg);
+    transform: scale(0.18) rotate(180deg);
 
     @include handOfCards($card-width, $card-height, false, 20, 35deg);
   }
