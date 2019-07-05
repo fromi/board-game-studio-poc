@@ -6,7 +6,17 @@ import {DndProvider} from "react-dnd"
 import TouchBackend from 'react-dnd-touch-backend'
 import {createServerReducer, getMoveView, pendingNotificationsListener} from "./reducers/ServerReducer"
 import {createClientReducer, notificationsAnimationListener} from "./reducers/ClientReducer"
-import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, PLAY_MOVE, UNDO_MOVE} from "./StudioActions"
+import {
+  APPLY_ANIMATING_MOVE,
+  DISPLAY_PLAYER_VIEW,
+  DISPLAY_SPECTATOR_VIEW,
+  END_ANIMATION,
+  MOVE_BACK,
+  MOVE_FORWARD,
+  NEW_GAME,
+  PLAY_MOVE,
+  UNDO_MOVE
+} from "./StudioActions"
 import {priorMoveMiddleware} from "./middleware/PriorMoveMiddleware"
 import {prepareMoveMiddleware} from "./middleware/PrepareMoveMiddleware"
 import {useTranslation} from "react-i18next"
@@ -25,11 +35,18 @@ const Studio = ({Game, GameUI}) => {
   store.subscribe(() => localStorage.setItem(localStorageKey, JSON.stringify(store.getState())))
   if (!savedState) {
     store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers: 3})})
+  } else if (savedState.client.animation) {
+    if (savedState.client.animation.moveApplied) {
+      store.dispatch({type: END_ANIMATION})
+    } else {
+      store.dispatch({type: APPLY_ANIMATING_MOVE})
+    }
   }
   const GameView = connect(state => ({
-    ...state.client, playersMap: state.server.playersMap,
-    play: (move) => store.dispatch({type: PLAY_MOVE, playerId: state.client.playerId, move}),
-    undo: (move) => store.dispatch({type: UNDO_MOVE, playerId: state.client.playerId, move})
+    ...state.client, playersMap: state.server.playersMap
+  }), (dispatch) => ({
+    play: (move) => dispatch({type: PLAY_MOVE, playerId: store.getState().client.playerId, move}),
+    undo: (move) => dispatch({type: UNDO_MOVE, playerId: store.getState().client.playerId, move})
   }))(GameUI.Interface)
 
   // Tools for console control
@@ -55,15 +72,17 @@ const Studio = ({Game, GameUI}) => {
     new: (numberOfPlayers = 3) => store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers})}),
     getPlayerMoves: (playerId) => Game.getMandatoryMoves(window.game.state, playerId).concat(Game.getOptionalMoves(window.game.state, playerId)),
     play: (playerId, move) => store.dispatch({type: PLAY_MOVE, playerId, move}),
+    back: (moves = 1) => store.dispatch({type: MOVE_BACK, moves}),
+    forward: (moves = 1) => store.dispatch({type: MOVE_FORWARD, moves}),
     displayPlayerView: (playerId) => {
       const moveHistory = store.getState().server.moveHistory.map(move => getMoveView(Game.moves[move.type], move, playerId, window.game.state))
       const initialState = Game.getPlayerView(store.getState().server.initialState, playerId)
-      store.dispatch({type: DISPLAY_PLAYER_VIEW, playerId, game: Game.getPlayerView(window.game.state, playerId), moveHistory, initialState})
+      return store.dispatch({type: DISPLAY_PLAYER_VIEW, playerId, game: Game.getPlayerView(window.game.state, playerId), moveHistory, initialState})
     },
     displaySpectatorView: () => {
       const moveHistory = store.getState().server.moveHistory.map(move => getMoveView(Game.moves[move.type], move, undefined, window.game.state))
       const initialState = Game.getPlayerView(store.getState().server.initialState)
-      store.dispatch({type: DISPLAY_SPECTATOR_VIEW, game: Game.getSpectatorView(window.game.state), moveHistory, initialState})
+      return store.dispatch({type: DISPLAY_SPECTATOR_VIEW, game: Game.getSpectatorView(window.game.state), moveHistory, initialState})
     },
     changeLanguage: (language) => i18n.changeLanguage(language)
   }
