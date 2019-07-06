@@ -57,4 +57,10 @@ $outer-column-width: $card-width + $decks-card-shift-x * ($decks-max-cards-displ
   &.seat-bottom {
     top: $header-height + $player-panel-height * 2 + $default-margin * 3;
   }
+  &.seat-center {
+    bottom: $default-margin;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
 }

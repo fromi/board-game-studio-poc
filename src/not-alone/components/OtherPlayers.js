@@ -29,6 +29,7 @@ const OtherPlayers = (props) => {
         {game.hunted.map((hunted, index) =>
           <HuntedPlayer hunted={hunted} huntedId={HUNTED_PREFIX + (index + 1)} classes={[...tableSeats[index]]} key={index} {...props}/>
         )}
+        {!playerId && <CreaturePlayer classes={['seat-center']} creature={game.creature} animation={animation} playersMap={playersMap}/>}
       </React.Fragment>
     )
   }

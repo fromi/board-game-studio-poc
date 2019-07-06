@@ -82,7 +82,7 @@ const createConsoleTools = (Game, store) => {
     },
     displaySpectatorView: () => {
       const moveHistory = store.getState().server.moveHistory.map(move => getMoveView(Game.moves[move.type], move, undefined, window.game.state))
-      const initialState = Game.getPlayerView(store.getState().server.initialState)
+      const initialState = Game.getSpectatorView(store.getState().server.initialState)
       return store.dispatch({type: DISPLAY_SPECTATOR_VIEW, game: Game.getSpectatorView(window.game.state), moveHistory, initialState})
     },
   }
