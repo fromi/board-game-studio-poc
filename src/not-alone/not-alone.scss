@@ -84,6 +84,30 @@
     .survival-cards-deck {
       bottom: $default-margin;
       right: $default-margin;
+
+      .card.drawing {
+        $top: $header-height + $card-height + $default-margin - 100vh;
+
+        &.seat-left {
+          left: -75.6vw;
+        }
+
+        &.seat-right {
+          left: calc(21.7vh - 25vw);
+        }
+
+        &.seat-top {
+          top: $top
+        }
+
+        &.seat-middle {
+          top: $top + $player-panel-height + $default-margin
+        }
+
+        &.seat-bottom {
+          top: $top + ($player-panel-height + $default-margin) * 2
+        }
+      }
     }
   }
 
