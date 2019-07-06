@@ -39,10 +39,10 @@ export const Interface = (props) => {
       {BOARD_SIDES.map(side =>
         <Board side={side} key={side} {...props}/>
       )}
+      <Artemia {...props}/>
+      <OtherPlayers {...props}/>
       <HuntCardsDeck {...props}/>
       <SurvivalCardsDeck {...props}/>
-      <OtherPlayers {...props}/>
-      <Artemia {...props}/>
       {playerId && <PlayerMaterial {...props}/>}
     </div>
   )
@@ -51,20 +51,31 @@ export const Interface = (props) => {
 // eslint-disable-next-line import/no-webpack-loader-syntax
 const style = require('sass-extract-loader!./variables.scss');
 
-export const getPreAnimationDelay = (animation) => {
-  if (animation.move.type === CHOOSE_BOARD_SIDE) {
-    return style.global['$board-side-chosen-animation'].value
-  } else {
-    return 0
+export const getPreAnimationDelay = (animation, playerId) => {
+  switch (animation.move.type) {
+    case CHOOSE_BOARD_SIDE:
+      return style.global['$board-side-chosen-animation'].value
+    case DRAW_HUNT_CARD:
+      if (playerId === CREATURE) {
+        return 0
+      } else {
+        return style.global['$other-player-draw-card-pre-animation'].value
+      }
+    default:
+      return 0
   }
 }
 
-export const getAnimationDelay = (animation) => {
+export const getAnimationDelay = (animation, playerId) => {
   switch (animation.move.type) {
     case CHOOSE_BOARD_SIDE:
       return style.global['$setup-animation'].value
     case DRAW_HUNT_CARD:
-      return style.global['$draw-hunt-card-animation'].value
+      if (playerId === CREATURE) {
+        return style.global['$draw-hunt-card-animation'].value
+      } else {
+        return style.global['$other-player-draw-card-animation'].value
+      }
     default:
       return 0
   }

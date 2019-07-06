@@ -73,7 +73,7 @@ export function notificationsAnimationListener(GameUI, store) {
   const applyAnimatingNotification = () => {
     const animation = store.getState().client.animation
     if (animation) {
-      const animationDelay = GameUI.getAnimationDelay ? GameUI.getAnimationDelay(animation) : 0
+      const animationDelay = GameUI.getAnimationDelay ? GameUI.getAnimationDelay(animation, store.getState().client.playerId) : 0
       store.dispatch({type: APPLY_ANIMATING_MOVE})
       setTimeout(() => store.dispatch({type: END_ANIMATION}), animationDelay * 1000)
     }
@@ -83,7 +83,7 @@ export function notificationsAnimationListener(GameUI, store) {
     const state = store.getState().client
     if (!state.animation && state.pendingNotifications.length) {
       const animation = state.pendingNotifications[0]
-      const preAnimationDelay = GameUI.getPreAnimationDelay ? GameUI.getPreAnimationDelay(animation) : 0
+      const preAnimationDelay = GameUI.getPreAnimationDelay ? GameUI.getPreAnimationDelay(animation, store.getState().client.playerId) : 0
       store.dispatch({type: START_ANIMATION})
       setTimeout(applyAnimatingNotification, preAnimationDelay * 1000)
     }

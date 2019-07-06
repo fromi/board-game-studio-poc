@@ -22,11 +22,16 @@ import {prepareMoveMiddleware} from "./middleware/PrepareMoveMiddleware"
 import {useTranslation} from "react-i18next"
 import "./i18n"
 
-const Studio = ({Game, GameUI}) => {
-  const {i18n} = useTranslation();
+export const createStudio = (Game, GameUI) => {
+  const store = createStudioStore(Game, GameUI)
+  createConsoleTools(Game, store)
+  return () => <Studio store={store} GameUI={GameUI}/>
+}
+
+const createStudioStore = (Game, GameUI) => {
+  const localStorageKey = 'state'
   const server = createServerReducer(Game)
   const client = createClientReducer(Game)
-  const localStorageKey = 'state'
   const savedState = JSON.parse(localStorage.getItem(localStorageKey)) || undefined
   const store = createStore(combineReducers({server, client}), savedState,
     applyMiddleware(priorMoveMiddleware(Game), prepareMoveMiddleware(Game)))
@@ -42,14 +47,10 @@ const Studio = ({Game, GameUI}) => {
       store.dispatch({type: APPLY_ANIMATING_MOVE})
     }
   }
-  const GameView = connect(state => ({
-    ...state.client, playersMap: state.server.playersMap
-  }), (dispatch) => ({
-    play: (move) => dispatch({type: PLAY_MOVE, playerId: store.getState().client.playerId, move}),
-    undo: (move) => dispatch({type: UNDO_MOVE, playerId: store.getState().client.playerId, move})
-  }))(GameUI.Interface)
+  return store
+}
 
-  // Tools for console control
+const createConsoleTools = (Game, store) => {
   window.Game = Game
   window.game = {
     get state() {
@@ -84,8 +85,18 @@ const Studio = ({Game, GameUI}) => {
       const initialState = Game.getPlayerView(store.getState().server.initialState)
       return store.dispatch({type: DISPLAY_SPECTATOR_VIEW, game: Game.getSpectatorView(window.game.state), moveHistory, initialState})
     },
-    changeLanguage: (language) => i18n.changeLanguage(language)
   }
+}
+
+const Studio = ({store, GameUI}) => {
+  const {i18n} = useTranslation();
+  window.changeLanguage = (language) => i18n.changeLanguage(language)
+  const GameView = connect(state => ({
+    ...state.client, playersMap: state.server.playersMap
+  }), (dispatch) => ({
+    play: (move) => dispatch({type: PLAY_MOVE, playerId: store.getState().client.playerId, move}),
+    undo: (move) => dispatch({type: UNDO_MOVE, playerId: store.getState().client.playerId, move})
+  }))(GameUI.Interface)
 
   return (
     <DndProvider backend={TouchBackend}>
@@ -97,21 +108,10 @@ const Studio = ({Game, GameUI}) => {
 }
 
 Studio.propTypes = {
-  Game: PropTypes.shape({
-    setup: PropTypes.func.isRequired,
-    getPlayerIds: PropTypes.func.isRequired,
-    getMandatoryMoves: PropTypes.func.isRequired,
-    getOptionalMoves: PropTypes.func.isRequired,
-    getPlayerView: PropTypes.func.isRequired,
-    getSpectatorView: PropTypes.func.isRequired,
-    getAutomaticMove: PropTypes.func.isRequired
-  }).isRequired,
+  store: PropTypes.object,
   GameUI: PropTypes.shape({
     Interface: PropTypes.func.isRequired,
     getPreAnimationDelay: PropTypes.func,
     getAnimationDelay: PropTypes.func
   }).isRequired
 }
-
-export default Studio
-

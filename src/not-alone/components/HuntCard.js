@@ -17,18 +17,21 @@ import {
   VIRUS
 } from "../material/HuntCards"
 
-const HuntCard = ({cardName}) => (
-  <div className="card hunt-card">
-    {cardName && [
-      <img className="face front" src={huntCard} alt="" draggable="false" key="img"/>,
-      <h3 key="name"><Trans>{cardName}</Trans></h3>,
-      <div className="description" key="description">
-        <p><Trans>{descriptions[cardName]}</Trans></p>
-      </div>
-    ]}
-    <img className="face back" src={huntCardBack} alt="" draggable="false"/>
-  </div>
-)
+const HuntCard = ({cardName, classes = []}) => {
+  classes.push('card', 'hunt-card')
+  return (
+    <div className={classes.join(' ')}>
+      {cardName && [
+        <img className="face front" src={huntCard} alt="" draggable="false" key="img"/>,
+        <h3 key="name"><Trans>{cardName}</Trans></h3>,
+        <div className="description" key="description">
+          <p><Trans>{descriptions[cardName]}</Trans></p>
+        </div>
+      ]}
+      <img className="face back" src={huntCardBack} alt="" draggable="false"/>
+    </div>
+  )
+}
 
 const descriptions = {
   [DESPAIR]: 'No Survival cards may be played or drawn for the remainder of the turn.',

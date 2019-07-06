@@ -3,16 +3,28 @@ import Tooltip from "@material-ui/core/Tooltip"
 import {useTranslation} from 'react-i18next';
 import {CREATURE} from "../NotAlone"
 import HuntCard from "./HuntCard"
+import {DRAW_HUNT_CARD} from "../moves/DrawHuntCard"
 
-const CreaturePlayer = ({game, classes, playersMap}) => {
+const CreaturePlayer = ({creature, classes, playersMap, animation}) => {
   const {t} = useTranslation()
   classes.push('other-player', 'creature')
+  const isDrawingHuntCard = animation && animation.move.type === DRAW_HUNT_CARD
+  const cards = creature.hand.map((card, index) => {
+    const classes = []
+    if (isDrawingHuntCard && index === creature.hand.length - 1) {
+      classes.push('drawing')
+    }
+    return <HuntCard key={index} classes={classes}/>
+  })
+  if (isDrawingHuntCard && !animation.moveApplied) {
+    cards.push(<HuntCard key={creature.hand.length} classes={['will-draw']}/>)
+  }
   return (
     <div className={classes.join(' ')}>
       <h3>{playersMap[CREATURE].name}</h3>
-      <Tooltip title={t('{{count}} Hunt card(s)', {count: game.creature.hand.length})} enterTouchDelay={0}>
+      <Tooltip title={t('{{count}} Hunt card(s)', {count: creature.hand.length})} enterTouchDelay={0}>
         <div className="player-hand">
-          {game.creature.hand.map((card, index) => <HuntCard key={index}/>)}
+          {cards}
         </div>
       </Tooltip>
     </div>

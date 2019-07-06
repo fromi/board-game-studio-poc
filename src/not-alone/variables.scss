@@ -16,7 +16,14 @@ $decks-card-shift-x: 0.1vh;
 $decks-card-shift-y: 0.2vh;
 
 $artemia-grid-gap: 0.5vh;
+$artemia-width: $card-width * 5 + 6 * $artemia-grid-gap;
+
+$player-panel-height: 21vh;
+$other-players-hand-scale: 0.18;
+$other-players-hand-top: 10vh;
 
 $board-side-chosen-animation: 1s;
 $setup-animation: 1s;
 $draw-hunt-card-animation: 1s;
+$other-player-draw-card-pre-animation: 0.4s;
+$other-player-draw-card-animation: 0.1s;
