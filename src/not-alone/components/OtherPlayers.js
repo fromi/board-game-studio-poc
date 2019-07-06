@@ -48,7 +48,7 @@ const MIDDLE_RIGHT = [SEAT_MIDDLE, SEAT_RIGHT]
 const BOTTOM_LEFT = [SEAT_BOTTOM, SEAT_LEFT]
 const BOTTOM_RIGHT = [SEAT_BOTTOM, SEAT_RIGHT]
 
-const numberOfHuntedToTableSeatsForCreature = {
+export const numberOfHuntedToTableSeatsForCreature = {
   1: [TOP_LEFT],
   2: [TOP_LEFT, TOP_RIGHT],
   3: [MIDDLE_LEFT, TOP_LEFT, TOP_RIGHT],

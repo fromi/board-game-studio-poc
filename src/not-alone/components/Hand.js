@@ -25,7 +25,7 @@ const Hand = ({game, playerId, animation, play}) => {
   }
 
   const specialCardDrawType = hunted ? DRAW_SURVIVAL_CARD : DRAW_HUNT_CARD
-  const isDrawingSpecialCard = animation && animation.type === MOVE_PLAYED && animation.move.type === specialCardDrawType
+  const isDrawingSpecialCard = animation && animation.type === MOVE_PLAYED && animation.move.type === specialCardDrawType && (!hunted || animation.move.playerId === playerId)
   const SpecialCardComponent = hunted ? SurvivalCard : HuntCard
   const specialCards = hunted ? hunted.handSurvivalCards : game.creature.hand
 

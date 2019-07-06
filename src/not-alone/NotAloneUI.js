@@ -62,6 +62,12 @@ export const getPreAnimationDelay = (animation, playerId) => {
       } else {
         return style.global['$other-player-draw-card-pre-animation'].value
       }
+    case DRAW_SURVIVAL_CARD:
+      if (playerId === animation.move.playerId) {
+        return 0
+      } else {
+        return style.global['$other-player-draw-card-pre-animation'].value
+      }
     default:
       return 0
   }

@@ -39,6 +39,11 @@
     .card:not(.drawing) img {
       filter: drop-shadow(0 0 0.05vh white);
     }
+
+    .card.drawing {
+      transition: all $other-player-draw-card-pre-animation ease-in-out;
+      transform: rotate(-180deg) scale($other-players-hand-scale);
+    }
   }
 
   &.hunted {
@@ -46,31 +51,36 @@
       transform: rotate(-90deg) translate($board-width / 2 - $board-height / 2, $board-height / 2 - $board-width / 2);
       left: 0;
     }
+
     .hunt-cards-deck {
       top: $header-height + $default-margin;
       right: $default-margin;
 
       .card.drawing {
-        transition: all $other-player-draw-card-pre-animation ease-in-out;
-        transform: rotate(180deg) scale($other-players-hand-scale);
         $top: $other-players-hand-top - $card-height * $other-players-hand-scale / 2 - $card-height / 2;
+
         &.seat-left {
           left: -75.6vw;
         }
+
         &.seat-right {
-          left: calc(-25vw + 21.7vh);
+          left: calc(21.7vh - 25vw);
         }
+
         &.seat-top {
           top: $top
         }
+
         &.seat-middle {
           top: $top + $player-panel-height + $default-margin
         }
+
         &.seat-bottom {
           top: $top + ($player-panel-height + $default-margin) * 2
         }
       }
     }
+
     .survival-cards-deck {
       bottom: $default-margin;
       right: $default-margin;
@@ -82,13 +92,39 @@
       transform: rotate(90deg) translate($board-height / 2 - $board-width / 2, $board-height / 2 - $board-width / 2);
       right: 0;
     }
+
     .hunt-cards-deck {
       bottom: $default-margin;
       left: $default-margin;
     }
+
     .survival-cards-deck {
       top: $header-height + $default-margin;
       left: $default-margin;
+
+      .card.drawing {
+        $top: $other-players-hand-top - $card-height * $other-players-hand-scale / 2 - $card-height / 2;
+
+        &.seat-left {
+          left: calc(25vw - 20.7vh);
+        }
+
+        &.seat-right {
+          left: 76.3vw;
+        }
+
+        &.seat-top {
+          top: $top
+        }
+
+        &.seat-middle {
+          top: $top + $player-panel-height + $default-margin
+        }
+
+        &.seat-bottom {
+          top: $top + ($player-panel-height + $default-margin) * 2
+        }
+      }
     }
   }
 }
