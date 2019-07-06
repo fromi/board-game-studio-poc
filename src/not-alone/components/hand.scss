@@ -20,7 +20,6 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
     &.will-draw {
       &:before, .card-wrapper-inner {
         opacity: 0;
-        transform: translate(calc(#{$default-margin} - 50vw + #{$card-width} / 2), $hand-bottom-margin - $default-margin - $deck-top-card-shift-y);
       }
       .card {
         transform: rotateY(-180deg);
@@ -28,7 +27,7 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
     }
     &.drawing {
       &:before, > .card-wrapper-inner, .card {
-        transition: transform 1s ease-in-out;
+        transition: transform $draw-card-animation ease-in-out;
       }
     }
   }
@@ -46,6 +45,23 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
       animation: opacity 1.5s ease-in-out infinite alternate;
       outline: 1px solid transparent;
       border-radius: 1vh;
+    }
+  }
+}
+
+.not-alone.creature .hand {
+  .card-wrapper-outer.will-draw {
+    &:before, .card-wrapper-inner {
+      transform: translate(calc(#{$card-width / 2 + $default-margin} - 50vw), $hand-bottom-margin - $default-margin - $deck-top-card-shift-y);
+    }
+  }
+}
+
+.not-alone.hunted .hand {
+  .card-wrapper-outer.will-draw {
+    &:before, .card-wrapper-inner {
+      transform: translate(calc(50vw - #{$card-width / 2 + $default-margin + $decks-card-shift-x * $decks-max-cards-displayed}),
+              $hand-bottom-margin - $default-margin - $deck-top-card-shift-y);
     }
   }
 }

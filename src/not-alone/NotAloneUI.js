@@ -11,6 +11,7 @@ import {useTranslation} from 'react-i18next';
 import {PLAY_PLACE_CARD} from "./moves/PlayPlaceCard"
 import OtherPlayers from "./components/OtherPlayers"
 import PlayerMaterial from "./components/PlayerMaterial"
+import {DRAW_SURVIVAL_CARD} from "./moves/DrawSurvivalCard"
 
 export const Interface = (props) => {
   const {playerId, game, animation} = props
@@ -72,7 +73,13 @@ export const getAnimationDelay = (animation, playerId) => {
       return style.global['$setup-animation'].value
     case DRAW_HUNT_CARD:
       if (playerId === CREATURE) {
-        return style.global['$draw-hunt-card-animation'].value
+        return style.global['$draw-card-animation'].value
+      } else {
+        return style.global['$other-player-draw-card-animation'].value
+      }
+    case DRAW_SURVIVAL_CARD:
+      if (playerId === animation.move.playerId) {
+        return style.global['$draw-card-animation'].value
       } else {
         return style.global['$other-player-draw-card-animation'].value
       }
