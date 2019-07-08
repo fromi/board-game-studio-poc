@@ -30,6 +30,13 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
         transition: transform $draw-card-animation ease-in-out;
       }
     }
+
+    &.dragging {
+      pointer-events: none;
+      .card {
+        opacity: 0.5;
+      }
+    }
   }
 
   .card.playable {

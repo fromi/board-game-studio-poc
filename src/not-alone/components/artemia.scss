@@ -47,4 +47,25 @@
       grid-column: $i % 5 + 1;
     }
   }
+
+  .drop-info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 128, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > p {
+      color: antiquewhite;
+      text-shadow: -2px 0 2px black, 0 2px 2px black, 2px 0 2px black, 0 -2px 2px black;
+    }
+
+    &.item-over {
+      background-color: rgba(0, 128, 0, 0.4);
+    }
+  }
 }

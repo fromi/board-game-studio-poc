@@ -185,7 +185,9 @@ i18n.use(initReactI18next).init({
         'Reach the star with the Assimilation counter before the Rescue counter does!':
           'Atteignez l’étoile avec le jeton Assimilation avant le jeton Secours !',
         'Reach the star with the Rescue counter before the Assimilation counter does!':
-          'Atteignez l’étoile avec le jeton Secours avant le jeton Assimilation !'
+          'Atteignez l’étoile avec le jeton Secours avant le jeton Assimilation !',
+
+        'Play {{place}}': 'Jouer {{place}}'
       }
     }
   },

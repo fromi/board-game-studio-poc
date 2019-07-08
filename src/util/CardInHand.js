@@ -12,12 +12,13 @@ const CardInHand = ({children, classes = [], useDragItem, onClick}) => {
       collect: monitor => ({
         dragOffsetDiff: monitor.getDifferenceFromInitialOffset(),
         isDragging: monitor.isDragging()
-      })
+      }),
+      end: (item, monitor) => monitor.didDrop() && onClick()
     })
     ref = drag
 
-    if (isDragging) {
-      classes.push('hover')
+    if (isDragging && dragOffsetDiff) {
+      classes.push('hover', 'dragging')
       style.left = dragOffsetDiff.x + 'px'
       style.top = dragOffsetDiff.y + 'px'
     }
