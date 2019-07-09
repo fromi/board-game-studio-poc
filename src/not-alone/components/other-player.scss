@@ -1,8 +1,6 @@
 @import "../../util/hand-of-cards";
 @import "../variables";
 
-$outer-column-width: $card-width + $decks-card-shift-x * ($decks-max-cards-displayed) + $default-margin * 2;
-
 .other-player {
   position: absolute;
   height: $player-panel-height;

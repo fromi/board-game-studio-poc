@@ -68,6 +68,12 @@ export const getPreAnimationDelay = (animation, playerId) => {
       } else {
         return style.global['$other-player-draw-card-pre-animation'].value
       }
+    case PLAY_PLACE_CARD:
+      if (playerId === animation.move.playerId) {
+        return style.global['$playing-place-card-animation'].value
+      } else {
+        return 0
+      }
     default:
       return 0
   }

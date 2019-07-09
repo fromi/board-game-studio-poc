@@ -1,7 +1,9 @@
+@import "../variables";
+
 .played-cards {
   position: absolute;
-  bottom: 3vh;
-  right: calc(50% - 70vh);
+  bottom: 2vh;
+  right: calc(50% - #{$artemia-width / 2 + $default-margin + $card-width});
 
   .place-card {
     transform: rotateY(-180deg);

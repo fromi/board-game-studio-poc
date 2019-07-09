@@ -57,8 +57,12 @@ export function createServerReducer(Game) {
           console.error("You cannot undo a move while playing back the history. Go to latest move by using game.displayPlayerView or displaySpectatorView.");
           return state
         }
+        const moveIndex = state.moveHistory.reverse().findIndex(move => isEqual(move, action.move))
+        if (moveIndex < 0) {
+          console.error("This move does not exist, it cannot be undone: " + action.move);
+          return state
+        }
         return produce(state, draft => {
-          const moveIndex = draft.moveHistory.reverse().findIndex(move => isEqual(move, action.move))
           draft.moveHistory.splice(moveIndex, 1)
           draft.moveHistory.reverse()
           draft.game = draft.moveHistory.reduce((state, move) => {

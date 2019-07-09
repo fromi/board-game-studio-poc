@@ -37,6 +37,10 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
         opacity: 0.5;
       }
     }
+
+    &:not(.dragging) > .card-wrapper-inner {
+      transition: all 0.3s 0.3s ease-out;
+    }
   }
 
   .card.playable {
@@ -71,6 +75,18 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
               $hand-bottom-margin - $default-margin - $deck-top-card-shift-y);
     }
   }
+
+  .card-wrapper-outer.playing-place-card {
+    &:before, .card-wrapper-inner {
+      transition: all $playing-place-card-animation ease-in-out;
+      transform: translateX($artemia-width / 2 + $card-width / 2 + $default-margin);
+    }
+    .card {
+      transition: transform $playing-place-card-animation ease-in-out;
+      transform: rotateY(-180deg);
+    }
+  }
+
 }
 
 @keyframes opacity {

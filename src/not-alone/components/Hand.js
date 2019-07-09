@@ -15,9 +15,14 @@ const Hand = ({game, playerId, animation, play}) => {
   const hunted = playerId && playerId !== CREATURE ? getHunted(game, playerId) : undefined
 
   if (hunted) {
+    const isPlayingPlaceCard = animation && animation.type === MOVE_PLAYED && animation.move.type === PLAY_PLACE_CARD && animation.move.playerId === playerId
     hunted.handPlaceCards.forEach((place) => {
+      const classes = []
+      if (isPlayingPlaceCard && animation.move.place === place) {
+        classes.push('playing-place-card')
+      }
       cards.push((
-        <CardInHand useDragItem={{type: PLACE_CARD, place}} key={place} onClick={() => play({type: PLAY_PLACE_CARD, place})}>
+        <CardInHand useDragItem={{type: PLACE_CARD, place}} key={place} onSelect={() => play({type: PLAY_PLACE_CARD, place})} classes={classes}>
           <PlaceCard place={place} classes={['playable']}/>
         </CardInHand>
       ))
