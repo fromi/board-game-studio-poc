@@ -51,20 +51,19 @@ export function createServerReducer(Game) {
           }
         })
       case SERVER_NOTIFICATION:
-        return {...state, pendingNotifications: []}
+        return {...state, pendingNotifications: state.pendingNotifications.slice(action.notifications.length)}
       case UNDO_MOVE:
         if (state.back > 0) {
           console.error("You cannot undo a move while playing back the history. Go to latest move by using game.displayPlayerView or displaySpectatorView.");
           return state
         }
-        const moveIndex = state.moveHistory.reverse().findIndex(move => isEqual(move, action.move))
+        const moveIndex = findLastIndex(state.moveHistory, move => isEqual(move, action.move))
         if (moveIndex < 0) {
-          console.error("This move does not exist, it cannot be undone: " + action.move);
+          console.error("This move does not exist, it cannot be undone: " + JSON.stringify(action.move));
           return state
         }
         return produce(state, draft => {
           draft.moveHistory.splice(moveIndex, 1)
-          draft.moveHistory.reverse()
           draft.game = draft.moveHistory.reduce((state, move) => {
             Game.moves[move.type].execute(state, move)
             return state
@@ -99,10 +98,16 @@ export function createServerReducer(Game) {
 }
 
 export function pendingNotificationsListener(Game, store) {
+  let notifying = false
   return () => {
     const pendingNotifications = store.getState().server.pendingNotifications
-    if (pendingNotifications.length > 0) {
-      setTimeout(() => store.dispatch({type: SERVER_NOTIFICATION, notifications: pendingNotifications}), 50)
+    if (!notifying && pendingNotifications.length > 0) {
+      setTimeout(() => {
+        store.dispatch({type: SERVER_NOTIFICATION, notifications: pendingNotifications})
+      }, 50)
+      notifying = true
+    } else {
+      notifying = false
     }
   }
 }
@@ -110,3 +115,12 @@ export function pendingNotificationsListener(Game, store) {
 const menNames = ['John', 'Bob', 'Vincent', 'Roger', 'Luck', 'Xavier', 'Stephen', 'Nicolas', 'Gregory']
 const womenNames = ['Alice', 'Clara', 'Debora', 'Elena', 'Fanny', 'Helen', 'Iris', 'Maria', 'Lila']
 const fakePlayers = menNames.map(name => ({name, gender: '♂'})).concat(womenNames.map(name => ({name, gender: '♀'})))
+
+const findLastIndex = (array, predicate) => {
+  let l = array.length;
+  while (l--) {
+    if (predicate(array[l], l, array))
+      return l;
+  }
+  return -1;
+}
