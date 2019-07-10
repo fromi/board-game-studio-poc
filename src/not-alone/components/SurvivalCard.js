@@ -1,12 +1,12 @@
 import React from "react"
-import survivalCard from '../img/survival-card.jpg'
-import survivalCardBack from "../img/survival-card-back.jpg"
-import {Trans} from "react-i18next"
+import {useTranslation} from "react-i18next"
 import './survival-card.scss'
 import {
-  ADRENALINE, AMPLIFIER,
+  ADRENALINE,
+  AMPLIFIER,
   DETECTOR,
-  DODGE, DOUBLE_BACK,
+  DODGE,
+  DOUBLE_BACK,
   DRONE,
   GATE,
   HOLOGRAM,
@@ -15,21 +15,24 @@ import {
   SIXTH_SENSE,
   SMOKESCREEN,
   STRIKE_BACK,
-  VORTEX, WRONG_TRACK
+  VORTEX,
+  WRONG_TRACK
 } from "../material/SurvivalCards"
 
 const SurvivalCard = ({cardName, classes = []}) => {
+  const {t} = useTranslation()
   classes.push('card', 'survival-card')
   return (
     <div className={classes.join(' ')}>
-      {cardName && [
-        <img className="face front" src={survivalCard} alt="" draggable="false" key="img"/>,
-        <h3 key="name"><Trans>{cardName}</Trans></h3>,
-        <div className="description" key="description">
-          <p><Trans>{descriptions[cardName]}</Trans></p>
+      {cardName && (
+        <div className="face front">
+          <h3 key="name">{t(cardName)}</h3>
+          <div className="description" key="description">
+            <p>{t(descriptions[cardName])}</p>
+          </div>
         </div>
-      ]}
-      <img className="face back" src={survivalCardBack} alt="" draggable="false"/>
+      )}
+      <div className="face back"/>
     </div>
   )
 }

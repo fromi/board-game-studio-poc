@@ -3,11 +3,15 @@
 .place-card {
   transition: all 0.3s ease-in-out;
 
+  .face.back {
+    background-image: url("../img/place-card-back.jpg");
+  }
+
   h3 {
     position: absolute;
-    left: $card-border + $card-image-width * 0.15;
-    right: $card-border + $card-image-width * 0.15;
-    top: $card-border + $card-image-height * 0.73;
+    left: $card-image-width * 0.15;
+    right: $card-image-width * 0.15;
+    top: $card-image-height * 0.75;
     margin: auto;
     text-align: center;
     font-size: $card-image-height / 18;
@@ -18,10 +22,10 @@
   .description {
     overflow: hidden;
     position: absolute;
-    top: $card-border + $card-image-height * 0.78;
-    left: $card-border + $card-image-width * 0.02;
-    right: $card-border + $card-image-width * 0.02;
-    bottom: $card-border + $card-image-height * 0.02;
+    top: $card-image-height * 0.8;
+    left: $card-image-width * 0.01;
+    right: $card-image-width * 0.01;
+    bottom: 0;
     font-size: $card-image-height / 25;
     line-height: 1.1;
     text-align: center;
@@ -36,5 +40,11 @@
 
   &.place-1 .description {
     font-size: $card-image-height / 28;
+  }
+
+  @for $i from 1 through 10{
+    &.place-#{$i} .face.front {
+      background-image: url("../img/places/place-#{$i}.jpg");
+    }
   }
 }

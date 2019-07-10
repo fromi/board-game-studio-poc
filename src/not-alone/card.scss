@@ -8,18 +8,15 @@
   width: $card-width;
   transform-style: preserve-3d;
 
-  img {
-    border: $card-border solid;
-    border-radius: $border-radius;
+  .face {
     position: absolute;
     height: $card-image-height;
     width: $card-image-width;
+    border: $card-border solid;
+    border-radius: $border-radius;
     backface-visibility: hidden;
     filter: drop-shadow($card-border $card-border $card-border black);
-  }
-
-  .face {
-    backface-visibility: hidden;
+    background-size: cover;
 
     &.back:not(:only-child) {
       transform: rotateY(-180deg);

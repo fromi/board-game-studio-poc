@@ -1,34 +1,43 @@
 import React from "react"
-import huntCard from '../img/hunt-card.jpg'
-import huntCardBack from "../img/hunt-card-back.jpg"
-import {Trans} from "react-i18next"
+import {useTranslation} from "react-i18next"
 import './hunt-card.scss'
 import {
   ANTICIPATION,
-  ASCENDANCY, CATACLYSM, CLONE,
-  DESPAIR, DETOUR,
-  FIERCENESS, FLASHBACK,
+  ASCENDANCY,
+  CATACLYSM,
+  CLONE,
+  DESPAIR,
+  DETOUR,
+  FIERCENESS,
+  FLASHBACK,
   FORBIDDEN_ZONE,
   FORCE_FIELD,
-  INTERFERENCE, MIRAGE,
+  INTERFERENCE,
+  MIRAGE,
   MUTATION,
   PERSECUTION,
-  PHOBIA, SCREAM, STASIS, TOXIN, TRACKING,
+  PHOBIA,
+  SCREAM,
+  STASIS,
+  TOXIN,
+  TRACKING,
   VIRUS
 } from "../material/HuntCards"
 
 const HuntCard = ({cardName, classes = []}) => {
+  const {t} = useTranslation()
   classes.push('card', 'hunt-card')
   return (
     <div className={classes.join(' ')}>
-      {cardName && [
-        <img className="face front" src={huntCard} alt="" draggable="false" key="img"/>,
-        <h3 key="name"><Trans>{cardName}</Trans></h3>,
-        <div className="description" key="description">
-          <p><Trans>{descriptions[cardName]}</Trans></p>
+      {cardName && (
+        <div className="face front">
+          <h3 key="name">{t(cardName)}</h3>
+          <div className="description" key="description">
+            <p>{t(descriptions[cardName])}</p>
+          </div>
         </div>
-      ]}
-      <img className="face back" src={huntCardBack} alt="" draggable="false"/>
+      )}
+      <div className="face back"/>
     </div>
   )
 }

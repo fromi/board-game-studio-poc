@@ -1,10 +1,6 @@
 import React from "react"
 import './place-card.scss'
 import {useTranslation} from 'react-i18next';
-import placeCardBack from "../img/place-card-back.jpg"
-
-const images = require.context('../img/places');
-const getImage = (place) => images('./place-' + place + '.jpg')
 
 export const PLACE_CARD = 'place card'
 
@@ -19,14 +15,15 @@ const PlaceCard = ({place, onClick, classes = []}) => {
 
   return (
     <div className={classes.join(' ')} onClick={onClick} onTouchEnd={event => event.preventDefault()}>
-      <img className="face back" src={placeCardBack} alt="" draggable="false"/>
-      {place && [
-        <img src={getImage(place)} alt={'Place ' + place} draggable="false" key="img"/>,
-        <h3 key="name">{t(places[place].name)}</h3>,
-        <div className="description" key="description">
-          {places[place].description.map((description, index) => <p key={index}>{t(description)}</p>)}
-        </div>
-      ]}
+      {place && (
+        <div className="face front">
+          <h3 key="name">{t(places[place].name)}</h3>
+          <div className="description" key="description">
+            {places[place].description.map((description, index) => <p key={index}>{t(description)}</p>)}
+          </div>
+        </div>)
+      }
+      <div className="face back"/>
     </div>
   )
 }

@@ -1,11 +1,19 @@
 @import "../variables";
 
 .survival-card {
+
+  .face.front {
+    background-image: url("../img/survival-card.jpg");
+  }
+  .face.back {
+    background-image: url("../img/survival-card-back.jpg");
+  }
+
   h3 {
     position: absolute;
-    left: $card-border * 2;
-    right: $card-border * 2;
-    top: $card-border + $card-image-height * 0.08;
+    left: 1vh;
+    right: 1vh;
+    top: $card-image-height * 0.075;
     margin: auto;
     text-align: center;
     font-size: $card-image-height / 15;
@@ -17,18 +25,14 @@
   .description {
     overflow: hidden;
     position: absolute;
-    top: $card-border + $card-image-height * 0.27;
-    left: $card-border * 2;
-    right: $card-border * 2;
-    bottom: $card-border + $card-image-height * 0.2;
+    top: $card-image-height * 0.27;
+    left: 0.5vh;
+    right: 0.5vh;
+    bottom: $card-image-height * 0.19;
     font-size: $card-image-height / 16;
     text-align: center;
     display: flex;
     justify-content: center;
     flex-direction: column;
-
-    p {
-      -webkit-backface-visibility: hidden;
-    }
   }
 }

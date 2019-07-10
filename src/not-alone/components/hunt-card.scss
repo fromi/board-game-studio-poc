@@ -1,11 +1,19 @@
 @import "../variables";
 
 .hunt-card {
+
+  .face.front {
+    background-image: url("../img/hunt-card.jpg");
+  }
+  .face.back {
+    background-image: url("../img/hunt-card-back.jpg");
+  }
+
   h3 {
     position: absolute;
-    left: $card-border * 2;
-    right: $card-border * 2;
-    top: $card-border + $card-image-height * 0.05;
+    left: 1vh;
+    right: 1vh;
+    top: $card-image-height * 0.04;
     margin: auto;
     text-align: center;
     font-size: $card-image-height / 15;
@@ -17,10 +25,10 @@
   .description {
     overflow: hidden;
     position: absolute;
-    top: $card-border + $card-image-height * 0.55;
-    left: $card-border * 2;
-    right: $card-border * 2;
-    bottom: $card-border + $card-image-height * 0.1;
+    top: $card-image-height * 0.6;
+    left: 0.5vh;
+    right: 0.5vh;
+    bottom: $card-image-height * 0.09;
     font-size: $card-image-height / 17;
     text-align: center;
     display: flex;
