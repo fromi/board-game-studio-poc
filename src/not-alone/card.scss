@@ -14,11 +14,11 @@
     width: $card-image-width;
     border: $card-border solid;
     border-radius: $border-radius;
-    backface-visibility: hidden;
     filter: drop-shadow($card-border $card-border $card-border black);
     background-size: cover;
 
     &.back:not(:only-child) {
+      backface-visibility: hidden;
       transform: rotateY(-180deg);
     }
   }

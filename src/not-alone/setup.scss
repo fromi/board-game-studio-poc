@@ -7,7 +7,7 @@
     width: 4606 / 886 * $board-width / 3;
     left: 0;
     right: 0;
-    margin: auto;
+    margin: 0 auto;
 
     &.board-1 {
       bottom: $board-width * 5 / 9;

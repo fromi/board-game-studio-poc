@@ -3,7 +3,7 @@
 .artemia {
   display: grid;
   grid-gap: $artemia-grid-gap;
-  width: fit-content;
+  width: $artemia-width;
   position: absolute;
   left: 0;
   right: 0;
