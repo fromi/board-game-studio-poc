@@ -18,8 +18,11 @@ const Hand = ({game, playerId, animation, play, undo}) => {
     const isPlayingPlaceCard = animation && animation.type === MOVE_PLAYED && animation.move.type === PLAY_PLACE_CARD && animation.move.playerId === playerId
     hunted.handPlaceCards.forEach((place) => {
       const classes = []
+      const placeCardClasses = []
       if (isPlayingPlaceCard && animation.move.place === place) {
         classes.push('playing-place-card')
+      } else {
+        placeCardClasses.push('playable')
       }
       const dragItem = game.phase === 1 ? {type: PLACE_CARD, place} : undefined
       const onSelect = () => {
@@ -33,7 +36,7 @@ const Hand = ({game, playerId, animation, play, undo}) => {
       }
       cards.push((
         <CardInHand useDragItem={dragItem} key={place} onSelect={onSelect} classes={classes}>
-          <PlaceCard place={place} classes={['playable']}/>
+          <PlaceCard place={place} classes={placeCardClasses}/>
         </CardInHand>
       ))
     })

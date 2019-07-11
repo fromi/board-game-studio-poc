@@ -73,7 +73,7 @@ export function notificationsAnimationListener(GameUI, store) {
   const applyAnimatingNotification = () => {
     const animation = store.getState().client.animation
     if (animation) {
-      const animationDelay = GameUI.getAnimationDelay ? GameUI.getAnimationDelay(animation, store.getState().client.playerId) : 0
+      const animationDelay = getAnimationDelay(GameUI, animation, store.getState().client.playerId)
       store.dispatch({type: APPLY_ANIMATING_MOVE})
       setTimeout(() => store.dispatch({type: END_ANIMATION}), animationDelay * 1000)
     }
@@ -83,9 +83,41 @@ export function notificationsAnimationListener(GameUI, store) {
     const state = store.getState().client
     if (!state.animation && state.pendingNotifications.length) {
       const animation = state.pendingNotifications[0]
-      const preAnimationDelay = GameUI.getPreAnimationDelay ? GameUI.getPreAnimationDelay(animation, store.getState().client.playerId) : 0
+      const preAnimationDelay = getPreAnimationDelay(GameUI, animation, store.getState().client.playerId)
       store.dispatch({type: START_ANIMATION})
       setTimeout(applyAnimatingNotification, preAnimationDelay * 1000)
     }
   }
+}
+
+const getPreAnimationDelay = (GameUI, animation, playerId) => {
+  if (GameUI.movesDisplay && GameUI.movesDisplay[animation.move.type]) {
+    const MoveDisplay = GameUI.movesDisplay[animation.move.type]
+    if (animation.type === MOVE_PLAYED) {
+      if (MoveDisplay.playerPreAnimationDelay && animation.move.playerId === playerId) {
+        return MoveDisplay.playerPreAnimationDelay(animation.move, playerId)
+      } else if (MoveDisplay.othersPreAnimationDelay) {
+        return MoveDisplay.othersPreAnimationDelay(animation.move, playerId)
+      } else if (MoveDisplay.preAnimationDelay) {
+        return MoveDisplay.preAnimationDelay(animation.move, playerId)
+      }
+    }
+  }
+  return GameUI.getPreAnimationDelay ? GameUI.getPreAnimationDelay(animation, playerId) : 0
+}
+
+const getAnimationDelay = (GameUI, animation, playerId) => {
+  if (GameUI.movesDisplay && GameUI.movesDisplay[animation.move.type]) {
+    const MoveDisplay = GameUI.movesDisplay[animation.move.type]
+    if (animation.type === MOVE_PLAYED) {
+      if (MoveDisplay.playerAnimationDelay && animation.move.playerId === playerId) {
+        return MoveDisplay.playerAnimationDelay(animation.move)
+      } else if (MoveDisplay.othersAnimationDelay) {
+        return MoveDisplay.othersAnimationDelay(animation.move, playerId)
+      } else if (MoveDisplay.animationDelay) {
+        return MoveDisplay.animationDelay(animation.move, playerId)
+      }
+    }
+  }
+  return GameUI.getAnimationDelay ? GameUI.getAnimationDelay(animation, playerId) : 0
 }
