@@ -177,6 +177,8 @@ i18n.use(initReactI18next).init({
         'Hunted players must play a Place card': 'Les Traqués doivent jouer une carte Lieu',
         'You must play a Place card': 'Vous devez jouer une carte lieu',
         'You played {{place}}': 'Vous avez joué {{place}}',
+        'You draw a Survival card': 'Vous piochez une carte Survie',
+        '{{player}} draws a Survival card': '{{player}} pioche une carte Survie',
 
         'The Creature will have the Artemia token when Rescue counter is 6 spaces or less from victory.':
           'La Créature pourra placer le jeton Artemia lorsque le jeton Secours sera à 6 cases ou moins de la victoire.',

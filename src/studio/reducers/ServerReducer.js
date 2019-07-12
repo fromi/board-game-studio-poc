@@ -103,11 +103,10 @@ export function pendingNotificationsListener(Game, store) {
     const pendingNotifications = store.getState().server.pendingNotifications
     if (!notifying && pendingNotifications.length > 0) {
       setTimeout(() => {
+        notifying = false
         store.dispatch({type: SERVER_NOTIFICATION, notifications: pendingNotifications})
       }, 50)
       notifying = true
-    } else {
-      notifying = false
     }
   }
 }
