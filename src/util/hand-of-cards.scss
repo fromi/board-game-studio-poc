@@ -25,6 +25,7 @@
 
       .card-wrapper-inner {
         position: relative;
+        will-change: transform;
       }
 
       &:before, .card-wrapper-inner {
@@ -66,7 +67,7 @@
 
         @if ($hoverEffect) {
           &:before, > .card-wrapper-inner {
-            transform: rotate($card-rotation);
+            transform: rotate($card-rotation) translate3d(0,0,0);
           }
 
           @media (hover) {
@@ -79,7 +80,7 @@
             @include showCompleteCardInHand($card-rotation, $rotation-origin);
           }
         } @else {
-          transform: rotate($card-rotation);
+          transform: rotate($card-rotation) translate3d(0,0,0);
         }
       }
     }

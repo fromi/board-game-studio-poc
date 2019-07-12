@@ -37,6 +37,7 @@
     @include deck($card-width, $card-height, $decks-max-cards-displayed, $decks-card-shift-x, $decks-card-shift-y);
 
     .card:not(.drawing) .face {
+      box-shadow: none;
       filter: drop-shadow(0 0 0.05vh white);
     }
 

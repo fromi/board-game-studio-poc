@@ -109,8 +109,7 @@ const getInformation = (Game, GameUI, state, playersMap, t) => {
   if (state.server.back) {
     return 'You are ' + state.server.back + ' steps back in game history'
   }
-  console.warn('No information message for this state:')
-  console.warn(state)
+  console.warn('No information message for this state:', state)
   return ''
 }
 
