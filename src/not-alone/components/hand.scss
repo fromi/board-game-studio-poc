@@ -23,11 +23,23 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
       }
       .card {
         transform: rotateY(-180deg);
-      }
+
+        // Fix for Chrome bug (front face remains hidden if mouse is not moved during animation)
+        .face.front {
+          backface-visibility: visible;
+        }
+       }
     }
     &.drawing {
       &:before, > .card-wrapper-inner, .card {
         transition: transform $draw-card-animation ease-in-out;
+      }
+    }
+
+    // Fix for Chrome bug (front face remains hidden if mouse is not moved during animation)
+    &.will-draw, &.drawing {
+      .card .face.front {
+        backface-visibility: visible;
       }
     }
 
