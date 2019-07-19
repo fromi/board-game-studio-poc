@@ -4,13 +4,7 @@ import * as PropTypes from "prop-types"
 import {applyMiddleware, combineReducers, createStore} from "redux"
 import {DndProvider} from "react-dnd"
 import TouchBackend from 'react-dnd-touch-backend'
-import {
-  createServerReducer,
-  executeMove,
-  getMoveView,
-  MOVE_PLAYED,
-  pendingNotificationsListener
-} from "./reducers/ServerReducer"
+import {createServerReducer, getMoveView, MOVE_PLAYED, pendingNotificationsListener} from "./reducers/ServerReducer"
 import {createClientReducer, notificationsAnimationListener} from "./reducers/ClientReducer"
 import {
   APPLY_ANIMATING_MOVE,

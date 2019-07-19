@@ -10,4 +10,16 @@
       width: 3vh;
     }
   }
+
+  .played-place-cards {
+    position: absolute;
+    bottom: 1vh;
+    left: 1vh;
+    transform: scale(0.3);
+    transform-origin: bottom left;
+
+    .card {
+      cursor: help;
+    }
+  }
 }

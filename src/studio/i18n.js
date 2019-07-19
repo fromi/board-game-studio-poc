@@ -189,7 +189,9 @@ i18n.use(initReactI18next).init({
         'Reach the star with the Rescue counter before the Assimilation counter does!':
           'Atteignez l’étoile avec le jeton Secours avant le jeton Assimilation !',
 
-        'Play {{place}}': 'Jouer {{place}}'
+        'Play {{place}}': 'Jouer {{place}}',
+        '{{player}} played {{count}} Place cards, not revealed yet': '{{player}} a joué 1 carte Lieu, pas encore révélée',
+        '{{player}} played {{count}} Place cards, not revealed yet_plural': '{{player}} a joué {{count}} cartes Lieu, pas encore révélées'
       }
     }
   },

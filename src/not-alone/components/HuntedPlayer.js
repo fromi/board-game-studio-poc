@@ -1,6 +1,6 @@
 import React from "react"
 import "./hunted-player.scss"
-import PlaceCard from "./PlaceCard"
+import PlaceCard, {places} from "./PlaceCard"
 import SurvivalCard from "./SurvivalCard"
 import Tooltip from "@material-ui/core/Tooltip"
 import {useTranslation} from 'react-i18next';
@@ -31,6 +31,20 @@ const HuntedPlayer = ({hunted, huntedId, classes, playersMap, animation}) => {
           {[...Array(hunted.willCounters)].map((_, index) => <img src={willCounter} alt={t('A Will counter')} key={index}/>)}
         </div>
       </Tooltip>
+      <div className="played-place-cards">
+        {hunted.playedPlaceCards.map((place, index) => {
+          const tooltip = isNaN(place) ?
+            t('{{player}} played {{count}} Place cards, not revealed yet', {player: playersMap[huntedId].name, count: hunted.playedPlaceCards.length}) :
+            t('{{player}} played {{place}}', {player: playersMap[huntedId].name, place: t(places[place].name)})
+          return (
+            <Tooltip title={tooltip} enterTouchDelay={0} key={isNaN(place) ? index : place}>
+              <div>
+                <PlaceCard place={place}/>
+              </div>
+            </Tooltip>
+          )
+        })}
+      </div>
     </div>
   )
 }

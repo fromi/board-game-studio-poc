@@ -7,7 +7,7 @@ export const PLACE_CARD = 'place card'
 const PlaceCard = ({place, onClick, classes = []}) => {
 
   classes.push('card', 'place-card')
-  if (place) {
+  if (!isNaN(place)) {
     classes.push('place-' + place)
   }
 
@@ -15,7 +15,7 @@ const PlaceCard = ({place, onClick, classes = []}) => {
 
   return (
     <div className={classes.join(' ')} onClick={onClick} onTouchEnd={event => event.preventDefault()}>
-      {place && (
+      {!isNaN(place) && (
         <div className="face front">
           <h3 key="name">{t(places[place].name)}</h3>
           <div className="description" key="description">
