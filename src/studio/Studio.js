@@ -4,7 +4,13 @@ import * as PropTypes from "prop-types"
 import {applyMiddleware, combineReducers, createStore} from "redux"
 import {DndProvider} from "react-dnd"
 import TouchBackend from 'react-dnd-touch-backend'
-import {createServerReducer, getMoveView, MOVE_PLAYED, pendingNotificationsListener} from "./reducers/ServerReducer"
+import {
+  createServerReducer,
+  executeMove,
+  getMoveView,
+  MOVE_PLAYED,
+  pendingNotificationsListener
+} from "./reducers/ServerReducer"
 import {createClientReducer, notificationsAnimationListener} from "./reducers/ClientReducer"
 import {
   APPLY_ANIMATING_MOVE,
@@ -21,6 +27,7 @@ import {priorMoveMiddleware} from "./middleware/PriorMoveMiddleware"
 import {prepareMoveMiddleware} from "./middleware/PrepareMoveMiddleware"
 import {useTranslation} from "react-i18next"
 import "./i18n"
+import produce from "immer";
 
 export const createStudio = (Game, GameUI) => {
   const store = createStudioStore(Game, GameUI)
@@ -73,10 +80,17 @@ const createConsoleTools = (Game, store) => {
     new: (numberOfPlayers = 3) => store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers})}),
     getPlayerMoves: (playerId) => Game.getMandatoryMoves(window.game.state, playerId).concat(Game.getOptionalMoves(window.game.state, playerId)),
     play: (playerId, move) => store.dispatch({type: PLAY_MOVE, playerId, move}),
-    back: (moves = 1) => store.dispatch({type: MOVE_BACK, moves}),
-    forward: (moves = 1) => store.dispatch({type: MOVE_FORWARD, moves}),
+    back: (moves) => store.dispatch({type: MOVE_BACK, moves}),
+    forward: (moves) => store.dispatch({type: MOVE_FORWARD, moves}),
     displayPlayerView: (playerId) => {
-      const moveHistory = store.getState().server.moveHistory.map(move => getMoveView(Game.moves[move.type], move, playerId, window.game.state))
+      const {moveHistory} = produce(store.getState().server, draft => {
+        const game = draft.initialState
+        draft.moveHistory = draft.moveHistory.map((move) => {
+          let Move = Game.moves[move.type];
+          Move.execute(game, move)
+          return getMoveView(Move, move, playerId, game)
+        })
+      })
       const initialState = Game.getPlayerView(store.getState().server.initialState, playerId)
       return store.dispatch({type: DISPLAY_PLAYER_VIEW, playerId, game: Game.getPlayerView(window.game.state, playerId), moveHistory, initialState})
     },
@@ -106,8 +120,8 @@ const getInformation = (Game, GameUI, state, playersMap, t) => {
   if (information) {
     return information
   }
-  if (state.server.back) {
-    return 'You are ' + state.server.back + ' steps back in game history'
+  if (state.client.replayToMove) {
+    return 'You are ' + (state.client.moveHistory.length - state.client.currentMove) + ' steps back in game history'
   }
   console.warn('No information message for this state:', state)
   return ''
@@ -174,8 +188,20 @@ const Studio = ({store, GameUI, Game}) => {
   const GameView = connect(state => ({
     ...state.client, playersMap: state.server.playersMap, information: getInformation(Game, GameUI, state, state.server.playersMap, t)
   }), (dispatch) => ({
-    play: (move) => dispatch({type: PLAY_MOVE, playerId: store.getState().client.playerId, move}),
-    undo: (move) => dispatch({type: UNDO_MOVE, playerId: store.getState().client.playerId, move})
+    play: (move) => {
+      if (store.getState().client.replayToMove !== undefined) {
+        console.error("You cannot undo a move while playing back the history. Go to latest move by using game.forward().");
+      } else {
+        dispatch({type: PLAY_MOVE, playerId: store.getState().client.playerId, move})
+      }
+    },
+    undo: (move) => {
+      if (store.getState().client.replayToMove !== undefined) {
+        console.error("You cannot undo a move while playing back the history. Go to latest move by using game.forward().");
+      } else {
+        dispatch({type: UNDO_MOVE, playerId: store.getState().client.playerId, move})
+      }
+    }
   }))(GameUI.Interface)
 
   return (
