@@ -9,8 +9,11 @@ import {startPhase, StartPhase} from "./moves/StartPhase"
 import {PlayPlaceCard, playPlaceCard} from "./moves/PlayPlaceCard"
 import {StrikeBack} from "./moves/StrikeBack"
 import {ShuffleHuntCards} from "./moves/ShuffleHuntCards"
+import {placeHuntToken, PlaceHuntToken} from "./moves/PlaceHuntToken";
 
-export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2]
+export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  CREATURE_TOKEN = 'CREATURE_TOKEN', ARTEMIA_TOKEN = 'ARTEMIA_TOKEN', TARGET_TOKEN = 'TARGET_TOKEN',
+  HUNT_TOKENS = [CREATURE_TOKEN, ARTEMIA_TOKEN, TARGET_TOKEN]
 
 /**
  * Setup a new Game.
@@ -24,6 +27,7 @@ export const setup = options => ({
   rescueCounter: 11 + options.numberOfPlayers,
   markerCounterOnBeach: false,
   reserve: setupReserve(options.numberOfPlayers),
+  huntTokensLocations: {[CREATURE_TOKEN]: [], [ARTEMIA_TOKEN]: [], [TARGET_TOKEN]: []},
   survivalCardsDeck: shuffle(SurvivalCards),
   huntCardsDeck: shuffle(HuntCards),
   huntCardsDiscard: [],
@@ -54,13 +58,13 @@ export function getPlayerIds(game) {
   return [CREATURE].concat(game.hunted.map((hunted, index) => HUNTED_PREFIX + (index + 1)))
 }
 
-export const moves = {ChooseBoardSide, DrawHuntCard, DrawSurvivalCard, StartPhase, PlayPlaceCard, ShuffleHuntCards, StrikeBack}
+export const moves = {ChooseBoardSide, DrawHuntCard, DrawSurvivalCard, StartPhase, PlayPlaceCard, PlaceHuntToken, ShuffleHuntCards, StrikeBack}
 
 export function getAutomaticMove(game) {
   if (game.nextMoves.length) {
     return game.nextMoves[0]
   }
-  if (getPlayerIds(game).every(playerId => !getMandatoryMoves(game, playerId))) {
+  if (getPlayerIds(game).every(playerId => getMandatoryMoves(game, playerId).length === 0)) {
     if (game.phase === 1) {
       return startPhase(2)
     }
@@ -81,6 +85,8 @@ export function getMandatoryMoves(game, playerId) {
 function getCreatureMandatoryMoves(game) {
   if (!game.boardSide) {
     return BOARD_SIDES.map(side => chooseBoardSide(side))
+  } else if (game.phase === 2) {
+    return HUNT_TOKENS.filter(huntToken => huntTokenCanBePlaced(game, huntToken)).flatMap(huntToken => PLACES.map(place => placeHuntToken(huntToken, [place])))
   }
   return []
 }
@@ -140,4 +146,26 @@ function hideHuntedSecrets(hunted) {
     handSurvivalCards: hideItemsDetail(hunted.handSurvivalCards),
     playedPlaceCards: hideItemsDetail(hunted.playedPlaceCards)
   }
+}
+
+function huntTokenCanBePlaced(game, huntToken) {
+  return !game.huntTokensLocations[huntToken].length && isHuntTokenAvailable(game, huntToken)
+}
+
+function isHuntTokenAvailable(game, huntToken) {
+  return huntToken === CREATURE_TOKEN ||
+    (huntToken === ARTEMIA_TOKEN && isRescueCounterOnArtemiaSymbol(game)) ||
+    creaturePlayedHuntCardWithSymbol(game, huntToken)
+}
+
+function isRescueCounterOnArtemiaSymbol(game) {
+  if (game.boardSide === 1) {
+    return game.rescueCounter <= 6
+  } else {
+    return game.rescueCounter <= 11 && game.rescueCounter % 2 === 1
+  }
+}
+
+function creaturePlayedHuntCardWithSymbol(game, huntToken) {
+  return false // TODO
 }

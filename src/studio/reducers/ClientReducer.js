@@ -60,6 +60,7 @@ export function createClientReducer(Game) {
               return state
             }
             draft.moveHistory.splice(moveIndex, 1)
+            draft.currentMove--
             draft.game = draft.moveHistory.reduce((state, move) => {
               reportMove(Game, state, draft.playerId, move)
               return state

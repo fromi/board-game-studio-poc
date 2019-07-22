@@ -15,6 +15,8 @@ import {ChooseBoardSideDisplay} from "./moves-display/ChooseBoardSideDisplay"
 import {DrawHuntCardDisplay} from "./moves-display/DrawHuntCardDisplay"
 import {DrawSurvivalCardDisplay} from "./moves-display/DrawSurvivalCardDisplay"
 import {PlayPlaceCardDisplay} from "./moves-display/PlayPlaceCardDisplay"
+import {PLACE_HUNT_TOKEN} from "./moves/PlaceHuntToken";
+import {PlaceHuntTokenDisplay} from "./moves-display/PlaceHuntTokenDisplay";
 
 export const Interface = (props) => {
   const {playerId, game, animation, information} = props
@@ -57,6 +59,7 @@ export const movesDisplay = {
   [DRAW_HUNT_CARD]: DrawHuntCardDisplay,
   [DRAW_SURVIVAL_CARD]: DrawSurvivalCardDisplay,
   [PLAY_PLACE_CARD]: PlayPlaceCardDisplay,
+  [PLACE_HUNT_TOKEN]: PlaceHuntTokenDisplay
 }
 
 export const getInformation = (t, game, playerId, animation, playersMap) => {
