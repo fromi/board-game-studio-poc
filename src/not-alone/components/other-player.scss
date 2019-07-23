@@ -4,7 +4,7 @@
 .other-player {
   position: absolute;
   height: $player-panel-height;
-  width: calc(50% - #{$outer-column-width + $artemia-width / 2 + $default-margin});
+  width: calc(50vw - #{$board-height + $artemia-width / 2 + $default-margin * 2});
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 1vh;
 
@@ -38,11 +38,11 @@
   }
 
   &.seat-left {
-    left: $outer-column-width;
+    left: $board-height + $default-margin;
   }
 
   &.seat-right {
-    right: $outer-column-width;
+    right: $board-height + $default-margin;
   }
 
   &.seat-top {
