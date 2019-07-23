@@ -17,7 +17,7 @@ export const DrawHuntCardDisplay = {
     if (playerId === CREATURE) {
       return t('You draw 3 Hunt cards')
     } else {
-      return t('{{player}} draws 3 Hunt cards', {player: playersMap[CREATURE].name, context: playersMap[CREATURE].gender})
+      return t('{player} draws 3 Hunt cards', {player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender})
     }
   }
 }

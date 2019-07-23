@@ -14,7 +14,7 @@ const PlayedCards = ({game, playerId, undo}) => {
     const hunted = getHunted(game, playerId)
     let tooltip = ''
     if (hunted.playedPlaceCards.length === 1) {
-      tooltip = t('You played {{place}}', {place: t(places[hunted.playedPlaceCards[0]].name)})
+      tooltip = t('You played {place}', {place: t(places[hunted.playedPlaceCards[0]].name)})
     }
     return (
       <Tooltip title={tooltip} enterTouchDelay={0}>

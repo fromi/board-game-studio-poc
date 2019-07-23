@@ -64,7 +64,7 @@ export const movesDisplay = {
 
 export const getInformation = (t, game, playerId, animation, playersMap) => {
   if (game.assimilationCounter === 0) {
-    return t('{{player}} has assimilated the Hunted and wins the game!', {player: playersMap[CREATURE].name, context: playersMap[CREATURE].gender})
+    return t('{player} has assimilated the Hunted and wins the game!', {player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender})
   } else if (game.rescueCounter === 0) {
     return t('The Hunted escaped Artemia, they all win the game!')
   }

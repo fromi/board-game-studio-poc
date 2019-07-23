@@ -5,7 +5,7 @@ const style = require('sass-extract-loader!../variables.scss');
 
 export const ChooseBoardSideDisplay = {
   playerInformation: (t) => t('You are the Creature. Please choose the board side.'),
-  othersInformation: (t, game, playersMap) => t('{{player}} is the Creature! They must choose the board side.', {player: playersMap[CREATURE].name, context: playersMap[CREATURE].gender}),
+  othersInformation: (t, game, playersMap) => t('{player} is the Creature! {gender, select, ♀ {She} ♂ {He} other {They}} must choose the board side.', {player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender}),
 
   preAnimationDelay: () => style.global['$board-side-chosen-animation'].value,
   animationDelay: () => style.global['$setup-animation'].value,

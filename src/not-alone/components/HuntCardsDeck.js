@@ -15,7 +15,7 @@ const HuntCardsDeck = ({game, animation, playerId}) => {
   const isDrawingHuntCard = animation && animation.move.type === DRAW_HUNT_CARD
   const slice = game.huntCardsDeck.slice(0, maxCardsDisplayed)
   return (
-    <Tooltip title={t('Hunt cards ({{count}} card(s) left)', {count: game.huntCardsDeck.length})} enterTouchDelay={0}>
+    <Tooltip title={t('Hunt cards ({count} {count, plural, one {card} other {cards}} left)', {count: game.huntCardsDeck.length})} enterTouchDelay={0}>
       <div className="hunt-cards-deck">
         {slice.map((card, index) => {
           const classes = []

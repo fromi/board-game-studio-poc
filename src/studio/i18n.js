@@ -1,7 +1,8 @@
 import i18n from 'i18next'
 import {initReactI18next} from 'react-i18next'
+import ICU from 'i18next-icu'
 
-i18n.use(initReactI18next).init({
+i18n.use(ICU).use(initReactI18next).init({
   resources: {
     fr: {
       translation: {
@@ -42,8 +43,7 @@ i18n.use(initReactI18next).init({
         'You may not copy the Artefact.':
           'L’Artefact ne peut être copié.',
 
-        'Hunt cards ({{count}} card(s) left)': 'Cartes Traque ({{count}} carte restante)',
-        'Hunt cards ({{count}} card(s) left)_plural': 'Cartes Traque ({{count}} cartes restantes)',
+        'Hunt cards ({count} {count, plural, one {card} other {cards}} left)': 'Cartes Traque ({count} {count, plural, one {carte restante} other {cartes restantes}})',
 
         'Despair': 'Désespoir',
         'Force Field': 'Champ de Force',
@@ -107,8 +107,7 @@ i18n.use(initReactI18next).init({
         'Copy the last Hunt card you discarded.':
           'Copiez la dernière carte Traque défaussée.',
 
-        'Survival cards ({{count}} card(s) left)': 'Cartes Survie ({{count}} carte restante)',
-        'Survival cards ({{count}} card(s) left)_plural': 'Cartes Survie ({{count}} cartes restantes)',
+        'Survival cards ({count} {count, plural, one {card} other {cards}} left)': 'Cartes Survie ({count} {count, plural, one {carte restante} other {cartes restantes}} left)',
 
         'Adrenaline': 'Adénaline',
         'Ingenuity': 'Système D',
@@ -157,28 +156,22 @@ i18n.use(initReactI18next).init({
         'Take back the Place card you just played.':
           'Reprenez en main votre carte Lieu jouée.',
 
-        '{{count}} Place card(s)': '{{count}} carte Lieu',
-        '{{count}} Place card(s)_plural': '{{count}} cartes Lieu',
-        '{{count}} Survival card(s)': '{{count}} carte Survie',
-        '{{count}} Survival card(s)_plural': '{{count}} cartes Survie',
-        '{{count}} Hunt card(s)': '{{count}} carte Traque',
-        '{{count}} Hunt card(s)_plural': '{{count}} cartes Traque',
+        '{count} Place {count, plural, one {card} other {cards}}': '{count} {count, plural, one {carte} other {cartes}} Lieu',
+        '{count} Survival {count, plural, one {card} other {cards}}': '{count} {count, plural, one {carte} other {cartes}} Survie',
+        '{count} Hunt {count, plural, one {card} other {cards}}': '{count} {count, plural, one {carte} other {cartes}} Traque',
         'A Will counter': 'Un pion Volonté',
-        '{{count}} Will counter(s)': '{{count}} pion Volonté',
-        '{{count}} Will counter(s)_plural': '{{count}} pions Volonté',
+        '{count} Will {count, plural, one {counter} other {counters}}': '{count} {count, plural, one {pion} other {pions}} Volonté',
 
         'You are the Creature. Please choose the board side.': 'Vous êtes la Créature ! Veuillez choisir la face du plateau.',
-        '{{player}} is the Creature! They must choose the board side.': '{{player}} est la Creature! Elle·Il doit choisir la face du plateau.',
-        '{{player}} is the Creature! They must choose the board side._♂': '{{player}} est la Creature! Il doit choisir la face du plateau.',
-        '{{player}} is the Creature! They must choose the board side._♀': '{{player}} est la Creature! Elle doit choisir la face du plateau.',
+        '{player} is the Creature! {gender, select, ♀ {She} ♂ {He} other {They}} must choose the board side.': '{player} est la Creature! {gender, select, ♀ {Elle} ♂ {Il} other {Elle·Il}} doit choisir la face du plateau.',
         'Board side is chosen! Creating Artemia...': 'La face du plateau est choisie ! Création d’Artemia...',
         'You draw 3 Hunt cards': 'Vous piochez 3 cartes Traque',
-        '{{player}} draws 3 Hunt cards': '{{player}} pioche 3 cartes Traque',
+        '{player} draws 3 Hunt cards': '{player} pioche 3 cartes Traque',
         'Hunted players must play a Place card': 'Les Traqués doivent jouer une carte Lieu',
         'You must play a Place card': 'Vous devez jouer une carte lieu',
-        'You played {{place}}': 'Vous avez joué {{place}}',
+        'You played {place}': 'Vous avez joué {place}',
         'You draw a Survival card': 'Vous piochez une carte Survie',
-        '{{player}} draws a Survival card': '{{player}} pioche une carte Survie',
+        '{player} draws a Survival card': '{player} pioche une carte Survie',
 
         'The Creature will have the Artemia token when Rescue counter is 6 spaces or less from victory.':
           'La Créature pourra placer le jeton Artemia lorsque le jeton Secours sera à 6 cases ou moins de la victoire.',
@@ -189,12 +182,10 @@ i18n.use(initReactI18next).init({
         'Reach the star with the Rescue counter before the Assimilation counter does!':
           'Atteignez l’étoile avec le jeton Secours avant le jeton Assimilation !',
 
-        'Play {{place}}': 'Jouer {{place}}',
-        '{{player}} played {{count}} Place cards, not revealed yet': '{{player}} a joué 1 carte Lieu, pas encore révélée',
-        '{{player}} played {{count}} Place cards, not revealed yet_plural': '{{player}} a joué {{count}} cartes Lieu, pas encore révélées',
+        'Play {place}': 'Jouer {place}',
+        '{player} played {count} Place {count, plural, one {card} other {cards}}, not revealed yet': '{player} a joué {count} {count, plural, one {carte} other {cartes}} Lieu, pas encore révélée',
 
-        '{{count}} copies left in the reserve': '{{count}} exemplaire restant dans la réserve',
-        '{{count}} copies left in the reserve_plural': '{{count}} exemplaires restants dans la réserve'
+        '{count} {count, plural, one {copy} other {copies}} left in the reserve': '{count} {count, plural, one {exemplaire restant} other {exemplaires restants}} dans la réserve',
       }
     }
   },

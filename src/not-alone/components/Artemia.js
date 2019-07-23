@@ -27,14 +27,14 @@ const Artemia = ({game}) => {
           <div className={'place place-' + (place)} key={place}>
             <PlaceCard place={place} withTooltip="true"/>
             {place > 5 && (
-              <Tooltip title={t('{{count}} copies left in the reserve', {count: game.reserve[place]})} enterTouchDelay={0}>
+              <Tooltip title={t('{count} {count, plural, one {copy} other {copies}} left in the reserve', {count: game.reserve[place]})} enterTouchDelay={0}>
                 <div className="reserve">{game.reserve[place]}</div>
               </Tooltip>
             )}
           </div>
         )
       })}
-      {draggedPlace && <div className={dropInfoClasses.join(' ')}><p>{t('Play {{place}}', {place: t(places[draggedPlace].name)})}</p></div>}
+      {draggedPlace && <div className={dropInfoClasses.join(' ')}><p>{t('Play {place}', {place: t(places[draggedPlace].name)})}</p></div>}
     </div>
   )
 }

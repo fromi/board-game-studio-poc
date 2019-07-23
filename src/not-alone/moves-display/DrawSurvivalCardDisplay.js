@@ -7,5 +7,5 @@ export const DrawSurvivalCardDisplay = {
   othersAnimationDelay: () => style.global['$other-player-draw-card-animation'].value,
 
   playerAnimatingInformation: (t) => t('You draw a Survival card'),
-  othersAnimatingInformation: (t, move, playerId, playersMap) => t('{{player}} draws a Survival card', {player: playersMap[move.playerId].name, context: playersMap[move.playerId].gender})
+  othersAnimatingInformation: (t, move, playerId, playersMap) => t('{player} draws a Survival card', {player: playersMap[move.playerId].name, gender: playersMap[move.playerId].gender})
 }
