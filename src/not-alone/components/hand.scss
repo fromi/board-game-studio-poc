@@ -38,7 +38,7 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
 
     // Fix for Chrome bug (front face remains hidden if mouse is not moved during animation)
     &.will-draw, &.drawing {
-      .card .face.front {
+      .card, .card .face.front {
         backface-visibility: visible;
       }
     }

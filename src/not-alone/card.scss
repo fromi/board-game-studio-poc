@@ -8,6 +8,7 @@
   width: $card-width;
   transform-style: preserve-3d;
   will-change: transform;
+  backface-visibility: hidden;
 
   .face {
     position: absolute;
