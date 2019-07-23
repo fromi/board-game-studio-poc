@@ -27,6 +27,7 @@
   .board {
     position: absolute;
     width: $board-width;
+    cursor: help;
   }
 
   .hunt-cards-deck, .survival-cards-deck {

@@ -191,7 +191,10 @@ i18n.use(initReactI18next).init({
 
         'Play {{place}}': 'Jouer {{place}}',
         '{{player}} played {{count}} Place cards, not revealed yet': '{{player}} a joué 1 carte Lieu, pas encore révélée',
-        '{{player}} played {{count}} Place cards, not revealed yet_plural': '{{player}} a joué {{count}} cartes Lieu, pas encore révélées'
+        '{{player}} played {{count}} Place cards, not revealed yet_plural': '{{player}} a joué {{count}} cartes Lieu, pas encore révélées',
+
+        '{{count}} copies left in the reserve': '{{count}} exemplaire restant dans la réserve',
+        '{{count}} copies left in the reserve_plural': '{{count}} exemplaires restants dans la réserve'
       }
     }
   },

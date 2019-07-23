@@ -6,6 +6,7 @@
   .board:not(.chosen) {
     $board-translate-x: calc((50vw - #{$board-width / 2}) / #{$board-scale-factor});
     $scale-delta-top: $board-height / 2 - $board-height / 2 / $board-scale-factor;
+    will-change: transform, opacity;
 
     &.board-1 {
       transform: scale($board-scale-factor) translate($board-translate-x, $scale-delta-top + $board-width / 9 / $board-scale-factor);
@@ -64,6 +65,10 @@
         z-index: -1;
       }
     }
+  }
+
+  .artemia .place-card:hover {
+    transform: none;
   }
 }
 

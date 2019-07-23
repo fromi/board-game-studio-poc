@@ -22,6 +22,7 @@
     right: 0;
     top: $other-players-hand-top;
     transform: scale($other-players-hand-scale) rotate(180deg);
+    cursor: help;
 
     @include handOfCards($card-width, $card-height, false, 20, 35deg);
 

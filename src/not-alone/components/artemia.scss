@@ -29,22 +29,26 @@
     border-top-right-radius: 1vh;
   }
 
-  .place-card {
-    position: relative;
-    top: 0;
-    left: 0;
-  }
+  > .place {
+    z-index: 0;
+    transition-property: transform, z-index;
 
-  .place-card:hover {
-    transition-delay: 0.5s;
-    transform: scale(3);
-    z-index: 100;
-  }
+    @for $i from 0 through (9) {
+      &.place-#{$i + 1} {
+        grid-row: $i / 5 + 1;
+        grid-column: $i % 5 + 1;
+      }
+    }
 
-  @for $i from 0 through (9) {
-    .place-#{$i + 1} {
-      grid-row: $i / 5 + 1;
-      grid-column: $i % 5 + 1;
+    .reserve {
+      color: white;
+      background-color: black;
+      border-bottom-left-radius: 1.5vh;
+      border-bottom-right-radius: 1.5vh;
+      width: 3vh;
+      margin: 0 auto;
+      text-align: center;
+      cursor: help;
     }
   }
 
