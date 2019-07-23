@@ -107,7 +107,7 @@ i18n.use(ICU).use(initReactI18next).init({
         'Copy the last Hunt card you discarded.':
           'Copiez la dernière carte Traque défaussée.',
 
-        'Survival cards ({count} {count, plural, one {card} other {cards}} left)': 'Cartes Survie ({count} {count, plural, one {carte restante} other {cartes restantes}} left)',
+        'Survival cards ({count} {count, plural, one {card} other {cards}} left)': 'Cartes Survie ({count} {count, plural, one {carte restante} other {cartes restantes}})',
 
         'Adrenaline': 'Adénaline',
         'Ingenuity': 'Système D',
@@ -156,8 +156,8 @@ i18n.use(ICU).use(initReactI18next).init({
         'Take back the Place card you just played.':
           'Reprenez en main votre carte Lieu jouée.',
 
-        '{count} Place {count, plural, one {card} other {cards}}': '{count} {count, plural, one {carte} other {cartes}} Lieu',
-        '{count} Survival {count, plural, one {card} other {cards}}': '{count} {count, plural, one {carte} other {cartes}} Survie',
+        '{placeCards} Place {placeCards, plural, one {card} other {cards}} and {survivalCards} Survival {survivalCards, plural, one {card} other {cards}}':
+          '{placeCards} {placeCards, plural, one {carte} other {cartes}} Lieu et {survivalCards} {survivalCards, plural, one {carte} other {cartes}} Survie',
         '{count} Hunt {count, plural, one {card} other {cards}}': '{count} {count, plural, one {carte} other {cartes}} Traque',
         'A Will counter': 'Un pion Volonté',
         '{count} Will {count, plural, one {counter} other {counters}}': '{count} {count, plural, one {pion} other {pions}} Volonté',

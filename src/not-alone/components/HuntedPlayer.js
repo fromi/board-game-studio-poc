@@ -14,8 +14,9 @@ const HuntedPlayer = ({hunted, huntedId, classes, playersMap, animation}) => {
   return (
     <div className={classes.join(' ')}>
       <h3>{playersMap[huntedId].name}</h3>
-      <Tooltip title={t('{count} Place {count, plural, one {card} other {cards}}', {count: hunted.handPlaceCards.length}) + ' / '
-      + t('{count} Survival {count, plural, one {card} other {cards}}', {count: hunted.handSurvivalCards.length})} enterTouchDelay={0}>
+      <Tooltip
+        title={t('{placeCards} Place {placeCards, plural, one {card} other {cards}} and {survivalCards} Survival {survivalCards, plural, one {card} other {cards}}',
+          {placeCards: hunted.handPlaceCards.length, survivalCards: hunted.handSurvivalCards.length})} enterTouchDelay={0}>
         <div className="player-hand">
           {hunted.handPlaceCards.map((card, index) => <PlaceCard key={index}/>)}
           {hunted.handSurvivalCards.map((card, index) => {
@@ -35,7 +36,10 @@ const HuntedPlayer = ({hunted, huntedId, classes, playersMap, animation}) => {
       <div className="played-place-cards">
         {hunted.playedPlaceCards.map((place, index) => {
           const tooltip = isNaN(place) ?
-            t('{player} played {count} Place {count, plural, one {card} other {cards}}, not revealed yet', {player: playersMap[huntedId].name, count: hunted.playedPlaceCards.length}) :
+            t('{player} played {count} Place {count, plural, one {card} other {cards}}, not revealed yet', {
+              player: playersMap[huntedId].name,
+              count: hunted.playedPlaceCards.length
+            }) :
             t('{player} played {place}', {player: playersMap[huntedId].name, place: t(places[place].name)})
           return (
             <Tooltip title={tooltip} enterTouchDelay={0} key={isNaN(place) ? index : place}>
