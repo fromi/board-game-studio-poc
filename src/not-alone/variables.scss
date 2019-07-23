@@ -3,6 +3,7 @@ $default-margin: 1.5vh;
 
 $board-width: 100vh - $header-height;
 $board-height: $board-width * 886 / 4606;
+$board-ratio: 4606 / 886;
 
 $card-border: 0.5vh;
 $card-image-ratio: 5 / 7;

@@ -26,7 +26,6 @@
 
   .board {
     position: absolute;
-    bottom: 0;
     width: $board-width;
   }
 
@@ -49,8 +48,7 @@
 
   &.hunted {
     .board {
-      transform: rotate(-90deg) translate($board-width / 2 - $board-height / 2, $board-height / 2 - $board-width / 2);
-      left: 0;
+      transform: rotate(-90deg) translate($board-height / 2 - $board-width / 2, $board-height / 2 - $board-width / 2);
     }
 
     .hunt-cards-deck {
@@ -114,8 +112,7 @@
 
   &:not(.hunted) {
     .board {
-      transform: rotate(90deg) translate($board-height / 2 - $board-width / 2, $board-height / 2 - $board-width / 2);
-      right: 0;
+      transform: rotate(90deg) translate($board-width / 2 - $board-height / 2, calc(-100vw + #{$board-width / 2 + $board-height / 2}));
     }
 
     .hunt-cards-deck {
