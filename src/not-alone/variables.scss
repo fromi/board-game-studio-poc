@@ -16,10 +16,14 @@ $decks-max-cards-displayed: 8;
 $decks-card-shift-x: 0.1vh;
 $decks-card-shift-y: 0.2vh;
 
+$artemia-top-margin: 17vh;
 $artemia-grid-gap: 0.5vh;
 $artemia-width: $card-width * 5 + 6 * $artemia-grid-gap;
 
+$hand-bottom-margin: 2vh;
+
 $player-panel-height: 21vh;
+$calc-player-panel-width: calc(50vw - #{$board-height + $artemia-width / 2 + $default-margin * 2});
 $other-players-hand-scale: 0.18;
 $other-players-hand-top: 10vh;
 

@@ -186,6 +186,10 @@ i18n.use(ICU).use(initReactI18next).init({
         '{player} played {count} Place {count, plural, one {card} other {cards}}, not revealed yet': '{player} a joué {count} {count, plural, one {carte} other {cartes}} Lieu, pas encore révélée',
 
         '{count} {count, plural, one {copy} other {copies}} left in the reserve': '{count} {count, plural, one {exemplaire restant} other {exemplaires restants}} dans la réserve',
+
+        'The Creature token': 'Le jeton Creature',
+        'The Artemia token': 'Le jeton Artemia',
+        'The Target token': 'Le jeton Cible'
       }
     }
   },

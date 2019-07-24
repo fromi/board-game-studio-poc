@@ -4,7 +4,7 @@
 .other-player {
   position: absolute;
   height: $player-panel-height;
-  width: calc(50vw - #{$board-height + $artemia-width / 2 + $default-margin * 2});
+  width: $calc-player-panel-width;
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 1vh;
 

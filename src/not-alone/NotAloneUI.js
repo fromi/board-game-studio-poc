@@ -1,6 +1,6 @@
 import React from 'react'
 import "./not-alone.scss"
-import {BOARD_SIDES, CREATURE} from "./NotAlone"
+import {BOARD_SIDES, CREATURE, HUNT_TOKENS} from "./NotAlone"
 import Board from "./components/Board"
 import {CHOOSE_BOARD_SIDE} from "./moves/ChooseBoardSide"
 import Artemia from "./components/Artemia"
@@ -17,6 +17,7 @@ import {DrawSurvivalCardDisplay} from "./moves-display/DrawSurvivalCardDisplay"
 import {PlayPlaceCardDisplay} from "./moves-display/PlayPlaceCardDisplay"
 import {PLACE_HUNT_TOKEN} from "./moves/PlaceHuntToken";
 import {PlaceHuntTokenDisplay} from "./moves-display/PlaceHuntTokenDisplay";
+import HuntToken from "./components/HuntToken";
 
 export const Interface = (props) => {
   const {playerId, game, animation, information} = props
@@ -50,6 +51,7 @@ export const Interface = (props) => {
       <HuntCardsDeck {...props}/>
       <SurvivalCardsDeck {...props}/>
       {playerId && <PlayerMaterial {...props}/>}
+      {HUNT_TOKENS.map(token => <HuntToken token={token} locations={game.huntTokensLocations[token]} playerId={playerId} game={game} key={token}/>)}
     </div>
   )
 }

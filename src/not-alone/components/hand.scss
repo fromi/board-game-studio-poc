@@ -1,7 +1,6 @@
 @import "../../util/hand-of-cards";
 @import "../variables";
 
-$hand-bottom-margin: 2vh;
 $hand-card-y: 100vh - $card-height / 2 + $hand-bottom-margin;
 $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
 
