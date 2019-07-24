@@ -27,7 +27,7 @@ const Artemia = ({game}) => {
           <div className={'place place-' + (place)} key={place}>
             <PlaceCard place={place} withTooltip="true"/>
             {place > 5 && (
-              <Tooltip title={t('{count} {count, plural, one {copy} other {copies}} left in the reserve', {count: game.reserve[place]})} enterTouchDelay={0}>
+              <Tooltip title={t('{count, plural, one {One copy} other {{count} copies}} left in the reserve', {count: game.reserve[place]})} enterTouchDelay={0}>
                 <div className="reserve">{game.reserve[place]}</div>
               </Tooltip>
             )}

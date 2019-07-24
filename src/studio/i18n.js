@@ -43,7 +43,7 @@ i18n.use(ICU).use(initReactI18next).init({
         'You may not copy the Artefact.':
           'L’Artefact ne peut être copié.',
 
-        'Hunt cards ({count} {count, plural, one {card} other {cards}} left)': 'Cartes Traque ({count} {count, plural, one {carte restante} other {cartes restantes}})',
+        'Hunt cards ({count, plural, one {one card} other {{count} cards}} left)': 'Cartes Traque ({count, plural, one {une carte restante} other {{count} cartes restantes}})',
 
         'Despair': 'Désespoir',
         'Force Field': 'Champ de Force',
@@ -107,7 +107,7 @@ i18n.use(ICU).use(initReactI18next).init({
         'Copy the last Hunt card you discarded.':
           'Copiez la dernière carte Traque défaussée.',
 
-        'Survival cards ({count} {count, plural, one {card} other {cards}} left)': 'Cartes Survie ({count} {count, plural, one {carte restante} other {cartes restantes}})',
+        'Survival cards ({count, plural, one {one card} other {{count} cards}} left)': 'Cartes Survie ({count, plural, one {une carte restante} other {{count} cartes restantes}})',
 
         'Adrenaline': 'Adénaline',
         'Ingenuity': 'Système D',
@@ -156,11 +156,11 @@ i18n.use(ICU).use(initReactI18next).init({
         'Take back the Place card you just played.':
           'Reprenez en main votre carte Lieu jouée.',
 
-        '{placeCards} Place {placeCards, plural, one {card} other {cards}} and {survivalCards} Survival {survivalCards, plural, one {card} other {cards}}':
-          '{placeCards} {placeCards, plural, one {carte} other {cartes}} Lieu et {survivalCards} {survivalCards, plural, one {carte} other {cartes}} Survie',
-        '{count} Hunt {count, plural, one {card} other {cards}}': '{count} {count, plural, one {carte} other {cartes}} Traque',
+        '{placeCards, plural, one {One Place card} other {{placeCards} Place cards}} and {survivalCards, plural, one {one Survival card} other {{survivalCards} Survival cards}}':
+          '{placeCards, plural, one {Une carte} other {{placeCards} cartes}} Lieu et {survivalCards, plural, one {une carte} other {{survivalCards} cartes}} Survie',
+        '{count, plural, one {One Hunt card} other {{count} Hunt cards}}': '{count, plural, one {Une carte} other {{count} cartes}} Traque',
         'A Will counter': 'Un pion Volonté',
-        '{count} Will {count, plural, one {counter} other {counters}}': '{count} {count, plural, one {pion} other {pions}} Volonté',
+        '{count, plural, one {One Will counter} other {{count} Will counters}}': '{count, plural, one {Un pion} other {{count} pions}} Volonté',
 
         'You are the Creature. Please choose the board side.': 'Vous êtes la Créature ! Veuillez choisir la face du plateau.',
         '{player} is the Creature! {gender, select, ♀ {She} ♂ {He} other {They}} must choose the board side.': '{player} est la Creature! {gender, select, ♀ {Elle} ♂ {Il} other {Elle·Il}} doit choisir la face du plateau.',
@@ -183,9 +183,9 @@ i18n.use(ICU).use(initReactI18next).init({
           'Atteignez l’étoile avec le jeton Secours avant le jeton Assimilation !',
 
         'Play {place}': 'Jouer {place}',
-        '{player} played {count} Place {count, plural, one {card} other {cards}}, not revealed yet': '{player} a joué {count} {count, plural, one {carte} other {cartes}} Lieu, pas encore révélée',
+        '{player} played {count, plural, one {one Place card} other {{count} Place cards}}, not revealed yet': '{player} a joué {count, plural, one {une carte} other {{count} cartes}} Lieu, pas encore révélée',
 
-        '{count} {count, plural, one {copy} other {copies}} left in the reserve': '{count} {count, plural, one {exemplaire restant} other {exemplaires restants}} dans la réserve',
+        '{count, plural, one {One copy} other {{count} copies}} left in the reserve': '{count, plural, one {Un exemplaire restant} other {{count} exemplaires restants}} dans la réserve',
 
         'The Creature token': 'Le jeton Creature',
         'The Artemia token': 'Le jeton Artemia',

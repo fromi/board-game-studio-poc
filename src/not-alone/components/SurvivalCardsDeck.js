@@ -15,7 +15,7 @@ const SurvivalCardsDeck = ({game, playerId, animation}) => {
   const isDrawingSurvivalCard = animation && animation.move.type === DRAW_SURVIVAL_CARD
   const slice = game.survivalCardsDeck.slice(0, maxCardsDisplayed)
   return (
-    <Tooltip title={t('Survival cards ({count} {count, plural, one {card} other {cards}} left)', {count: game.survivalCardsDeck.length})} enterTouchDelay={0}>
+    <Tooltip title={t('Survival cards ({count, plural, one {one card} other {{count} cards}} left)', {count: game.survivalCardsDeck.length})} enterTouchDelay={0}>
       <div className="survival-cards-deck">
         {slice.map((card, index) => {
           const classes = []

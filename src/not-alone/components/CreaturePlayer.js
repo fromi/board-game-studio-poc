@@ -22,7 +22,7 @@ const CreaturePlayer = ({creature, classes, playersMap, animation}) => {
   return (
     <div className={classes.join(' ')}>
       <h3>{playersMap[CREATURE].name}</h3>
-      <Tooltip title={t('{count} Hunt {count, plural, one {card} other {cards}}', {count: creature.hand.length})} enterTouchDelay={0}>
+      <Tooltip title={t('{count, plural, one {One Hunt card} other {{count} Hunt cards}}', {count: creature.hand.length})} enterTouchDelay={0}>
         <div className="player-hand">
           {cards}
         </div>
