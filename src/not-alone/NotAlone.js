@@ -79,7 +79,7 @@ export function getAutomaticMove(game) {
  * @return {[]} The player legal moves at this state of the game
  */
 export function getMandatoryMoves(game, playerId) {
-  return playerId === CREATURE ? getCreatureMandatoryMoves(game) : getHuntedMandatoryMoves(game, getHunted(game, playerId))
+  return playerId === CREATURE ? getCreatureMandatoryMoves(game) : getHuntedMandatoryMoves(game, playerId)
 }
 
 function getCreatureMandatoryMoves(game) {
@@ -91,9 +91,10 @@ function getCreatureMandatoryMoves(game) {
   return []
 }
 
-function getHuntedMandatoryMoves(game, hunted) {
+function getHuntedMandatoryMoves(game, huntedId) {
+  const hunted = getHunted(game, huntedId)
   if (game.phase === 1 && !explorationDone(hunted)) {
-    return hunted.handPlaceCards.map(place => playPlaceCard(place))
+    return hunted.handPlaceCards.map(place => playPlaceCard(huntedId, place))
   }
   return []
 }

@@ -10,20 +10,14 @@ import {
   START_ANIMATION
 } from "../StudioActions"
 import produce from "immer"
-import {findLastIndex, MOVE_PLAYED} from "./ServerReducer"
+import {findLastIndex, MOVE_PLAYED, MOVE_UNDONE} from "./ServerReducer"
 
 const isEqual = require("react-fast-compare");
 
 function reportMove(Game, game, playerId, move) {
   const Move = Game.moves[move.type]
-  if (Move.reportInOwnView && move.playerId === playerId) {
-    Move.reportInOwnView(game, move)
-  } else if (Move.reportInSpectatorView && !playerId) {
-    Move.reportInSpectatorView(game, move)
-  } else if (Move.reportInPlayerView) {
-    Move.reportInPlayerView(game, move, playerId)
-  } else if (Move.reportInView) {
-    Move.reportInView(game, move)
+  if (Move.reportInView) {
+    Move.reportInView(game, move, playerId)
   } else {
     Move.execute(game, move)
   }
@@ -100,14 +94,14 @@ export function notificationsAnimationListener(GameUI, store) {
   const applyAnimatingNotification = () => {
     const animation = store.getState().client.animation
     if (animation) {
-      const animationDelay = getAnimationDelay(GameUI, animation, store.getState().client.playerId)
+      const animationDelay = getAnimationDelay(GameUI, store.getState().client)
       store.dispatch({type: APPLY_ANIMATING_MOVE})
       setTimeout(() => store.dispatch({type: END_ANIMATION}), animationDelay * 1000)
     }
   }
 
   const startAnimation = (animation) => {
-    const preAnimationDelay = getPreAnimationDelay(GameUI, animation, store.getState().client.playerId)
+    const preAnimationDelay = getPreAnimationDelay(GameUI, animation, store.getState().client)
     store.dispatch({type: START_ANIMATION, animation})
     setTimeout(applyAnimatingNotification, preAnimationDelay * 1000)
   }
@@ -125,34 +119,27 @@ export function notificationsAnimationListener(GameUI, store) {
   }
 }
 
-const getPreAnimationDelay = (GameUI, animation, playerId) => {
+const getPreAnimationDelay = (GameUI, animation, client) => {
   if (GameUI.movesDisplay && GameUI.movesDisplay[animation.move.type]) {
     const MoveDisplay = GameUI.movesDisplay[animation.move.type]
-    if (animation.type === MOVE_PLAYED) {
-      if (MoveDisplay.playerPreAnimationDelay && animation.move.playerId === playerId) {
-        return MoveDisplay.playerPreAnimationDelay(animation.move, playerId)
-      } else if (MoveDisplay.othersPreAnimationDelay) {
-        return MoveDisplay.othersPreAnimationDelay(animation.move, playerId)
-      } else if (MoveDisplay.preAnimationDelay) {
-        return MoveDisplay.preAnimationDelay(animation.move, playerId)
-      }
+    if (animation.type === MOVE_UNDONE && MoveDisplay.preUndoAnimationDelay) {
+      return MoveDisplay.preUndoAnimationDelay(animation, client)
+    } else if (MoveDisplay.preAnimationDelay) {
+      return MoveDisplay.preAnimationDelay(animation, client)
     }
   }
-  return GameUI.getPreAnimationDelay ? GameUI.getPreAnimationDelay(animation, playerId) : 0
+  return GameUI.getPreAnimationDelay ? GameUI.getPreAnimationDelay(animation, client) : 0
 }
 
-const getAnimationDelay = (GameUI, animation, playerId) => {
+const getAnimationDelay = (GameUI, client) => {
+  const animation = client.animation
   if (GameUI.movesDisplay && GameUI.movesDisplay[animation.move.type]) {
     const MoveDisplay = GameUI.movesDisplay[animation.move.type]
-    if (animation.type === MOVE_PLAYED) {
-      if (MoveDisplay.playerAnimationDelay && animation.move.playerId === playerId) {
-        return MoveDisplay.playerAnimationDelay(animation.move)
-      } else if (MoveDisplay.othersAnimationDelay) {
-        return MoveDisplay.othersAnimationDelay(animation.move, playerId)
-      } else if (MoveDisplay.animationDelay) {
-        return MoveDisplay.animationDelay(animation.move, playerId)
-      }
+    if (animation.type === MOVE_UNDONE && MoveDisplay.undoAnimationDelay) {
+      return MoveDisplay.undoAnimationDelay(animation, client)
+    } else if (MoveDisplay.animationDelay) {
+      return MoveDisplay.animationDelay(animation, client)
     }
   }
-  return GameUI.getAnimationDelay ? GameUI.getAnimationDelay(animation, playerId) : 0
+  return GameUI.getAnimationDelay ? GameUI.getAnimationDelay(animation, client) : 0
 }

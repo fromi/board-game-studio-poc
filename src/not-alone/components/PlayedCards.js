@@ -20,7 +20,7 @@ const PlayedCards = ({game, playerId, undo}) => {
       <Tooltip title={tooltip} enterTouchDelay={0}>
         <div className="played-cards">
           {hunted.playedPlaceCards.map(place => (
-            <PlaceCard place={place} key={place} onClick={() => undo({type: PLAY_PLACE_CARD, place})}/>
+            <PlaceCard place={place} key={place} onClick={() => undo({type: PLAY_PLACE_CARD, place, huntedId: playerId})}/>
           ))}
         </div>
       </Tooltip>

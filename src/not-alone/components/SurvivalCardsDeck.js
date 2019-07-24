@@ -19,13 +19,13 @@ const SurvivalCardsDeck = ({game, playerId, animation}) => {
       <div className="survival-cards-deck">
         {slice.map((card, index) => {
           const classes = []
-          if (index + 1 === slice.length && isDrawingSurvivalCard && !animation.moveApplied && playerId && playerId !== animation.move.playerId) {
-            if (playerId === CREATURE) {
-              const huntedNumber = getHuntedNumber(animation.move.playerId)
+          if (index + 1 === slice.length && isDrawingSurvivalCard && !animation.moveApplied && playerId && playerId !== animation.move.huntedId) {
+            if (!playerId || playerId === CREATURE) {
+              const huntedNumber = getHuntedNumber(animation.move.huntedId)
               classes.push('drawing', ...numberOfHuntedToTableSeatsForCreature[game.hunted.length][huntedNumber - 1])
             } else {
               const huntedNumber = getHuntedNumber(playerId)
-              const otherHuntedNumber = getHuntedNumber(animation.move.playerId)
+              const otherHuntedNumber = getHuntedNumber(animation.move.huntedId)
               const tableSeats = numberOfHuntedAndHuntedPositionToTableSeats[game.hunted.length][huntedNumber]
               const seat = otherHuntedNumber < huntedNumber ? tableSeats[otherHuntedNumber] : tableSeats[otherHuntedNumber - 1]
               classes.push('drawing', ...seat)

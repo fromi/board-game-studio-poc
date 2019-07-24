@@ -1,4 +1,4 @@
-import {PLAY_MOVE, UNDO_MOVE} from "../StudioActions"
+import {PLAY_MOVE} from "../StudioActions"
 
 /**
  * Prepares a game move which is going to be taken, by adding some more information.
@@ -13,12 +13,7 @@ export const prepareMoveMiddleware = Game => store => next => action => {
     const game = store.getState().server.game
     if (Move.prepare) {
       action.move = Move.prepare(action.move, game, action.playerId)
-    } else if (action.playerId) {
-      action.move = {...action.move, playerId: action.playerId}
     }
-  }
-  if (action.type === UNDO_MOVE) {
-    action.move = {...action.move, playerId: action.playerId}
   }
   return next(action)
 }

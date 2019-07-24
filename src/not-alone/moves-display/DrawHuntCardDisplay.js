@@ -4,20 +4,13 @@ import {CREATURE} from "../NotAlone"
 const style = require('sass-extract-loader!../variables.scss');
 
 export const DrawHuntCardDisplay = {
-  othersPreAnimationDelay: () => style.global['$other-player-draw-card-pre-animation'].value,
-  animationDelay: (move, playerId) => {
-    if (playerId === CREATURE) {
-      return style.global['$draw-card-animation'].value
-    } else {
-      return style.global['$other-player-draw-card-animation'].value
-    }
-  },
+  preAnimationDelay: (animation, {playerId}) => playerId !== CREATURE ? style.global['$other-player-draw-card-pre-animation'].value : 0,
 
-  animatingInformation: (t, move, playerId, playersMap) => {
-    if (playerId === CREATURE) {
-      return t('You draw 3 Hunt cards')
-    } else {
-      return t('{player} draws 3 Hunt cards', {player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender})
-    }
-  }
+  animationDelay: (animation, {playerId}) => playerId === CREATURE ?
+    style.global['$draw-card-animation'].value :
+    style.global['$other-player-draw-card-animation'].value,
+
+  animatingInformation: (t, {playerId}, playersMap) => playerId === CREATURE ?
+    t('You draw 3 Hunt cards') :
+    t('{player} draws 3 Hunt cards', {player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender})
 }

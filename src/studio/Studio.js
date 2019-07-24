@@ -122,16 +122,12 @@ const getInformation = (Game, GameUI, state, playersMap, t) => {
 }
 
 const getAnimationInformation = (GameUI, state, playersMap, t) => {
-  const {animation, playerId} = state.client
+  const animation = state.client.animation
   if (animation && GameUI.movesDisplay && GameUI.movesDisplay[animation.move.type]) {
     const MoveDisplay = GameUI.movesDisplay[animation.move.type]
     if (MoveDisplay && animation.type === MOVE_PLAYED) {
-      if (MoveDisplay.playerAnimatingInformation && animation.move.playerId === playerId) {
-        return MoveDisplay.playerAnimatingInformation(t, animation.move, playersMap)
-      } else if (MoveDisplay.othersAnimatingInformation) {
-        return MoveDisplay.othersAnimatingInformation(t, animation.move, playerId, playersMap)
-      } else if (MoveDisplay.animatingInformation) {
-        return MoveDisplay.animatingInformation(t, animation.move, playerId, playersMap)
+      if (MoveDisplay.animatingInformation) {
+        return MoveDisplay.animatingInformation(t, state.client, playersMap)
       }
     }
   }

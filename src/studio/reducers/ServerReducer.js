@@ -13,19 +13,7 @@ function executeMove(Game, state, move) {
 }
 
 export function getMoveView(Move, move, playerId, game) {
-  if (Move.getOwnView && move.playerId === playerId) {
-    return Move.getOwnView(move, game)
-  } else if (Move.getSpectatorView && !playerId) {
-    return Move.getSpectatorView(move, game)
-  } else if (Move.getOthersView && move.playerId !== playerId) {
-    return Move.getOthersView(move, game)
-  } else if (Move.getPlayerView) {
-    return Move.getPlayerView(move, playerId, game)
-  } else if (Move.getView) {
-    return Move.getView(move, game)
-  } else {
-    return move
-  }
+  return Move.getView ? Move.getView(game, move, playerId) : move;
 }
 
 export function createServerReducer(Game) {
@@ -40,6 +28,11 @@ export function createServerReducer(Game) {
         }, {});
         return {initialState: action.game, game: action.game, moveHistory: [], pendingNotifications: [], playerId: playerIds[0], playersMap}
       case PLAY_MOVE:
+        const allowedMoves = Game.getMandatoryMoves(state.game, action.playerId).concat(Game.getOptionalMoves(state.game, action.playerId));
+        if (!allowedMoves.some(move => isEqual(move, action.move))) {
+          console.error("This move is not authorized right now: " + JSON.stringify(action.move));
+          return state
+        }
         return produce(state, draft => {
           executeMove(Game, draft, action.move)
           while (Game.getAutomaticMove(draft.game)) {

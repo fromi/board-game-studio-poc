@@ -15,7 +15,7 @@ const Hand = ({game, playerId, animation, play, undo}) => {
   const hunted = playerId && playerId !== CREATURE ? getHunted(game, playerId) : undefined
 
   if (hunted) {
-    const isPlayingPlaceCard = animation && animation.type === MOVE_PLAYED && animation.move.type === PLAY_PLACE_CARD && animation.move.playerId === playerId
+    const isPlayingPlaceCard = animation && animation.type === MOVE_PLAYED && animation.move.type === PLAY_PLACE_CARD && animation.move.huntedId === playerId
     hunted.handPlaceCards.forEach((place) => {
       const classes = []
       const placeCardClasses = []
@@ -30,8 +30,8 @@ const Hand = ({game, playerId, animation, play, undo}) => {
         if (move) {
           play(move)
         } else if (game.phase === 1 && hunted.playedPlaceCards.length) {
-          undo({type: PLAY_PLACE_CARD, place: hunted.playedPlaceCards[0]})
-          play({type: PLAY_PLACE_CARD, place})
+          undo({type: PLAY_PLACE_CARD, place: hunted.playedPlaceCards[0], huntedId: playerId})
+          play({type: PLAY_PLACE_CARD, place, huntedId: playerId})
         }
       }
       cards.push((
@@ -43,7 +43,7 @@ const Hand = ({game, playerId, animation, play, undo}) => {
   }
 
   const specialCardDrawType = hunted ? DRAW_SURVIVAL_CARD : DRAW_HUNT_CARD
-  const isDrawingSpecialCard = animation && animation.type === MOVE_PLAYED && animation.move.type === specialCardDrawType && (!hunted || animation.move.playerId === playerId)
+  const isDrawingSpecialCard = animation && animation.type === MOVE_PLAYED && animation.move.type === specialCardDrawType && (!hunted || animation.move.huntedId === playerId)
   const SpecialCardComponent = hunted ? SurvivalCard : HuntCard
   const specialCards = hunted ? hunted.handSurvivalCards : game.creature.hand
 

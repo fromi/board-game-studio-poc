@@ -5,5 +5,5 @@ export const PlayPlaceCardDisplay = {
   playerInformation: (t) => t('You must play a Place card'),
   othersInformation: (t) => t('Hunted players must play a Place card'),
 
-  playerPreAnimationDelay: () => style.global['$playing-place-card-animation'].value
+  preAnimationDelay: (animation, {playerId}) => animation.move.huntedId === playerId ? style.global['$playing-place-card-animation'].value : 0
 }

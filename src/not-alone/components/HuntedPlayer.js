@@ -10,7 +10,7 @@ import {DRAW_SURVIVAL_CARD} from "../moves/DrawSurvivalCard"
 const HuntedPlayer = ({hunted, huntedId, classes, playersMap, animation}) => {
   const {t} = useTranslation()
   classes.push('other-player', 'hunted')
-  const isDrawingSurvivalCard = animation && animation.move.type === DRAW_SURVIVAL_CARD && animation.move.playerId === huntedId
+  const isDrawingSurvivalCard = animation && animation.move.type === DRAW_SURVIVAL_CARD && animation.move.huntedId === huntedId
   return (
     <div className={classes.join(' ')}>
       <h3>{playersMap[huntedId].name}</h3>

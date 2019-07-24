@@ -2,20 +2,22 @@ import {getHunted} from "../NotAlone"
 
 export const DRAW_SURVIVAL_CARD = 'DrawSurvivalCard'
 
-export const drawSurvivalCard = (playerId) => ({type: DRAW_SURVIVAL_CARD, playerId})
+export const drawSurvivalCard = (huntedId) => ({type: DRAW_SURVIVAL_CARD, huntedId})
 
 const execute = (game, move) => {
-  getHunted(game, move.playerId).handSurvivalCards.push(game.survivalCardsDeck.shift())
+  getHunted(game, move.huntedId).handSurvivalCards.push(game.survivalCardsDeck.shift())
   game.nextMoves.shift()
 }
 
 export const DrawSurvivalCard = {
   execute,
 
-  getOwnView: (move, game) => ({...move, card: getHunted(game, move.playerId).handSurvivalCards.slice(-1)[0]}),
+  getView: (game, move, playerId) => playerId === move.huntedId ? {...move, card: getHunted(game, playerId).handSurvivalCards.slice(-1)[0]} : move,
 
-  reportInOwnView: (game, move) => {
+  reportInView: (game, move, playerId) => {
     execute(game, move)
-    getHunted(game, move.playerId).handSurvivalCards.splice(-1, 1, move.card)
+    if (playerId === move.huntedId) {
+      getHunted(game, playerId).handSurvivalCards.splice(-1, 1, move.card)
+    }
   }
 }
