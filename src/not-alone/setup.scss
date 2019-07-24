@@ -2,17 +2,17 @@
 
 .not-alone.setup {
   $board-scale-factor: $board-ratio / 3;
+  $board-translate-x: calc((50vw - #{$board-width / 2}));
+  $scale-delta-top: $board-height / 2 - $board-height / 2;
 
   .board:not(.chosen) {
-    $board-translate-x: calc((50vw - #{$board-width / 2}) / #{$board-scale-factor});
-    $scale-delta-top: $board-height / 2 - $board-height / 2 / $board-scale-factor;
     will-change: transform, opacity;
 
     &.board-1 {
-      transform: scale($board-scale-factor) translate($board-translate-x, $scale-delta-top + $board-width / 9 / $board-scale-factor);
+      transform: translate($board-translate-x, $scale-delta-top + $board-width / 9 + $header-height) scale($board-scale-factor);
     }
     &.board-2 {
-      transform: scale($board-scale-factor) translate($board-translate-x, $scale-delta-top + $board-width * 5 / 9 / $board-scale-factor);
+      transform: translate($board-translate-x, $scale-delta-top + $board-width * 5 / 9 + $header-height) scale($board-scale-factor);
     }
   }
 
@@ -27,15 +27,11 @@
       cursor: pointer;
 
       &:hover {
-        $hover-scale-factor: 1.05 * $board-scale-factor;
-        $board-translate-x: calc((50vw - #{$board-width / 2}) / #{$hover-scale-factor});
-        $scale-delta-top: $board-height / 2 - $board-height / 2 / $hover-scale-factor;
-
         &.board-1 {
-          transform: scale($hover-scale-factor) translate($board-translate-x, $scale-delta-top + $board-width / 9 / $hover-scale-factor);
+          transform: translate($board-translate-x, $scale-delta-top + $board-width / 9 + $header-height) scale($board-scale-factor * 1.05);
         }
         &.board-2 {
-          transform: scale($hover-scale-factor) translate($board-translate-x, $scale-delta-top + $board-width * 5 / 9 / $hover-scale-factor);
+          transform: translate($board-translate-x, $scale-delta-top + $board-width * 5 / 9 + $header-height) scale($board-scale-factor * 1.05);
         }
         filter: drop-shadow(0 0 0.4rem white);
       }
