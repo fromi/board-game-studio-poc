@@ -3,7 +3,7 @@
 @mixin showCompleteCardInHand($card-rotation, $rotation-origin) {
   .card-wrapper-inner {
     transform: translateX(sin($card-rotation) * $rotation-origin);
-    z-index: 1;
+    z-index: 10;
   }
 }
 
@@ -20,12 +20,13 @@
         position: absolute;
         height: $card-height;
         width: $card-width;
-        z-index: 2;
+        z-index: 20;
       }
 
       .card-wrapper-inner {
         position: relative;
-        will-change: transform;
+        z-index: 0;
+        will-change: transform, z-index;
       }
 
       &:before, .card-wrapper-inner {
@@ -33,11 +34,10 @@
       }
 
       &:before, .card-wrapper-inner, .card-wrapper-inner > * {
-        transition: transform 0.3s ease-in-out;
+        transition: transform 0.3s ease-in-out, z-index 0.3s ease-in-out;
       }
 
       .card-wrapper-inner > * {
-        transition: all 0.3s ease-in-out;
         transform-origin: bottom;
       }
 

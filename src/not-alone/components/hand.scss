@@ -45,7 +45,7 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
     }
 
     &:not(.dragging):not(.drawing) > .card-wrapper-inner {
-      transition: left 0.3s 0.3s ease-out, top 0.3s 0.3s ease-out, transform 0.3s ease-in-out;
+      transition: left 0.3s 0.3s ease-out, top 0.3s 0.3s ease-out, transform 0.3s ease-in-out, z-index 0.3s ease-in-out;
     }
   }
 

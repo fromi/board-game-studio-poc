@@ -7,6 +7,7 @@ $token-size: 8vh;
   width: $token-size;
   height: $token-size;
   left: calc(50vw - #{$token-size / 2});
+  filter: drop-shadow(0.2vh 0.2vh 0.1vh black);
   cursor: help;
 
   &.placed {
