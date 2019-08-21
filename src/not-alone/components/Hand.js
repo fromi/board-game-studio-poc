@@ -1,5 +1,5 @@
 import React from "react"
-import {CREATURE, getHunted, getMandatoryMoves} from "../NotAlone"
+import {CREATURE, getHunted, getLegalMoves} from "../NotAlone"
 import PlaceCard, {PLACE_CARD} from "./PlaceCard"
 import HuntCard from "./HuntCard"
 import "./hand.scss"
@@ -26,7 +26,7 @@ const Hand = ({game, playerId, animation, play, undo}) => {
       }
       const dragItem = game.phase === 1 ? {type: PLACE_CARD, place} : undefined
       const onSelect = () => {
-        const move = getMandatoryMoves(game, playerId).find((move) => move.place === place && move.type === PLAY_PLACE_CARD)
+        const move = getLegalMoves(game, playerId).find((move) => move.place === place && move.type === PLAY_PLACE_CARD)
         if (move) {
           play(move)
         } else if (game.phase === 1 && hunted.playedPlaceCards.length) {

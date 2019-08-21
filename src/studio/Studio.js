@@ -72,7 +72,7 @@ const createConsoleTools = (Game, store) => {
       }, {})
     },
     new: (numberOfPlayers = 3) => store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers})}),
-    getPlayerMoves: (playerId) => Game.getMandatoryMoves(window.game.state, playerId).concat(Game.getOptionalMoves(window.game.state, playerId)),
+    getPlayerMoves: (playerId) => Game.getLegalMoves(window.game.state, playerId),
     play: (playerId, move) => store.dispatch({type: PLAY_MOVE, playerId, move}),
     back: (moves) => store.dispatch({type: MOVE_BACK, moves}),
     forward: (moves) => store.dispatch({type: MOVE_FORWARD, moves}),
@@ -135,7 +135,7 @@ const getAnimationInformation = (GameUI, state, playersMap, t) => {
 
 const getPlayerMandatoryMovesInformation = (Game, GameUI, state, playersMap, t) => {
   const {game, playerId} = state.client
-  const mandatoryMoves = playerId ? Game.getMandatoryMoves(game, playerId) : []
+  const mandatoryMoves = playerId ? Game.getLegalMoves(game, playerId) : []
   if (mandatoryMoves.length) {
     const mandatoryMovesTypes = mandatoryMoves.map(move => move.type).filter((moveType, index, moveTypes) => moveTypes.indexOf(moveType) === index);
     if (mandatoryMovesTypes.length === 1) {
@@ -154,7 +154,7 @@ const getOthersMandatoryMovesInformation = (Game, GameUI, state, playersMap, t) 
   const {game} = state.client
   const moveTypesToPlayerIds = {}
   Game.getPlayerIds(game).forEach((playerId) => {
-    Game.getMandatoryMoves(game, playerId).forEach((move) => {
+    Game.getLegalMoves(game, playerId).forEach((move) => {
       if (!moveTypesToPlayerIds.hasOwnProperty(move.type)) {
         moveTypesToPlayerIds[move.type] = []
       }

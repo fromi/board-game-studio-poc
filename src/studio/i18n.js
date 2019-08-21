@@ -35,7 +35,7 @@ i18n.use(ICU).use(initReactI18next).init({
         'Draw 2 Survival cards, choose one and discard the second.':
           'Piochez 2 cartes Survie, gardez-en une et défaussez l’autre.',
         'Move the Rescue counter forward 1 space.':
-          'Avancez le pion Secours de 1 case. (max 1x/tour)',
+          'Avancez le pion Secours de 1 case.',
         'The Hunted of your choice (you or another player) regains 1 Will OR you draw 1 Survival card.':
           'Le Traqué de votre choix (vous ou un autre joueur) récupère 1 Volonté OU piochez 1 carte Survie.',
         'Next turn, play 2 Place cards. Resolve both places.':

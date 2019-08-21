@@ -1,4 +1,4 @@
-import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, SERVER_NOTIFICATION, PLAY_MOVE, UNDO_MOVE} from "../StudioActions"
+import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, PLAY_MOVE, SERVER_NOTIFICATION, UNDO_MOVE} from "../StudioActions"
 import produce from "immer"
 import {getRandom} from "../../game-api/Random"
 
@@ -28,7 +28,7 @@ export function createServerReducer(Game) {
         }, {});
         return {initialState: action.game, game: action.game, moveHistory: [], pendingNotifications: [], playerId: playerIds[0], playersMap}
       case PLAY_MOVE:
-        const allowedMoves = Game.getMandatoryMoves(state.game, action.playerId).concat(Game.getOptionalMoves(state.game, action.playerId));
+        const allowedMoves = Game.getLegalMoves(state.game, action.playerId);
         if (!allowedMoves.some(move => isEqual(move, action.move))) {
           console.error("This move is not authorized right now: " + JSON.stringify(action.move));
           return state
