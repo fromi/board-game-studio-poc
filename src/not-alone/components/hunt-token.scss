@@ -6,12 +6,48 @@ $token-size: 8vh;
   position: absolute;
   width: $token-size;
   height: $token-size;
-  left: calc(50vw - #{$token-size / 2});
+  left: 0;
+  right: 0;
+  margin: auto;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh black);
   cursor: help;
+  transition: transform 0.3s ease-in-out;
+  z-index: 0;
+
+  img {
+    width: 100%;
+  }
+
+  &.available:not(.dragging) {
+    border-radius: 50%;
+    box-shadow: 0 0 0.1vh 0.1vh mediumvioletred;
+    outline: 1px solid transparent;
+    cursor: grab;
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0 0 0.8vh 0.2vh mediumvioletred;
+      animation: opacity 1.5s ease-in-out infinite alternate;
+      outline: 1px solid transparent;
+      border-radius: 50%;
+    }
+  }
+
+  &.dragging {
+    pointer-events: none;
+    cursor: grabbing;
+    z-index: 1000;
+  }
+
+  &:not(.dragging) {
+    transition: left 0.3s 0.1s ease-out, top 0.3s 0.1s ease-out, transform 0.3s ease-in-out, z-index 0.3s ease-in-out;
+  }
 
   &.placed {
-    $translate-y-artemia: $artemia-top-margin - $header-height + $artemia-grid-gap + $card-height / 2 - $token-size / 2;
+    $translate-y-artemia: $artemia-top-margin + $artemia-grid-gap + $card-height / 2 - $token-size / 2;
 
     @for $i from 1 through (5) {
       &.place-#{$i} {
@@ -43,7 +79,7 @@ $token-size: 8vh;
 
 .not-alone.creature {
   .hunt-token:not(.placed) {
-    $translation-y: 100vh - $header-height - $card-height - $token-size - $hand-bottom-margin - $default-margin;
+    $translation-y: 100vh - $card-height - $token-size - $hand-bottom-margin - $default-margin;
 
     &.creature-token {
       transform: translateX(- $token-size - $default-margin) translateY($translation-y);
@@ -61,10 +97,10 @@ $token-size: 8vh;
 
 .not-alone:not(.creature) {
   .hunt-token:not(.placed) {
-    $seat-top-translateY: $player-panel-height - $token-size;
-    $seat-middle-translateY: $player-panel-height * 2 + $default-margin - $token-size;
-    $seat-bottom-translateY: $player-panel-height * 3 + $default-margin * 2 - $token-size;
-    $seat-center-translateY: 100vh - $header-height - $token-size - $default-margin * 2;
+    $seat-top-translateY: $header-height + $player-panel-height - $token-size;
+    $seat-middle-translateY: $header-height + $player-panel-height * 2 + $default-margin - $token-size;
+    $seat-bottom-translateY: $header-height + $player-panel-height * 3 + $default-margin * 2 - $token-size;
+    $seat-center-translateY: 100vh - $token-size - $default-margin * 2;
 
     &.creature-token {
       &.seat-left {

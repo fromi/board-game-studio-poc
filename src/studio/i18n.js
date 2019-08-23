@@ -189,7 +189,10 @@ i18n.use(ICU).use(initReactI18next).init({
 
         'The Creature token': 'Le jeton Creature',
         'The Artemia token': 'Le jeton Artemia',
-        'The Target token': 'Le jeton Cible'
+        'The Target token': 'Le jeton Cible',
+
+        'You must place the Creature token on Artemia': 'Vous devez placer le jeton Creature sur Artemia',
+        '{player} must place the Creature token on Artemia.': '{player} doit placer le jeton Creature sur Artemia.'
       }
     }
   },

@@ -1,43 +1,30 @@
 import React from "react"
 import './place-card.scss'
 import {useTranslation} from 'react-i18next';
-import {Tooltip} from "@material-ui/core";
 
-export const PLACE_CARD = 'place card'
+export const PLACE_CARD = 'Place card'
 
-const PlaceCard = ({place, withTooltip, onClick, classes = []}) => {
+const PlaceCard = ({place, onClick, classes = []}) => {
 
   classes.push('card', 'place-card')
   if (!isNaN(place)) {
     classes.push('place-' + place)
   }
-  if (withTooltip) {
-    classes.push('with-tooltip')
-  }
 
   const {t} = useTranslation()
 
-  const tooltip = withTooltip ? (
-    <React.Fragment>
-      <h3 key="name">{t(places[place].name)}</h3>
-      {places[place].description.map((description, index) => <p key={index}>{t(description)}</p>)}
-    </React.Fragment>
-  ) : ''
-
   return (
-    <Tooltip title={tooltip} enterTouchDelay={0}>
-      <div className={classes.join(' ')} onClick={onClick} onTouchEnd={event => event.preventDefault()}>
-        {!isNaN(place) && (
-          <div className="face front">
-            <h3 key="name">{t(places[place].name)}</h3>
-            <div className="description" key="description">
-              {places[place].description.map((description, index) => <p key={index}>{t(description)}</p>)}
-            </div>
-          </div>)
-        }
-        <div className="face back"/>
-      </div>
-    </Tooltip>
+    <div className={classes.join(' ')} onClick={onClick} onTouchEnd={event => event.preventDefault()}>
+      {!isNaN(place) && (
+        <div className="face front">
+          <h3 key="name">{t(places[place].name)}</h3>
+          <div className="description" key="description">
+            {places[place].description.map((description, index) => <p key={index}>{t(description)}</p>)}
+          </div>
+        </div>)
+      }
+      <div className="face back"/>
+    </div>
   )
 }
 

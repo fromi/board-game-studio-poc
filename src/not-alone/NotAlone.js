@@ -86,7 +86,7 @@ function getCreatureMandatoryMoves(game) {
   if (!game.boardSide) {
     return BOARD_SIDES.map(side => chooseBoardSide(side))
   } else if (game.phase === 2) {
-    return HUNT_TOKENS.filter(huntToken => huntTokenCanBePlaced(game, huntToken)).flatMap(huntToken => PLACES.map(place => placeHuntToken(huntToken, [place])))
+    return HUNT_TOKENS.filter(token => huntTokenCanBePlaced(game, token)).flatMap(token => PLACES.map(place => placeHuntToken(token, [place])))
   }
   return []
 }
@@ -145,14 +145,14 @@ function hideHuntedSecrets(hunted) {
   }
 }
 
-function huntTokenCanBePlaced(game, huntToken) {
-  return !game.huntTokensLocations[huntToken].length && isHuntTokenAvailable(game, huntToken)
+function huntTokenCanBePlaced(game, token) {
+  return !game.huntTokensLocations[token].length && isHuntTokenAvailable(game, token)
 }
 
-function isHuntTokenAvailable(game, huntToken) {
-  return huntToken === CREATURE_TOKEN ||
-    (huntToken === ARTEMIA_TOKEN && isRescueCounterOnArtemiaSymbol(game)) ||
-    creaturePlayedHuntCardWithSymbol(game, huntToken)
+function isHuntTokenAvailable(game, token) {
+  return token === CREATURE_TOKEN ||
+    (token === ARTEMIA_TOKEN && isRescueCounterOnArtemiaSymbol(game)) ||
+    creaturePlayedHuntCardWithSymbol(game, token)
 }
 
 function isRescueCounterOnArtemiaSymbol(game) {
@@ -163,6 +163,6 @@ function isRescueCounterOnArtemiaSymbol(game) {
   }
 }
 
-function creaturePlayedHuntCardWithSymbol(game, huntToken) {
+function creaturePlayedHuntCardWithSymbol(game, token) {
   return false // TODO
 }

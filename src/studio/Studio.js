@@ -3,7 +3,8 @@ import {connect, Provider} from 'react-redux'
 import * as PropTypes from "prop-types"
 import {applyMiddleware, combineReducers, createStore} from "redux"
 import {DndProvider} from "react-dnd"
-import TouchBackend from 'react-dnd-touch-backend'
+import MultiBackend from 'react-dnd-multi-backend';
+import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch';
 import {createServerReducer, getMoveView, MOVE_PLAYED, pendingNotificationsListener} from "./reducers/ServerReducer"
 import {createClientReducer, notificationsAnimationListener} from "./reducers/ClientReducer"
 import {
@@ -74,6 +75,13 @@ const createConsoleTools = (Game, store) => {
     new: (numberOfPlayers = 3) => store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers})}),
     getPlayerMoves: (playerId) => Game.getLegalMoves(window.game.state, playerId),
     play: (playerId, move) => store.dispatch({type: PLAY_MOVE, playerId, move}),
+    undo: (move) => {
+      if (!move) {
+        const history = store.getState().server.moveHistory;
+        move = history[history.length - 1]
+      }
+      store.dispatch({type: UNDO_MOVE, move})
+    },
     back: (moves) => store.dispatch({type: MOVE_BACK, moves}),
     forward: (moves) => store.dispatch({type: MOVE_FORWARD, moves}),
     displayPlayerView: (playerId) => {
@@ -118,7 +126,7 @@ const getInformation = (Game, GameUI, state, playersMap, t) => {
     return 'You are ' + (state.client.moveHistory.length - state.client.currentMove) + ' steps back in game history'
   }
   console.warn('No information message for this state:', state)
-  return ''
+  return '?'
 }
 
 const getAnimationInformation = (GameUI, state, playersMap, t) => {
@@ -195,7 +203,7 @@ const Studio = ({store, GameUI, Game}) => {
   }))(GameUI.Interface)
 
   return (
-    <DndProvider backend={TouchBackend}>
+    <DndProvider backend={MultiBackend(HTML5toTouch)}>
       <Provider store={store}>
         <GameView/>
       </Provider>
