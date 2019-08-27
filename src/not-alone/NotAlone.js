@@ -10,6 +10,7 @@ import {PlayPlaceCard, playPlaceCard} from "./moves/PlayPlaceCard"
 import {StrikeBack} from "./moves/StrikeBack"
 import {ShuffleHuntCards} from "./moves/ShuffleHuntCards"
 import {placeHuntToken, PlaceHuntToken} from "./moves/PlaceHuntToken";
+import {pass, Pass} from "./moves/Pass";
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   CREATURE_TOKEN = 'CREATURE_TOKEN', ARTEMIA_TOKEN = 'ARTEMIA_TOKEN', TARGET_TOKEN = 'TARGET_TOKEN',
@@ -58,7 +59,7 @@ export function getPlayerIds(game) {
   return [CREATURE].concat(game.hunted.map((hunted, index) => HUNTED_PREFIX + (index + 1)))
 }
 
-export const moves = {ChooseBoardSide, DrawHuntCard, DrawSurvivalCard, StartPhase, PlayPlaceCard, PlaceHuntToken, ShuffleHuntCards, StrikeBack}
+export const moves = {ChooseBoardSide, DrawHuntCard, DrawSurvivalCard, StartPhase, PlayPlaceCard, PlaceHuntToken, Pass, ShuffleHuntCards, StrikeBack}
 
 export function getAutomaticMove(game) {
   if (game.nextMoves.length) {
@@ -79,19 +80,28 @@ export function getAutomaticMove(game) {
  * @return {[]} The player legal moves at this state of the game
  */
 export function getLegalMoves(game, playerId) {
-  return playerId === CREATURE ? getCreatureMandatoryMoves(game) : getHuntedMandatoryMoves(game, playerId)
+  return playerId === CREATURE ? getCreatureMoves(game) : getHuntedMoves(game, playerId)
 }
 
-function getCreatureMandatoryMoves(game) {
+function getCreatureMoves(game) {
   if (!game.boardSide) {
     return BOARD_SIDES.map(side => chooseBoardSide(side))
   } else if (game.phase === 2) {
-    return HUNT_TOKENS.filter(token => huntTokenCanBePlaced(game, token)).flatMap(token => PLACES.map(place => placeHuntToken(token, [place])))
+    return getCreatureHuntingMoves(game)
   }
   return []
 }
 
-function getHuntedMandatoryMoves(game, huntedId) {
+function getCreatureHuntingMoves(game) {
+  const moves = []
+  if (!game.creature.passed) {
+    const tokenToPlace = HUNT_TOKENS.filter(token => huntTokenCanBePlaced(game, token));
+    moves.push(pass(CREATURE), ...tokenToPlace.flatMap(token => PLACES.map(place => placeHuntToken(token, [place]))))
+  }
+  return moves
+}
+
+function getHuntedMoves(game, huntedId) {
   const hunted = getHunted(game, huntedId)
   if (game.phase === 1 && !explorationDone(hunted)) {
     return hunted.handPlaceCards.map(place => playPlaceCard(huntedId, place))

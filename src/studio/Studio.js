@@ -109,13 +109,13 @@ const getInformation = (Game, GameUI, state, playersMap, t) => {
   if (animationInformation) {
     return animationInformation
   }
-  const playerMandatoryMoveInformation = getPlayerMandatoryMovesInformation(Game, GameUI, state, playersMap, t)
-  if (playerMandatoryMoveInformation) {
-    return playerMandatoryMoveInformation
+  const playerMoveInformation = getPlayerMovesInformation(Game, GameUI, state, playersMap, t)
+  if (playerMoveInformation) {
+    return playerMoveInformation
   }
-  const othersMandatoryMoveInformation = getOthersMandatoryMovesInformation(Game, GameUI, state, playersMap, t)
-  if (othersMandatoryMoveInformation) {
-    return othersMandatoryMoveInformation
+  const defaultMoveInformation = getDefaultMovesInformation(Game, GameUI, state, playersMap, t)
+  if (defaultMoveInformation) {
+    return defaultMoveInformation
   }
   const {game, animation, playerId} = state.client
   const information = GameUI.getInformation(t, game, playerId, animation, playersMap)
@@ -141,15 +141,13 @@ const getAnimationInformation = (GameUI, state, playersMap, t) => {
   }
 }
 
-const getPlayerMandatoryMovesInformation = (Game, GameUI, state, playersMap, t) => {
+const getPlayerMovesInformation = (Game, GameUI, state, playersMap, t) => {
   const {game, playerId} = state.client
-  const mandatoryMoves = playerId ? Game.getLegalMoves(game, playerId) : []
-  if (mandatoryMoves.length) {
-    const mandatoryMovesTypes = mandatoryMoves.map(move => move.type).filter((moveType, index, moveTypes) => moveTypes.indexOf(moveType) === index);
-    if (mandatoryMovesTypes.length === 1) {
-      const MoveDisplay = GameUI.movesDisplay[mandatoryMovesTypes[0]]
+  if (playerId) {
+    for (const move of Game.getLegalMoves(game, playerId)) {
+      const MoveDisplay = GameUI.movesDisplay[move.type]
       if (MoveDisplay && MoveDisplay.playerInformation) {
-        const information = MoveDisplay.playerInformation(t, mandatoryMoves, game, playersMap)
+        const information = MoveDisplay.playerInformation(t, game, playerId, playersMap)
         if (information) {
           return information
         }
@@ -158,24 +156,18 @@ const getPlayerMandatoryMovesInformation = (Game, GameUI, state, playersMap, t) 
   }
 }
 
-const getOthersMandatoryMovesInformation = (Game, GameUI, state, playersMap, t) => {
+const getDefaultMovesInformation = (Game, GameUI, state, playersMap, t) => {
   const {game} = state.client
-  const moveTypesToPlayerIds = {}
-  Game.getPlayerIds(game).forEach((playerId) => {
-    Game.getLegalMoves(game, playerId).forEach((move) => {
-      if (!moveTypesToPlayerIds.hasOwnProperty(move.type)) {
-        moveTypesToPlayerIds[move.type] = []
+  const playerIds = Game.getPlayerIds(game);
+  for (const playerId of playerIds) {
+    for (const move of Game.getLegalMoves(game, playerId)) {
+      const MoveDisplay = GameUI.movesDisplay[move.type]
+      if (MoveDisplay && MoveDisplay.defaultInformation) {
+        const information = MoveDisplay.defaultInformation(t, game, playersMap);
+        if (information) {
+          return information;
+        }
       }
-      if (moveTypesToPlayerIds[move.type].indexOf(playerId) === -1) {
-        moveTypesToPlayerIds[move.type].push(playerId)
-      }
-    })
-  })
-  const moveTypes = Object.keys(moveTypesToPlayerIds)
-  if (moveTypes.length === 1) {
-    const MoveDisplay = GameUI.movesDisplay[moveTypes[0]]
-    if (MoveDisplay && MoveDisplay.othersInformation) {
-      return MoveDisplay.othersInformation(t, game, playersMap, moveTypesToPlayerIds[moveTypes[0]])
     }
   }
 }

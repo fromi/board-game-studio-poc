@@ -18,6 +18,8 @@ import {PlayPlaceCardDisplay} from "./moves-display/PlayPlaceCardDisplay"
 import {PLACE_HUNT_TOKEN} from "./moves/PlaceHuntToken";
 import {PlaceHuntTokenDisplay} from "./moves-display/PlaceHuntTokenDisplay";
 import HuntToken from "./components/HuntToken";
+import {PASS} from "./moves/Pass";
+import {PassDisplay} from "./moves-display/PassDisplay";
 
 export const Interface = (props) => {
   const {playerId, game, animation, information} = props
@@ -61,7 +63,8 @@ export const movesDisplay = {
   [DRAW_HUNT_CARD]: DrawHuntCardDisplay,
   [DRAW_SURVIVAL_CARD]: DrawSurvivalCardDisplay,
   [PLAY_PLACE_CARD]: PlayPlaceCardDisplay,
-  [PLACE_HUNT_TOKEN]: PlaceHuntTokenDisplay
+  [PLACE_HUNT_TOKEN]: PlaceHuntTokenDisplay,
+  [PASS]: PassDisplay
 }
 
 export const getInformation = (t, game, playerId, animation, playersMap) => {
