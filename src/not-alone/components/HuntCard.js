@@ -12,6 +12,7 @@ import {
   FLASHBACK,
   FORBIDDEN_ZONE,
   FORCE_FIELD,
+  huntCardFromName,
   INTERFERENCE,
   MIRAGE,
   MUTATION,
@@ -35,6 +36,7 @@ const HuntCard = ({cardName, classes = []}) => {
           <div className="description" key="description">
             <p>{t(descriptions[cardName])}</p>
           </div>
+          <p className="phase">{cardName === FLASHBACK ? t('Phase of the copied card') : t('Phase {number}', {number: huntCardFromName[cardName].phase})}</p>
         </div>
       )}
       <div className="face back"/>

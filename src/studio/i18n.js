@@ -107,6 +107,9 @@ i18n.use(ICU).use(initReactI18next).init({
         'Copy the last Hunt card you discarded.':
           'Copiez la dernière carte Traque défaussée.',
 
+        'Phase {number}': 'Phase {number}',
+        'Phase of the copied card': 'Phase de la carte copiée',
+
         'Survival cards ({count, plural, one {one card} other {{count} cards}} left)': 'Cartes Survie ({count, plural, one {une carte restante} other {{count} cartes restantes}})',
 
         'Adrenaline': 'Adénaline',

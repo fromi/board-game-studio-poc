@@ -39,4 +39,15 @@
       -webkit-backface-visibility: hidden;
     }
   }
+
+  .phase {
+    position: absolute;
+    bottom: 0.3vh;
+    left: 0.3vh;
+    right: 0.3vh;
+    margin: auto;
+    text-align: center;
+    font-size: $card-image-height / 16;
+    font-weight: bold;
+  }
 }
