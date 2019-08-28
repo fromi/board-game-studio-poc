@@ -81,7 +81,7 @@ export function getAutomaticMove(game) {
     return game.nextMoves[0]
   }
   if (game.phase === 1) {
-    if (getPlayerIds(game).every(playerId => getLegalMoves(game, playerId).length === 0)) { // TODO: hunted played, and creature passed or cannot play phase 1 Hunt card
+    if (game.hunted.every(hunted => explorationDone(hunted))) {
       return startPhase(2)
     }
   } else if (game.phase === 2) {

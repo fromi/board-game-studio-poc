@@ -18,7 +18,7 @@ const HuntToken = ({token, locations, playerId, game}) => {
   const {t} = useTranslation()
   const classes = ['hunt-token', tokensDisplay[token].className]
   const availableForPlacement = playerId === CREATURE && getLegalMoves(game, playerId).some((move) => move.type === PLACE_HUNT_TOKEN && move.token === token);
-  const canChangePlacement = locations.length && playerId === CREATURE && game.phase === 2
+  const canChangePlacement = locations.length !== 0 && playerId === CREATURE && game.phase === 2
 
   if (locations.length) {
     classes.push('placed', 'place-' + locations.join('-'))
