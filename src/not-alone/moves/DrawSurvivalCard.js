@@ -12,7 +12,7 @@ const execute = (game, move) => {
 export const DrawSurvivalCard = {
   execute,
 
-  getView: (game, move, playerId) => playerId === move.huntedId ? {...move, card: getHunted(game, playerId).handSurvivalCards.slice(-1)[0]} : move,
+  getView: (move, playerId, game) => playerId === move.huntedId ? {...move, card: getHunted(game, playerId).handSurvivalCards.slice(-1)[0]} : move,
 
   reportInView: (game, move, playerId) => {
     execute(game, move)

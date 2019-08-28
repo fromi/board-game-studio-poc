@@ -11,5 +11,5 @@ export const ShuffleHuntCards = {
     game.huntCardsDiscard = []
   },
 
-  getView: (game, move) => ({...move, shuffled: hideItemsDetail(move.shuffled)})
+  getView: (move) => ({...move, shuffled: hideItemsDetail(move.shuffled)})
 }

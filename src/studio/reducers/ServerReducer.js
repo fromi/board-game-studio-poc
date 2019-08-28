@@ -13,7 +13,7 @@ function executeMove(Game, state, move) {
 }
 
 export function getMoveView(Move, move, playerId, game) {
-  return Move.getView ? Move.getView(game, move, playerId) : move;
+  return Move.getView ? Move.getView(move, playerId, game) : move;
 }
 
 export function createServerReducer(Game) {

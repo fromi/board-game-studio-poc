@@ -11,6 +11,7 @@ import {StrikeBack} from "./moves/StrikeBack"
 import {ShuffleHuntCards} from "./moves/ShuffleHuntCards"
 import {placeHuntToken, PlaceHuntToken} from "./moves/PlaceHuntToken";
 import {pass, Pass} from "./moves/Pass";
+import {revealPlaceCards, RevealPlaceCards} from "./moves/RevealPlaceCard";
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   CREATURE_TOKEN = 'CREATURE_TOKEN', ARTEMIA_TOKEN = 'ARTEMIA_TOKEN', TARGET_TOKEN = 'TARGET_TOKEN',
@@ -59,15 +60,23 @@ export function getPlayerIds(game) {
   return [CREATURE].concat(game.hunted.map((hunted, index) => HUNTED_PREFIX + (index + 1)))
 }
 
-export const moves = {ChooseBoardSide, DrawHuntCard, DrawSurvivalCard, StartPhase, PlayPlaceCard, PlaceHuntToken, Pass, ShuffleHuntCards, StrikeBack}
+export const moves = {ChooseBoardSide, DrawHuntCard, DrawSurvivalCard, StartPhase, PlayPlaceCard, PlaceHuntToken, RevealPlaceCards, Pass, ShuffleHuntCards, StrikeBack}
 
 export function getAutomaticMove(game) {
   if (game.nextMoves.length) {
     return game.nextMoves[0]
   }
-  if (getPlayerIds(game).every(playerId => getLegalMoves(game, playerId).length === 0)) {
-    if (game.phase === 1) {
+  if (game.phase === 1) {
+    if (getPlayerIds(game).every(playerId => getLegalMoves(game, playerId).length === 0)) { // TODO: hunted played, and creature passed or cannot play phase 1 Hunt card
       return startPhase(2)
+    }
+  } else if (game.phase === 2) {
+    if (game.creature.passed && game.hunted.every(hunted => hunted.passed || !couldPlaySurvivalCard(game, hunted))) {
+      return startPhase(3)
+    }
+  } else if (game.phase === 3) {
+    if (!game.playedPlaceCardsRevealed) { // TODO: The River: players must take back a place card before revealing
+      return revealPlaceCards
     }
   }
   return null
@@ -138,7 +147,7 @@ export function getSpectatorView(game) {
     huntCardsDeck: hideItemsDetail(game.huntCardsDeck),
     survivalCardsDeck: hideItemsDetail(game.survivalCardsDeck),
     creature: hideCreatureSecrets(game),
-    hunted: game.hunted.map((hunted) => hideHuntedSecrets(hunted))
+    hunted: game.hunted.map((hunted) => hideHuntedSecrets(game, hunted))
   }
 }
 
@@ -146,12 +155,12 @@ function hideCreatureSecrets(game) {
   return {...game.creature, hand: hideItemsDetail(game.creature.hand)}
 }
 
-function hideHuntedSecrets(hunted) {
+function hideHuntedSecrets(game, hunted) {
   return {
     ...hunted,
     handPlaceCards: hideItemsDetail(hunted.handPlaceCards),
     handSurvivalCards: hideItemsDetail(hunted.handSurvivalCards),
-    playedPlaceCards: hideItemsDetail(hunted.playedPlaceCards)
+    playedPlaceCards: game.playedPlaceCardsRevealed ? hunted.playedPlaceCards : hideItemsDetail(hunted.playedPlaceCards)
   }
 }
 
@@ -175,4 +184,18 @@ function isRescueCounterOnArtemiaSymbol(game) {
 
 function creaturePlayedHuntCardWithSymbol(game, token) {
   return false // TODO
+}
+
+/**
+ * @return boolean True if the Hunted might have a Survival card to play from another player point of view
+ */
+function couldPlaySurvivalCard(game, hunted) {
+  if (hunted.handSurvivalCards.length === 0) {
+    return false
+  }
+  if (hunted.playedSurvivalCard) {
+    return false
+  }
+  // TODO: check if all the survival cards from current phase are in the discard pile
+  return false // TODO: return true
 }

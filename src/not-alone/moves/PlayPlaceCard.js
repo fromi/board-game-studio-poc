@@ -12,7 +12,7 @@ export const PlayPlaceCard = {
     hunted.playedPlaceCards.push(place)
   },
 
-  getView: (game, move, playerId) => playerId !== move.huntedId ? {...move, place: {}} : move,
+  getView: (move, playerId) => playerId !== move.huntedId ? {...move, place: {}} : move,
 
   undoable: (nextMoves) => nextMoves.every(move => move.type !== START_PHASE)
 }

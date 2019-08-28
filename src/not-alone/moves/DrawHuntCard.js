@@ -17,7 +17,7 @@ export const DrawHuntCard = {
 
   execute,
 
-  getView: (game, move, playerId) => playerId === CREATURE ? {...move, card: game.creature.hand.slice(-1)[0]} : move,
+  getView: (move, playerId, game) => playerId === CREATURE ? {...move, card: game.creature.hand.slice(-1)[0]} : move,
 
   reportInView: (game, move, playerId) => {
     execute(game, move)

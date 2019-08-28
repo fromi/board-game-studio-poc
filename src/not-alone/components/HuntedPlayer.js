@@ -13,7 +13,7 @@ const HuntedPlayer = ({hunted, huntedId, classes, playersMap, animation}) => {
   const isDrawingSurvivalCard = animation && animation.move.type === DRAW_SURVIVAL_CARD && animation.move.huntedId === huntedId
   return (
     <div className={classes.join(' ')}>
-      <h3>{playersMap[huntedId].name}</h3>
+      <h2>{playersMap[huntedId].name}</h2>
       <Tooltip
         title={t('{placeCards, plural, one {One Place card} other {{placeCards} Place cards}} and {survivalCards, plural, one {one Survival card} other {{survivalCards} Survival cards}}',
           {placeCards: hunted.handPlaceCards.length, survivalCards: hunted.handSurvivalCards.length})} enterTouchDelay={0}>
