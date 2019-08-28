@@ -1,6 +1,6 @@
 import React from 'react'
 import "./not-alone.scss"
-import {BOARD_SIDES, CREATURE, getLegalMoves, HUNT_TOKENS} from "./NotAlone"
+import {BOARD_SIDES, CREATURE, getLegalMoves} from "./NotAlone"
 import Board from "./components/Board"
 import {CHOOSE_BOARD_SIDE} from "./moves/ChooseBoardSide"
 import Artemia from "./components/Artemia"
@@ -23,6 +23,7 @@ import {PassDisplay} from "./moves-display/PassDisplay";
 import Button from "@material-ui/core/Button";
 import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
 import {lightBlue, pink} from "@material-ui/core/colors";
+import {HUNT_TOKENS} from "./material/HuntTokens";
 
 const createTheme = (color) => createMuiTheme({
   palette: {

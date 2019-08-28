@@ -12,10 +12,9 @@ import {ShuffleHuntCards} from "./moves/ShuffleHuntCards"
 import {placeHuntToken, PlaceHuntToken} from "./moves/PlaceHuntToken";
 import {pass, Pass} from "./moves/Pass";
 import {revealPlaceCards, RevealPlaceCards} from "./moves/RevealPlaceCard";
+import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS, TARGET_TOKEN} from "./material/HuntTokens";
 
-export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-  CREATURE_TOKEN = 'CREATURE_TOKEN', ARTEMIA_TOKEN = 'ARTEMIA_TOKEN', TARGET_TOKEN = 'TARGET_TOKEN',
-  HUNT_TOKENS = [CREATURE_TOKEN, ARTEMIA_TOKEN, TARGET_TOKEN]
+export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 /**
  * Setup a new Game.
@@ -60,7 +59,18 @@ export function getPlayerIds(game) {
   return [CREATURE].concat(game.hunted.map((hunted, index) => HUNTED_PREFIX + (index + 1)))
 }
 
-export const moves = {ChooseBoardSide, DrawHuntCard, DrawSurvivalCard, StartPhase, PlayPlaceCard, PlaceHuntToken, RevealPlaceCards, Pass, ShuffleHuntCards, StrikeBack}
+export const moves = {
+  ChooseBoardSide,
+  DrawHuntCard,
+  DrawSurvivalCard,
+  StartPhase,
+  PlayPlaceCard,
+  PlaceHuntToken,
+  RevealPlaceCards,
+  Pass,
+  ShuffleHuntCards,
+  StrikeBack
+}
 
 export function getAutomaticMove(game) {
   if (game.nextMoves.length) {

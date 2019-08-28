@@ -22,6 +22,18 @@
     -webkit-backface-visibility: hidden;
   }
 
+  .hunt-token-symbol {
+    position: absolute;
+    height: $card-image-height / 7;
+    width: $card-image-height / 7;
+    top: $card-image-height * 0.13;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 50%;
+    box-shadow: 0 0 $card-image-height / 500 $card-image-height / 1000 green;
+  }
+
   .description {
     overflow: hidden;
     position: absolute;

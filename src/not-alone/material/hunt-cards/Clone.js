@@ -1,4 +1,4 @@
-import {TARGET_TOKEN} from "../../NotAlone";
+import {TARGET_TOKEN} from "../HuntTokens";
 
 export const Clone = {
   phase: 2,

@@ -4,12 +4,13 @@ import creatureToken from "../img/creature-token.png"
 import artemiaToken from "../img/artemia-token.png"
 import targetToken from "../img/target-token.png"
 import "./hunt-token.scss"
-import {ARTEMIA_TOKEN, CREATURE, CREATURE_TOKEN, getHuntedNumber, getLegalMoves, TARGET_TOKEN} from "../NotAlone";
+import {CREATURE, getHuntedNumber, getLegalMoves} from "../NotAlone";
 import {useTranslation} from "react-i18next";
 import {numberOfHuntedAndHuntedPositionToTableSeats, SEAT_CENTER} from "./OtherPlayers";
 import {PLACE_HUNT_TOKEN} from "../moves/PlaceHuntToken";
 import {useDrag, useDragLayer} from "react-dnd";
 import {getEmptyImage} from "react-dnd-html5-backend";
+import {ARTEMIA_TOKEN, CREATURE_TOKEN, TARGET_TOKEN} from "../material/HuntTokens";
 
 export const HUNT_TOKEN = 'Hunt token'
 
@@ -70,7 +71,7 @@ const Image = React.memo(({token}) => {
   return (<img src={tokensDisplay[token].image} alt={tokensDisplay[token].description(t)} draggable={false}/>)
 })
 
-const tokensDisplay = {
+export const tokensDisplay = {
   [CREATURE_TOKEN]: {className: 'creature-token', image: creatureToken, description: (t) => t('The Creature token')},
   [ARTEMIA_TOKEN]: {className: 'artemia-token', image: artemiaToken, description: (t) => t('The Artemia token')},
   [TARGET_TOKEN]: {className: 'target-token', image: targetToken, description: (t) => t('The Target token')}
