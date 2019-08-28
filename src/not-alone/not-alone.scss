@@ -47,6 +47,15 @@
     }
   }
 
+  .pass-button {
+    position: absolute;
+    top: $header-height;
+    bottom: 100vh - $artemia-top-margin;
+    height: 4vh;
+    margin: auto;
+    right: calc(#{$calc-player-panel-width} + #{$board-height + 3 * $default-margin});
+  }
+
   &.hunted {
     .board {
       transform: rotate(-90deg) translate($board-height / 2 - $board-width / 2, $board-height / 2 - $board-width / 2);
