@@ -195,7 +195,19 @@ i18n.use(ICU).use(initReactI18next).init({
         'The Target token': 'Le jeton Cible',
 
         'You may place the Creature token on Artemia': 'Vous pouvez placer le jeton Creature sur Artemia',
-        '{player} may place the Creature token on Artemia.': '{player} peut placer le jeton Creature sur Artemia.'
+        '{player} may place the Creature token on Artemia.': '{player} peut placer le jeton Creature sur Artemia.',
+
+        'Pass': 'Passer',
+        'Pass to end your turn': 'Passez pour terminer votre tour',
+
+        'You may play {card}': 'Vous pouvez jouer {card}',
+        'You may play {card1} or {card2}': 'Vous pouvez jouer {card1} ou {card2}',
+        'You may play a Hunt card': 'Vous pouvez jouer une carte Traque',
+
+        '{player} may play a Hunt card': '{player} peut jouer une carte Traque',
+        '{player} may play a Survival card': '{player} peut jouer une carte Survie',
+        'Some players may play a Hunt card or a Survival card': 'Certains joueurs peuvent jouer une carte Traque ou une carte Survie',
+        'Some Hunted may play a Survival card': 'Certains Traqués peuvent jouer une carte Survie',
       }
     }
   },

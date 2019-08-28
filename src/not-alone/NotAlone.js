@@ -1,6 +1,6 @@
 import {shuffle} from "../game-api/Random"
 import SurvivalCards from "./material/SurvivalCards"
-import HuntCards from "./material/HuntCards"
+import HuntCards, {huntCardFromName} from "./material/HuntCards"
 import {hideItemsDetail} from "../game-api/Secrets"
 import {ChooseBoardSide, chooseBoardSide} from "./moves/ChooseBoardSide"
 import {DrawHuntCard} from "./moves/DrawHuntCard"
@@ -13,6 +13,7 @@ import {placeHuntToken, PlaceHuntToken} from "./moves/PlaceHuntToken";
 import {pass, Pass} from "./moves/Pass";
 import {revealPlaceCards, RevealPlaceCards} from "./moves/RevealPlaceCard";
 import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS, TARGET_TOKEN} from "./material/HuntTokens";
+import {playHuntCard, PlayHuntCard} from "./moves/PlayHuntCard";
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -22,7 +23,7 @@ export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1,
  * @return {Object} Game state before the first player move
  */
 export const setup = options => ({
-  creature: {hand: []},
+  creature: {hand: [], huntCardsPlayed: [], huntCardPlayLimit: 1},
   hunted: setupHunted(options.numberOfPlayers),
   assimilationCounter: 5 + options.numberOfPlayers,
   rescueCounter: 11 + options.numberOfPlayers,
@@ -68,6 +69,7 @@ export const moves = {
   PlaceHuntToken,
   RevealPlaceCards,
   Pass,
+  PlayHuntCard,
   ShuffleHuntCards,
   StrikeBack
 }
@@ -105,10 +107,23 @@ export function getLegalMoves(game, playerId) {
 function getCreatureMoves(game) {
   if (!game.boardSide) {
     return BOARD_SIDES.map(side => chooseBoardSide(side))
-  } else if (game.phase === 2) {
-    return getCreatureHuntingMoves(game)
   }
-  return []
+  const moves = []
+  if (couldCreaturePlayHuntCard(game)) {
+    game.creature.hand.forEach(card => {
+      const HuntCard = huntCardFromName[card]
+      if (HuntCard && HuntCard.phase === game.phase) {
+        moves.push(playHuntCard(card))
+      }
+    })
+  }
+  if (game.phase === 1 && creatureShouldPassOrPlayHuntCard(game)) {
+    moves.push(pass(CREATURE))
+  }
+  if (game.phase === 2) {
+    moves.push(...getCreatureHuntingMoves(game))
+  }
+  return moves
 }
 
 function getCreatureHuntingMoves(game) {
@@ -122,7 +137,7 @@ function getCreatureHuntingMoves(game) {
 
 function getHuntedMoves(game, huntedId) {
   const hunted = getHunted(game, huntedId)
-  if (game.phase === 1 && !explorationDone(hunted)) {
+  if (game.phase === 1 && !explorationDone(hunted) && !creatureShouldPassOrPlayHuntCard(game)) {
     return hunted.handPlaceCards.map(place => playPlaceCard(huntedId, place))
   }
   return []
@@ -199,13 +214,24 @@ function creaturePlayedHuntCardWithSymbol(game, token) {
 /**
  * @return boolean True if the Hunted might have a Survival card to play from another player point of view
  */
-function couldPlaySurvivalCard(game, hunted) {
+export function couldPlaySurvivalCard(game, hunted) {
   if (hunted.handSurvivalCards.length === 0) {
     return false
   }
-  if (hunted.playedSurvivalCard) {
+  if (hunted.survivalCardPlayed) {
     return false
   }
   // TODO: check if all the survival cards from current phase are in the discard pile
   return false // TODO: return true
+}
+
+/**
+ * @return boolean True if the Creature might have a Hunt card to play from another player point of view
+ */
+export function couldCreaturePlayHuntCard(game) {
+  return game.creature.huntCardsPlayed.length < game.creature.huntCardPlayLimit && game.creature.hand.length > 0
+}
+
+function creatureShouldPassOrPlayHuntCard(game) {
+  return !game.creature.passed && couldCreaturePlayHuntCard(game)
 }

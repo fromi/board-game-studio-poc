@@ -24,6 +24,9 @@ import Button from "@material-ui/core/Button";
 import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
 import {lightBlue, pink} from "@material-ui/core/colors";
 import {HUNT_TOKENS} from "./material/HuntTokens";
+import {useTranslation} from "react-i18next";
+import {PlayHuntCardDisplay} from "./moves-display/PlayHuntCardDisplay";
+import {PLAY_HUNT_CARD} from "./moves/PlayHuntCard";
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -36,6 +39,7 @@ const createTheme = (color) => createMuiTheme({
 
 export const Interface = (props) => {
   const {playerId, game, animation, information, play} = props
+  const {t} = useTranslation()
 
   const classes = ['not-alone']
   if (!playerId) {
@@ -60,7 +64,7 @@ export const Interface = (props) => {
       <div className={classes.join(' ')}>
         <h2 className="information">{information}</h2>
         {playerId && getLegalMoves(game, playerId).some(move => move.type === PASS) &&
-        <Button variant="contained" color="primary" size="large" className="pass-button" onClick={() => play({type: PASS, playerId})}>Pass</Button>}
+        <Button variant="contained" color="primary" size="large" className="pass-button" onClick={() => play({type: PASS, playerId})}>{t('Pass')}</Button>}
         {BOARD_SIDES.map(side =>
           <Board side={side} key={side} {...props}/>
         )}
@@ -81,6 +85,7 @@ export const movesDisplay = {
   [DRAW_SURVIVAL_CARD]: DrawSurvivalCardDisplay,
   [PLAY_PLACE_CARD]: PlayPlaceCardDisplay,
   [PLACE_HUNT_TOKEN]: PlaceHuntTokenDisplay,
+  [PLAY_HUNT_CARD]: PlayHuntCardDisplay,
   [PASS]: PassDisplay
 }
 
