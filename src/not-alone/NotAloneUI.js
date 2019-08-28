@@ -27,6 +27,8 @@ import {HUNT_TOKENS} from "./material/HuntTokens";
 import {useTranslation} from "react-i18next";
 import {PlayHuntCardDisplay} from "./moves-display/PlayHuntCardDisplay";
 import {PLAY_HUNT_CARD} from "./moves/PlayHuntCard";
+import {PLAY_SURVIVAL_CARD} from "./moves/PlaySurvivalCard";
+import {PlaySurvivalCardDisplay} from "./moves-display/PlaySurvivalCardDisplay";
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -86,6 +88,7 @@ export const movesDisplay = {
   [PLAY_PLACE_CARD]: PlayPlaceCardDisplay,
   [PLACE_HUNT_TOKEN]: PlaceHuntTokenDisplay,
   [PLAY_HUNT_CARD]: PlayHuntCardDisplay,
+  [PLAY_SURVIVAL_CARD]: PlaySurvivalCardDisplay,
   [PASS]: PassDisplay
 }
 

@@ -1,5 +1,7 @@
 import {couldCreaturePlayHuntCard, CREATURE, getLegalMoves, getPlayerIds} from "../NotAlone";
 import {PASS} from "../moves/Pass";
+import {PLAY_HUNT_CARD} from "../moves/PlayHuntCard";
+import {PLAY_SURVIVAL_CARD} from "../moves/PlaySurvivalCard";
 
 export const PassDisplay = {
   playerInformation: (t, game, playerId) => {
@@ -12,13 +14,19 @@ export const PassDisplay = {
     let awaitedPlayers = []
     for (const playerId of getPlayerIds(game)) {
       for (const move of getLegalMoves(game, playerId)) {
-        if (move.type !== PASS) {
-          return
-        } else {
-          awaitedPlayers.push(playerId)
+        switch (move.type) {
+          case PASS:
+            awaitedPlayers.push(playerId)
+            break
+          case PLAY_HUNT_CARD:
+          case PLAY_SURVIVAL_CARD:
+            break
+          default:
+            return
         }
       }
     }
+    console.log(awaitedPlayers)
     const creatureCouldPlayHuntCard = awaitedPlayers.includes(CREATURE) && couldCreaturePlayHuntCard(game)
     if (awaitedPlayers.length === 1) {
       if (creatureCouldPlayHuntCard) {

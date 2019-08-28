@@ -1,5 +1,5 @@
 import {shuffle} from "../game-api/Random"
-import SurvivalCards from "./material/SurvivalCards"
+import SurvivalCards, {survivalCardFromName} from "./material/SurvivalCards"
 import HuntCards, {huntCardFromName} from "./material/HuntCards"
 import {hideItemsDetail} from "../game-api/Secrets"
 import {ChooseBoardSide, chooseBoardSide} from "./moves/ChooseBoardSide"
@@ -14,6 +14,7 @@ import {pass, Pass} from "./moves/Pass";
 import {revealPlaceCards, RevealPlaceCards} from "./moves/RevealPlaceCard";
 import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS, TARGET_TOKEN} from "./material/HuntTokens";
 import {playHuntCard, PlayHuntCard} from "./moves/PlayHuntCard";
+import {playSurvivalCard, PlaySurvivalCard} from "./moves/PlaySurvivalCard";
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -70,6 +71,7 @@ export const moves = {
   RevealPlaceCards,
   Pass,
   PlayHuntCard,
+  PlaySurvivalCard,
   ShuffleHuntCards,
   StrikeBack
 }
@@ -137,10 +139,25 @@ function getCreatureHuntingMoves(game) {
 
 function getHuntedMoves(game, huntedId) {
   const hunted = getHunted(game, huntedId)
-  if (game.phase === 1 && !explorationDone(hunted) && !creatureShouldPassOrPlayHuntCard(game)) {
-    return hunted.handPlaceCards.map(place => playPlaceCard(huntedId, place))
+  const moves = []
+  if (couldPlaySurvivalCard(game, hunted)) {
+    hunted.handSurvivalCards.forEach(card => {
+      const SurvivalCard = survivalCardFromName[card]
+      if (SurvivalCard && SurvivalCard.phase === game.phase) {
+        moves.push(playSurvivalCard(card))
+      }
+    })
   }
-  return []
+  if (game.phase === 1) {
+    if (creatureShouldPassOrPlayHuntCard(game)) {
+      if (shouldPassOrPlaySurvivalCard(game, hunted)) {
+        moves.push(pass(huntedId))
+      }
+    } else if (!explorationDone(hunted)) {
+      return hunted.handPlaceCards.map(place => playPlaceCard(huntedId, place))
+    }
+  }
+  return moves
 }
 
 export function getHunted(game, huntedPlayerId) {
@@ -222,7 +239,11 @@ export function couldPlaySurvivalCard(game, hunted) {
     return false
   }
   // TODO: check if all the survival cards from current phase are in the discard pile
-  return false // TODO: return true
+  return true
+}
+
+function shouldPassOrPlaySurvivalCard(game, hunted) {
+  return !hunted.passed && couldPlaySurvivalCard(game, hunted)
 }
 
 /**

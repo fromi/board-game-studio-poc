@@ -9,7 +9,7 @@ export const Pass = {
     if (move.playerId === CREATURE) {
       game.creature.passed = true
     } else {
-      getHunted(game, move.huntedId).passed = true
+      getHunted(game, move.playerId).passed = true
     }
   }
 }
