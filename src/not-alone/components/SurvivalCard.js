@@ -15,6 +15,7 @@ import {
   SIXTH_SENSE,
   SMOKESCREEN,
   STRIKE_BACK,
+  survivalCardFromName,
   VORTEX,
   WRONG_TRACK
 } from "../material/SurvivalCards"
@@ -30,6 +31,7 @@ const SurvivalCard = ({cardName, classes = []}) => {
           <div className="description" key="description">
             <p>{t(descriptions[cardName])}</p>
           </div>
+          <p className="phase">{t('Phase {number}', {number: survivalCardFromName[cardName].phase})}</p>
         </div>
       )}
       <div className="face back"/>

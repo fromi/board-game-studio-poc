@@ -35,4 +35,15 @@
     justify-content: center;
     flex-direction: column;
   }
+
+  .phase {
+    position: absolute;
+    bottom: 0;
+    left: 0.3vh;
+    right: 0.3vh;
+    margin: auto;
+    text-align: center;
+    font-size: $card-image-height / 17;
+    font-weight: bold;
+  }
 }
