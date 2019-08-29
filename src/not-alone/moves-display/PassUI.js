@@ -3,7 +3,7 @@ import {PASS} from "../moves/Pass";
 import {PLAY_HUNT_CARD} from "../moves/PlayHuntCard";
 import {PLAY_SURVIVAL_CARD} from "../moves/PlaySurvivalCard";
 
-export const PassDisplay = {
+export const PassUI = {
   playerInformation: (t, game, playerId) => {
     if (getLegalMoves(game, playerId).length === 1) {
       return t('Pass to end your turn')

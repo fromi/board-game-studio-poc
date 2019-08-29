@@ -91,7 +91,7 @@ const createConsoleTools = (Game, store) => {
 }
 
 const getInformation = (Game, GameUI, state, playersMap, t) => {
-  const animationInformation = getAnimationInformation(GameUI, state, playersMap, t)
+  const animationInformation = getAnimationInformation(Game, state, playersMap, t)
   if (animationInformation) {
     return animationInformation
   }
@@ -115,14 +115,12 @@ const getInformation = (Game, GameUI, state, playersMap, t) => {
   return '?'
 }
 
-const getAnimationInformation = (GameUI, state, playersMap, t) => {
+const getAnimationInformation = (Game, state, playersMap, t) => {
   const animation = state.client.animation
-  if (animation && GameUI.movesDisplay && GameUI.movesDisplay[animation.move.type]) {
-    const MoveDisplay = GameUI.movesDisplay[animation.move.type]
-    if (MoveDisplay && animation.type === MOVE_PLAYED) {
-      if (MoveDisplay.animatingInformation) {
-        return MoveDisplay.animatingInformation(t, state.client, playersMap)
-      }
+  if (animation && animation.type === MOVE_PLAYED) {
+    const Move = Game.moves[animation.move.type]
+    if (Move && Move.animatingInformation) {
+      return Move.animatingInformation(t, state.client, playersMap)
     }
   }
 }
@@ -131,9 +129,9 @@ const getPlayerMovesInformation = (Game, GameUI, state, playersMap, t) => {
   const {game, playerId} = state.client
   if (playerId) {
     for (const move of Game.getLegalMoves(game, playerId)) {
-      const MoveDisplay = GameUI.movesDisplay[move.type]
-      if (MoveDisplay && MoveDisplay.playerInformation) {
-        const information = MoveDisplay.playerInformation(t, game, playerId, playersMap)
+      const Move = Game.moves[move.type]
+      if (Move && Move.playerInformation) {
+        const information = Move.playerInformation(t, game, playerId, playersMap)
         if (information) {
           return information
         }
@@ -147,9 +145,9 @@ const getDefaultMovesInformation = (Game, GameUI, state, playersMap, t) => {
   const playerIds = Game.getPlayerIds(game);
   for (const playerId of playerIds) {
     for (const move of Game.getLegalMoves(game, playerId)) {
-      const MoveDisplay = GameUI.movesDisplay[move.type]
-      if (MoveDisplay && MoveDisplay.defaultInformation) {
-        const information = MoveDisplay.defaultInformation(t, game, playersMap);
+      const Move = Game.moves[move.type]
+      if (Move && Move.defaultInformation) {
+        const information = Move.defaultInformation(t, game, playersMap);
         if (information) {
           return information;
         }
@@ -192,6 +190,16 @@ const Studio = ({store, GameUI, Game}) => {
 Studio.propTypes = {
   store: PropTypes.object,
   GameUI: PropTypes.shape({
-    Interface: PropTypes.func.isRequired
+    Interface: PropTypes.func.isRequired,
+    getInformation: PropTypes.func
+  }),
+  Game: PropTypes.shape({
+    moves: PropTypes.object.isRequired,
+    setup: PropTypes.func.isRequired,
+    getPlayerIds: PropTypes.func.isRequired,
+    getLegalMoves: PropTypes.func.isRequired,
+    getPlayerView: PropTypes.func.isRequired,
+    getSpectatorView: PropTypes.func.isRequired,
+    getAutomaticMove: PropTypes.func.isRequired,
   }).isRequired
 }

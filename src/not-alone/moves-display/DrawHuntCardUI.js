@@ -3,7 +3,7 @@ import {CREATURE} from "../NotAlone"
 // eslint-disable-next-line import/no-webpack-loader-syntax
 const style = require('sass-extract-loader!../variables.scss');
 
-export const DrawHuntCardDisplay = {
+export const DrawHuntCardUI = {
   animationDelay: (animation, playerId) => playerId === CREATURE ?
     style.global['$draw-card-animation'].value :
     style.global['$other-player-draw-card-animation'].value - 0.1,

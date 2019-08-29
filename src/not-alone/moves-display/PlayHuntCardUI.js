@@ -1,15 +1,15 @@
-import {getLegalMoves} from "../NotAlone";
+import {CREATURE, getLegalMoves} from "../NotAlone";
+import {PLAY_HUNT_CARD} from "../moves/PlayHuntCard";
 import {PASS} from "../moves/Pass";
-import {PLAY_SURVIVAL_CARD} from "../moves/PlaySurvivalCard";
 
-export const PlaySurvivalCardDisplay = {
-  playerInformation: (t, game, playerId) => {
-    const moves = getLegalMoves(game, playerId)
+export const PlayHuntCardUI = {
+  playerInformation: (t, game) => {
+    const moves = getLegalMoves(game, CREATURE)
     const eligibleCards = []
     let isAwaited = false
     for (const move of moves) {
       switch (move.type) {
-        case PLAY_SURVIVAL_CARD:
+        case PLAY_HUNT_CARD:
           eligibleCards.push(move.card)
           break
         case PASS:
@@ -28,7 +28,7 @@ export const PlaySurvivalCardDisplay = {
       case 2:
         return t('You may play {card1} or {card2}', {card1: t(eligibleCards[0]), card2: t(eligibleCards[1])})
       default:
-        return t('You may play a Survival card')
+        return t('You may play a Hunt card')
     }
   }
 }

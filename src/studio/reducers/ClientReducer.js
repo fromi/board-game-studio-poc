@@ -66,7 +66,8 @@ function applyPendingMove(Game, GameUI, state, initialState) {
     state.initialState = initialState
   }
   const animation = {type, move}
-  animation.duration = getAnimationDelay(GameUI, animation, state.playerId, state.game)
+  const Move = Game.moves[move.type]
+  animation.duration = Move.animationDelay ? Move.animationDelay(animation, state.playerId, state.game) : 0
   if (animation.duration) {
     state.animation = animation
   }
@@ -130,15 +131,6 @@ export function notificationsAnimationListener(GameUI, store) {
     } else if (timeout) {
       clearTimeout(timeout);
       timeout = null
-    }
-  }
-}
-
-const getAnimationDelay = (GameUI, animation, playerId, game) => {
-  if (GameUI.movesDisplay && GameUI.movesDisplay[animation.move.type]) {
-    const MoveDisplay = GameUI.movesDisplay[animation.move.type]
-    if (MoveDisplay.animationDelay) {
-      return MoveDisplay.animationDelay(animation, playerId, game)
     }
   }
 }

@@ -2,33 +2,33 @@ import React from 'react'
 import "./not-alone.scss"
 import {BOARD_SIDES, CREATURE, getLegalMoves} from "./NotAlone"
 import Board from "./components/Board"
-import {CHOOSE_BOARD_SIDE} from "./moves/ChooseBoardSide"
+import {CHOOSE_BOARD_SIDE, ChooseBoardSide} from "./moves/ChooseBoardSide"
 import Artemia from "./components/Artemia"
 import HuntCardsDeck from "./components/HuntCardsDeck"
-import {DRAW_HUNT_CARD} from "./moves/DrawHuntCard"
+import {DrawHuntCard} from "./moves/DrawHuntCard"
 import SurvivalCardsDeck from "./components/SurvivalCardsDeck"
-import {PLAY_PLACE_CARD} from "./moves/PlayPlaceCard"
+import {PlayPlaceCard} from "./moves/PlayPlaceCard"
 import OtherPlayers from "./components/OtherPlayers"
 import PlayerMaterial from "./components/PlayerMaterial"
-import {DRAW_SURVIVAL_CARD} from "./moves/DrawSurvivalCard"
-import {ChooseBoardSideDisplay} from "./moves-display/ChooseBoardSideDisplay"
-import {DrawHuntCardDisplay} from "./moves-display/DrawHuntCardDisplay"
-import {DrawSurvivalCardDisplay} from "./moves-display/DrawSurvivalCardDisplay"
-import {PlayPlaceCardDisplay} from "./moves-display/PlayPlaceCardDisplay"
-import {PLACE_HUNT_TOKEN} from "./moves/PlaceHuntToken";
-import {PlaceHuntTokenDisplay} from "./moves-display/PlaceHuntTokenDisplay";
+import {DrawSurvivalCard} from "./moves/DrawSurvivalCard"
+import {ChooseBoardSideUI} from "./moves-display/ChooseBoardSideUI"
+import {DrawHuntCardUI} from "./moves-display/DrawHuntCardUI"
+import {DrawSurvivalCardUI} from "./moves-display/DrawSurvivalCardUI"
+import {PlayPlaceCardUI} from "./moves-display/PlayPlaceCardUI"
+import {PlaceHuntToken} from "./moves/PlaceHuntToken";
+import {PlaceHuntTokenUI} from "./moves-display/PlaceHuntTokenUI";
 import HuntToken from "./components/HuntToken";
-import {PASS} from "./moves/Pass";
-import {PassDisplay} from "./moves-display/PassDisplay";
+import {Pass, PASS} from "./moves/Pass";
+import {PassUI} from "./moves-display/PassUI";
 import Button from "@material-ui/core/Button";
 import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
 import {lightBlue, pink} from "@material-ui/core/colors";
 import {HUNT_TOKENS} from "./material/HuntTokens";
 import {useTranslation} from "react-i18next";
-import {PlayHuntCardDisplay} from "./moves-display/PlayHuntCardDisplay";
-import {PLAY_HUNT_CARD} from "./moves/PlayHuntCard";
-import {PLAY_SURVIVAL_CARD} from "./moves/PlaySurvivalCard";
-import {PlaySurvivalCardDisplay} from "./moves-display/PlaySurvivalCardDisplay";
+import {PlayHuntCardUI} from "./moves-display/PlayHuntCardUI";
+import {PlayHuntCard} from "./moves/PlayHuntCard";
+import {PlaySurvivalCard} from "./moves/PlaySurvivalCard";
+import {PlaySurvivalCardUI} from "./moves-display/PlaySurvivalCardUI";
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -79,16 +79,14 @@ export const Interface = (props) => {
   )
 }
 
-export const movesDisplay = {
-  [CHOOSE_BOARD_SIDE]: ChooseBoardSideDisplay,
-  [DRAW_HUNT_CARD]: DrawHuntCardDisplay,
-  [DRAW_SURVIVAL_CARD]: DrawSurvivalCardDisplay,
-  [PLAY_PLACE_CARD]: PlayPlaceCardDisplay,
-  [PLACE_HUNT_TOKEN]: PlaceHuntTokenDisplay,
-  [PLAY_HUNT_CARD]: PlayHuntCardDisplay,
-  [PLAY_SURVIVAL_CARD]: PlaySurvivalCardDisplay,
-  [PASS]: PassDisplay
-}
+Object.assign(ChooseBoardSide, ChooseBoardSideUI)
+Object.assign(DrawHuntCard, DrawHuntCardUI)
+Object.assign(DrawSurvivalCard, DrawSurvivalCardUI)
+Object.assign(PlayPlaceCard, PlayPlaceCardUI)
+Object.assign(PlaceHuntToken, PlaceHuntTokenUI)
+Object.assign(PlayHuntCard, PlayHuntCardUI)
+Object.assign(PlaySurvivalCard, PlaySurvivalCardUI)
+Object.assign(Pass, PassUI)
 
 export const getInformation = (t, game, playerId, animation, playersMap) => {
   if (game.assimilationCounter === 0) {
