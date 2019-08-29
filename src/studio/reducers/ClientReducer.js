@@ -59,9 +59,9 @@ function applyPendingMove(Game, GameUI, state, initialState) {
     }
     state.moveHistory.splice(moveIndex, 1)
     state.currentMove--
-    state.game = state.moveHistory.reduce((state, move) => {
-      reportMove(Game, state, state.playerId, move)
-      return state
+    state.game = state.moveHistory.reduce((game, move) => {
+      reportMove(Game, game, state.playerId, move)
+      return game
     }, state.initialState)
     state.initialState = initialState
   }
