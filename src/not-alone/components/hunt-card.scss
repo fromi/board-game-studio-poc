@@ -19,7 +19,7 @@
     font-size: $card-image-height / 15;
     text-transform: uppercase;
     font-weight: bold;
-    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 
   .hunt-token-symbol {
@@ -48,7 +48,7 @@
     flex-direction: column;
 
     p {
-      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
   }
 
@@ -59,7 +59,8 @@
     right: 0.3vh;
     margin: auto;
     text-align: center;
-    font-size: $card-image-height / 16;
+    font-size: $card-image-height / 17;
     font-weight: bold;
+    backface-visibility: hidden;
   }
 }

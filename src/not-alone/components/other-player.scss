@@ -27,12 +27,9 @@
     @include handOfCards($card-width, $card-height, false, 20, 35deg);
 
     .card {
-      transition: transform $other-player-draw-card-pre-animation + $other-player-draw-card-animation ease-out;
-      &.will-draw {
-        opacity: 0;
-      }
+      transition: transform $other-player-draw-card-animation ease-out;
       &.drawing {
-        transition: transform $other-player-draw-card-animation ease-out;
+        opacity: 0;
       }
     }
   }

@@ -7,17 +7,7 @@ import MultiBackend from 'react-dnd-multi-backend';
 import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch';
 import {createServerReducer, getMoveView, MOVE_PLAYED, pendingNotificationsListener} from "./reducers/ServerReducer"
 import {createClientReducer, notificationsAnimationListener} from "./reducers/ClientReducer"
-import {
-  APPLY_ANIMATING_MOVE,
-  DISPLAY_PLAYER_VIEW,
-  DISPLAY_SPECTATOR_VIEW,
-  END_ANIMATION,
-  MOVE_BACK,
-  MOVE_FORWARD,
-  NEW_GAME,
-  PLAY_MOVE,
-  UNDO_MOVE
-} from "./StudioActions"
+import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, MOVE_BACK, MOVE_FORWARD, NEW_GAME, PLAY_MOVE, RESUME, UNDO_MOVE} from "./StudioActions"
 import {priorMoveMiddleware} from "./middleware/PriorMoveMiddleware"
 import {prepareMoveMiddleware} from "./middleware/PrepareMoveMiddleware"
 import {useTranslation} from "react-i18next"
@@ -33,7 +23,7 @@ export const createStudio = (Game, GameUI) => {
 const createStudioStore = (Game, GameUI) => {
   const localStorageKey = 'state'
   const server = createServerReducer(Game)
-  const client = createClientReducer(Game)
+  const client = createClientReducer(Game, GameUI)
   const savedState = JSON.parse(localStorage.getItem(localStorageKey)) || undefined
   const store = createStore(combineReducers({server, client}), savedState,
     applyMiddleware(priorMoveMiddleware(Game), prepareMoveMiddleware(Game)))
@@ -43,11 +33,7 @@ const createStudioStore = (Game, GameUI) => {
   if (!savedState) {
     store.dispatch({type: NEW_GAME, game: Game.setup({numberOfPlayers: 3})})
   } else if (savedState.client.animation) {
-    if (savedState.client.animation.moveApplied) {
-      store.dispatch({type: END_ANIMATION})
-    } else {
-      store.dispatch({type: APPLY_ANIMATING_MOVE})
-    }
+    store.dispatch({type: RESUME})
   }
   return store
 }
@@ -206,8 +192,6 @@ const Studio = ({store, GameUI, Game}) => {
 Studio.propTypes = {
   store: PropTypes.object,
   GameUI: PropTypes.shape({
-    Interface: PropTypes.func.isRequired,
-    getPreAnimationDelay: PropTypes.func,
-    getAnimationDelay: PropTypes.func
+    Interface: PropTypes.func.isRequired
   }).isRequired
 }

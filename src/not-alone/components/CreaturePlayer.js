@@ -16,9 +16,6 @@ const CreaturePlayer = ({creature, classes, playersMap, animation}) => {
     }
     return <HuntCard key={index} classes={classes}/>
   })
-  if (isDrawingHuntCard && !animation.moveApplied) {
-    cards.push(<HuntCard key={creature.hand.length} classes={['will-draw']}/>)
-  }
   return (
     <div className={classes.join(' ')}>
       <h2>{playersMap[CREATURE].name}</h2>

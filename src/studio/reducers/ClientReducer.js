@@ -1,16 +1,6 @@
-import {
-  APPLY_ANIMATING_MOVE,
-  DISPLAY_PLAYER_VIEW,
-  DISPLAY_SPECTATOR_VIEW,
-  END_ANIMATION,
-  MOVE_BACK,
-  MOVE_FORWARD,
-  NEW_GAME,
-  SERVER_NOTIFICATION,
-  START_ANIMATION
-} from "../StudioActions"
+import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, MOVE_BACK, MOVE_FORWARD, NEW_GAME, RESUME, SERVER_NOTIFICATION} from "../StudioActions"
 import produce from "immer"
-import {findLastIndex, MOVE_PLAYED, MOVE_UNDONE} from "./ServerReducer"
+import {findLastIndex, MOVE_PLAYED} from "./ServerReducer"
 
 const isEqual = require("react-fast-compare");
 
@@ -23,7 +13,66 @@ function reportMove(Game, game, playerId, move) {
   }
 }
 
-export function createClientReducer(Game) {
+/**
+ * Apply all pending moves for the state until some animation is reached (or everything is up to date)
+ */
+function resume(Game, GameUI, state, initialState) {
+  while (!state.animation && hasPendingMove(state)) {
+    applyPendingMove(Game, GameUI, state, initialState)
+  }
+}
+
+function hasPendingMove(state) {
+  if (state.animation) {
+    return true
+  }
+  if (state.replayToMove !== undefined) {
+    return state.currentMove < state.replayToMove
+  } else if (state.currentMove < state.moveHistory.length) {
+    return true
+  } else {
+    return state.pendingNotifications.length > 0
+  }
+}
+
+function applyPendingMove(Game, GameUI, state, initialState) {
+  let type, move
+  if (state.replayToMove || state.currentMove < state.moveHistory.length) {
+    type = MOVE_PLAYED
+    move = state.moveHistory[state.currentMove]
+  } else {
+    type = state.pendingNotifications[0].type
+    move = state.pendingNotifications[0].move
+    state.pendingNotifications.splice(0, 1)
+  }
+  if (type === MOVE_PLAYED) {
+    if (state.moveHistory.length === state.currentMove) {
+      state.moveHistory.push(move)
+    }
+    state.currentMove++
+    reportMove(Game, state.game, state.playerId, move)
+  } else {
+    const moveIndex = findLastIndex(state.moveHistory, historyMove => isEqual(historyMove, move))
+    if (moveIndex < 0) {
+      console.error("This move does not exist, it cannot be undone: " + JSON.stringify(move));
+      return state
+    }
+    state.moveHistory.splice(moveIndex, 1)
+    state.currentMove--
+    state.game = state.moveHistory.reduce((state, move) => {
+      reportMove(Game, state, state.playerId, move)
+      return state
+    }, state.initialState)
+    state.initialState = initialState
+  }
+  const animation = {type, move}
+  animation.duration = getAnimationDelay(GameUI, animation, state.playerId, state.game)
+  if (animation.duration) {
+    state.animation = animation
+  }
+}
+
+export function createClientReducer(Game, GameUI) {
   return (state = {}, action) => {
     switch (action.type) {
       case NEW_GAME:
@@ -31,40 +80,15 @@ export function createClientReducer(Game) {
         const gameView = Game.getPlayerView(action.game, playerId)
         return {game: gameView, initialState: gameView, playerId, pendingNotifications: [], moveHistory: [], currentMove: 0}
       case SERVER_NOTIFICATION:
-        // TODO: if we have both similar PLAY_MOVE and UNDO_MOVE pending notifications, we can delete both instead of play them both.
-        return {...state, pendingNotifications: state.pendingNotifications.concat(action.notifications)}
-      case START_ANIMATION:
-        if (state.moveHistory.length === state.currentMove) {
-          return {...state, animation: action.animation, pendingNotifications: state.pendingNotifications.slice(1)}
-        } else {
-          return {...state, animation: action.animation}
-        }
-      case APPLY_ANIMATING_MOVE:
         return produce(state, draft => {
-          if (draft.animation.type === MOVE_PLAYED) {
-            if (state.moveHistory.length === state.currentMove) {
-              draft.moveHistory.push(draft.animation.move)
-            }
-            draft.currentMove++
-            reportMove(Game, draft.game, draft.playerId, draft.animation.move)
-          } else {
-            const moveIndex = findLastIndex(state.moveHistory, move => isEqual(move, state.animation.move))
-            if (moveIndex < 0) {
-              console.error("This move does not exist, it cannot be undone: " + JSON.stringify(state.animation.move));
-              return state
-            }
-            draft.moveHistory.splice(moveIndex, 1)
-            draft.currentMove--
-            draft.game = draft.moveHistory.reduce((state, move) => {
-              reportMove(Game, state, draft.playerId, move)
-              return state
-            }, draft.initialState)
-            draft.initialState = state.initialState
-          }
-          draft.animation.moveApplied = true
+          draft.pendingNotifications.push(...action.notifications)
+          resume(Game, GameUI, draft, state.initialState)
         })
-      case END_ANIMATION:
-        return {...state, animation: null}
+      case RESUME:
+        return produce(state, draft => {
+          draft.animation = null
+          resume(Game, GameUI, draft, state.initialState)
+        })
       case DISPLAY_PLAYER_VIEW:
       case DISPLAY_SPECTATOR_VIEW:
         return {...action, pendingNotifications: [], currentMove: action.moveHistory.length}
@@ -75,15 +99,16 @@ export function createClientReducer(Game) {
               reportMove(Game, draft, state.playerId, state.moveHistory[i])
             }
           })
-        return {...state, animation: null, game, currentMove, replayToMove: currentMove}
+        return {...state, animation: null, game, currentMove, replayToMove: currentMove, hold: 0}
       case MOVE_FORWARD:
-        if (state.replayToMove !== undefined && action.moves !== undefined) {
-          const replayToMove = state.replayToMove + action.moves
-          if (replayToMove <= state.moveHistory.length) {
-            return {...state, replayToMove}
+        return produce(state, draft => {
+          if (draft.replayToMove !== undefined && action.moves !== undefined && draft.replayToMove + action.moves <= draft.moveHistory.length) {
+            draft.replayToMove = draft.replayToMove + action.moves
+          } else {
+            draft.replayToMove = undefined
           }
-        }
-        return {...state, replayToMove: undefined}
+          resume(Game, GameUI, draft, state.initialState)
+        })
       default:
         return state
     }
@@ -91,55 +116,29 @@ export function createClientReducer(Game) {
 }
 
 export function notificationsAnimationListener(GameUI, store) {
-  const applyAnimatingNotification = () => {
-    const animation = store.getState().client.animation
-    if (animation) {
-      const animationDelay = getAnimationDelay(GameUI, store.getState().client)
-      store.dispatch({type: APPLY_ANIMATING_MOVE})
-      setTimeout(() => store.dispatch({type: END_ANIMATION}), animationDelay * 1000)
-    }
-  }
-
-  const startAnimation = (animation) => {
-    const preAnimationDelay = getPreAnimationDelay(GameUI, animation, store.getState().client)
-    store.dispatch({type: START_ANIMATION, animation})
-    setTimeout(applyAnimatingNotification, preAnimationDelay * 1000)
-  }
+  let timeout
 
   return () => {
-    const state = store.getState().client
-    if (state.animation) return
-    if (state.currentMove < state.moveHistory.length) {
-      if (state.currentMove !== state.replayToMove) {
-        startAnimation({type: MOVE_PLAYED, move: state.moveHistory[state.currentMove], moveApplied: false})
+    const animation = store.getState().client.animation
+    if (animation && animation.duration) {
+      if (!timeout) {
+        timeout = setTimeout(() => {
+          timeout = null
+          store.dispatch({type: RESUME})
+        }, animation.duration * 1000 + 100) // TODO: remove +100 and instead start timeout after UI rendering (to be sure that animations are done when we resume)
       }
-    } else if (state.replayToMove === undefined && state.pendingNotifications.length) {
-      startAnimation({...state.pendingNotifications[0], moveApplied: false})
+    } else if (timeout) {
+      clearTimeout(timeout);
+      timeout = null
     }
   }
 }
 
-const getPreAnimationDelay = (GameUI, animation, client) => {
+const getAnimationDelay = (GameUI, animation, playerId, game) => {
   if (GameUI.movesDisplay && GameUI.movesDisplay[animation.move.type]) {
     const MoveDisplay = GameUI.movesDisplay[animation.move.type]
-    if (animation.type === MOVE_UNDONE && MoveDisplay.preUndoAnimationDelay) {
-      return MoveDisplay.preUndoAnimationDelay(animation, client)
-    } else if (MoveDisplay.preAnimationDelay) {
-      return MoveDisplay.preAnimationDelay(animation, client)
+    if (MoveDisplay.animationDelay) {
+      return MoveDisplay.animationDelay(animation, playerId, game)
     }
   }
-  return GameUI.getPreAnimationDelay ? GameUI.getPreAnimationDelay(animation, client) : 0
-}
-
-const getAnimationDelay = (GameUI, client) => {
-  const animation = client.animation
-  if (GameUI.movesDisplay && GameUI.movesDisplay[animation.move.type]) {
-    const MoveDisplay = GameUI.movesDisplay[animation.move.type]
-    if (animation.type === MOVE_UNDONE && MoveDisplay.undoAnimationDelay) {
-      return MoveDisplay.undoAnimationDelay(animation, client)
-    } else if (MoveDisplay.animationDelay) {
-      return MoveDisplay.animationDelay(animation, client)
-    }
-  }
-  return GameUI.getAnimationDelay ? GameUI.getAnimationDelay(animation, client) : 0
 }

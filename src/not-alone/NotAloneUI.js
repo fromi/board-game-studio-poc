@@ -52,12 +52,10 @@ export const Interface = (props) => {
     classes.push('hunted')
   }
   const boardSideAnimation = animation && animation.move.type === CHOOSE_BOARD_SIDE
-  if (!game.boardSide || (boardSideAnimation)) {
+  if (!game.boardSide || boardSideAnimation) {
     classes.push('setup')
-    if (!animation) {
-      classes.push('board-side-choice')
-    } else if (!game.boardSide) {
-      classes.push('board-side-animation')
+    if (animation) {
+      classes.push('board-side-chosen')
     }
   }
 

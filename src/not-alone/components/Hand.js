@@ -17,14 +17,11 @@ const Hand = ({game, playerId, animation, play, undo}) => {
   if (hunted) {
     const isPlayingPlaceCard = animation && animation.type === MOVE_PLAYED && animation.move.type === PLAY_PLACE_CARD && animation.move.huntedId === playerId
     hunted.handPlaceCards.forEach((place) => {
-      const classes = []
       const placeCardClasses = []
-      if (isPlayingPlaceCard && animation.move.place === place) {
-        classes.push('playing-place-card')
-      } else {
+      const dragItem = game.phase === 1 ? {type: PLACE_CARD, place} : undefined
+      if (dragItem) {
         placeCardClasses.push('playable')
       }
-      const dragItem = game.phase === 1 ? {type: PLACE_CARD, place} : undefined
       const onSelect = () => {
         const move = getLegalMoves(game, playerId).find((move) => move.place === place && move.type === PLAY_PLACE_CARD)
         if (move) {
@@ -35,11 +32,19 @@ const Hand = ({game, playerId, animation, play, undo}) => {
         }
       }
       cards.push((
-        <CardInHand useDragItem={dragItem} key={place} onSelect={onSelect} classes={classes}>
+        <CardInHand useDragItem={dragItem} key={place} onSelect={onSelect}>
           <PlaceCard place={place} classes={placeCardClasses}/>
         </CardInHand>
       ))
     })
+    if (isPlayingPlaceCard) {
+      const position = hunted.handPlaceCards.filter(place => place < animation.move.place).length
+      cards.splice(position, 0, (
+        <CardInHand key={animation.move.place} classes={['playing-place-card']}>
+          <PlaceCard place={animation.move.place}/>
+        </CardInHand>
+      ))
+    }
   }
 
   const specialCardDrawType = hunted ? DRAW_SURVIVAL_CARD : DRAW_HUNT_CARD
@@ -58,9 +63,6 @@ const Hand = ({game, playerId, animation, play, undo}) => {
       </CardInHand>
     )
   })
-  if (isDrawingSpecialCard && !animation.moveApplied) {
-    cards.push(<CardInHand key={animation.move.card} classes={['will-draw']}><SpecialCardComponent cardName={animation.move.card}/></CardInHand>)
-  }
 
   return <div className="hand">{cards}</div>
 }

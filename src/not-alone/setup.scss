@@ -5,9 +5,19 @@
   $board-translate-x: calc((50vw - #{$board-width / 2}));
   $scale-delta-top: $board-height / 2 - $board-height / 2;
 
-  .board:not(.chosen) {
+  .board {
     will-change: transform, opacity;
+    transition-property: transform, opacity;
+    transition-duration: $board-side-chosen-animation;
+    transition-timing-function: ease-in-out;
 
+    &.removing {
+      opacity: 0;
+      z-index: -1;
+    }
+  }
+
+  &:not(.board-side-chosen) .board, .board.removing {
     &.board-1 {
       transform: translate($board-translate-x, $scale-delta-top + $board-width / 9 + $header-height) scale($board-scale-factor);
     }
@@ -16,9 +26,13 @@
     }
   }
 
-  &.board-side-choice {
+  > *:not(.information):not(.board) {
+    pointer-events: none;
+  }
+
+  &:not(.board-side-chosen) {
     > *:not(.information):not(.board) {
-      display: none;
+      z-index: -1;
       opacity: 0;
     }
 
@@ -42,29 +56,10 @@
     }
   }
 
-  > *:not(.information):not(.board) {
-    transition: opacity $setup-animation ease;
-  }
-
-  &.board-side-animation {
+  &.board-side-chosen {
     > *:not(.information):not(.board) {
-      opacity: 0;
+      transition: opacity $setup-animation ease $board-side-chosen-animation;
     }
-
-    .board {
-      transition-property: transform, opacity;
-      transition-duration: $board-side-chosen-animation;
-      transition-timing-function: ease-in-out;
-
-      &:not(.chosen) {
-        opacity: 0;
-        z-index: -1;
-      }
-    }
-  }
-
-  .artemia .place-card:hover {
-    transform: none;
   }
 }
 

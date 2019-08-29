@@ -16,24 +16,9 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
   @include handOfCards($card-width, $card-height);
 
   .card-wrapper-outer {
-    &.will-draw {
-      &:before, .card-wrapper-inner {
-        opacity: 0;
-      }
-      .card {
-        transform: rotateY(-180deg);
-       }
-    }
     &.drawing {
-      &:before, > .card-wrapper-inner, .card {
-        transition: transform $draw-card-animation ease-in-out;
-      }
-    }
-
-    // Fix for Chrome bug (front face remains hidden if mouse is not moved during animation)
-    &.will-draw, &.drawing {
-      .card .face.front {
-        backface-visibility: visible;
+      .card {
+        animation: revealing $draw-card-animation ease-in-out;
       }
     }
 
@@ -44,7 +29,7 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
       }
     }
 
-    &:not(.dragging):not(.drawing) > .card-wrapper-inner {
+    &:not(.dragging) > .card-wrapper-inner {
       transition: left 0.3s 0.3s ease-out, top 0.3s 0.3s ease-out, transform 0.3s ease-in-out, z-index 0.3s ease-in-out;
     }
   }
@@ -67,18 +52,17 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
 }
 
 .not-alone.creature .hand {
-  .card-wrapper-outer.will-draw {
+  .card-wrapper-outer.drawing {
     &:before, .card-wrapper-inner {
-      transform: translate(calc(#{$card-width / 2 + $default-margin} - 50vw), $hand-bottom-margin - $default-margin - $deck-top-card-shift-y);
+      animation: drawing-hunt-card $draw-card-animation ease-in-out;
     }
   }
 }
 
 .not-alone.hunted .hand {
-  .card-wrapper-outer.will-draw {
+  .card-wrapper-outer.drawing {
     &:before, .card-wrapper-inner {
-      transform: translate(calc(50vw - #{$card-width / 2 + $default-margin + $decks-card-shift-x * $decks-max-cards-displayed}),
-              $hand-bottom-margin - $default-margin - $deck-top-card-shift-y);
+      animation: drawing-survival-card $draw-card-animation ease-in-out;
     }
   }
 
@@ -101,5 +85,24 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes revealing {
+  from {
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes drawing-hunt-card {
+  from {
+    transform: translate(calc(#{$card-width / 2 + $default-margin} - 50vw), $hand-bottom-margin - $default-margin - $deck-top-card-shift-y);
+  }
+}
+
+@keyframes drawing-survival-card {
+  from {
+    transform: translate(calc(50vw - #{$card-width / 2 + $default-margin + $decks-card-shift-x * $decks-max-cards-displayed}),
+            $hand-bottom-margin - $default-margin - $deck-top-card-shift-y);
   }
 }

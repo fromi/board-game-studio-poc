@@ -7,16 +7,17 @@ import {Tooltip} from "@material-ui/core"
 import {useTranslation} from "react-i18next"
 
 const Board = ({game, playerId, animation, side, play}) => {
-  if (game.boardSide && game.boardSide !== side) {
+  const animating = animation && animation.move.type === CHOOSE_BOARD_SIDE
+
+  if (!animating && game.boardSide && game.boardSide !== side) {
     return null;
   }
 
   const {t} = useTranslation()
-  const animating = animation && animation.move.type === CHOOSE_BOARD_SIDE
 
   const classes = ['board', 'board-' + side]
-  if (animating && animation.move.side === side) {
-    classes.push('chosen')
+  if (animating && animation.move.side !== side) {
+    classes.push('removing')
   }
 
   const alt = side === 1 ?

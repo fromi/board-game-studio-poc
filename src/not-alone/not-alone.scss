@@ -42,7 +42,8 @@
     }
 
     .card.drawing {
-      transition: all $other-player-draw-card-pre-animation ease-in-out;
+      transition: all $other-player-draw-card-animation ease-in-out;
+      z-index: 100;
       transform: rotate(-180deg) scale($other-players-hand-scale);
     }
   }

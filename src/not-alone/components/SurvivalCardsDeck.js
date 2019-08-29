@@ -13,13 +13,14 @@ const maxCardsDisplayed = style.global['$decks-max-cards-displayed'].value
 const SurvivalCardsDeck = ({game, playerId, animation}) => {
   const {t} = useTranslation()
   const isDrawingSurvivalCard = animation && animation.move.type === DRAW_SURVIVAL_CARD
-  const slice = game.survivalCardsDeck.slice(0, maxCardsDisplayed)
+  const slice = game.survivalCardsDeck.slice(-maxCardsDisplayed)
   return (
     <Tooltip title={t('Survival cards ({count, plural, one {one card} other {{count} cards}} left)', {count: game.survivalCardsDeck.length})} enterTouchDelay={0}>
       <div className="survival-cards-deck">
         {slice.map((card, index) => {
           const classes = []
-          if (index + 1 === slice.length && isDrawingSurvivalCard && !animation.moveApplied && playerId && playerId !== animation.move.huntedId) {
+          const cardNumber = game.survivalCardsDeck.length - slice.length + index + 1
+          if (cardNumber === game.survivalCardsDeck.length && isDrawingSurvivalCard && playerId && playerId !== animation.move.huntedId) {
             if (!playerId || playerId === CREATURE) {
               const huntedNumber = getHuntedNumber(animation.move.huntedId)
               classes.push('drawing', ...numberOfHuntedToTableSeatsForCreature[game.hunted.length][huntedNumber - 1])
@@ -31,7 +32,7 @@ const SurvivalCardsDeck = ({game, playerId, animation}) => {
               classes.push('drawing', ...seat)
             }
           }
-          return <SurvivalCard key={index} classes={classes}/>
+          return <SurvivalCard key={cardNumber} classes={classes}/>
         })}
       </div>
     </Tooltip>

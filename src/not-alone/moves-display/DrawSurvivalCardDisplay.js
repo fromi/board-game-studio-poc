@@ -2,11 +2,9 @@
 const style = require('sass-extract-loader!../variables.scss');
 
 export const DrawSurvivalCardDisplay = {
-  preAnimationDelay: (animation, {playerId}) => playerId !== animation.move.huntedId ? style.global['$other-player-draw-card-pre-animation'].value : 0,
-
-  animationDelay: (animation, {playerId}) => playerId === animation.move.huntedId ?
+  animationDelay: (animation, playerId) => playerId === animation.move.huntedId ?
     style.global['$draw-card-animation'].value :
-    style.global['$other-player-draw-card-animation'].value,
+    style.global['$other-player-draw-card-animation'].value - 0.1,
 
   animatingInformation: (t, {playerId, animation}, playersMap) => playerId === animation.move.huntedId ?
     t('You draw a Survival card') :
