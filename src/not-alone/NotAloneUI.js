@@ -42,7 +42,7 @@ const createTheme = (color) => createMuiTheme({
 const phases = {
   1: 'Phase 1: Exploration',
   2: 'Phase 2: Hunting',
-  3: 'Phase 3: Reckoning',
+    3: 'Phase 3: Reckoning',
   4: 'Phase 4: End-of-turn actions'
 }
 

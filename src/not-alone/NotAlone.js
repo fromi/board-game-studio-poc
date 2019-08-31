@@ -140,6 +140,14 @@ function getCreatureHuntingMoves(game) {
 function getHuntedMoves(game, huntedId) {
   const hunted = getHunted(game, huntedId)
   const moves = []
+  if (game.phase === 1) {
+    if (!explorationDone(hunted)) {
+      hunted.handPlaceCards.forEach(place => moves.push(playPlaceCard(huntedId, place)))
+    }
+  }
+  if (moves.length === 0 && shouldPassOrPlaySurvivalCard(game, hunted)) {
+    moves.push(pass(huntedId))
+  }
   if (couldPlaySurvivalCard(game, hunted)) {
     hunted.handSurvivalCards.forEach(card => {
       const SurvivalCard = survivalCardFromName[card]
@@ -147,15 +155,6 @@ function getHuntedMoves(game, huntedId) {
         moves.push(playSurvivalCard(card))
       }
     })
-  }
-  if (game.phase === 1) {
-    if (creatureShouldPassOrPlayHuntCard(game)) {
-      if (shouldPassOrPlaySurvivalCard(game, hunted)) {
-        moves.push(pass(huntedId))
-      }
-    } else if (!explorationDone(hunted)) {
-      return hunted.handPlaceCards.map(place => playPlaceCard(huntedId, place))
-    }
   }
   return moves
 }

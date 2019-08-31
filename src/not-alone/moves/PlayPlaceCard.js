@@ -1,4 +1,4 @@
-import {getHunted} from "../NotAlone"
+import {explorationDone, getHunted} from "../NotAlone"
 import {START_PHASE} from "./StartPhase"
 
 export const PLAY_PLACE_CARD = 'PlayPlaceCard'
@@ -10,6 +10,9 @@ export const PlayPlaceCard = {
     const place = move.place
     hunted.handPlaceCards.splice(hunted.handPlaceCards.indexOf(place), 1)
     hunted.playedPlaceCards.push(place)
+    if (explorationDone(hunted)) {
+      hunted.passed = true
+    }
   },
 
   getView: (move, playerId) => playerId !== move.huntedId ? {...move, place: {}} : move,
