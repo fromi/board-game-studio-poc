@@ -176,6 +176,7 @@ i18n.use(ICU).use(initReactI18next).init({
         'You draw 3 Hunt cards': 'Vous piochez 3 cartes Traque',
         '{player} draws 3 Hunt cards': '{player} pioche 3 cartes Traque',
         'Hunted players must play a Place card': 'Les Traqués doivent jouer une carte Lieu',
+        '{player} must play a Place card': '{player} doit jouer une carte Lieu',
         'You must play a Place card': 'Vous devez jouer une carte lieu',
         'You played {place}': 'Vous avez joué {place}',
         'You draw a Survival card': 'Vous piochez une carte Survie',
