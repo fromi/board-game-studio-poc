@@ -39,6 +39,13 @@ const createTheme = (color) => createMuiTheme({
   }
 });
 
+const phases = {
+  1: 'Phase 1: Exploration',
+  2: 'Phase 2: Hunting',
+  3: 'Phase 3: Reckoning',
+  4: 'Phase 4: End-of-turn actions'
+}
+
 export const Interface = (props) => {
   const {playerId, game, animation, information, play} = props
   const {t} = useTranslation()
@@ -63,6 +70,7 @@ export const Interface = (props) => {
     <MuiThemeProvider theme={playerId === CREATURE ? createTheme(pink) : createTheme(lightBlue)}>
       <div className={classes.join(' ')}>
         <h2 className="information">{information}</h2>
+        <h3 className="phase">{t(phases[game.phase])}</h3>
         {playerId && getLegalMoves(game, playerId).some(move => move.type === PASS) &&
         <Button variant="contained" color="primary" size="large" className="pass-button" onClick={() => play({type: PASS, playerId})}>{t('Pass')}</Button>}
         {BOARD_SIDES.map(side =>

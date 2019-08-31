@@ -190,7 +190,7 @@ i18n.use(ICU).use(initReactI18next).init({
 
         '{count, plural, one {One copy} other {{count} copies}} left in the reserve': '{count, plural, one {Un exemplaire restant} other {{count} exemplaires restants}} dans la réserve',
 
-        'The Creature token': 'Le jeton Creature',
+        'The Creature token': 'Le jeton Créature',
         'The Artemia token': 'Le jeton Artemia',
         'The Target token': 'Le jeton Cible',
 
@@ -199,6 +199,7 @@ i18n.use(ICU).use(initReactI18next).init({
 
         'Pass': 'Passer',
         'Pass to end your turn': 'Passez pour terminer votre tour',
+        'Pass to tell other players that you do not play a Hunt card this phase': 'Passez pour indiquer que vous ne jouez pas de carte à cette phase',
 
         'You may play {card}': 'Vous pouvez jouer {card}',
         'You may play {card1} or {card2}': 'Vous pouvez jouer {card1} ou {card2}',

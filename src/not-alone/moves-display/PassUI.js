@@ -6,7 +6,11 @@ import {PLAY_SURVIVAL_CARD} from "../moves/PlaySurvivalCard";
 export const PassUI = {
   playerInformation: (t, game, playerId) => {
     if (getLegalMoves(game, playerId).length === 1) {
-      return t('Pass to end your turn')
+      if (playerId === CREATURE && game.phase === 1) {
+        return t('Pass to tell other players that you do not play a Hunt card this phase')
+      } else {
+        return t('Pass to end your turn')
+      }
     }
   },
 
