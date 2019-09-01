@@ -15,6 +15,16 @@ import {revealPlaceCards, RevealPlaceCards} from "./moves/RevealPlaceCard";
 import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS, TARGET_TOKEN} from "./material/HuntTokens";
 import {playHuntCard, PlayHuntCard} from "./moves/PlayHuntCard";
 import {playSurvivalCard, PlaySurvivalCard} from "./moves/PlaySurvivalCard";
+import {Lair} from "./material/place-cards/Lair";
+import {Jungle} from "./material/place-cards/Jungle";
+import {River} from "./material/place-cards/River";
+import {Beach} from "./material/place-cards/Beach";
+import {Rover} from "./material/place-cards/Rover";
+import {Swamp} from "./material/place-cards/Swamp";
+import {Shelter} from "./material/place-cards/Shelter";
+import {Wreck} from "./material/place-cards/Wreck";
+import {Source} from "./material/place-cards/Source";
+import {Artefact} from "./material/place-cards/Artefact";
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -42,7 +52,7 @@ function setupHunted(numberOfPlayers) {
   if (numberOfPlayers > 7) throw new Error('Not Alone cannot be played with more that 7 players')
   const hunted = []
   for (let playerNumber = 1; playerNumber < numberOfPlayers; playerNumber++) {
-    hunted.push({willCounters: 3, handPlaceCards: [1, 2, 3, 4, 5], handSurvivalCards: [], playedPlaceCards: []})
+    hunted.push({willCounters: 3, handPlaceCards: [1, 2, 3, 4, 5], handSurvivalCards: [], playedPlaceCards: [], resolvedPlaceCards: []})
   }
   return hunted
 }
@@ -75,6 +85,8 @@ export const moves = {
   ShuffleHuntCards,
   StrikeBack
 }
+
+const places = [Lair, Jungle, River, Beach, Rover, Swamp, Shelter, Wreck, Source, Artefact]
 
 export function getAutomaticMove(game) {
   if (game.nextMoves.length) {
@@ -146,6 +158,11 @@ function getHuntedMoves(game, huntedId) {
   if (game.phase === 1) {
     if (!explorationDone(hunted)) {
       hunted.handPlaceCards.forEach(place => moves.push(playPlaceCard(huntedId, place)))
+    }
+  }
+  if (game.phase === 3 && !game.hunted.some(hunted => shouldPassOrPlaySurvivalCard(game, hunted)) && !creatureShouldPassOrPlayHuntCard(game)) {
+    if (nextHuntedExploringPlaceWithoutHuntToken(game) === hunted) {
+      getPlacesToExplore(game, hunted).forEach(place => moves.push(places[place].getPowerMoves(game, hunted)))
     }
   }
   if (moves.length === 0 && shouldPassOrPlaySurvivalCard(game, hunted)) {
@@ -266,4 +283,17 @@ function creatureShouldPassOrPlayHuntCard(game) {
     return false
   }
   return !game.creature.passed && couldCreaturePlayHuntCard(game)
+}
+
+function nextHuntedExploringPlaceWithoutHuntToken(game) {
+  return game.hunted.find(hunted => getPlacesToExplore(game, hunted).length > 0)
+}
+
+function getPlacesToExplore(game, hunted) {
+  return getHuntedFinalPlaces(game, hunted).filter(place => !hunted.resolvedPlaceCards.includes(place))
+    .filter(place => !HUNT_TOKENS.some(huntToken => game.huntTokensLocations[huntToken].includes(place)))
+}
+
+function getHuntedFinalPlaces(game, hunted) {
+  return hunted.playedPlaceCards // TODO: Detour
 }
