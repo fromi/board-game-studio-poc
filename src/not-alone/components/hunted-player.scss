@@ -1,3 +1,5 @@
+@import "../variables";
+
 .other-player.hunted {
   .will-counters {
     position: absolute;
@@ -22,5 +24,22 @@
     .card {
       cursor: help;
     }
+
+    &.revealing {
+      z-index: 1000;
+
+      .card {
+        animation: revealing-with-scale $revealing-place-card-animation;
+      }
+    }
+  }
+}
+
+@keyframes revealing-with-scale {
+  from {
+    transform: rotateY(-180deg);
+  }
+  50% {
+    transform: rotateY(0deg) scale(3);
   }
 }

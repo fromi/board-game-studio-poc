@@ -6,11 +6,17 @@ import Tooltip from "@material-ui/core/Tooltip"
 import {useTranslation} from 'react-i18next';
 import willCounter from '../img/will-counter.png'
 import {DRAW_SURVIVAL_CARD} from "../moves/DrawSurvivalCard"
+import {REVEAL_PLACE_CARDS} from "../moves/RevealPlaceCard";
 
 const HuntedPlayer = ({hunted, huntedId, classes, playersMap, animation}) => {
   const {t} = useTranslation()
   classes.push('other-player', 'hunted')
   const isDrawingSurvivalCard = animation && animation.move.type === DRAW_SURVIVAL_CARD && animation.move.huntedId === huntedId
+  const isRevealingPlaceCards = animation && animation.move.type === REVEAL_PLACE_CARDS && animation.move.huntedId === huntedId
+  const playedPlacesClasses = ['played-place-cards']
+  if (isRevealingPlaceCards) {
+    playedPlacesClasses.push('revealing')
+  }
   return (
     <div className={classes.join(' ')}>
       <h2>{playersMap[huntedId].name}</h2>
@@ -33,7 +39,7 @@ const HuntedPlayer = ({hunted, huntedId, classes, playersMap, animation}) => {
           {[...Array(hunted.willCounters)].map((_, index) => <img src={willCounter} alt={t('A Will counter')} key={index}/>)}
         </div>
       </Tooltip>
-      <div className="played-place-cards">
+      <div className={playedPlacesClasses.join(' ')}>
         {hunted.playedPlaceCards.map((place, index) => {
           const tooltip = isNaN(place) ?
             t('{player} played {count, plural, one {one Place card} other {{count} Place cards}}, not revealed yet', {

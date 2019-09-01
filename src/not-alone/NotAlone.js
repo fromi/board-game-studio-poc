@@ -89,8 +89,11 @@ export function getAutomaticMove(game) {
       return startPhase(3)
     }
   } else if (game.phase === 3) {
-    if (!game.playedPlaceCardsRevealed) { // TODO: The River: players must take back a place card before revealing
-      return revealPlaceCards
+    // TODO: The River: players must take back a place card before revealing
+    for (const hunted of game.hunted) {
+      if (!hunted.playedPlaceCardsRevealed) {
+        return revealPlaceCards(HUNTED_PREFIX + (game.hunted.indexOf(hunted) + 1))
+      }
     }
   }
   return null
@@ -201,7 +204,7 @@ function hideHuntedSecrets(game, hunted) {
     ...hunted,
     handPlaceCards: hideItemsDetail(hunted.handPlaceCards),
     handSurvivalCards: hideItemsDetail(hunted.handSurvivalCards),
-    playedPlaceCards: game.playedPlaceCardsRevealed ? hunted.playedPlaceCards : hideItemsDetail(hunted.playedPlaceCards)
+    playedPlaceCards: hunted.playedPlaceCardsRevealed ? hunted.playedPlaceCards : hideItemsDetail(hunted.playedPlaceCards)
   }
 }
 
@@ -245,6 +248,9 @@ function shouldPassOrPlaySurvivalCard(game, hunted) {
   if (game.phase === 2 && !game.creature.passed) {
     return false
   }
+  if (game.phase === 3 && game.hunted.some(hunted => !hunted.playedPlaceCardsRevealed)) {
+    return false
+  }
   return !hunted.passed && couldPlaySurvivalCard(game, hunted)
 }
 
@@ -256,5 +262,8 @@ export function couldCreaturePlayHuntCard(game) {
 }
 
 function creatureShouldPassOrPlayHuntCard(game) {
+  if (game.phase === 3 && game.hunted.some(hunted => !hunted.playedPlaceCardsRevealed)) {
+    return false
+  }
   return !game.creature.passed && couldCreaturePlayHuntCard(game)
 }

@@ -29,6 +29,8 @@ import {PlayHuntCardUI} from "./moves-display/PlayHuntCardUI";
 import {PlayHuntCard} from "./moves/PlayHuntCard";
 import {PlaySurvivalCard} from "./moves/PlaySurvivalCard";
 import {PlaySurvivalCardUI} from "./moves-display/PlaySurvivalCardUI";
+import {RevealPlaceCards} from "./moves/RevealPlaceCard";
+import {RevealPlaceCardsUI} from "./moves-display/RevealPlaceCardsUI";
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -94,6 +96,7 @@ Object.assign(PlayPlaceCard, PlayPlaceCardUI)
 Object.assign(PlaceHuntToken, PlaceHuntTokenUI)
 Object.assign(PlayHuntCard, PlayHuntCardUI)
 Object.assign(PlaySurvivalCard, PlaySurvivalCardUI)
+Object.assign(RevealPlaceCards, RevealPlaceCardsUI)
 Object.assign(Pass, PassUI)
 
 export const getInformation = (t, game, playerId, animation, playersMap) => {

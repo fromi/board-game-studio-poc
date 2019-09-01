@@ -16,4 +16,17 @@
       }
     }
   }
+
+  &.revealing {
+    .place-card {
+      transform: none;
+      animation: revealing $revealing-place-card-animation;
+    }
+  }
+
+  &.revealed {
+    .place-card {
+      transform: none;
+    }
+  }
 }
