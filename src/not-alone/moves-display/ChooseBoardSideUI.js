@@ -9,5 +9,5 @@ export const ChooseBoardSideUI = {
 
   animationDelay: () => style.global['$board-side-chosen-animation'].value + style.global['$setup-animation'].value,
 
-  animatingInformation: (t) => t('Board side is chosen! Creating Artemia...')
+  animationInformation: (t) => t('Board side is chosen! Creating Artemia...')
 }

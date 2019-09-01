@@ -119,8 +119,8 @@ const getAnimationInformation = (Game, state, playersMap, t) => {
   const animation = state.client.animation
   if (animation && animation.type === MOVE_PLAYED) {
     const Move = Game.moves[animation.move.type]
-    if (Move && Move.animatingInformation) {
-      return Move.animatingInformation(t, state.client, playersMap)
+    if (Move && Move.animationInformation) {
+      return Move.animationInformation(t, {...state.client, playersMap})
     }
   }
 }

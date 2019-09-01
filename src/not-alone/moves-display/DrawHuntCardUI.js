@@ -8,7 +8,7 @@ export const DrawHuntCardUI = {
     style.global['$draw-card-animation'].value :
     style.global['$other-player-draw-card-animation'].value - 0.1,
 
-  animatingInformation: (t, {playerId}, playersMap) => playerId === CREATURE ?
+  animationInformation: (t, {playerId, playersMap}) => playerId === CREATURE ?
     t('You draw 3 Hunt cards') :
     t('{player} draws 3 Hunt cards', {player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender})
 }

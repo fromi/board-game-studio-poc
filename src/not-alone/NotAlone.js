@@ -81,7 +81,7 @@ export function getAutomaticMove(game) {
     return game.nextMoves[0]
   }
   if (game.phase === 1) {
-    if (game.hunted.every(hunted => explorationDone(hunted))) {
+    if (game.hunted.every(hunted => explorationDone(hunted)) && !creatureShouldPassOrPlayHuntCard(game)) {
       return startPhase(2)
     }
   } else if (game.phase === 2) {

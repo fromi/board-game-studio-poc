@@ -193,6 +193,7 @@ i18n.use(ICU).use(initReactI18next).init({
 
         'Play {place}': 'Jouer {place}',
         '{player} played {count, plural, one {one Place card} other {{count} Place cards}}, not revealed yet': '{player} a joué {count, plural, one {une carte} other {{count} cartes}} Lieu, pas encore révélée',
+        'All the Hunted have selected a Place to explore': 'Tous les traqués ont choisi un Lieu à explorer',
 
         '{count, plural, one {One copy} other {{count} copies}} left in the reserve': '{count, plural, one {Un exemplaire restant} other {{count} exemplaires restants}} dans la réserve',
 

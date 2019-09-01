@@ -30,7 +30,6 @@ export const PassUI = {
         }
       }
     }
-    console.log(awaitedPlayers)
     const creatureCouldPlayHuntCard = awaitedPlayers.includes(CREATURE) && couldCreaturePlayHuntCard(game)
     if (awaitedPlayers.length === 1) {
       if (creatureCouldPlayHuntCard) {

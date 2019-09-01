@@ -1,5 +1,6 @@
-import {getLegalMoves, getPlayerIds} from "../NotAlone";
+import {getAutomaticMove, getLegalMoves, getPlayerIds} from "../NotAlone";
 import {PLAY_PLACE_CARD} from "../moves/PlayPlaceCard";
+import {START_PHASE} from "../moves/StartPhase";
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 const style = require('sass-extract-loader!../variables.scss');
@@ -16,5 +17,12 @@ export const PlayPlaceCardUI = {
     }
   },
 
-  animationDelay: (animation, playerId) => animation.move.huntedId === playerId ? style.global['$playing-place-card-animation'].value : 0
+  animationDelay: (animation, playerId) => animation.move.huntedId === playerId ? style.global['$playing-place-card-animation'].value : 0,
+
+  animationInformation: (t, {game}) => {
+    const automaticMove = getAutomaticMove(game);
+    if (automaticMove && automaticMove.type === START_PHASE) {
+      return t('All the Hunted have selected a Place to explore')
+    }
+  }
 }
