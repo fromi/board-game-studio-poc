@@ -147,7 +147,7 @@ const getDefaultMovesInformation = (Game, GameUI, state, playersMap, t) => {
     for (const move of Game.getLegalMoves(game, playerId)) {
       const Move = Game.moves[move.type]
       if (Move && Move.defaultInformation) {
-        const information = Move.defaultInformation(t, game, playersMap);
+        const information = Move.defaultInformation(t, game, playersMap, playerId);
         if (information) {
           return information;
         }

@@ -25,6 +25,7 @@ import {Shelter} from "./material/place-cards/Shelter";
 import {Wreck} from "./material/place-cards/Wreck";
 import {Source} from "./material/place-cards/Source";
 import {Artefact} from "./material/place-cards/Artefact";
+import {PutMarkerOnBeach} from "./moves/PutMarkerOnBeach";
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -82,6 +83,7 @@ export const moves = {
   Pass,
   PlayHuntCard,
   PlaySurvivalCard,
+  PutMarkerOnBeach,
   ShuffleHuntCards,
   StrikeBack
 }
@@ -162,7 +164,7 @@ function getHuntedMoves(game, huntedId) {
   }
   if (game.phase === 3 && !game.hunted.some(hunted => shouldPassOrPlaySurvivalCard(game, hunted)) && !creatureShouldPassOrPlayHuntCard(game)) {
     if (nextHuntedExploringPlaceWithoutHuntToken(game) === hunted) {
-      getPlacesToExplore(game, hunted).forEach(place => moves.push(places[place].getPowerMoves(game, hunted)))
+      getPlacesToExplore(game, hunted).forEach(place => moves.push(...(places[place - 1].getPowerMoves(game, huntedId))))
     }
   }
   if (moves.length === 0 && shouldPassOrPlaySurvivalCard(game, hunted)) {
