@@ -206,7 +206,7 @@ i18n.use(ICU).use(initReactI18next).init({
 
         'Pass': 'Passer',
         'Pass to end your turn': 'Passez pour terminer votre tour',
-        'Pass to tell other players that you do not play a Hunt card this phase': 'Passez pour indiquer que vous ne jouez pas de carte à cette phase',
+        'Pass to indicate that you do not play a card this phase': 'Passez pour indiquer que vous ne jouez pas de carte à cette phase',
 
         'You may play {card}': 'Vous pouvez jouer {card}',
         'You may play {card1} or {card2}': 'Vous pouvez jouer {card1} ou {card2}',
@@ -216,7 +216,9 @@ i18n.use(ICU).use(initReactI18next).init({
         '{player} may play a Hunt card': '{player} peut jouer une carte Traque',
         '{player} may play a Survival card': '{player} peut jouer une carte Survie',
         'Some players may play a Hunt card or a Survival card': 'Certains joueurs peuvent jouer une carte Traque ou une carte Survie',
-        'Some Hunted may play a Survival card': 'Certains Traqués peuvent jouer une carte Survie'
+        'Some Hunted may play a Survival card': 'Certains Traqués peuvent jouer une carte Survie',
+
+        '{player} played {place}': '{player} a joué {place}'
       }
     }
   },

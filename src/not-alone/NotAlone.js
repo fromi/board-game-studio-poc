@@ -111,6 +111,12 @@ function getCreatureMoves(game) {
     return BOARD_SIDES.map(side => chooseBoardSide(side))
   }
   const moves = []
+  if (game.phase === 2) {
+    moves.push(...getCreatureHuntingMoves(game))
+  }
+  if (moves.length === 0 && creatureShouldPassOrPlayHuntCard(game)) {
+    moves.push(pass(CREATURE))
+  }
   if (couldCreaturePlayHuntCard(game)) {
     game.creature.hand.forEach(card => {
       const HuntCard = huntCardFromName[card]
@@ -118,12 +124,6 @@ function getCreatureMoves(game) {
         moves.push(playHuntCard(card))
       }
     })
-  }
-  if (game.phase === 1 && creatureShouldPassOrPlayHuntCard(game)) {
-    moves.push(pass(CREATURE))
-  }
-  if (game.phase === 2) {
-    moves.push(...getCreatureHuntingMoves(game))
   }
   return moves
 }
@@ -242,6 +242,9 @@ export function couldPlaySurvivalCard(game, hunted) {
 }
 
 function shouldPassOrPlaySurvivalCard(game, hunted) {
+  if (game.phase === 2 && !game.creature.passed) {
+    return false
+  }
   return !hunted.passed && couldPlaySurvivalCard(game, hunted)
 }
 
