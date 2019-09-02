@@ -15,6 +15,10 @@
       opacity: 0;
       z-index: -1;
     }
+
+    .rescue-counter, .assimilation-counter {
+      display: none;
+    }
   }
 
   &:not(.board-side-chosen) .board, .board.removing {

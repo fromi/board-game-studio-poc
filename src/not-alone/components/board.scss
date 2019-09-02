@@ -1,0 +1,164 @@
+@import "../variables";
+
+.not-alone {
+  .board {
+    position: absolute;
+    width: $board-width;
+    height: $board-height;
+    cursor: help;
+    background-size: cover;
+
+    &.board-1 {
+      background-image: url("../img/board-1.jpg");
+    }
+
+    &.board-2 {
+      background-image: url("../img/board-2.jpg");
+    }
+
+    .rescue-counter, .assimilation-counter {
+      height: 4.5vh;
+      position: absolute;
+
+      &[data-value='0'] {
+        transform: translate(53.8vh, 5.4vh);
+      }
+    }
+
+    .rescue-counter {
+      &[data-value='1'] {
+        transform: translate(49.4vh, 8.2vh);
+      }
+
+      &[data-value='2'] {
+        transform: translate(45.9vh, 4.5vh);
+      }
+
+      &[data-value='3'] {
+        transform: translate(43.9vh, 9.1vh);
+      }
+
+      &[data-value='4'] {
+        transform: translate(40.5vh, 5.4vh);
+      }
+
+      &[data-value='5'] {
+        transform: translate(38.3vh, 10vh);
+      }
+
+      &[data-value='6'] {
+        transform: translate(35vh, 6.1vh);
+      }
+
+      &[data-value='7'] {
+        transform: translate(32.5vh, 10.5vh);
+      }
+
+      &[data-value='8'] {
+        transform: translate(29.5vh, 6.5vh);
+      }
+
+      &[data-value='9'] {
+        transform: translate(26.7vh, 10.7vh);
+      }
+
+      &[data-value='10'] {
+        transform: translate(23.9vh, 6.4vh);
+      }
+
+      &[data-value='11'] {
+        transform: translate(20.8vh, 10.5vh);
+      }
+
+      &[data-value='12'] {
+        transform: translate(18.5vh, 5.9vh);
+      }
+
+      &[data-value='13'] {
+        transform: translate(15.1vh, 9.8vh);
+      }
+
+      &[data-value='14'] {
+        transform: translate(13.1vh, 5vh);
+      }
+
+      &[data-value='15'] {
+        transform: translate(9.5vh, 8.6vh);
+      }
+
+      &[data-value='16'] {
+        transform: translate(8vh, 3.8vh);
+      }
+
+      &[data-value='17'] {
+        transform: translate(4.1vh, 7vh);
+      }
+
+      &[data-value='18'] {
+        transform: translate(2.9vh, 2vh);
+      }
+    }
+
+    .assimilation-counter {
+      &[data-value='1'] {
+        transform: translate(58.2vh, 2.4vh);
+      }
+
+      &[data-value='2'] {
+        transform: translate(61.3vh, 6.1vh);
+      }
+
+      &[data-value='3'] {
+        transform: translate(63.7vh, 1.8vh);
+      }
+
+      &[data-value='4'] {
+        transform: translate(66.5vh, 5.9vh);
+      }
+
+      &[data-value='5'] {
+        transform: translate(69.3vh, 1.9vh);
+      }
+
+      &[data-value='6'] {
+        transform: translate(71.6vh, 6.2vh);
+      }
+
+      &[data-value='7'] {
+        transform: translate(74.8vh, 2.6vh);
+      }
+
+      &[data-value='8'] {
+        transform: translate(76.8vh, 7.2vh);
+      }
+
+      &[data-value='9'] {
+        transform: translate(80.3vh, 3.9vh);
+      }
+
+      &[data-value='10'] {
+        transform: translate(81.6vh, 8.6vh);
+      }
+
+      &[data-value='11'] {
+        transform: translate(85.5vh, 5.7vh);
+      }
+
+      &[data-value='12'] {
+        transform: translate(86.3vh, 10.5vh);
+      }
+    }
+  }
+
+  &.hunted {
+    .board {
+      transform: rotate(-90deg) translate($board-height / 2 - $board-width / 2, $board-height / 2 - $board-width / 2);
+    }
+  }
+
+  &:not(.hunted) {
+    .board {
+      transform: rotate(90deg) translate($board-width / 2 - $board-height / 2, calc(-100vw + #{$board-width / 2 + $board-height / 2}));
+    }
+  }
+}

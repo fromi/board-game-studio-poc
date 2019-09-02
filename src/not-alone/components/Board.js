@@ -1,10 +1,11 @@
 import React from "react"
-import board1 from "../img/board-1.jpg"
-import board2 from "../img/board-2.jpg"
+import rescueCounter from "../img/rescue-counter.png"
+import assimilationCounter from "../img/assimilation-counter.png"
 import {CREATURE} from "../NotAlone"
 import {CHOOSE_BOARD_SIDE} from "../moves/ChooseBoardSide"
 import {Tooltip} from "@material-ui/core"
 import {useTranslation} from "react-i18next"
+import "./board.scss"
 
 const Board = ({game, playerId, animation, side, play}) => {
   const animating = animation && animation.move.type === CHOOSE_BOARD_SIDE
@@ -39,10 +40,19 @@ const Board = ({game, playerId, animation, side, play}) => {
     }
   }
 
+  const rescueCounterDescription = t('The Rescue counter');
+  const assimilationCounterDescription = t('The Assimilation counter');
+
   return (
     <Tooltip title={tooltip} enterTouchDelay={0}>
-      <img className={classes.join(' ')}
-           onClick={onClick} src={side === 1 ? board1 : board2} alt={alt} draggable="false"/>
+      <div className={classes.join(' ')} onClick={onClick}>
+        <Tooltip title={rescueCounterDescription} enterTouchDelay={0}>
+          <img className="rescue-counter" src={rescueCounter} data-value={game.rescueCounter} alt={alt} draggable="false"/>
+        </Tooltip>
+        <Tooltip title={assimilationCounterDescription} enterTouchDelay={0}>
+          <img className="assimilation-counter" src={assimilationCounter} data-value={game.assimilationCounter} alt={alt} draggable="false"/>
+        </Tooltip>
+      </div>
     </Tooltip>
   )
 }
