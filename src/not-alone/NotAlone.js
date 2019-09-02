@@ -110,7 +110,36 @@ export function getAutomaticMove(game) {
       }
     }
   }
+  const creatureMove = getCreatureAutomaticMove(game)
+  if (creatureMove) {
+    return creatureMove
+  }
+  for (let i = 1; i <= game.hunted.length; i++) {
+    const huntedAutomaticMove = getHuntedAutomaticMove(game, HUNTED_PREFIX + i)
+    if (huntedAutomaticMove) {
+      return huntedAutomaticMove
+    }
+  }
   return null
+}
+
+function getCreatureAutomaticMove(game) {
+  if (!couldCreaturePlayHuntCard(game)) {
+    const moves = getLegalMoves(game, CREATURE);
+    if (moves.length === 1) {
+      return moves[0]
+    }
+  }
+}
+
+function getHuntedAutomaticMove(game, huntedId) {
+  const hunted = getHunted(game, huntedId)
+  if (!couldPlaySurvivalCard(game, hunted)) {
+    const moves = getLegalMoves(game, huntedId)
+    if (moves.length === 1) {
+      return moves[0]
+    }
+  }
 }
 
 /**
