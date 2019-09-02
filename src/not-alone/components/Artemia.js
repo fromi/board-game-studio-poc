@@ -6,6 +6,7 @@ import {useTranslation} from "react-i18next"
 import {Tooltip} from "@material-ui/core";
 import ArtemiaPlace from "./ArtemiaPlace";
 import {PLACE_HUNT_TOKEN} from "../moves/PlaceHuntToken";
+import markerCounter from "../img/marker-counter.png"
 
 const Artemia = ({game, play}) => {
   const {t} = useTranslation()
@@ -29,6 +30,11 @@ const Artemia = ({game, play}) => {
         return (
           <div className={placeClasses.join(' ')} key={place}>
             <ArtemiaPlace place={place} dropHuntToken={token => play({type: PLACE_HUNT_TOKEN, token, locations: [place]})}/>
+            {place === 4 && (
+              <Tooltip title={t('Marker counter (for the Beach)')} enterTouchDelay={0}>
+                <img className={game.markerCounterOnBeach ? 'marker-counter on-beach' : 'marker-counter'} src={markerCounter} alt={t('Marker counter (for the Beach)')}/>
+              </Tooltip>
+            )}
             {place > 5 && (
               <Tooltip title={t('{count, plural, one {One copy} other {{count} copies}} left in the reserve', {count: game.reserve[place]})} enterTouchDelay={0}>
                 <div className="reserve">{game.reserve[place]}</div>

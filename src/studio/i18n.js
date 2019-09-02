@@ -222,7 +222,10 @@ i18n.use(ICU).use(initReactI18next).init({
         'You reveal {place1} and {place2}': 'Vous révélez {place1} et {place2}',
         '{player} reveals {place}': '{player} revèle {place}',
         '{player} reveals {place1} and {place2}': '{player} révèle {place1} et {place2}',
-        '{player} played {place}': '{player} a joué {place}'
+        '{player} played {place}': '{player} a joué {place}',
+
+        'Marker counter (for the Beach)': 'Pion Balise (pour la Plage)',
+        '{player} may place the Marker counter on the Beach': '{player} peut placer le pion Balise sur la Plage'
       }
     }
   },

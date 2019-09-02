@@ -40,6 +40,18 @@
       }
     }
 
+    .marker-counter {
+      position: absolute;
+      height: 4vh;
+      left: $card-width * 3 + $card-width / 2;
+      top: -5vh;
+
+      &.on-beach {
+        left: $card-width * 3 + $artemia-grid-gap * 4 + $default-margin;
+        top: 12vh
+      }
+    }
+
     .hunt-token-reception .card .face {
       border-color: mediumvioletred;
     }
