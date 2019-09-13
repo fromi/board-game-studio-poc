@@ -1,6 +1,7 @@
 {
   "name": "@bga/not-alone-ui",
   "version": "0.1.0",
+  "homepage": "/not-alone/",
   "private": true,
   "dependencies": {
     "@bga/not-alone": "../not-alone",
