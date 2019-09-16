@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
     "lerna": "^3.16.4"
   },
   "dependencies": {
@@ -11,7 +13,10 @@
     "mongoose": "^5.7.1"
   },
   "scripts": {
-    "start": "node index.js",
+    "clean": "rm -rf build && mkdir build",
+    "build-babel": "babel -d ./build ./src -s",
+    "build": "npm run clean && npm run build-babel",
+    "start": "npm run build && node ./build/index.js",
     "heroku-postbuild": "cd packages/not-alone-ui && npm install && npm run build"
   },
   "engines": {
