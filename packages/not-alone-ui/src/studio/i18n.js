@@ -120,7 +120,7 @@ i18n.use(ICU).use(initReactI18next).init({
 
         'Survival cards ({count, plural, one {one card} other {{count} cards}} left)': 'Cartes Survie ({count, plural, one {une carte restante} other {{count} cartes restantes}})',
 
-        'Adrenaline': 'Adénaline',
+        'Adrenaline': 'Adrénaline',
         'Ingenuity': 'Système D',
         'Sacrifice': 'Sacrifice',
         'Sixth Sense': 'Sixième Sens',

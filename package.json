@@ -5,7 +5,9 @@
     "lerna": "^3.16.4"
   },
   "dependencies": {
-    "express": "latest"
+    "@bga/not-alone": "./packages/not-alone",
+    "express": "latest",
+    "mongoose": "^5.7.1"
   },
   "scripts": {
     "start": "node index.js",
