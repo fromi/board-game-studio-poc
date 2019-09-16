@@ -1,11 +1,9 @@
+import mongoose from "mongoose";
+import express from "express";
+import path from "path";
 import {setup} from "@bga/not-alone";
 
-const express = require('express');
-const path = require('path');
-
 const app = express();
-
-const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/your-app-name');
 
 const Game = mongoose.Schema({state: Object})

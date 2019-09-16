@@ -12,5 +12,8 @@
   "scripts": {
     "start": "node index.js",
     "heroku-postbuild": "cd packages/not-alone-ui && npm install && npm run build"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
