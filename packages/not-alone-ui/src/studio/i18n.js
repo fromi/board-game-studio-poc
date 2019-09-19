@@ -227,8 +227,10 @@ i18n.use(ICU).use(initReactI18next).init({
         '{player} reveals {place1} and {place2}': '{player} révèle {place1} et {place2}',
         '{player} played {place}': '{player} a joué {place}',
 
-        'Marker counter (for the Beach)': 'Pion Balise (pour la Plage)',
-        '{player} may place the Marker counter on the Beach': '{player} peut placer le pion Balise sur la Plage'
+        'Marker counter (see "The Beach")': 'Pion Balise (voir "La Plage")',
+        'A round yellow piece': 'Un pion jaune et rond',
+        '{player} may place the Marker counter on the Beach': '{player} peut placer le pion Balise sur la Plage',
+        'You may place the Marker counter on the Beach': 'Vous pouvez placer le pion Balise sur la Plage'
       }
     }
   },
