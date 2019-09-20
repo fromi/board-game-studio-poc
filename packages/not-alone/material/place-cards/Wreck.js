@@ -1,3 +1,3 @@
 export const Wreck = {
-  getPowerMoves: (game, hunted) => []
+  getPowerMoves: (game, huntedId) => []
 }

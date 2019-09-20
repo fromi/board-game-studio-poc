@@ -1,3 +1,3 @@
 export const Rover = {
-  getPowerMoves: (game, hunted) => []
+  getPowerMoves: (game, huntedId) => []
 }

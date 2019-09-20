@@ -1,3 +1,3 @@
 export const River = {
-  getPowerMoves: (game, hunted) => []
+  getPowerMoves: (game, huntedId) => []
 }

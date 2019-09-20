@@ -25,6 +25,8 @@ import {Wreck} from "./material/place-cards/Wreck";
 import {Source} from "./material/place-cards/Source";
 import {Artefact} from "./material/place-cards/Artefact";
 import {PutMarkerOnBeach} from "./moves/PutMarkerOnBeach";
+import {RemoveMarkerFromBeach} from "./moves/RemoveMarkerFromBeach";
+import {TakeBackPlayedPlace} from "./moves/TakeBackPlayedPlace";
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -52,7 +54,7 @@ function setupHunted(numberOfPlayers) {
   if (numberOfPlayers > 7) throw new Error('Not Alone cannot be played with more that 7 players')
   const hunted = []
   for (let playerNumber = 1; playerNumber < numberOfPlayers; playerNumber++) {
-    hunted.push({willCounters: 3, handPlaceCards: [1, 2, 3, 4, 5], handSurvivalCards: [], playedPlaceCards: [], resolvedPlaceCards: []})
+    hunted.push({willCounters: 3, handPlaceCards: [1, 2, 3, 4, 5], handSurvivalCards: [], playedPlaceCards: [], resolvedPlaceCards: [], discardedPlaceCards: []})
   }
   return hunted
 }
@@ -83,6 +85,8 @@ export const moves = {
   PlayHuntCard,
   PlaySurvivalCard,
   PutMarkerOnBeach,
+  RemoveMarkerFromBeach,
+  TakeBackPlayedPlace,
   ShuffleHuntCards,
   StrikeBack
 }

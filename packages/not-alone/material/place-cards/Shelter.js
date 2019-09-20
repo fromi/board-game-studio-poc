@@ -1,3 +1,3 @@
 export const Shelter = {
-  getPowerMoves: (game, hunted) => []
+  getPowerMoves: (game, huntedId) => []
 }

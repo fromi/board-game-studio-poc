@@ -1,3 +1,3 @@
 export const Swamp = {
-  getPowerMoves: (game, hunted) => []
+  getPowerMoves: (game, huntedId) => []
 }
