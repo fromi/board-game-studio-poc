@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 
 export const PLACE_CARD = 'Place card'
 
-const PlaceCard = ({place, onClick, classes = []}) => {
+const PlaceCard = ({place, classes = []}) => {
 
   classes.push('card', 'place-card')
   if (!isNaN(place)) {
@@ -14,7 +14,7 @@ const PlaceCard = ({place, onClick, classes = []}) => {
   const {t} = useTranslation()
 
   return (
-    <div className={classes.join(' ')} onClick={onClick} onTouchEnd={event => event.preventDefault()}>
+    <div className={classes.join(' ')} onTouchEnd={event => event.preventDefault()}>
       {!isNaN(place) && (
         <div className="face front">
           <h3 key="name">{t(places[place].name)}</h3>

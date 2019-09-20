@@ -4,29 +4,4 @@
   position: absolute;
   bottom: 2vh;
   right: calc(50% - #{$artemia-width / 2 + $default-margin + $card-width});
-
-  .place-card {
-    transform: rotateY(-180deg);
-    transition: all 0.5s ease-in-out;
-    transform-origin: bottom;
-
-    @media (hover) {
-      &:hover {
-        transform: scale(1.5);
-      }
-    }
-  }
-
-  &.revealing {
-    .place-card {
-      transform: none;
-      animation: revealing $revealing-place-card-animation;
-    }
-  }
-
-  &.revealed {
-    .place-card {
-      transform: none;
-    }
-  }
 }
