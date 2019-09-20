@@ -1,4 +1,4 @@
-import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, MOVE_BACK, MOVE_FORWARD, NEW_GAME, RESUME, SERVER_NOTIFICATION} from "../StudioActions"
+import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, MOVE_BACK, MOVE_FORWARD, NEW_GAME, PLAY_MOVE, RESUME, SERVER_NOTIFICATION} from "../StudioActions"
 import produce from "immer"
 import {findLastIndex, MOVE_PLAYED} from "./ServerReducer"
 
@@ -41,9 +41,15 @@ function applyPendingMove(Game, GameUI, state, initialState) {
     type = MOVE_PLAYED
     move = state.moveHistory[state.currentMove]
   } else {
-    type = state.pendingNotifications[0].type
-    move = state.pendingNotifications[0].move
+    const pendingNotification = state.pendingNotifications[0];
+    type = pendingNotification.type
+    move = pendingNotification.move
     state.pendingNotifications.splice(0, 1)
+    const expectedNotificationIndex = state.expectedNotifications.findIndex(notification => isEqual(notification, pendingNotification));
+    if (expectedNotificationIndex !== -1) {
+      state.expectedNotifications.splice(expectedNotificationIndex, 1)
+      return
+    }
   }
   if (type === MOVE_PLAYED) {
     if (state.moveHistory.length === state.currentMove) {
@@ -79,11 +85,18 @@ export function createClientReducer(Game, GameUI) {
       case NEW_GAME:
         const playerId = Game.getPlayerIds(action.game)[0]
         const gameView = Game.getPlayerView(action.game, playerId)
-        return {game: gameView, initialState: gameView, playerId, pendingNotifications: [], moveHistory: [], currentMove: 0}
+        return {game: gameView, initialState: gameView, playerId, pendingNotifications: [], expectedNotifications: [], moveHistory: [], currentMove: 0}
       case SERVER_NOTIFICATION:
         return produce(state, draft => {
           draft.pendingNotifications.push(...action.notifications)
           resume(Game, GameUI, draft, state.initialState)
+        })
+      case PLAY_MOVE:
+        return produce(state, draft => {
+          draft.expectedNotifications.push({type: MOVE_PLAYED, move: action.move})
+          draft.moveHistory.push(action.move)
+          draft.currentMove++
+          reportMove(Game, draft.game, draft.playerId, action.move)
         })
       case RESUME:
         return produce(state, draft => {
@@ -92,7 +105,7 @@ export function createClientReducer(Game, GameUI) {
         })
       case DISPLAY_PLAYER_VIEW:
       case DISPLAY_SPECTATOR_VIEW:
-        return {...action, pendingNotifications: [], currentMove: action.moveHistory.length}
+        return {...action, pendingNotifications: [], expectedNotifications:[], currentMove: action.moveHistory.length}
       case MOVE_BACK:
         const currentMove = action.moves ? Math.max(0, state.currentMove - action.moves) : 0
         const game = produce(state.initialState, draft => {

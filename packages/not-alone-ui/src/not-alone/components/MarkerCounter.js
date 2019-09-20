@@ -6,9 +6,9 @@ import {useTranslation} from "react-i18next";
 import {getLegalMoves, HUNTED_PREFIX} from "@bga/not-alone";
 import {PUT_MARKER_ON_BEACH} from "@bga/not-alone/moves/PutMarkerOnBeach";
 import {REMOVE_MARKER_FROM_BEACH} from "@bga/not-alone/moves/RemoveMarkerFromBeach";
-import Draggable from "../../util/Draggable";
+import DragWrapper from "../../util/DragWrapper";
 
-const MARKER_COUNTER = 'Marker counter';
+export const MARKER_COUNTER = 'Marker counter';
 
 const MarkerCounter = ({game, playerId}) => {
   const {t} = useTranslation()
@@ -23,9 +23,9 @@ const MarkerCounter = ({game, playerId}) => {
   return (
     <Tooltip title={t('Marker counter (see "The Beach")')} enterTouchDelay={0}>
       <div className={classes.join(' ')}>
-        <Draggable draggable={canMove} item={{type: MARKER_COUNTER}}>
+        <DragWrapper draggable={canMove} item={MARKER_COUNTER}>
           <Counter/>
-        </Draggable>
+        </DragWrapper>
       </div>
     </Tooltip>
   )

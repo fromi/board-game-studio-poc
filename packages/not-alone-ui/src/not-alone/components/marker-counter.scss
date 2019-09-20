@@ -4,6 +4,7 @@
   position: absolute;
   top: 0;
   transform: translate($card-width / 2 - 2vh, -5vh);
+  transition: transform 0.3s ease-in-out;
   z-index: 1000;
 
   img {
@@ -16,25 +17,34 @@
     transform: translate($default-margin, 12vh);
   }
 
-  .draggable {
-    cursor: grab;
-    will-change: transform;
+  .drag-wrapper {
     border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
 
-    &:not(.dragging) {
-      box-shadow: 0 0 0.1vh 0.1vh deepskyblue;
-      outline: 1px solid transparent;
+    &.draggable {
+      cursor: grab;
+      will-change: transform;
 
-      &:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        box-shadow: 0 0 0.8vh 0.2vh deepskyblue;
-        animation: opacity 1.5s ease-in-out infinite alternate;
+      &.dragging {
+        pointer-events: none;
+        transition: none;
+      }
+
+      &:not(.dragging) {
+        box-shadow: 0 0 0.1vh 0.1vh deepskyblue;
         outline: 1px solid transparent;
-        border-radius: 50%;
+
+        &:after {
+          content: '';
+          position: absolute;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          box-shadow: 0 0 0.8vh 0.2vh deepskyblue;
+          animation: opacity 1.5s ease-in-out infinite alternate;
+          outline: 1px solid transparent;
+          border-radius: 50%;
+        }
       }
     }
   }

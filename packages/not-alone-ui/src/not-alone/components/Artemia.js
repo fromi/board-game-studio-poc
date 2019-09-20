@@ -5,11 +5,12 @@ import {useDrop} from "react-dnd"
 import {useTranslation} from "react-i18next"
 import {Tooltip} from "@material-ui/core";
 import ArtemiaPlace from "./ArtemiaPlace";
-import {PLACE_HUNT_TOKEN} from "@bga/not-alone/moves/PlaceHuntToken";
 import MarkerCounter from "./MarkerCounter";
+import {PLACES} from "@bga/not-alone";
+import {THE_BEACH, THE_ROVER} from "@bga/not-alone/material/PlaceCards";
 
 const Artemia = (props) => {
-  const {game, play} = props
+  const {game} = props
   const {t} = useTranslation()
   const [{draggedPlace, isOver}, drop] = useDrop({
     accept: PLACE_CARD,
@@ -25,14 +26,13 @@ const Artemia = (props) => {
   return (
     <div className="artemia" ref={drop}>
       <h3>Artemia</h3>
-      {[...Array(10).keys()].map(i => {
-        const place = i + 1;
+      {PLACES.map(place => {
         const placeClasses = ['place', 'place-' + place]
         return (
           <div className={placeClasses.join(' ')} key={place}>
-            <ArtemiaPlace place={place} dropHuntToken={token => play({type: PLACE_HUNT_TOKEN, token, locations: [place]})}/>
-            {place === 4 && <MarkerCounter {...props}/>}
-            {place > 5 && (
+            <ArtemiaPlace {...props} place={place}/>
+            {place === THE_BEACH && <MarkerCounter {...props}/>}
+            {place > THE_ROVER && (
               <Tooltip title={t('{count, plural, one {One copy} other {{count} copies}} left in the reserve', {count: game.reserve[place]})}
                        enterTouchDelay={0}>
                 <div className="reserve">{game.reserve[place]}</div>
