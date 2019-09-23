@@ -6,10 +6,11 @@ const isEqual = require("react-fast-compare");
 
 function reportMove(Game, game, playerId, move) {
   const Move = Game.moves[move.type]
+  const moveCopy = JSON.parse(JSON.stringify(move)) // Prevents original move object to be modified if some reference inside it escape the object at some point
   if (Move.reportInView) {
-    Move.reportInView(game, move, playerId)
+    Move.reportInView(game, moveCopy, playerId)
   } else {
-    Move.execute(game, move)
+    Move.execute(game, moveCopy)
   }
 }
 
