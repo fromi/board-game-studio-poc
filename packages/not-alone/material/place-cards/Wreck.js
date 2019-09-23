@@ -1,3 +1,3 @@
 export const Wreck = {
-  getPowerMoves: (game, huntedId) => []
+  canUsePower: (game) => !game.wreckUsed
 }

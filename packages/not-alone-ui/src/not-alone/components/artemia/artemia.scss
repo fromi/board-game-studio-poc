@@ -1,4 +1,4 @@
-@import "../variables";
+@import "../../variables";
 
 .artemia {
   display: grid;
@@ -27,33 +27,6 @@
     padding: 0 1vh;
     border-top-left-radius: 1vh;
     border-top-right-radius: 1vh;
-  }
-
-  > .place {
-    transition-property: transform;
-
-    @for $i from 0 through (9) {
-      &.place-#{$i + 1} {
-        grid-row: $i / 5 + 1;
-        grid-column: $i % 5 + 1;
-      }
-    }
-
-    .hunt-token-reception .card .face {
-      border-color: mediumvioletred;
-    }
-
-    .reserve {
-      color: white;
-      background-color: rgba(0, 0, 0, 0.5);
-      border-bottom-left-radius: 3vh;
-      border-bottom-right-radius: 3vh;
-      font-size: 3vh;
-      width: 6vh;
-      margin: 0 auto;
-      text-align: center;
-      cursor: help;
-    }
   }
 
   .drop-info {

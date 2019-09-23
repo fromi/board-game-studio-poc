@@ -229,15 +229,8 @@ i18n.use(ICU).use(initReactI18next).init({
 
         'Marker counter (see "The Beach")': 'Pion Balise (voir "La Plage")',
         'A round yellow piece': 'Un pion jaune et rond',
-        '{player} may place the Marker counter on the Beach': '{player} peut placer le pion Balise sur la Plage',
-        'You may place the Marker counter on the Beach': 'Vous pouvez placer le pion Balise sur la Plage',
-
-        'You may take back {place} to your hand': 'Vous pouvez reprendre en main {place}',
-        'You may take back {place1} and {place2} to your hand': 'Vous pouvez reprendre en main {place1} et {place2}',
-        'You may take back {place} and 1 Place card from your discard pile to your hand': 'Vous pouvez reprendre en main {place1} et une carte Lieu de votre défausse',
-        '{player} may take back {place} in hand': '{player} peut reprendre en main {place}',
-        '{player} may take back {place1} and {place2} in hand': '{player} peut reprendre en main {place1} et {place2}',
-        '{player} may take back {place} and 1 Place card from {gender, select, ♀ {her} ♂ {his} other {their}} discard pile in hand': '{player} peut reprendre en main {place1} et une carte Lieu de sa défausse',
+        'You may use the power of {place}': 'Vous pouvez utiliser le pouvoir de {place}',
+        '{player} may use the power of {place}': '{player} peut utiliser le pouvoir de {place}'
       }
     }
   },

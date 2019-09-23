@@ -1,6 +1,14 @@
 import {takeBackPlayedPlace} from "../../moves/TakeBackPlayedPlace";
-import {THE_JUNGLE} from "../PlaceCards";
+import {getHunted, getPlaceBeingResolved} from "../../NotAlone";
 
 export const Jungle = {
-  getPowerMoves: (game, huntedId) => [takeBackPlayedPlace(huntedId, THE_JUNGLE)]
+  canUsePower: () => true,
+
+  usePower: (game, huntedId) => {
+    const hunted = getHunted(game, huntedId)
+    game.nextMoves.push(takeBackPlayedPlace(huntedId, getPlaceBeingResolved(game, huntedId)))
+    if (hunted.discardedPlaceCards.length === 1) {
+      // TODO: hunted.pendingMoves = [TAKE_BACK_DISCARDED_PLACE]
+    }
+  }
 }

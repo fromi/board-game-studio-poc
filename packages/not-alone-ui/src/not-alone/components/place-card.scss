@@ -47,8 +47,4 @@
       background-image: url("../img/places/place-#{$i}.jpg");
     }
   }
-
-  &.with-tooltip {
-    cursor: help;
-  }
 }

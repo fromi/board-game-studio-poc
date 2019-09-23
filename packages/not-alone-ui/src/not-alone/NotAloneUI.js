@@ -3,7 +3,7 @@ import "./not-alone.scss"
 import {BOARD_SIDES, CREATURE, getLegalMoves} from "@bga/not-alone"
 import Board from "./components/Board"
 import {CHOOSE_BOARD_SIDE, ChooseBoardSide} from "@bga/not-alone/moves/ChooseBoardSide"
-import Artemia from "./components/Artemia"
+import Artemia from "./components/artemia/Artemia"
 import HuntCardsDeck from "./components/HuntCardsDeck"
 import {DrawHuntCard} from "@bga/not-alone/moves/DrawHuntCard"
 import SurvivalCardsDeck from "./components/SurvivalCardsDeck"
@@ -31,10 +31,8 @@ import {PlaySurvivalCard} from "@bga/not-alone/moves/PlaySurvivalCard";
 import {PlaySurvivalCardUI} from "./moves-display/PlaySurvivalCardUI";
 import {RevealPlaceCards} from "@bga/not-alone/moves/RevealPlaceCard";
 import {RevealPlaceCardsUI} from "./moves-display/RevealPlaceCardsUI";
-import {PutMarkerOnBeach} from "@bga/not-alone/moves/PutMarkerOnBeach";
-import {PutMarkerOnBeachUI} from "./moves-display/PutMarkerOnBeachUI";
-import {TakeBackPlayedPlace} from "@bga/not-alone/moves/TakeBackPlayedPlace";
-import {TakeBackPlayedPlaceUI} from "./moves-display/TakeBackPlayedPlaceUI";
+import {UsePlacePower} from "@bga/not-alone/moves/UsePlacePower";
+import {UsePlacePowerUI} from "./moves-display/UsePlacePowerUI";
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -101,8 +99,7 @@ Object.assign(PlaceHuntToken, PlaceHuntTokenUI)
 Object.assign(PlayHuntCard, PlayHuntCardUI)
 Object.assign(PlaySurvivalCard, PlaySurvivalCardUI)
 Object.assign(RevealPlaceCards, RevealPlaceCardsUI)
-Object.assign(PutMarkerOnBeach, PutMarkerOnBeachUI)
-Object.assign(TakeBackPlayedPlace, TakeBackPlayedPlaceUI)
+Object.assign(UsePlacePower, UsePlacePowerUI)
 Object.assign(Pass, PassUI)
 
 export const getInformation = (t, game, playerId, animation, playersMap) => {

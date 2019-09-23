@@ -14,19 +14,11 @@ import {revealPlaceCards, RevealPlaceCards} from "./moves/RevealPlaceCard";
 import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS, TARGET_TOKEN} from "./material/HuntTokens";
 import {playHuntCard, PlayHuntCard} from "./moves/PlayHuntCard";
 import {playSurvivalCard, PlaySurvivalCard} from "./moves/PlaySurvivalCard";
-import {Lair} from "./material/place-cards/Lair";
-import {Jungle} from "./material/place-cards/Jungle";
-import {River} from "./material/place-cards/River";
-import {Beach} from "./material/place-cards/Beach";
-import {Rover} from "./material/place-cards/Rover";
-import {Swamp} from "./material/place-cards/Swamp";
-import {Shelter} from "./material/place-cards/Shelter";
-import {Wreck} from "./material/place-cards/Wreck";
-import {Source} from "./material/place-cards/Source";
-import {Artefact} from "./material/place-cards/Artefact";
 import {PutMarkerOnBeach} from "./moves/PutMarkerOnBeach";
 import {RemoveMarkerFromBeach} from "./moves/RemoveMarkerFromBeach";
 import {TakeBackPlayedPlace} from "./moves/TakeBackPlayedPlace";
+import {usePlacePower, UsePlacePower} from "./moves/UsePlacePower";
+import {placeRule} from "./material/PlaceCards";
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -40,13 +32,15 @@ export const setup = options => ({
   hunted: setupHunted(options.numberOfPlayers),
   assimilationCounter: 5 + options.numberOfPlayers,
   rescueCounter: 11 + options.numberOfPlayers,
-  markerCounterOnBeach: false,
   reserve: setupReserve(options.numberOfPlayers),
   huntTokensLocations: {[CREATURE_TOKEN]: [], [ARTEMIA_TOKEN]: [], [TARGET_TOKEN]: []},
   survivalCardsDeck: shuffle(SurvivalCards),
   huntCardsDeck: shuffle(HuntCards),
   huntCardsDiscard: [],
-  nextMoves: []
+  nextMoves: [],
+  markerCounterOnBeach: false,
+  beachUsed: false,
+  wreckUsed: false
 })
 
 function setupHunted(numberOfPlayers) {
@@ -84,14 +78,13 @@ export const moves = {
   Pass,
   PlayHuntCard,
   PlaySurvivalCard,
+  UsePlacePower,
   PutMarkerOnBeach,
   RemoveMarkerFromBeach,
   TakeBackPlayedPlace,
   ShuffleHuntCards,
   StrikeBack
 }
-
-const places = [Lair, Jungle, River, Beach, Rover, Swamp, Shelter, Wreck, Source, Artefact]
 
 export function getAutomaticMove(game) {
   if (game.nextMoves.length) {
@@ -111,6 +104,10 @@ export function getAutomaticMove(game) {
       if (!hunted.playedPlaceCardsRevealed) {
         return revealPlaceCards(HUNTED_PREFIX + (game.hunted.indexOf(hunted) + 1))
       }
+    }
+    if (!nextHuntedExploringPlaceWithoutHuntToken(game)) {
+      // TODO: Solve Hun Tokens effects
+      return startPhase(4)
     }
   }
   const creatureMove = getCreatureAutomaticMove(game)
@@ -152,7 +149,13 @@ function getHuntedAutomaticMove(game, huntedId) {
  * @return {[]} The player legal moves at this state of the game
  */
 export function getLegalMoves(game, playerId) {
-  return playerId === CREATURE ? getCreatureMoves(game) : getHuntedMoves(game, playerId)
+  if (playerId === CREATURE) {
+    return getCreatureMoves(game)
+  } else if (playerId.startsWith(HUNTED_PREFIX)) {
+    return getHuntedMoves(game, playerId)
+  } else {
+    return []
+  }
 }
 
 function getCreatureMoves(game) {
@@ -196,7 +199,21 @@ function getHuntedMoves(game, huntedId) {
   }
   if (game.phase === 3 && !game.hunted.some(hunted => shouldPassOrPlaySurvivalCard(game, hunted)) && !creatureShouldPassOrPlayHuntCard(game)) {
     if (nextHuntedExploringPlaceWithoutHuntToken(game) === hunted) {
-      getPlacesToExplore(game, hunted).forEach(place => moves.push(...(places[place - 1].getPowerMoves(game, huntedId))))
+      const places = getPlacesToExplore(game, hunted)
+      if (places.length === 1) {
+        const place = places[0]
+        const Place = placeRule(place)
+        if (Place.canUsePower(game, hunted)) {
+          moves.push(usePlacePower(place, huntedId))
+        } else if (!hunted.discardedPlaceCards.length) {
+          // TODO moves.push(passPlaceReckoning) -> Place power cannot be used and player has 0 place card discarded
+        }
+        if (hunted.discardedPlaceCards.length) {
+          // TODO moves.push(takeBackDiscardedPlace)
+        }
+      } else {
+        // TODO Artefact choosePlaceToResolve
+      }
     }
   }
   if (moves.length === 0 && shouldPassOrPlaySurvivalCard(game, hunted)) {
@@ -330,4 +347,17 @@ function getPlacesToExplore(game, hunted) {
 
 function getHuntedFinalPlaces(game, hunted) {
   return hunted.playedPlaceCards // TODO: Detour
+}
+
+export function huntedOwnPlace(hunted, place) {
+  return hunted.handPlaceCards.includes(place) || hunted.discardedPlaceCards.includes(place) || hunted.playedPlaceCards.includes(place)
+}
+
+export function getPlaceBeingResolved(game, huntedId) {
+  const hunted = getHunted(game, huntedId)
+  if (hunted.playedPlaceCards.length === 1) {
+    return hunted.playedPlaceCards[0]
+  } else {
+    // TODO Artefact: return hunted.placeBeingResolved
+  }
 }

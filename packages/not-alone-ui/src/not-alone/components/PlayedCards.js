@@ -12,7 +12,7 @@ const PlayedCards = (props) => {
     return (
       <div className="played-cards">
         {hunted.playedPlaceCards.map(place => {
-          return <PlaceCardPlayed place={place} {...props}/>
+          return <PlaceCardPlayed place={place} {...props} key={place}/>
         })}
       </div>
     )

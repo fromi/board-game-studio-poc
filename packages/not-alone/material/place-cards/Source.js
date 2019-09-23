@@ -1,3 +1,3 @@
 export const Source = {
-  getPowerMoves: (game, huntedId) => []
+  canUsePower: (game) => game.survivalCardsDeck.length > 0 || game.hunted.some(hunted => hunted.willCounters < 3)
 }

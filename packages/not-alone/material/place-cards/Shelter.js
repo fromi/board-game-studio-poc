@@ -1,3 +1,3 @@
 export const Shelter = {
-  getPowerMoves: (game, huntedId) => []
+  canUsePower: (game) => game.survivalCardsDeck.length > 0
 }

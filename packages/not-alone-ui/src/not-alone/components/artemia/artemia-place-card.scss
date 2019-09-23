@@ -1,0 +1,31 @@
+@import "../../variables";
+
+.artemia-place-card {
+  border-radius: $card-border * 2;
+  width: $card-width;
+  height: $card-height;
+  position: relative;
+  cursor: help;
+
+  &.activable {
+    box-shadow: 0 0 0.1vh 0.1vh deepskyblue;
+    outline: 1px solid transparent;
+    cursor: pointer;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: inherit;
+      height: inherit;
+      box-shadow: 0 0 0.8vh 0.2vh deepskyblue;
+      animation: opacity 1.5s ease-in-out infinite alternate;
+      outline: 1px solid transparent;
+      border-radius: inherit;
+    }
+  }
+
+  &.drop-available .card .face {
+    border-color: mediumvioletred;
+  }
+}

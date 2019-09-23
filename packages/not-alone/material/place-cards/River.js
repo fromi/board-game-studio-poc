@@ -1,3 +1,5 @@
+import {THE_ARTEFACT} from "../PlaceCards";
+
 export const River = {
-  getPowerMoves: (game, huntedId) => []
+  canUsePower: (game, hunted) => hunted.pendingPlacePower !== THE_ARTEFACT
 }
