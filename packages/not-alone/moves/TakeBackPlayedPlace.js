@@ -1,7 +1,11 @@
 import {getHunted} from "../NotAlone";
+import {getPlaceBeingResolved} from "../phases/Reckoning";
 
 export const TAKE_BACK_PLAYED_PLACE = 'TakeBackPlayedPlace'
+
 export const takeBackPlayedPlace = (huntedId, place) => ({type: TAKE_BACK_PLAYED_PLACE, huntedId, place})
+
+export const takeBackPlaceBeingResolved = (game, huntedId) => takeBackPlayedPlace(huntedId, getPlaceBeingResolved(game, huntedId))
 
 export const TakeBackPlayedPlace = {
   execute: (game, move) => {

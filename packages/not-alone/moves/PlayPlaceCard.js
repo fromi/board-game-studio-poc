@@ -1,5 +1,6 @@
-import {explorationDone, getHunted} from "../NotAlone"
+import {getHunted} from "../NotAlone"
 import {START_PHASE} from "./StartPhase"
+import {explorationDone} from "../phases/Exploration";
 
 export const PLAY_PLACE_CARD = 'PlayPlaceCard'
 export const playPlaceCard = (huntedId, place) => ({type: PLAY_PLACE_CARD, huntedId, place})
