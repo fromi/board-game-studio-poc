@@ -98,6 +98,12 @@ export function createClientReducer(Game, GameUI) {
           draft.moveHistory.push(action.move)
           draft.currentMove++
           reportMove(Game, draft.game, draft.playerId, action.move)
+          const animation = {type: MOVE_PLAYED, move: action.move}
+          const Move = Game.moves[action.move.type]
+          animation.duration = Move.animationDelay ? Move.animationDelay(animation, draft.playerId, draft.game) : 0
+          if (animation.duration) {
+            draft.animation = animation
+          }
         })
       case RESUME:
         return produce(state, draft => {

@@ -1,6 +1,6 @@
 import {drawHuntCard} from "./DrawHuntCard"
 import {drawSurvivalCard} from "./DrawSurvivalCard"
-import {CREATURE, getPlayerIds} from "../NotAlone"
+import {CREATURE, EXPLORATION, getPlayerIds} from "../NotAlone"
 import {startPhase} from "./StartPhase"
 
 export const CHOOSE_BOARD_SIDE = 'ChooseBoardSide'
@@ -12,6 +12,6 @@ export const ChooseBoardSide = {
     game.boardSide = move.side
     game.nextMoves.push(drawHuntCard, drawHuntCard, drawHuntCard)
     getPlayerIds(game).filter((playerId) => playerId !== CREATURE).forEach((playerId) => game.nextMoves.push(drawSurvivalCard(playerId)))
-    game.nextMoves.push(startPhase(1))
+    game.nextMoves.push(startPhase(EXPLORATION))
   }
 }

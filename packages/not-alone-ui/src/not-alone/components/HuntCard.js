@@ -12,7 +12,7 @@ import {
   FLASHBACK,
   FORBIDDEN_ZONE,
   FORCE_FIELD,
-  huntCardFromName,
+  huntCardRule,
   INTERFERENCE,
   MIRAGE,
   MUTATION,
@@ -24,22 +24,22 @@ import {
   TRACKING,
   VIRUS
 } from "@bga/not-alone/material/HuntCards"
-import {tokensDisplay} from "./HuntToken";
+import {tokensDisplay} from "./HuntToken"
 
 const HuntCard = ({cardName, classes = []}) => {
   const {t} = useTranslation()
   classes.push('card', 'hunt-card')
-  const HuntCard = huntCardFromName[cardName];
+  const HuntCardRule = huntCardRule(cardName)
   return (
     <div className={classes.join(' ')}>
       {cardName && (
         <div className="face front">
           <h3 key="name">{t(cardName)}</h3>
-          {HuntCard.token && <img src={tokensDisplay[HuntCard.token].image} className="hunt-token-symbol" alt={tokensDisplay[HuntCard.token].description(t)} draggable={false}/>}
+          {HuntCardRule.token && <img src={tokensDisplay[HuntCardRule.token].image} className="hunt-token-symbol" alt={tokensDisplay[HuntCardRule.token].description(t)} draggable={false}/>}
           <div className="description" key="description">
             <p>{t(descriptions[cardName])}</p>
           </div>
-          <p className="phase">{cardName === FLASHBACK ? t('Phase of the copied card') : t('Phase {number}', {number: HuntCard.phase})}</p>
+          <p className="phase">{cardName === FLASHBACK ? t('Phase of the copied card') : t('Phase {number}', {number: HuntCardRule.phase})}</p>
         </div>
       )}
       <div className="face back"/>

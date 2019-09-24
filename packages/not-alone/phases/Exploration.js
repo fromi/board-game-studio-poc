@@ -1,6 +1,6 @@
-import {startPhase} from "../moves/StartPhase";
-import {creatureShouldPassOrPlayHuntCard, getHunted} from "../NotAlone";
-import {playPlaceCard} from "../moves/PlayPlaceCard";
+import {startPhase} from "../moves/StartPhase"
+import {creatureShouldPassOrPlayHuntCard, getHunted, HUNTING} from "../NotAlone"
+import {playPlaceCard} from "../moves/PlayPlaceCard"
 
 export function explorationDone(hunted) {
   return hunted.playedPlaceCards.length === 1
@@ -9,7 +9,7 @@ export function explorationDone(hunted) {
 export const Exploration = {
   getAutomaticMove: game => {
     if (game.hunted.every(hunted => explorationDone(hunted)) && !creatureShouldPassOrPlayHuntCard(game)) {
-      return startPhase(2)
+      return startPhase(HUNTING)
     }
   },
 

@@ -1,0 +1,19 @@
+@import "../../variables";
+
+.marker-counter {
+  position: absolute;
+  top: 0;
+  transform: translate($card-width / 2 - 2vh, -5vh);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+
+  img {
+    cursor: help;
+    height: 4vh;
+    display: block;
+  }
+
+  &.on-beach {
+    transform: translate($default-margin, 12vh);
+  }
+}

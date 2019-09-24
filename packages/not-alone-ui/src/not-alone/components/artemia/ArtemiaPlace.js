@@ -1,6 +1,6 @@
 import React from "react"
 import {THE_BEACH, THE_ROVER} from "@bga/not-alone/material/PlaceCards";
-import MarkerCounter from "../MarkerCounter";
+import MarkerCounter from "./MarkerCounter";
 import {Tooltip} from "@material-ui/core";
 import {useTranslation} from "react-i18next";
 import ArtemiaPlaceCard from "./ArtemiaPlaceCard";

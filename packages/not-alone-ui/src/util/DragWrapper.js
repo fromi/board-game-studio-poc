@@ -26,7 +26,7 @@ const DragWrapper = ({children, draggable, item}) => {
   if (isDragging && dragOffsetDiff) {
     classes.push('dragging')
   }
-  const style = dragOffsetDiff ? {transform: `translate(${dragOffsetDiff.x}px, ${dragOffsetDiff.y}px)`} : {}
+  const style = isDragging && dragOffsetDiff ? {transform: `translate(${dragOffsetDiff.x}px, ${dragOffsetDiff.y}px)`} : {}
 
   return (
     <div ref={drag} className={classes.join(' ')} style={style}>

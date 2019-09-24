@@ -6,44 +6,51 @@ $token-size: 8vh;
   position: absolute;
   width: $token-size;
   height: $token-size;
+  top: 0;
   left: 0;
   right: 0;
   margin: auto;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh black);
-  cursor: help;
   transition: transform 0.3s ease-in-out;
   z-index: 0;
 
   img {
-    width: 100%;
+    cursor: help;
+    width: $token-size;
+    display: block;
   }
 
-  &.available:not(.dragging) {
+  .drag-wrapper {
     border-radius: 50%;
-    box-shadow: 0 0 0.1vh 0.1vh mediumvioletred;
-    outline: 1px solid transparent;
-    cursor: grab;
+    transition: transform 0.3s ease-in-out;
 
-    &:before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      box-shadow: 0 0 0.8vh 0.2vh mediumvioletred;
-      animation: opacity 1.5s ease-in-out infinite alternate;
-      outline: 1px solid transparent;
-      border-radius: 50%;
+    &.draggable {
+      cursor: grab;
+      will-change: transform;
+
+      &.dragging {
+        pointer-events: none;
+        transition: none;
+        z-index: 1000;
+      }
+
+      &:not(.dragging) {
+        box-shadow: 0 0 0.1vh 0.1vh mediumvioletred;
+        outline: 1px solid transparent;
+        cursor: grab;
+
+        &:before {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          box-shadow: 0 0 0.8vh 0.2vh mediumvioletred;
+          animation: opacity 1.5s ease-in-out infinite alternate;
+          outline: 1px solid transparent;
+          border-radius: inherit;
+        }
+      }
     }
-  }
-
-  &.dragging {
-    pointer-events: none;
-    cursor: grabbing;
-    z-index: 1000;
-  }
-
-  &:not(.dragging) {
-    transition: left 0.3s 0.1s ease-out, top 0.3s 0.1s ease-out, transform 0.3s ease-in-out, z-index 0.3s ease-in-out;
   }
 
   &.placed {

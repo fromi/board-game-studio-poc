@@ -1,5 +1,5 @@
-import {getHunted} from "../NotAlone";
-import {getPlaceBeingResolved} from "../phases/Reckoning";
+import {continueGameAfterMove, getHunted} from "../NotAlone"
+import {getPlaceBeingResolved} from "../phases/Reckoning"
 
 export const TAKE_BACK_PLAYED_PLACE = 'TakeBackPlayedPlace'
 
@@ -14,5 +14,14 @@ export const TakeBackPlayedPlace = {
     hunted.handPlaceCards.push(move.place)
     hunted.handPlaceCards.sort()
     game.nextMoves.shift()
+    continueGameAfterMove(game, move)
+  },
+
+  reportInView: (game, move, playerId) => {
+    TakeBackPlayedPlace.execute(game, move)
+    if (playerId !== move.huntedId) {
+      const hunted = getHunted(game, move.huntedId)
+      hunted.handPlaceCards = hunted.handPlaceCards.map(() => ({}))
+    }
   }
 }

@@ -1,6 +1,6 @@
 import {shuffle} from "./game-api/Random"
-import SurvivalCards, {survivalCardFromName} from "./material/SurvivalCards"
-import HuntCards, {huntCardFromName} from "./material/HuntCards"
+import SurvivalCards, {survivalCardRule} from "./material/SurvivalCards"
+import HuntCards, {huntCardRule} from "./material/HuntCards"
 import {ChooseBoardSide, chooseBoardSide} from "./moves/ChooseBoardSide"
 import {DrawHuntCard} from "./moves/DrawHuntCard"
 import {DrawSurvivalCard} from "./moves/DrawSurvivalCard"
@@ -8,23 +8,24 @@ import {StartPhase} from "./moves/StartPhase"
 import {PlayPlaceCard} from "./moves/PlayPlaceCard"
 import {StrikeBack} from "./moves/StrikeBack"
 import {ShuffleHuntCards} from "./moves/ShuffleHuntCards"
-import {PlaceHuntToken} from "./moves/PlaceHuntToken";
-import {pass, Pass} from "./moves/Pass";
-import {RevealPlaceCards} from "./moves/RevealPlaceCard";
-import {ARTEMIA_TOKEN, CREATURE_TOKEN, TARGET_TOKEN} from "./material/HuntTokens";
-import {playHuntCard, PlayHuntCard} from "./moves/PlayHuntCard";
-import {playSurvivalCard, PlaySurvivalCard} from "./moves/PlaySurvivalCard";
-import {PutMarkerOnBeach} from "./moves/PutMarkerOnBeach";
-import {RemoveMarkerFromBeach} from "./moves/RemoveMarkerFromBeach";
-import {TakeBackPlayedPlace} from "./moves/TakeBackPlayedPlace";
-import {UsePlacePower} from "./moves/UsePlacePower";
-import {Exploration} from "./phases/Exploration";
-import {Hunting} from "./phases/Hunting";
-import {Reckoning} from "./phases/Reckoning";
-import {EndOfTurnActions} from "./phases/EndOfTurnActions";
+import {PlaceHuntToken} from "./moves/PlaceHuntToken"
+import {pass, Pass} from "./moves/Pass"
+import {RevealPlaceCards} from "./moves/RevealPlaceCard"
+import {ARTEMIA_TOKEN, CREATURE_TOKEN, TARGET_TOKEN} from "./material/HuntTokens"
+import {playHuntCard, PlayHuntCard} from "./moves/PlayHuntCard"
+import {playSurvivalCard, PlaySurvivalCard} from "./moves/PlaySurvivalCard"
+import {PutMarkerOnBeach} from "./moves/PutMarkerOnBeach"
+import {RemoveMarkerFromBeach} from "./moves/RemoveMarkerFromBeach"
+import {TakeBackPlayedPlace} from "./moves/TakeBackPlayedPlace"
+import {UsePlacePower} from "./moves/UsePlacePower"
+import {Exploration} from "./phases/Exploration"
+import {Hunting} from "./phases/Hunting"
+import {continueReckoning, Reckoning, REVEAL_PLACE_CARDS_STEP} from "./phases/Reckoning"
+import {EndOfTurnActions} from "./phases/EndOfTurnActions"
+import {placeRule} from "./material/PlaceCards"
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-const EXPLORATION = 1, HUNTING = 2, RECKONING = 3, END_OF_TURN_ACTIONS = 4
+export const EXPLORATION = 1, HUNTING = 2, RECKONING = 3, END_OF_TURN_ACTIONS = 4
 
 /**
  * Setup a new Game.
@@ -52,7 +53,7 @@ function setupHunted(numberOfPlayers) {
   if (numberOfPlayers > 7) throw new Error('Not Alone cannot be played with more that 7 players')
   const hunted = []
   for (let playerNumber = 1; playerNumber < numberOfPlayers; playerNumber++) {
-    hunted.push({willCounters: 3, handPlaceCards: [1, 2, 3, 4, 5], handSurvivalCards: [], playedPlaceCards: [], resolvedPlaceCards: [], discardedPlaceCards: []})
+    hunted.push({willCounters: 3, handPlaceCards: [1, 2, 3, 4, 5], handSurvivalCards: [], playedPlaceCards: [], discardedPlaceCards: []})
   }
   return hunted
 }
@@ -101,13 +102,13 @@ export function getAutomaticMove(game) {
     }
   }
   if (!couldCreaturePlayHuntCard(game)) {
-    const moves = getLegalMoves(game, CREATURE);
+    const moves = getLegalMoves(game, CREATURE)
     if (moves.length === 1) {
       return moves[0]
     }
   }
   for (let i = 1; i <= game.hunted.length; i++) {
-    const huntedId = HUNTED_PREFIX + i;
+    const huntedId = HUNTED_PREFIX + i
     const hunted = getHunted(game, huntedId)
     if (!couldPlaySurvivalCard(game, hunted)) {
       const moves = getLegalMoves(game, huntedId)
@@ -121,10 +122,14 @@ export function getAutomaticMove(game) {
 
 function PhaseRule(phase) {
   switch (phase) {
-    case EXPLORATION: return Exploration
-    case HUNTING: return Hunting
-    case RECKONING: return Reckoning
-    case END_OF_TURN_ACTIONS: return EndOfTurnActions
+    case EXPLORATION:
+      return Exploration
+    case HUNTING:
+      return Hunting
+    case RECKONING:
+      return Reckoning
+    case END_OF_TURN_ACTIONS:
+      return EndOfTurnActions
   }
 }
 
@@ -160,8 +165,8 @@ function getCreatureMoves(game) {
   }
   if (game.creature.huntCardsPlayed.length < game.creature.huntCardPlayLimit) {
     game.creature.hand.forEach(card => {
-      const HuntCard = huntCardFromName[card]
-      if (HuntCard && HuntCard.phase === game.phase) {
+      const HuntCardRule = huntCardRule(card)
+      if (HuntCardRule && HuntCardRule.phase === game.phase) {
         moves.push(playHuntCard(card))
       }
     })
@@ -183,8 +188,8 @@ function getHuntedMoves(game, huntedId) {
   }
   if (!hunted.survivalCardPlayed) {
     hunted.handSurvivalCards.forEach(card => {
-      const SurvivalCard = survivalCardFromName[card]
-      if (SurvivalCard && SurvivalCard.phase === game.phase) {
+      const SurvivalCardRule = survivalCardRule(card)
+      if (SurvivalCardRule && SurvivalCardRule.phase === game.phase) {
         moves.push(playSurvivalCard(card))
       }
     })
@@ -266,9 +271,30 @@ export function couldCreaturePlayHuntCard(game) {
 }
 
 export function creatureShouldPassOrPlayHuntCard(game) {
-  if (game.phase === 3 && game.hunted.some(hunted => !hunted.playedPlaceCardsRevealed)) {
+  if (game.phase === RECKONING && game.reckoning.step === REVEAL_PLACE_CARDS_STEP) {
     return false
   }
   return !game.creature.passed && couldCreaturePlayHuntCard(game)
 }
 
+export function continueGameAfterMove(game, move) {
+  if (game.pendingEffect) {
+    const rule = getPendingEffectRule(game)
+    if (rule.continueGameAfterMove) {
+      rule.continueGameAfterMove(game, move)
+    } else {
+      delete game.pendingEffect
+      continueGameAfterMove(game, move)
+    }
+  } else if (game.phase === RECKONING) {
+    continueReckoning(game)
+  }
+}
+
+function getPendingEffectRule(game) {
+  switch (game.pendingEffect.cardType) {
+    case "PLACE_CARD": return placeRule(game.pendingEffect.card)
+    case "HUNT_CARD": return huntCardRule(game.pendingEffect.card)
+    case "SURVIVAL_CARD": return survivalCardRule(game.pendingEffect.card)
+  }
+}

@@ -1,16 +1,15 @@
-import React, {useEffect} from "react"
+import React from "react"
 import {Tooltip} from "@material-ui/core"
 import creatureToken from "../img/creature-token.png"
 import artemiaToken from "../img/artemia-token.png"
 import targetToken from "../img/target-token.png"
 import "./hunt-token.scss"
-import {CREATURE, getHuntedNumber, getLegalMoves} from "@bga/not-alone";
-import {useTranslation} from "react-i18next";
-import {numberOfHuntedAndHuntedPositionToTableSeats, SEAT_CENTER} from "./OtherPlayers";
-import {PLACE_HUNT_TOKEN} from "@bga/not-alone/moves/PlaceHuntToken";
-import {useDrag, useDragLayer} from "react-dnd";
-import {getEmptyImage} from "react-dnd-html5-backend";
-import {ARTEMIA_TOKEN, CREATURE_TOKEN, TARGET_TOKEN} from "@bga/not-alone/material/HuntTokens";
+import {CREATURE, getHuntedNumber, getLegalMoves} from "@bga/not-alone"
+import {useTranslation} from "react-i18next"
+import {numberOfHuntedAndHuntedPositionToTableSeats, SEAT_CENTER} from "./OtherPlayers"
+import {PLACE_HUNT_TOKEN} from "@bga/not-alone/moves/PlaceHuntToken"
+import {ARTEMIA_TOKEN, CREATURE_TOKEN, TARGET_TOKEN} from "@bga/not-alone/material/HuntTokens"
+import DragWrapper from "../../util/DragWrapper"
 
 export const HUNT_TOKEN = 'Hunt token'
 
@@ -32,35 +31,12 @@ const HuntToken = ({token, locations, playerId, game}) => {
     }
   }
 
-  if (availableForPlacement) {
-    classes.push('available')
-  }
-
-  let [{isDragging}, drag, preview] = useDrag({
-    item: {type: HUNT_TOKEN, token},
-    canDrag: availableForPlacement || canChangePlacement,
-    collect: monitor => ({
-      isDragging: monitor.isDragging()
-    })
-  })
-  useEffect(() => {
-    preview(getEmptyImage())
-  }, [])
-  const {dragOffsetDiff} = useDragLayer(monitor => ({
-    dragOffsetDiff: monitor.getDifferenceFromInitialOffset()
-  }))
-
-  if (isDragging) {
-    classes.push('dragging')
-  }
-
-  const x = isDragging && dragOffsetDiff ? dragOffsetDiff.x : 0
-  const y = isDragging && dragOffsetDiff ? dragOffsetDiff.y : 0
-
   return (
     <Tooltip title={tokensDisplay[token].description(t)}>
-      <div className={classes.join(' ')} ref={drag} style={{left: x * 2 + 'px', top: y + 'px'}}>
-        <Image token={token}/>
+      <div className={classes.join(' ')}>
+        <DragWrapper draggable={availableForPlacement || canChangePlacement} item={{type: HUNT_TOKEN, token}}>
+          <Image token={token}/>
+        </DragWrapper>
       </div>
     </Tooltip>
   )

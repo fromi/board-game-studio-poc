@@ -1,13 +1,13 @@
-import {startPhase} from "../moves/StartPhase";
-import {couldPlaySurvivalCard, CREATURE, PLACES} from "../NotAlone";
-import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS} from "../material/HuntTokens";
-import {pass} from "../moves/Pass";
-import {placeHuntToken} from "../moves/PlaceHuntToken";
+import {startPhase} from "../moves/StartPhase"
+import {couldPlaySurvivalCard, CREATURE, PLACES, RECKONING} from "../NotAlone"
+import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS} from "../material/HuntTokens"
+import {pass} from "../moves/Pass"
+import {placeHuntToken} from "../moves/PlaceHuntToken"
 
 export const Hunting = {
   getAutomaticMove: game => {
     if (game.creature.passed && game.hunted.every(hunted => hunted.passed || !couldPlaySurvivalCard(game, hunted))) {
-      return startPhase(3)
+      return startPhase(RECKONING)
     }
   },
 

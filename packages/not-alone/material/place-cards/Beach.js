@@ -1,5 +1,5 @@
-import {putMarkerOnBeach} from "../../moves/PutMarkerOnBeach";
-import {removeMarkerFromBeach} from "../../moves/RemoveMarkerFromBeach";
+import {putMarkerOnBeach} from "../../moves/PutMarkerOnBeach"
+import {removeMarkerFromBeach} from "../../moves/RemoveMarkerFromBeach"
 
 export const Beach = {
   canUsePower: (game) => !game.beachUsed,
@@ -10,5 +10,6 @@ export const Beach = {
     } else {
       game.nextMoves.push(removeMarkerFromBeach(huntedId))
     }
+    game.beachUsed = true
   }
 }
