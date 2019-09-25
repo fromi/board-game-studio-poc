@@ -1,13 +1,13 @@
-import React from "react"
-import SurvivalCard from "./SurvivalCard"
-import Tooltip from '@material-ui/core/Tooltip';
-import {useTranslation} from 'react-i18next';
-import {DRAW_SURVIVAL_CARD} from "@bga/not-alone/moves/DrawSurvivalCard"
-import {CREATURE, getHuntedNumber} from "@bga/not-alone"
-import {numberOfHuntedAndHuntedPositionToTableSeats, numberOfHuntedToTableSeatsForCreature} from "./OtherPlayers"
+import React from 'react'
+import SurvivalCard from './SurvivalCard'
+import Tooltip from '@material-ui/core/Tooltip'
+import {useTranslation} from 'react-i18next'
+import {DRAW_SURVIVAL_CARD} from '@bga/not-alone/moves/DrawSurvivalCard'
+import {CREATURE, getHuntedNumber} from '@bga/not-alone'
+import {numberOfHuntedAndHuntedPositionToTableSeats, numberOfHuntedToTableSeatsForCreature} from './other-players/OtherPlayers'
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
-const style = require('sass-extract-loader!../variables.scss');
+const style = require('sass-extract-loader!../variables.scss')
 const maxCardsDisplayed = style.global['$decks-max-cards-displayed'].value
 
 const SurvivalCardsDeck = ({game, playerId, animation}) => {
@@ -15,7 +15,8 @@ const SurvivalCardsDeck = ({game, playerId, animation}) => {
   const isDrawingSurvivalCard = animation && animation.move.type === DRAW_SURVIVAL_CARD
   const slice = game.survivalCardsDeck.slice(-maxCardsDisplayed)
   return (
-    <Tooltip title={t('Survival cards ({count, plural, one {one card} other {{count} cards}} left)', {count: game.survivalCardsDeck.length})} enterTouchDelay={0}>
+    <Tooltip title={t('Survival cards ({count, plural, one {one card} other {{count} cards}} left)', {count: game.survivalCardsDeck.length})}
+             enterTouchDelay={0}>
       <div className="survival-cards-deck">
         {slice.map((card, index) => {
           const classes = []

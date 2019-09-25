@@ -1,52 +1,52 @@
 import React from 'react'
-import "./not-alone.scss"
-import {BOARD_SIDES, CREATURE, getLegalMoves} from "@bga/not-alone"
-import Board from "./components/Board"
-import {CHOOSE_BOARD_SIDE, ChooseBoardSide} from "@bga/not-alone/moves/ChooseBoardSide"
-import Artemia from "./components/artemia/Artemia"
-import HuntCardsDeck from "./components/HuntCardsDeck"
-import {DrawHuntCard} from "@bga/not-alone/moves/DrawHuntCard"
-import SurvivalCardsDeck from "./components/SurvivalCardsDeck"
-import {PlayPlaceCard} from "@bga/not-alone/moves/PlayPlaceCard"
-import OtherPlayers from "./components/OtherPlayers"
-import PlayerMaterial from "./components/PlayerMaterial"
-import {DrawSurvivalCard} from "@bga/not-alone/moves/DrawSurvivalCard"
-import {ChooseBoardSideUI} from "./moves-display/ChooseBoardSideUI"
-import {DrawHuntCardUI} from "./moves-display/DrawHuntCardUI"
-import {DrawSurvivalCardUI} from "./moves-display/DrawSurvivalCardUI"
-import {PlayPlaceCardUI} from "./moves-display/PlayPlaceCardUI"
-import {PlaceHuntToken} from "@bga/not-alone/moves/PlaceHuntToken";
-import {PlaceHuntTokenUI} from "./moves-display/PlaceHuntTokenUI";
-import HuntToken from "./components/HuntToken";
-import {Pass, PASS} from "@bga/not-alone/moves/Pass";
-import {PassUI} from "./moves-display/PassUI";
-import Button from "@material-ui/core/Button";
-import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
-import {lightBlue, pink} from "@material-ui/core/colors";
-import {HUNT_TOKENS} from "@bga/not-alone/material/HuntTokens";
-import {useTranslation} from "react-i18next";
-import {PlayHuntCardUI} from "./moves-display/PlayHuntCardUI";
-import {PlayHuntCard} from "@bga/not-alone/moves/PlayHuntCard";
-import {PlaySurvivalCard} from "@bga/not-alone/moves/PlaySurvivalCard";
-import {PlaySurvivalCardUI} from "./moves-display/PlaySurvivalCardUI";
-import {RevealPlaceCards} from "@bga/not-alone/moves/RevealPlaceCard";
-import {RevealPlaceCardsUI} from "./moves-display/RevealPlaceCardsUI";
-import {UsePlacePower} from "@bga/not-alone/moves/UsePlacePower";
-import {UsePlacePowerUI} from "./moves-display/UsePlacePowerUI";
+import './not-alone.scss'
+import {BOARD_SIDES, CREATURE, getLegalMoves} from '@bga/not-alone'
+import Board from './components/Board'
+import {CHOOSE_BOARD_SIDE, ChooseBoardSide} from '@bga/not-alone/moves/ChooseBoardSide'
+import Artemia from './components/artemia/Artemia'
+import HuntCardsDeck from './components/HuntCardsDeck'
+import {DrawHuntCard} from '@bga/not-alone/moves/DrawHuntCard'
+import SurvivalCardsDeck from './components/SurvivalCardsDeck'
+import {PlayPlaceCard} from '@bga/not-alone/moves/PlayPlaceCard'
+import OtherPlayers from './components/other-players/OtherPlayers'
+import PlayerMaterial from './components/player/PlayerMaterial'
+import {DrawSurvivalCard} from '@bga/not-alone/moves/DrawSurvivalCard'
+import {ChooseBoardSideUI} from './moves-display/ChooseBoardSideUI'
+import {DrawHuntCardUI} from './moves-display/DrawHuntCardUI'
+import {DrawSurvivalCardUI} from './moves-display/DrawSurvivalCardUI'
+import {PlayPlaceCardUI} from './moves-display/PlayPlaceCardUI'
+import {PlaceHuntToken} from '@bga/not-alone/moves/PlaceHuntToken'
+import {PlaceHuntTokenUI} from './moves-display/PlaceHuntTokenUI'
+import HuntToken from './components/HuntToken'
+import {Pass, PASS} from '@bga/not-alone/moves/Pass'
+import {PassUI} from './moves-display/PassUI'
+import Button from '@material-ui/core/Button'
+import {createMuiTheme, MuiThemeProvider} from '@material-ui/core'
+import {lightBlue, pink} from '@material-ui/core/colors'
+import {HUNT_TOKENS} from '@bga/not-alone/material/HuntTokens'
+import {useTranslation} from 'react-i18next'
+import {PlayHuntCardUI} from './moves-display/PlayHuntCardUI'
+import {PlayHuntCard} from '@bga/not-alone/moves/PlayHuntCard'
+import {PlaySurvivalCard} from '@bga/not-alone/moves/PlaySurvivalCard'
+import {PlaySurvivalCardUI} from './moves-display/PlaySurvivalCardUI'
+import {RevealPlaceCards} from '@bga/not-alone/moves/RevealPlaceCard'
+import {RevealPlaceCardsUI} from './moves-display/RevealPlaceCardsUI'
+import {UsePlacePower} from '@bga/not-alone/moves/UsePlacePower'
+import {UsePlacePowerUI} from './moves-display/UsePlacePowerUI'
 
 const createTheme = (color) => createMuiTheme({
   palette: {
     primary: color
   },
   typography: {
-    useNextVariants: true,
+    useNextVariants: true
   }
-});
+})
 
 const phases = {
   1: 'Phase 1: Exploration',
   2: 'Phase 2: Hunting',
-    3: 'Phase 3: Reckoning',
+  3: 'Phase 3: Reckoning',
   4: 'Phase 4: End-of-turn actions'
 }
 

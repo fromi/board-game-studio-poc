@@ -1,14 +1,14 @@
-import React from "react"
-import {CREATURE, getHunted, getLegalMoves} from "@bga/not-alone"
-import PlaceCard, {PLACE_CARD} from "./PlaceCard"
-import HuntCard from "./HuntCard"
-import "./hand.scss"
-import {DRAW_HUNT_CARD} from "@bga/not-alone/moves/DrawHuntCard"
-import SurvivalCard from "./SurvivalCard"
-import {PLAY_PLACE_CARD} from "@bga/not-alone/moves/PlayPlaceCard"
-import CardInHand from "../../util/CardInHand"
-import {DRAW_SURVIVAL_CARD} from "@bga/not-alone/moves/DrawSurvivalCard"
-import {MOVE_PLAYED} from "../../studio/reducers/ServerReducer"
+import React from 'react'
+import {CREATURE, getHunted, getLegalMoves} from '@bga/not-alone'
+import PlaceCard, {PLACE_CARD} from '../PlaceCard'
+import HuntCard from '../HuntCard'
+import './hand.scss'
+import {DRAW_HUNT_CARD} from '@bga/not-alone/moves/DrawHuntCard'
+import SurvivalCard from '../SurvivalCard'
+import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
+import CardInHand from '../../../util/CardInHand'
+import {DRAW_SURVIVAL_CARD} from '@bga/not-alone/moves/DrawSurvivalCard'
+import {MOVE_PLAYED} from '../../../studio/reducers/ServerReducer'
 
 const Hand = ({game, playerId, animation, play, undo}) => {
   const cards = []

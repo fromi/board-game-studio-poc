@@ -1,22 +1,22 @@
-import React from "react"
-import {Tooltip} from "@material-ui/core"
-import creatureToken from "../img/creature-token.png"
-import artemiaToken from "../img/artemia-token.png"
-import targetToken from "../img/target-token.png"
-import "./hunt-token.scss"
-import {CREATURE, getHuntedNumber, getLegalMoves} from "@bga/not-alone"
-import {useTranslation} from "react-i18next"
-import {numberOfHuntedAndHuntedPositionToTableSeats, SEAT_CENTER} from "./OtherPlayers"
-import {PLACE_HUNT_TOKEN} from "@bga/not-alone/moves/PlaceHuntToken"
-import {ARTEMIA_TOKEN, CREATURE_TOKEN, TARGET_TOKEN} from "@bga/not-alone/material/HuntTokens"
-import DragWrapper from "../../util/DragWrapper"
+import React from 'react'
+import {Tooltip} from '@material-ui/core'
+import creatureToken from '../img/creature-token.png'
+import artemiaToken from '../img/artemia-token.png'
+import targetToken from '../img/target-token.png'
+import './hunt-token.scss'
+import {CREATURE, getHuntedNumber, getLegalMoves} from '@bga/not-alone'
+import {useTranslation} from 'react-i18next'
+import {numberOfHuntedAndHuntedPositionToTableSeats, SEAT_CENTER} from './other-players/OtherPlayers'
+import {PLACE_HUNT_TOKEN} from '@bga/not-alone/moves/PlaceHuntToken'
+import {ARTEMIA_TOKEN, CREATURE_TOKEN, TARGET_TOKEN} from '@bga/not-alone/material/HuntTokens'
+import DragWrapper from '../../util/DragWrapper'
 
 export const HUNT_TOKEN = 'Hunt token'
 
 const HuntToken = ({token, locations, playerId, game}) => {
   const {t} = useTranslation()
   const classes = ['hunt-token', tokensDisplay[token].className]
-  const availableForPlacement = playerId === CREATURE && getLegalMoves(game, playerId).some((move) => move.type === PLACE_HUNT_TOKEN && move.token === token);
+  const availableForPlacement = playerId === CREATURE && getLegalMoves(game, playerId).some((move) => move.type === PLACE_HUNT_TOKEN && move.token === token)
   const canChangePlacement = locations.length !== 0 && playerId === CREATURE && game.phase === 2
 
   if (locations.length) {

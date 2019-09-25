@@ -1,13 +1,13 @@
-import React from "react"
-import HuntCard from "./HuntCard"
-import Tooltip from '@material-ui/core/Tooltip';
-import {useTranslation} from 'react-i18next';
-import {DRAW_HUNT_CARD} from "@bga/not-alone/moves/DrawHuntCard"
-import {CREATURE, getHuntedNumber} from "@bga/not-alone"
-import {numberOfHuntedAndHuntedPositionToTableSeats} from "./OtherPlayers"
+import React from 'react'
+import HuntCard from './HuntCard'
+import Tooltip from '@material-ui/core/Tooltip'
+import {useTranslation} from 'react-i18next'
+import {DRAW_HUNT_CARD} from '@bga/not-alone/moves/DrawHuntCard'
+import {CREATURE, getHuntedNumber} from '@bga/not-alone'
+import {numberOfHuntedAndHuntedPositionToTableSeats} from './other-players/OtherPlayers'
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
-const style = require('sass-extract-loader!../variables.scss');
+const style = require('sass-extract-loader!../variables.scss')
 const maxCardsDisplayed = style.global['$decks-max-cards-displayed'].value
 
 const HuntCardsDeck = ({game, animation, playerId}) => {

@@ -1,8 +1,8 @@
 import React from 'react'
-import HuntedPlayer from "./HuntedPlayer"
-import {CREATURE, getHuntedNumber, HUNTED_PREFIX} from "@bga/not-alone"
-import CreaturePlayer from "./CreaturePlayer"
-import "./other-player.scss"
+import HuntedPlayer from './HuntedPlayer'
+import {CREATURE, getHuntedNumber, HUNTED_PREFIX} from '@bga/not-alone'
+import CreaturePlayer from './CreaturePlayer'
+import './other-player.scss'
 
 const OtherPlayers = (props) => {
   const {playerId, game, animation, playersMap} = props

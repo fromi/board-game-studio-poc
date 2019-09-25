@@ -1,13 +1,13 @@
-import React from "react";
-import PlaceCard, {places} from "./PlaceCard";
-import "./place-card-played.scss"
-import {getHunted, getLegalMoves} from "@bga/not-alone";
-import {REVEAL_PLACE_CARDS} from "@bga/not-alone/moves/RevealPlaceCard";
-import {useTranslation} from "react-i18next";
-import {Tooltip} from "@material-ui/core";
-import {MOVE_PLAYED} from "../../studio/reducers/ServerReducer";
-import {PLAY_PLACE_CARD} from "@bga/not-alone/moves/PlayPlaceCard";
-import {TAKE_BACK_PLAYED_PLACE, takeBackPlayedPlace} from "@bga/not-alone/moves/TakeBackPlayedPlace";
+import React from 'react'
+import PlaceCard, {places} from '../PlaceCard'
+import './place-card-played.scss'
+import {getHunted, getLegalMoves} from '@bga/not-alone'
+import {REVEAL_PLACE_CARDS} from '@bga/not-alone/moves/RevealPlaceCard'
+import {useTranslation} from 'react-i18next'
+import {Tooltip} from '@material-ui/core'
+import {MOVE_PLAYED} from '../../../studio/reducers/ServerReducer'
+import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
+import {TAKE_BACK_PLAYED_PLACE, takeBackPlayedPlace} from '@bga/not-alone/moves/TakeBackPlayedPlace'
 
 const PlaceCardPlayed = ({place, game, playerId, animation, play, undo}) => {
   const {t} = useTranslation()

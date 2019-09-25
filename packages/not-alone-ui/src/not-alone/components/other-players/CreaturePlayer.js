@@ -2,7 +2,7 @@ import React from "react"
 import Tooltip from "@material-ui/core/Tooltip"
 import {useTranslation} from 'react-i18next';
 import {CREATURE} from "@bga/not-alone"
-import HuntCard from "./HuntCard"
+import HuntCard from "../HuntCard"
 import {DRAW_HUNT_CARD} from "@bga/not-alone/moves/DrawHuntCard"
 
 const CreaturePlayer = ({creature, classes, playersMap, animation}) => {

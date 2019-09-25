@@ -1,7 +1,7 @@
-import React from "react"
-import {CREATURE, getHunted} from "@bga/not-alone"
-import "./played-cards.scss"
-import PlaceCardPlayed from "./PlaceCardPlayed";
+import React from 'react'
+import {CREATURE, getHunted} from '@bga/not-alone'
+import './played-cards.scss'
+import PlaceCardPlayed from './PlaceCardPlayed'
 
 const PlayedCards = (props) => {
   const {game, playerId} = props

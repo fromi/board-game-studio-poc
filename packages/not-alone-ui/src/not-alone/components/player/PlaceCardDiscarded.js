@@ -1,6 +1,6 @@
 import React from 'react'
 import {Tooltip} from '@material-ui/core'
-import PlaceCard, {places} from './PlaceCard'
+import PlaceCard, {places} from '../PlaceCard'
 import {useTranslation} from 'react-i18next'
 import './place-card-discarded.scss'
 
