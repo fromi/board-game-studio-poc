@@ -23,6 +23,10 @@ import {Hunting} from "./phases/Hunting"
 import {continueReckoning, Reckoning, REVEAL_PLACE_CARDS_STEP} from "./phases/Reckoning"
 import {EndOfTurnActions} from "./phases/EndOfTurnActions"
 import {placeRule} from "./material/PlaceCards"
+import {DiscardPlayedPlaceCard} from "./moves/DiscardPlayedPlaceCard"
+import {RemoveHuntToken} from "./moves/RemoveHuntToken"
+import {MoveRescueCounter} from "./moves/MoveRescueCounter"
+import {MoveAssimilationCounter} from "./moves/MoveAssimilationCounter"
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 export const EXPLORATION = 1, HUNTING = 2, RECKONING = 3, END_OF_TURN_ACTIONS = 4
@@ -87,6 +91,10 @@ export const moves = {
   PutMarkerOnBeach,
   RemoveMarkerFromBeach,
   TakeBackPlayedPlace,
+  DiscardPlayedPlaceCard,
+  RemoveHuntToken,
+  MoveRescueCounter,
+  MoveAssimilationCounter,
   ShuffleHuntCards,
   StrikeBack
 }

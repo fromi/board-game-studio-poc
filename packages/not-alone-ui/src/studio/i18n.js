@@ -6,10 +6,10 @@ i18n.use(ICU).use(initReactI18next).init({
   resources: {
     fr: {
       translation: {
-        'Phase 1: Exploration': 'Phase 1: Exploration',
-        'Phase 2: Hunting': 'Phase 2: Traque',
-        'Phase 3: Reckoning': 'Phase 3: Résolution',
-        'Phase 4: End-of-turn actions': 'Phase 4: Maintenance',
+        'Phase 1: Exploration': 'Phase 1 : Exploration',
+        'Phase 2: Hunting': 'Phase 2 : Traque',
+        'Phase 3: Reckoning': 'Phase 3 : Résolution',
+        'Phase 4: End-of-turn actions': 'Phase 4 : Maintenance',
 
         'Rescue counter': 'Pion Secours',
         'Assimilation counter': 'Pion Assimilation',
