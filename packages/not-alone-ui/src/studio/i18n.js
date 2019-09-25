@@ -230,7 +230,9 @@ i18n.use(ICU).use(initReactI18next).init({
         'Marker counter (see "The Beach")': 'Pion Balise (voir "La Plage")',
         'A round yellow piece': 'Un pion jaune et rond',
         'You may use the power of {place}': 'Vous pouvez utiliser le pouvoir de {place}',
-        '{player} may use the power of {place}': '{player} peut utiliser le pouvoir de {place}'
+        '{player} may use the power of {place}': '{player} peut utiliser le pouvoir de {place}',
+
+        '{place} is in your discard': '{place} est dans votre défausse'
       }
     }
   },

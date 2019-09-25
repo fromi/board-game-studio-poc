@@ -1,0 +1,8 @@
+@import "../variables";
+
+.discarded-places {
+  position: absolute;
+  top: $header-height + $player-panel-height * 3 + $default-margin * 4;
+  left: $board-height + $default-margin;
+  width: $calc-player-panel-width;
+}
