@@ -5,6 +5,7 @@ import {useTranslation} from 'react-i18next'
 import willCounter from '../../img/will-counter.png'
 import HuntedPlayedHand from './HuntedPlayerHand'
 import HuntedPlayedPlayedPlaces from './HuntedPlayedPlayedPlaces'
+import HuntedPlayedDiscard from './HuntedPlayedDiscard'
 
 const HuntedPlayer = (props) => {
   const {hunted, huntedId, classes, playersMap} = props
@@ -21,6 +22,7 @@ const HuntedPlayer = (props) => {
         </div>
       </Tooltip>
       <HuntedPlayedPlayedPlaces {...props}/>
+      <HuntedPlayedDiscard {...props}/>
     </div>
   )
 }

@@ -232,7 +232,8 @@ i18n.use(ICU).use(initReactI18next).init({
         'You may use the power of {place}': 'Vous pouvez utiliser le pouvoir de {place}',
         '{player} may use the power of {place}': '{player} peut utiliser le pouvoir de {place}',
 
-        '{place} is in your discard': '{place} est dans votre défausse'
+        '{place} is in your discard': '{place} est dans votre défausse',
+        '{place} is in {player}’s discard': '{place} est dans la défausse de {player}'
       }
     }
   },
