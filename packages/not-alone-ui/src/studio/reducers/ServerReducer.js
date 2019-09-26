@@ -1,6 +1,6 @@
-import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, PLAY_MOVE, SERVER_NOTIFICATION, UNDO_MOVE} from "../StudioActions"
-import produce from "immer"
-import {getRandom} from "@bga/not-alone/game-api/Random"
+import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, NEW_GAME, PLAY_MOVE, SERVER_NOTIFICATION, UNDO_MOVE} from '../StudioActions'
+import produce from 'immer'
+import {getRandom} from '@bga/not-alone/game-api/Random'
 
 const isEqual = require("react-fast-compare");
 
@@ -35,8 +35,13 @@ export function createServerReducer(Game) {
         }
         return produce(state, draft => {
           executeMove(Game, draft, action.move)
+          let counter = 0
           while (Game.getAutomaticMove(draft.game)) {
+            if (counter > 100) {
+              throw new Error("Maximum number of automatic moves reached (100). Rollback action due to infinite loop.")
+            }
             executeMove(Game, draft, Game.getAutomaticMove(draft.game))
+            counter++
           }
         })
       case SERVER_NOTIFICATION:
