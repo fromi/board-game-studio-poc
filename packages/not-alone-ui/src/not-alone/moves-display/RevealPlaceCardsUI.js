@@ -1,4 +1,4 @@
-import {places} from "../components/PlaceCard";
+import {places} from '../material/place-cards/PlaceCard'
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 const style = require('sass-extract-loader!../variables.scss');

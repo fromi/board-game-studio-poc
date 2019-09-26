@@ -1,0 +1,12 @@
+@import "../variables";
+
+.my-will-counters {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: fit-content;
+  bottom: $card-height + $default-margin * 2;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}

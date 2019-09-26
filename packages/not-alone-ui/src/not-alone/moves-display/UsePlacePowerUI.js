@@ -1,6 +1,6 @@
-import {getLegalMoves} from "@bga/not-alone";
-import {USE_PLACE_POWER} from "@bga/not-alone/moves/UsePlacePower";
-import {places} from "../components/PlaceCard";
+import {getLegalMoves} from '@bga/not-alone'
+import {USE_PLACE_POWER} from '@bga/not-alone/moves/UsePlacePower'
+import {places} from '../material/place-cards/PlaceCard'
 
 export const UsePlacePowerUI = {
   playerInformation: (t, game, playerId) => {

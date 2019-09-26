@@ -1,7 +1,0 @@
-@import "../../variables";
-
-.played-cards {
-  position: absolute;
-  bottom: 2vh;
-  right: calc(50% - #{$artemia-width / 2 + $default-margin + $card-width});
-}

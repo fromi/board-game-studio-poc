@@ -12,7 +12,9 @@ i18n.use(ICU).use(initReactI18next).init({
         'Phase 4: End-of-turn actions': 'Phase 4 : Maintenance',
 
         'Rescue counter': 'Pion Secours',
+        'A cylindrical blue counter representing the Rescue counter': 'Un pion bleu cylindrique représentant le pion Secours',
         'Assimilation counter': 'Pion Assimilation',
+        'A cylindrical purple counter representing the Assimilation counter': 'Un pion violet cylindrique représentant le pion Assimilation',
 
         'The Lair': 'L’Antre',
         'The Jungle': 'La Jungle',
@@ -170,7 +172,8 @@ i18n.use(ICU).use(initReactI18next).init({
         '{placeCards, plural, one {One Place card} other {{placeCards} Place cards}} and {survivalCards, plural, one {one Survival card} other {{survivalCards} Survival cards}}':
           '{placeCards, plural, one {Une carte} other {{placeCards} cartes}} Lieu et {survivalCards, plural, one {une carte} other {{survivalCards} cartes}} Survie',
         '{count, plural, one {One Hunt card} other {{count} Hunt cards}}': '{count, plural, one {Une carte} other {{count} cartes}} Traque',
-        'A Will counter': 'Un pion Volonté',
+        'A red cube representing a Will counter': 'Un cube rouge représentant un pion Volonté',
+        'You have {count, plural, one {one Will counter} other {{count} Will counters}}': 'Vous avez {count, plural, one {un pion} other {{count} pions}} Volonté',
         '{count, plural, one {One Will counter} other {{count} Will counters}}': '{count, plural, one {Un pion} other {{count} pions}} Volonté',
 
         'You are the Creature. Please choose the board side.': 'Vous êtes la Créature ! Veuillez choisir la face du plateau.',
@@ -191,10 +194,6 @@ i18n.use(ICU).use(initReactI18next).init({
           'La Créature pourra placer le jeton Artemia lorsque le jeton Secours sera à 6 cases ou moins de la victoire.',
         'The Creature will have the Artemia token when Rescue counter is 1, 3, 5, 7, 9 or 11 spaces away from victory.':
           'La Créature pourra placer le jeton Artemia lorsque le jeton Secours sera à 1, 3, 5, 7, 9 or 11 cases de la victoire.',
-        'Reach the star with the Assimilation counter before the Rescue counter does!':
-          'Atteignez l’étoile avec le jeton Assimilation avant le jeton Secours !',
-        'Reach the star with the Rescue counter before the Assimilation counter does!':
-          'Atteignez l’étoile avec le jeton Secours avant le jeton Assimilation !',
 
         'Play {place}': 'Jouer {place}',
         '{player} played {count, plural, one {one Place card} other {{count} Place cards}}, not revealed yet': '{player} a joué {count, plural, one {une carte} other {{count} cartes}} Lieu, pas encore révélée',
