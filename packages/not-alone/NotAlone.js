@@ -110,6 +110,9 @@ export const moves = {
 }
 
 export function getAutomaticMove(game) {
+  if (game.assimilationCounter === 0 || game.rescueCounter === 0) {
+    return
+  }
   if (game.nextMoves.length) {
     return game.nextMoves[0]
   }
@@ -158,6 +161,9 @@ function PhaseRule(phase) {
  * @return {[]} The player legal moves at this state of the game
  */
 export function getLegalMoves(game, playerId) {
+  if (game.assimilationCounter === 0 || game.rescueCounter === 0) {
+    return []
+  }
   if (playerId === CREATURE) {
     return getCreatureMoves(game)
   } else if (playerId.startsWith(HUNTED_PREFIX)) {
