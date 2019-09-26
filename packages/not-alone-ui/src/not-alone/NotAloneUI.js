@@ -33,13 +33,20 @@ import {RevealPlaceCards} from '@bga/not-alone/moves/RevealPlaceCard'
 import {RevealPlaceCardsUI} from './moves-display/RevealPlaceCardsUI'
 import {UsePlacePower} from '@bga/not-alone/moves/UsePlacePower'
 import {UsePlacePowerUI} from './moves-display/UsePlacePowerUI'
+import HeaderContent from './HeaderContent'
 
 const createTheme = (color) => createMuiTheme({
   palette: {
     primary: color
   },
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
+    button: {
+      fontSize: '4vh',
+      lineHeight: '1',
+      border: '0.2vh solid',
+      textTransform: 'none'
+    }
   }
 })
 
@@ -51,7 +58,7 @@ const phases = {
 }
 
 export const Interface = (props) => {
-  const {playerId, game, animation, information, play} = props
+  const {playerId, game, animation, play} = props
   const {t} = useTranslation()
 
   const classes = ['not-alone']
@@ -73,7 +80,7 @@ export const Interface = (props) => {
   return (
     <MuiThemeProvider theme={playerId === CREATURE ? createTheme(pink) : createTheme(lightBlue)}>
       <div className={classes.join(' ')}>
-        <h2 className="information">{information}</h2>
+        <h2 className="information"><HeaderContent {...props}/></h2>
         <h3 className="phase">{t(phases[game.phase])}</h3>
         {playerId && getLegalMoves(game, playerId).some(move => move.type === PASS) &&
         <Button variant="contained" color="primary" size="large" className="pass-button" onClick={() => play({type: PASS, playerId})}>{t('Pass')}</Button>}

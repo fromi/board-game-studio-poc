@@ -1,6 +1,6 @@
-import {getHunted} from "../NotAlone"
-import {START_PHASE} from "./StartPhase"
-import {explorationDone} from "../phases/Exploration";
+import {getHunted} from '../NotAlone'
+import {START_PHASE} from './StartPhase'
+import {explorationDone} from '../phases/Exploration'
 
 export const PLAY_PLACE_CARD = 'PlayPlaceCard'
 export const playPlaceCard = (huntedId, place) => ({type: PLAY_PLACE_CARD, huntedId, place})
@@ -18,5 +18,5 @@ export const PlayPlaceCard = {
 
   getView: (move, playerId) => playerId !== move.huntedId ? {...move, place: {}} : move,
 
-  undoable: (nextMoves) => nextMoves.every(move => move.type !== START_PHASE)
+  undoable: (move, nextMoves) => nextMoves.every(move => move.type !== START_PHASE)
 }

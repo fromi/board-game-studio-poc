@@ -1,7 +1,8 @@
-import {takeBackPlaceBeingResolved} from "../../moves/TakeBackPlayedPlace"
-import {getHunted} from "../../NotAlone"
-import {THE_JUNGLE} from "../PlaceCards"
-import {getCurrentHuntedId} from "../../phases/Reckoning"
+import {takeBackPlaceBeingResolved} from '../../moves/TakeBackPlayedPlace'
+import {getHunted} from '../../NotAlone'
+import {THE_JUNGLE} from '../PlaceCards'
+import {getCurrentHuntedId} from '../../phases/Reckoning'
+import {tackBackDiscardedPlace} from '../../moves/TakeBackDiscardedPlace'
 
 export const Jungle = {
   canUsePower: () => true,
@@ -16,7 +17,8 @@ export const Jungle = {
 
   getPlayerMoves: (game, playerId) => {
     if (playerId === getCurrentHuntedId(game)) {
-      // TODO: return tackBackDiscardedPlace
+      const hunted = getHunted(game, playerId)
+      return hunted.discardedPlaceCards.map(place => tackBackDiscardedPlace(playerId, place))
     }
   }
 }

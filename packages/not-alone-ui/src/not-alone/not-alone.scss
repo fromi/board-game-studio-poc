@@ -15,10 +15,11 @@
 
   .information {
     $font-size: 4vh;
+    $line-height: 1.4;
     color: antiquewhite;
     font-size: $font-size;
-    line-height: 1;
-    padding: ($header-height - $font-size) / 2;
+    line-height: $line-height;
+    padding: ($header-height - $font-size * $line-height) / 2;
     text-align: center;
     margin: 0;
     background: rgba(255, 255, 255, 0.2);

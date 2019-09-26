@@ -1,32 +1,37 @@
-import {shuffle} from "./game-api/Random"
-import SurvivalCards, {survivalCardRule} from "./material/SurvivalCards"
-import HuntCards, {huntCardRule} from "./material/HuntCards"
-import {ChooseBoardSide, chooseBoardSide} from "./moves/ChooseBoardSide"
-import {DrawHuntCard} from "./moves/DrawHuntCard"
-import {DrawSurvivalCard} from "./moves/DrawSurvivalCard"
-import {StartPhase} from "./moves/StartPhase"
-import {PlayPlaceCard} from "./moves/PlayPlaceCard"
-import {StrikeBack} from "./moves/StrikeBack"
-import {ShuffleHuntCards} from "./moves/ShuffleHuntCards"
-import {PlaceHuntToken} from "./moves/PlaceHuntToken"
-import {pass, Pass} from "./moves/Pass"
-import {RevealPlaceCards} from "./moves/RevealPlaceCard"
-import {ARTEMIA_TOKEN, CREATURE_TOKEN, TARGET_TOKEN} from "./material/HuntTokens"
-import {playHuntCard, PlayHuntCard} from "./moves/PlayHuntCard"
-import {playSurvivalCard, PlaySurvivalCard} from "./moves/PlaySurvivalCard"
-import {PutMarkerOnBeach} from "./moves/PutMarkerOnBeach"
-import {RemoveMarkerFromBeach} from "./moves/RemoveMarkerFromBeach"
-import {TakeBackPlayedPlace} from "./moves/TakeBackPlayedPlace"
-import {UsePlacePower} from "./moves/UsePlacePower"
-import {Exploration} from "./phases/Exploration"
-import {Hunting} from "./phases/Hunting"
-import {continueReckoning, Reckoning, REVEAL_PLACE_CARDS_STEP} from "./phases/Reckoning"
-import {EndOfTurnActions} from "./phases/EndOfTurnActions"
-import {placeRule} from "./material/PlaceCards"
-import {DiscardPlayedPlaceCard} from "./moves/DiscardPlayedPlaceCard"
-import {RemoveHuntToken} from "./moves/RemoveHuntToken"
-import {MoveRescueCounter} from "./moves/MoveRescueCounter"
-import {MoveAssimilationCounter} from "./moves/MoveAssimilationCounter"
+import {shuffle} from './game-api/Random'
+import SurvivalCards, {survivalCardRule} from './material/SurvivalCards'
+import HuntCards, {huntCardRule} from './material/HuntCards'
+import {ChooseBoardSide, chooseBoardSide} from './moves/ChooseBoardSide'
+import {DrawHuntCard} from './moves/DrawHuntCard'
+import {DrawSurvivalCard} from './moves/DrawSurvivalCard'
+import {StartPhase} from './moves/StartPhase'
+import {PlayPlaceCard} from './moves/PlayPlaceCard'
+import {StrikeBack} from './moves/StrikeBack'
+import {ShuffleHuntCards} from './moves/ShuffleHuntCards'
+import {PlaceHuntToken} from './moves/PlaceHuntToken'
+import {pass, Pass} from './moves/Pass'
+import {RevealPlaceCards} from './moves/RevealPlaceCard'
+import {ARTEMIA_TOKEN, CREATURE_TOKEN, TARGET_TOKEN} from './material/HuntTokens'
+import {playHuntCard, PlayHuntCard} from './moves/PlayHuntCard'
+import {playSurvivalCard, PlaySurvivalCard} from './moves/PlaySurvivalCard'
+import {PutMarkerOnBeach} from './moves/PutMarkerOnBeach'
+import {RemoveMarkerFromBeach} from './moves/RemoveMarkerFromBeach'
+import {TakeBackPlayedPlace} from './moves/TakeBackPlayedPlace'
+import {UsePlacePower} from './moves/UsePlacePower'
+import {Exploration} from './phases/Exploration'
+import {Hunting} from './phases/Hunting'
+import {continueReckoning, Reckoning, REVEAL_PLACE_CARDS_STEP} from './phases/Reckoning'
+import {EndOfTurnActions} from './phases/EndOfTurnActions'
+import {placeRule} from './material/PlaceCards'
+import {DiscardPlayedPlaceCard} from './moves/DiscardPlayedPlaceCard'
+import {RemoveHuntToken} from './moves/RemoveHuntToken'
+import {MoveRescueCounter} from './moves/MoveRescueCounter'
+import {MoveAssimilationCounter} from './moves/MoveAssimilationCounter'
+import {RESIST, Resist} from './moves/Resist'
+import {GiveUp} from './moves/GiveUp'
+import {LoseWillCounter} from './moves/LoseWillCounter'
+import {tackBackDiscardedPlace, TackBackDiscardedPlace} from './moves/TakeBackDiscardedPlace'
+import {RegainWillCounter} from './moves/RegainWillCounter'
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 export const EXPLORATION = 1, HUNTING = 2, RECKONING = 3, END_OF_TURN_ACTIONS = 4
@@ -82,6 +87,11 @@ export const moves = {
   DrawSurvivalCard,
   StartPhase,
   PlayPlaceCard,
+  Resist,
+  LoseWillCounter,
+  TackBackDiscardedPlace,
+  GiveUp,
+  RegainWillCounter,
   PlaceHuntToken,
   RevealPlaceCards,
   Pass,
@@ -184,6 +194,9 @@ function getCreatureMoves(game) {
 
 function getHuntedMoves(game, huntedId) {
   const hunted = getHunted(game, huntedId)
+  if (hunted.pendingAction && hunted.pendingAction.type === RESIST) {
+    return hunted.discardedPlaceCards.map(place => tackBackDiscardedPlace(huntedId, place))
+  }
   const moves = []
   if (game.phase) {
     const phaseRule = PhaseRule(game.phase)
@@ -251,6 +264,9 @@ function hideHuntedSecrets(game, hunted) {
  * @return boolean True if the Hunted might have a Survival card to play from another player point of view
  */
 export function couldPlaySurvivalCard(game, hunted) {
+  if (game.pendingEffect || hunted.pendingAction) {
+    return false
+  }
   if (hunted.handSurvivalCards.length === 0) {
     return false
   }
@@ -275,7 +291,7 @@ export function shouldPassOrPlaySurvivalCard(game, hunted) {
  * @return boolean True if the Creature might have a Hunt card to play from another player point of view
  */
 export function couldCreaturePlayHuntCard(game) {
-  return game.creature.huntCardsPlayed.length < game.creature.huntCardPlayLimit && game.creature.hand.length > 0
+  return !game.pendingEffect && game.creature.huntCardsPlayed.length < game.creature.huntCardPlayLimit && game.creature.hand.length > 0
 }
 
 export function creatureShouldPassOrPlayHuntCard(game) {

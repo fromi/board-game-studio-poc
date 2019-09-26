@@ -12,8 +12,8 @@ const HuntedPlayedDiscard = (props) => {
     <div className="hunted-player-discard">
       {hunted.discardedPlaceCards.map(place => {
         return (
-          <Tooltip title={t('{place} is in {player}’s discard', {place: t(places[place].name), player: playersMap[huntedId].name})}>
-            <div className="discarded-place" key={place}>
+          <Tooltip title={t('{place} is in {player}’s discard', {place: t(places[place].name), player: playersMap[huntedId].name})} key={place}>
+            <div className="discarded-place">
               <PlaceCard place={place}/>
             </div>
           </Tooltip>
