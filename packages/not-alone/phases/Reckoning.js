@@ -1,24 +1,35 @@
-import {revealPlaceCards} from "../moves/RevealPlaceCard"
-import {creatureShouldPassOrPlayHuntCard, END_OF_TURN_ACTIONS, getHunted, HUNTED_PREFIX, shouldPassOrPlaySurvivalCard} from "../NotAlone"
-import {placeRule} from "../material/PlaceCards"
-import {usePlacePower} from "../moves/UsePlacePower"
-import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS, TARGET_TOKEN} from "../material/HuntTokens"
-import {takeBackPlayedPlace} from "../moves/TakeBackPlayedPlace"
-import {mustChoosePlaceToReveal} from "../material/place-cards/River"
-import {startPhase} from "../moves/StartPhase"
+import {revealPlaceCards} from '../moves/RevealPlaceCard'
+import {creatureShouldPassOrPlayHuntCard, END_OF_TURN_ACTIONS, getHunted, getHuntedId, HUNTED_PREFIX, shouldPassOrPlaySurvivalCard} from '../NotAlone'
+import {placeRule} from '../material/PlaceCards'
+import {usePlacePower} from '../moves/UsePlacePower'
+import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS, TARGET_TOKEN} from '../material/HuntTokens'
+import {takeBackPlayedPlace} from '../moves/TakeBackPlayedPlace'
+import {mustChoosePlaceToReveal} from '../material/place-cards/River'
+import {startPhase} from '../moves/StartPhase'
+import {discardPlaceCard} from '../moves/DiscardPlaceCard'
+import {loseWillCounter} from '../moves/LoseWillCounter'
+import {moveAssimilationCounter} from '../moves/MoveAssimilationCounter'
+import {regainWillCounter} from '../moves/RegainWillCounter'
+import {tackBackDiscardedPlace} from '../moves/TakeBackDiscardedPlace'
 
-export const REVEAL_PLACE_CARDS_STEP = "REVEAL_PLACE_CARDS", EXPLORE_PLACES_WITHOUT_TOKEN_STEP = "EXPLORE_PLACES_WITHOUT_TOKEN",
-  TARGET_TOKEN_STEP = "TARGET_TOKEN_STEP", ARTEMIA_TOKEN_STEP = "ARTEMIA_TOKEN_STEP", CREATURE_TOKEN_STEP = "CREATURE_TOKEN_STEP",
-  ASSIMILATION_STEP = "ASSIMILATION_STEP"
+export const REVEAL_PLACE_CARDS_STEP = 'REVEAL_PLACE_CARDS', EXPLORE_PLACES_WITHOUT_TOKEN_STEP = 'EXPLORE_PLACES_WITHOUT_TOKEN',
+  TARGET_TOKEN_STEP = 'TARGET_TOKEN_STEP', ARTEMIA_TOKEN_STEP = 'ARTEMIA_TOKEN_STEP', CREATURE_TOKEN_STEP = 'CREATURE_TOKEN_STEP',
+  ASSIMILATION_STEP = 'ASSIMILATION_STEP'
 
 function getReckoningStep(game) {
   switch (game.reckoning.step) {
-    case REVEAL_PLACE_CARDS_STEP: return RevealPlaceCardsStep
-    case EXPLORE_PLACES_WITHOUT_TOKEN_STEP: return ExplorePlacesWithoutTokenStep
-    case TARGET_TOKEN_STEP: return TargetTokenStep
-    case ARTEMIA_TOKEN_STEP: return ArtemiaTokenStep
-    case CREATURE_TOKEN_STEP: return CreatureTokenStep
-    case ASSIMILATION_STEP: return AssimilationStep
+    case REVEAL_PLACE_CARDS_STEP:
+      return RevealPlaceCardsStep
+    case EXPLORE_PLACES_WITHOUT_TOKEN_STEP:
+      return ExplorePlacesWithoutTokenStep
+    case TARGET_TOKEN_STEP:
+      return TargetTokenStep
+    case ARTEMIA_TOKEN_STEP:
+      return ArtemiaTokenStep
+    case CREATURE_TOKEN_STEP:
+      return creatureTokenStep
+    case ASSIMILATION_STEP:
+      return AssimilationStep
   }
 }
 
@@ -80,7 +91,7 @@ const TargetTokenStep = {
       const huntCardToApply = huntCards.find(huntCard => !hunted.huntCardsEffectsApplied.includes(huntCard))
       if (huntCardToApply) {
         // TODO: get Hunt Card moves (Scream and Toxin)
-        console.error("Not implemented")
+        console.error('Not implemented')
       } else {
         return placesPowerMoves(game, huntedId, getExploredPlacesWithToken(game, hunted, TARGET_TOKEN))
       }
@@ -99,32 +110,52 @@ const TargetTokenStep = {
 }
 
 const ArtemiaTokenStep = {
+  getHuntedMoves: (game, huntedId) => {
+    const hunted = getHunted(game, huntedId)
+    const currentHunted = getHunted(game, getCurrentHuntedId(game))
+    if (hunted === currentHunted) {
+      const huntCards = getHuntCardPlayedWithTokenEffect(game, ARTEMIA_TOKEN)
+      const huntCardToApply = huntCards.find(huntCard => !hunted.huntCardsEffectsApplied.includes(huntCard))
+      if (huntCardToApply) {
+        // TODO: get Hunt Card moves (Mutation)
+        console.error('Not implemented')
+      } else {
+        return hunted.handPlaceCards.map(place => discardPlaceCard(huntedId, place))
+      }
+    } else {
+      return []
+    }
+  },
+
   continueReckoning: game => {
     game.reckoning.huntedIndex = game.hunted.findIndex((hunted, index) => index > game.reckoning.huntedIndex && exploresPlaceWithToken(game, hunted, ARTEMIA_TOKEN))
     if (game.reckoning.huntedIndex === -1) {
-      game.reckoning.step = CREATURE_TOKEN_STEP
-      continueReckoning(game)
+      creatureTokenStep(game)
     }
   }
 }
 
-const CreatureTokenStep = {
-  continueReckoning: game => {
-    game.reckoning.huntedIndex = game.hunted.findIndex((hunted, index) => index > game.reckoning.huntedIndex && exploresPlaceWithToken(game, hunted, CREATURE_TOKEN))
-    if (game.reckoning.huntedIndex === -1) {
-      game.reckoning.step = ASSIMILATION_STEP
-      continueReckoning(game)
-    }
+const creatureTokenStep = game => {
+  if (game.hunted.some(hunted => exploresPlaceWithToken(game, hunted, CREATURE_TOKEN))) {
+    game.hunted.filter(hunted => exploresPlaceWithToken(game, hunted, CREATURE_TOKEN))
+      .filter(hunted => hunted.willCounters > 0).forEach(hunted => game.nextMoves.push(loseWillCounter(getHuntedId(game, hunted))))
+    game.nextMoves.push(moveAssimilationCounter)
   }
+  assimilationStep(game)
 }
 
-const AssimilationStep = {
-  // TODO: move assimilation counter if at least one hunted lost all will counters + give up
-  getAutomaticMove: game => {
-    if (game.hunted.every(hunted => hunted.willCounters > 0)) {
-      return startPhase(END_OF_TURN_ACTIONS)
-    }
+const assimilationStep = game => {
+  if (game.hunted.some(hunted => hunted.willCounters === 0)) {
+    game.nextMoves.push(moveAssimilationCounter)
+    game.hunted.filter(hunted => hunted.willCounters === 0).forEach(hunted => {
+      const huntedId = getHuntedId(game, hunted)
+      hunted.discardedPlaceCards.forEach(place => game.nextMoves.push(tackBackDiscardedPlace(huntedId, place)))
+      for (let i = 0; i < 3; i++) {
+        game.nextMoves.push(regainWillCounter(huntedId))
+      }
+    })
   }
+  game.nextMoves.push(startPhase(END_OF_TURN_ACTIONS))
 }
 
 export const Reckoning = {

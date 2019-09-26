@@ -218,9 +218,9 @@ function getHuntedMoves(game, huntedId) {
   return moves
 }
 
-export function getHunted(game, huntedPlayerId) {
-  return game.hunted[getHuntedNumber(huntedPlayerId) - 1]
-}
+export const getHunted = (game, huntedPlayerId) => game.hunted[getHuntedNumber(huntedPlayerId) - 1]
+
+export const getHuntedId = (game, hunted) => HUNTED_PREFIX + (game.hunted.indexOf(hunted) + 1)
 
 export function getHuntedNumber(playerId) {
   return parseInt(playerId.slice(HUNTED_PREFIX.length))
