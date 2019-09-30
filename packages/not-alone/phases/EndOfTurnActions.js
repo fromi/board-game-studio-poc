@@ -30,5 +30,7 @@ export const EndOfTurnActions = {
       }
       return startPhase(EXPLORATION)
     }
-  }
+  },
+
+  shouldPassOrPlaySurvivalCard: () => true
 }

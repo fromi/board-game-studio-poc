@@ -190,7 +190,9 @@ export const Reckoning = {
       return Step.getHuntedMoves(game, huntedId)
     }
     return []
-  }
+  },
+
+  shouldPassOrPlaySurvivalCard: (game) => game.reckoning.step !== REVEAL_PLACE_CARDS_STEP
 }
 
 export function continueReckoning(game) {

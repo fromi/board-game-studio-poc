@@ -1,8 +1,8 @@
-import {startPhase} from "../moves/StartPhase"
-import {couldPlaySurvivalCard, CREATURE, PLACES, RECKONING} from "../NotAlone"
-import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS} from "../material/HuntTokens"
-import {pass} from "../moves/Pass"
-import {placeHuntToken} from "../moves/PlaceHuntToken"
+import {startPhase} from '../moves/StartPhase'
+import {couldPlaySurvivalCard, CREATURE, PLACES, RECKONING} from '../NotAlone'
+import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS} from '../material/HuntTokens'
+import {pass} from '../moves/Pass'
+import {placeHuntToken} from '../moves/PlaceHuntToken'
 
 export const Hunting = {
   getAutomaticMove: game => {
@@ -18,7 +18,9 @@ export const Hunting = {
       moves.push(pass(CREATURE), ...tokenToPlace.flatMap(token => PLACES.map(place => placeHuntToken(token, [place]))))
     }
     return moves
-  }
+  },
+
+  shouldPassOrPlaySurvivalCard: (game) => game.creature.passed
 }
 
 function huntTokenCanBePlaced(game, token) {

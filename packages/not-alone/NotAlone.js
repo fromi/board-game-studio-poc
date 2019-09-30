@@ -57,6 +57,7 @@ export const setup = options => ({
   survivalCardsDeck: shuffle(SurvivalCards),
   huntCardsDeck: shuffle(HuntCards),
   huntCardsDiscard: [],
+  survivalCardsDiscard: [],
   nextMoves: [],
   markerCounterOnBeach: false,
   beachUsed: false,
@@ -207,7 +208,7 @@ function getCreatureMoves(game) {
   if (moves.length === 0 && creatureShouldPassOrPlayHuntCard(game)) {
     moves.push(pass(CREATURE))
   }
-  if (game.creature.huntCardsPlayed.length < game.creature.huntCardPlayLimit) {
+  if (couldCreaturePlayHuntCard(game)) {
     game.creature.hand.forEach(card => {
       const HuntCardRule = huntCardRule(card)
       if (HuntCardRule && HuntCardRule.phase === game.phase) {
@@ -237,7 +238,7 @@ function getHuntedMoves(game, huntedId) {
   if (moves.length === 0 && shouldPassOrPlaySurvivalCard(game, hunted)) {
     moves.push(pass(huntedId))
   }
-  if (!hunted.survivalCardPlayed && !game.creature.huntCardsPlayed.includes(DESPAIR)) {
+  if (couldPlaySurvivalCard(game, hunted)) {
     hunted.handSurvivalCards.forEach(card => {
       const SurvivalCardRule = survivalCardRule(card)
       if (SurvivalCardRule && SurvivalCardRule.phase === game.phase) {
@@ -294,33 +295,22 @@ function hideHuntedSecrets(game, hunted) {
  * @return boolean True if the Hunted might have a Survival card to play from another player point of view
  */
 export function couldPlaySurvivalCard(game, hunted) {
-  if (game.ongoingAction || hunted.ongoingAction) {
-    return false
-  }
-  if (hunted.handSurvivalCards.length === 0) {
-    return false
-  }
-  if (hunted.survivalCardPlayed) {
-    return false
-  }
-  // TODO: check if all the survival cards from current phase are in the discard pile
-  return true
+  return !game.ongoingAction && !hunted.ongoingAction && hunted.handSurvivalCards.length && !hunted.survivalCardPlayed
+    && !game.creature.huntCardsPlayed.includes(DESPAIR)
+    && SurvivalCards.filter(card => !game.survivalCardsDiscard.includes(card)).some(card => survivalCardRule(card).phase === game.phase)
 }
 
 export function shouldPassOrPlaySurvivalCard(game, hunted) {
-  if (game.phase === 2 && !game.creature.passed) {
-    return false
-  }
-  if (game.phase === 3 && game.hunted.some(hunted => !hunted.playedPlaceCardsRevealed)) {
-    return false
-  }
-  return !hunted.passed && couldPlaySurvivalCard(game, hunted)
+  return !hunted.passed && couldPlaySurvivalCard(game, hunted) && PhaseRule(game.phase).shouldPassOrPlaySurvivalCard(game, hunted)
 }
 
 /**
  * @return boolean True if the Creature might have a Hunt card to play from another player point of view
  */
 export function couldCreaturePlayHuntCard(game) {
+  if (game.phase === 1 && game.creature.passed) {
+    return false
+  }
   return !game.ongoingAction && game.creature.huntCardsPlayed.length < game.creature.huntCardPlayLimit && game.creature.hand.length > 0
 }
 
@@ -353,9 +343,12 @@ export function continueGameAfterMove(game, move) {
 
 export function getOngoingActionRule(game) {
   switch (game.ongoingAction.cardType) {
-    case "PLACE_CARD": return placeRule(game.ongoingAction.card)
-    case "HUNT_CARD": return huntCardRule(game.ongoingAction.card)
-    case "SURVIVAL_CARD": return survivalCardRule(game.ongoingAction.card)
+    case 'PLACE_CARD':
+      return placeRule(game.ongoingAction.card)
+    case 'HUNT_CARD':
+      return huntCardRule(game.ongoingAction.card)
+    case 'SURVIVAL_CARD':
+      return survivalCardRule(game.ongoingAction.card)
   }
 }
 

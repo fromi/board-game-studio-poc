@@ -210,15 +210,17 @@ i18n.use(ICU).use(initReactI18next).init({
 
         'Pass': 'Passer',
         'Pass to end your turn': 'Passez pour terminer votre tour',
-        'Pass to indicate that you do not play a card this phase': 'Passez pour indiquer que vous ne jouez pas de carte à cette phase',
+        'You cannot play your Hunt cards, you must pass': 'Vous ne pouvez pas jouer vos cartes Traque, vous devez passer',
+        'You cannot play your Hunt cards, you must <1>Pass</1>': 'Vous ne pouvez pas jouer vos cartes Traque, vous devez <1>Passer</1>',
+        'You cannot play your Survival {cards, plural, one{card} other{cards}}, you must pass': 'Vous ne pouvez pas jouer {cards, plural, one{votre carte} other{vos cartes}} Survie, vous devez passer',
 
-        'You may play {card}': 'Vous pouvez jouer {card}',
-        'You may play {card1} or {card2}': 'Vous pouvez jouer {card1} ou {card2}',
-        'You may play a Hunt card': 'Vous pouvez jouer une carte Traque',
-        'You may play a Survival card': 'Vous pouvez jouer une carte Survie',
+        'You must play {card} or pass': 'Vous devez jouer {card} ou passer',
+        'You must play {card1} or {card2} or pass': 'Vous devez jouer {card1} ou {card2} ou passer',
+        'You must play a Hunt card or pass': 'Vous devez jouer une carte Traque ou passer',
+        'You must play a Survival card or pass': 'Vous devez jouer une carte Survie ou passer',
 
-        '{player} may play a Hunt card': '{player} peut jouer une carte Traque',
-        '{player} may play a Survival card': '{player} peut jouer une carte Survie',
+        '{player} must play a Hunt card or pass': '{player} doit jouer une carte Traque ou passer',
+        '{player} must play a Survival card or pass': '{player} doit jouer une carte Survie ou passer',
         'Some players may play a Hunt card or a Survival card': 'Certains joueurs peuvent jouer une carte Traque ou une carte Survie',
         'Some Hunted may play a Survival card': 'Certains Traqués peuvent jouer une carte Survie',
 

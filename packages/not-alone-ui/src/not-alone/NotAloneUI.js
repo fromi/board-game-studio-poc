@@ -1,6 +1,6 @@
 import React from 'react'
 import './not-alone.scss'
-import {BOARD_SIDES, CREATURE, getLegalMoves} from '@bga/not-alone'
+import {BOARD_SIDES, CREATURE} from '@bga/not-alone'
 import Board from './material/board/Board'
 import {CHOOSE_BOARD_SIDE, ChooseBoardSide} from '@bga/not-alone/moves/ChooseBoardSide'
 import Artemia from './artemia/Artemia'
@@ -18,9 +18,8 @@ import {PlayPlaceCardUI} from './moves-display/PlayPlaceCardUI'
 import {PlaceHuntToken} from '@bga/not-alone/moves/PlaceHuntToken'
 import {PlaceHuntTokenUI} from './moves-display/PlaceHuntTokenUI'
 import HuntToken from './material/hunt-tokens/HuntToken'
-import {Pass, PASS} from '@bga/not-alone/moves/Pass'
+import {Pass} from '@bga/not-alone/moves/Pass'
 import {PassUI} from './moves-display/PassUI'
-import Button from '@material-ui/core/Button'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core'
 import {lightBlue, pink} from '@material-ui/core/colors'
 import {HUNT_TOKENS} from '@bga/not-alone/material/HuntTokens'
@@ -58,7 +57,7 @@ const phases = {
 }
 
 export const Interface = (props) => {
-  const {playerId, game, animation, play} = props
+  const {playerId, game, animation} = props
   const {t} = useTranslation()
 
   const classes = ['not-alone']
@@ -81,9 +80,7 @@ export const Interface = (props) => {
     <MuiThemeProvider theme={playerId === CREATURE ? createTheme(pink) : createTheme(lightBlue)}>
       <div className={classes.join(' ')}>
         <h2 className="information"><HeaderContent {...props}/></h2>
-        <h3 className="phase">{t(phases[game.phase])}</h3>
-        {playerId && getLegalMoves(game, playerId).some(move => move.type === PASS) &&
-        <Button variant="contained" color="primary" size="large" className="pass-button" onClick={() => play({type: PASS, playerId})}>{t('Pass')}</Button>}
+        {game.phase && <h3 className="phase">{t(phases[game.phase])}</h3>}
         {BOARD_SIDES.map(side =>
           <Board side={side} key={side} {...props}/>
         )}

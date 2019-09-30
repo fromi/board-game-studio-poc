@@ -10,7 +10,7 @@ export function explorationDone(hunted) {
 
 export const Exploration = {
   getAutomaticMove: game => {
-    if (game.hunted.every(hunted => explorationDone(hunted)) && !creatureShouldPassOrPlayHuntCard(game)) {
+    if (game.hunted.every(hunted => explorationDone(hunted))) {
       return startPhase(HUNTING)
     }
   },
@@ -18,7 +18,7 @@ export const Exploration = {
   getHuntedMoves: (game, huntedId) => {
     const moves = []
     const hunted = getHunted(game, huntedId)
-    if (!explorationDone(hunted)) {
+    if (!creatureShouldPassOrPlayHuntCard(game) && !explorationDone(hunted)) {
       hunted.handPlaceCards.forEach(place => moves.push(playPlaceCard(huntedId, place)))
       if (hunted.discardedPlaceCards.length > 0 || hunted.willCounters < 3) {
         if (hunted.willCounters > 1 && hunted.discardedPlaceCards.length > 0) {
@@ -28,7 +28,9 @@ export const Exploration = {
       }
     }
     return moves
-  }
+  },
+
+  shouldPassOrPlaySurvivalCard: () => false
 }
 
 const explorationMoves = [PLAY_PLACE_CARD, RESIST, GIVE_UP]
