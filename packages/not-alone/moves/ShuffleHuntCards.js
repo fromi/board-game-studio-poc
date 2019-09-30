@@ -1,6 +1,8 @@
-import {shuffle} from "../game-api/Random"
+import {shuffle} from '../game-api/Random'
 
-export const shuffleHuntCards = {type: 'ShuffleHuntCards'}
+export const SHUFFLE_HUNT_CARDS = 'ShuffleHuntCards'
+
+export const shuffleHuntCards = {type: SHUFFLE_HUNT_CARDS}
 
 export const ShuffleHuntCards = {
   prepare: (move, game) => ({...move, shuffled: shuffle(game.huntCardsDiscard)}),
