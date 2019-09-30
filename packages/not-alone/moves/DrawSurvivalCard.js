@@ -16,10 +16,10 @@ export const DrawSurvivalCard = {
     const survivalCard = game.survivalCardsDeck.shift()
     getHunted(game, move.huntedId).handSurvivalCards.push(survivalCard)
     game.nextMoves.shift()
-    if (game.pendingEffect) {
-      if (game.pendingEffect.card === THE_SHELTER) {
-        game.pendingEffect.survivalCards.push(survivalCard)
-      } else if (game.pendingEffect.card === THE_SOURCE) {
+    if (game.ongoingAction) {
+      if (game.ongoingAction.card === THE_SHELTER) {
+        game.ongoingAction.survivalCards.push(survivalCard)
+      } else if (game.ongoingAction.card === THE_SOURCE) {
         continueReckoning(game)
       }
     }

@@ -13,14 +13,14 @@ export const Swamp = {
     const hunted = getHunted(game, huntedId)
     game.nextMoves.push(takeBackPlaceBeingResolved(game, huntedId))
     if (hunted.discardedPlaceCards.length > 0) {
-      game.pendingEffect = {cardType: PLACE_CARD, card: THE_SWAMP, cardsLeft: 2}
+      game.ongoingAction = {cardType: PLACE_CARD, card: THE_SWAMP, cardsLeft: 2}
     }
   },
 
   getPlayerMoves: (game, playerId) => {
     if (playerId === getCurrentHuntedId(game)) {
       const hunted = getHunted(game, playerId)
-      if (game.pendingEffect.cardsLeft === hunted.discardedPlaceCards.length) {
+      if (game.ongoingAction.cardsLeft === hunted.discardedPlaceCards.length) {
         // Remove useless choice if player will take back all the cards from their discard
         return [takeBackDiscardedPlace(playerId, hunted.discardedPlaceCards[0])]
       }

@@ -6,7 +6,7 @@ import {takePlaceFromReserve} from '../../moves/TakePlaceFromReserve'
 export const Rover = {
   canUsePower: (game, hunted) => PLACES.find(place => canTakePlaceFromReserve(hunted, place)),
 
-  usePower: (game) => game.pendingEffect = {cardType: PLACE_CARD, card: THE_ROVER},
+  usePower: (game) => game.ongoingAction = {cardType: PLACE_CARD, card: THE_ROVER},
 
   getPlayerMoves: (game, playerId) => {
     if (playerId === getCurrentHuntedId(game)) {

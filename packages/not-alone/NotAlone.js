@@ -209,7 +209,7 @@ function getCreatureMoves(game) {
 
 function getHuntedMoves(game, huntedId) {
   const hunted = getHunted(game, huntedId)
-  if (hunted.pendingAction && hunted.pendingAction.type === RESIST) {
+  if (hunted.ongoingAction && hunted.ongoingAction.type === RESIST) {
     return hunted.discardedPlaceCards.map(place => takeBackDiscardedPlace(huntedId, place))
   }
   const moves = []
@@ -279,7 +279,7 @@ function hideHuntedSecrets(game, hunted) {
  * @return boolean True if the Hunted might have a Survival card to play from another player point of view
  */
 export function couldPlaySurvivalCard(game, hunted) {
-  if (game.pendingEffect || hunted.pendingAction) {
+  if (game.ongoingAction || hunted.ongoingAction) {
     return false
   }
   if (hunted.handSurvivalCards.length === 0) {
@@ -306,7 +306,7 @@ export function shouldPassOrPlaySurvivalCard(game, hunted) {
  * @return boolean True if the Creature might have a Hunt card to play from another player point of view
  */
 export function couldCreaturePlayHuntCard(game) {
-  return !game.pendingEffect && game.creature.huntCardsPlayed.length < game.creature.huntCardPlayLimit && game.creature.hand.length > 0
+  return !game.ongoingAction && game.creature.huntCardsPlayed.length < game.creature.huntCardPlayLimit && game.creature.hand.length > 0
 }
 
 export function creatureShouldPassOrPlayHuntCard(game) {
@@ -320,12 +320,12 @@ export function continueGameAfterMove(game, move) {
   if (game.nextMoves.length > 0) {
     return
   }
-  if (game.pendingEffect) {
-    const rule = getPendingEffectRule(game)
+  if (game.ongoingAction) {
+    const rule = getongoingActionRule(game)
     if (rule.continueGameAfterMove) {
       rule.continueGameAfterMove(game, move)
     } else {
-      delete game.pendingEffect
+      delete game.ongoingAction
       continueGameAfterMove(game, move)
     }
   } else if (game.phase === RECKONING) {
@@ -333,11 +333,11 @@ export function continueGameAfterMove(game, move) {
   }
 }
 
-function getPendingEffectRule(game) {
-  switch (game.pendingEffect.cardType) {
-    case "PLACE_CARD": return placeRule(game.pendingEffect.card)
-    case "HUNT_CARD": return huntCardRule(game.pendingEffect.card)
-    case "SURVIVAL_CARD": return survivalCardRule(game.pendingEffect.card)
+function getongoingActionRule(game) {
+  switch (game.ongoingAction.cardType) {
+    case "PLACE_CARD": return placeRule(game.ongoingAction.card)
+    case "HUNT_CARD": return huntCardRule(game.ongoingAction.card)
+    case "SURVIVAL_CARD": return survivalCardRule(game.ongoingAction.card)
   }
 }
 

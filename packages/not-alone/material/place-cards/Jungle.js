@@ -13,7 +13,7 @@ export const Jungle = {
     const hunted = getHunted(game, huntedId)
     game.nextMoves.push(takeBackPlaceBeingResolved(game, huntedId))
     if (hunted.discardedPlaceCards.length > 0) {
-      game.pendingEffect = {cardType: PLACE_CARD, card: THE_JUNGLE}
+      game.ongoingAction = {cardType: PLACE_CARD, card: THE_JUNGLE}
     }
   },
 

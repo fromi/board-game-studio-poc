@@ -8,10 +8,10 @@ export const TakeBackPlace = {
     cardOrigin.splice(cardOrigin.indexOf(move.place), 1)
     hunted.handPlaceCards.push(move.place)
     hunted.handPlaceCards.sort()
-    if (hunted.pendingAction && hunted.pendingAction.type === RESIST) {
-      hunted.pendingAction.cardsLeft--
-      if (!hunted.pendingAction.cardsLeft || !hunted.discardedPlaceCards.length) {
-        delete hunted.pendingAction
+    if (hunted.ongoingAction && hunted.ongoingAction.type === RESIST) {
+      hunted.ongoingAction.cardsLeft--
+      if (!hunted.ongoingAction.cardsLeft || !hunted.discardedPlaceCards.length) {
+        delete hunted.ongoingAction
       }
     } else {
       game.nextMoves.shift()

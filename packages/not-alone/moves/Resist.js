@@ -9,7 +9,7 @@ export const Resist = {
   execute: (game, move) => {
     const hunted = getHunted(game, move.huntedId)
     game.nextMoves.push(loseWillCounter(move.huntedId))
-    hunted.pendingAction = {type: RESIST, cardsLeft: 2}
+    hunted.ongoingAction = {type: RESIST, cardsLeft: 2}
   },
 
   undoable: (move, nextMoves) => !nextMoves.some(nextMove => isExplorationMove(nextMove, move.huntedId)),

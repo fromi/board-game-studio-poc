@@ -9,7 +9,7 @@ export const RegainWillCounter = {
   execute: (game, move) => {
     getHunted(game, move.huntedId).willCounters++
     game.nextMoves.shift()
-    if (game.pendingEffect && game.pendingEffect.card === THE_SOURCE) {
+    if (game.ongoingAction && game.ongoingAction.card === THE_SOURCE) {
       continueReckoning(game)
     }
   }

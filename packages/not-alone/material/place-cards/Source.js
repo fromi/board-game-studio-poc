@@ -7,7 +7,7 @@ import {regainWillCounter} from '../../moves/RegainWillCounter'
 export const Source = {
   canUsePower: (game) => game.survivalCardsDeck.length > 0 || game.survivalCardsDiscard.length > 0 || game.hunted.some(hunted => hunted.willCounters < 3),
 
-  usePower: (game) => game.pendingEffect = {cardType: PLACE_CARD, card: THE_SOURCE},
+  usePower: (game) => game.ongoingAction = {cardType: PLACE_CARD, card: THE_SOURCE},
 
   getPlayerMoves: (game, playerId) => {
     const moves = []
