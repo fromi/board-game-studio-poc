@@ -1,6 +1,6 @@
 import {shuffle} from './game-api/Random'
 import SurvivalCards, {survivalCardRule} from './material/SurvivalCards'
-import HuntCards, {huntCardRule} from './material/HuntCards'
+import HuntCards, {DESPAIR, huntCardRule} from './material/HuntCards'
 import {ChooseBoardSide, chooseBoardSide} from './moves/ChooseBoardSide'
 import {DrawHuntCard} from './moves/DrawHuntCard'
 import {DrawSurvivalCard} from './moves/DrawSurvivalCard'
@@ -237,7 +237,7 @@ function getHuntedMoves(game, huntedId) {
   if (moves.length === 0 && shouldPassOrPlaySurvivalCard(game, hunted)) {
     moves.push(pass(huntedId))
   }
-  if (!hunted.survivalCardPlayed) {
+  if (!hunted.survivalCardPlayed && !game.creature.huntCardsPlayed.includes(DESPAIR)) {
     hunted.handSurvivalCards.forEach(card => {
       const SurvivalCardRule = survivalCardRule(card)
       if (SurvivalCardRule && SurvivalCardRule.phase === game.phase) {
@@ -361,4 +361,8 @@ export function getOngoingActionRule(game) {
 
 export function getPlacesWithToken(game, token) {
   return game.huntTokensLocations[token] // TODO Clone: Target token is a second Creature token.
+}
+
+export function canDrawSurvivalCard(game) {
+  return !game.creature.huntCardsPlayed.includes(DESPAIR) && (game.survivalCardsDeck.length > 0 || game.survivalCardsDiscard > 0)
 }

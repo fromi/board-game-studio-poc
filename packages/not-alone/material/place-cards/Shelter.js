@@ -1,11 +1,11 @@
 import {THE_SHELTER} from '../PlaceCards'
 import {continueReckoning, getCurrentHuntedId} from '../../phases/Reckoning'
 import {discardSurvivalCard} from '../../moves/DiscardSurvivalCard'
-import {PLACE_CARD} from '../../NotAlone'
+import {canDrawSurvivalCard, PLACE_CARD} from '../../NotAlone'
 import {DRAW_SURVIVAL_CARD, drawSurvivalCard} from '../../moves/DrawSurvivalCard'
 
 export const Shelter = {
-  canUsePower: (game) => game.survivalCardsDeck.length > 0,
+  canUsePower: canDrawSurvivalCard,
 
   usePower: (game) => {
     game.ongoingAction = {cardType: PLACE_CARD, card: THE_SHELTER, survivalCards: []}
