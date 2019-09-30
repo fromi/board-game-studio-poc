@@ -39,6 +39,7 @@ import {DiscardSurvivalCard} from './moves/DiscardSurvivalCard'
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 export const EXPLORATION = 1, HUNTING = 2, RECKONING = 3, END_OF_TURN_ACTIONS = 4
+export const PLACE_CARD = 'Place card', HUNT_CARD = 'Hunt card', SURVIVAL_CARD = 'Survival card'
 
 /**
  * Setup a new Game.

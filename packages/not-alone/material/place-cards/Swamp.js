@@ -1,4 +1,4 @@
-import {getHunted} from '../../NotAlone'
+import {getHunted, PLACE_CARD} from '../../NotAlone'
 import {takeBackPlaceBeingResolved} from '../../moves/TakeBackPlayedPlace'
 import {THE_SWAMP} from '../PlaceCards'
 import {getCurrentHuntedId} from '../../phases/Reckoning'
@@ -13,7 +13,7 @@ export const Swamp = {
     const hunted = getHunted(game, huntedId)
     game.nextMoves.push(takeBackPlaceBeingResolved(game, huntedId))
     if (hunted.discardedPlaceCards.length > 0) {
-      game.pendingEffect = {cardType: 'PLACE_CARD', card: THE_SWAMP, cardsLeft: 2}
+      game.pendingEffect = {cardType: PLACE_CARD, card: THE_SWAMP, cardsLeft: 2}
     }
   },
 

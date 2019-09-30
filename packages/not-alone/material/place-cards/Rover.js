@@ -1,12 +1,12 @@
-import {getHunted, PLACES} from '../../NotAlone'
-import {THE_JUNGLE} from '../PlaceCards'
+import {getHunted, PLACE_CARD, PLACES} from '../../NotAlone'
+import {THE_ROVER} from '../PlaceCards'
 import {getCurrentHuntedId} from '../../phases/Reckoning'
 import {takePlaceFromReserve} from '../../moves/TakePlaceFromReserve'
 
 export const Rover = {
   canUsePower: (game, hunted) => PLACES.find(place => canTakePlaceFromReserve(hunted, place)),
 
-  usePower: (game) => game.pendingEffect = {cardType: 'PLACE_CARD', card: THE_JUNGLE},
+  usePower: (game) => game.pendingEffect = {cardType: PLACE_CARD, card: THE_ROVER},
 
   getPlayerMoves: (game, playerId) => {
     if (playerId === getCurrentHuntedId(game)) {
