@@ -32,6 +32,7 @@ import {GiveUp} from './moves/GiveUp'
 import {LoseWillCounter} from './moves/LoseWillCounter'
 import {tackBackDiscardedPlace, TackBackDiscardedPlace} from './moves/TakeBackDiscardedPlace'
 import {RegainWillCounter} from './moves/RegainWillCounter'
+import {TackBackAllDiscardedPlaces} from './moves/TakeBackAllDiscardedPlaces'
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 export const EXPLORATION = 1, HUNTING = 2, RECKONING = 3, END_OF_TURN_ACTIONS = 4
@@ -98,6 +99,7 @@ export const moves = {
   PlayHuntCard,
   PlaySurvivalCard,
   UsePlacePower,
+  TackBackAllDiscardedPlaces,
   PutMarkerOnBeach,
   RemoveMarkerFromBeach,
   TakeBackPlayedPlace,
@@ -308,6 +310,9 @@ export function creatureShouldPassOrPlayHuntCard(game) {
 }
 
 export function continueGameAfterMove(game, move) {
+  if (game.nextMoves.length > 0) {
+    return
+  }
   if (game.pendingEffect) {
     const rule = getPendingEffectRule(game)
     if (rule.continueGameAfterMove) {
@@ -327,4 +332,8 @@ function getPendingEffectRule(game) {
     case "HUNT_CARD": return huntCardRule(game.pendingEffect.card)
     case "SURVIVAL_CARD": return survivalCardRule(game.pendingEffect.card)
   }
+}
+
+export function getPlacesWithToken(game, token) {
+  return game.huntTokensLocations[token] // TODO Clone: Target token is a second Creature token.
 }

@@ -1,5 +1,13 @@
 import {revealPlaceCards} from '../moves/RevealPlaceCard'
-import {creatureShouldPassOrPlayHuntCard, END_OF_TURN_ACTIONS, getHunted, getHuntedId, HUNTED_PREFIX, shouldPassOrPlaySurvivalCard} from '../NotAlone'
+import {
+  creatureShouldPassOrPlayHuntCard,
+  END_OF_TURN_ACTIONS,
+  getHunted,
+  getHuntedId,
+  getPlacesWithToken,
+  HUNTED_PREFIX,
+  shouldPassOrPlaySurvivalCard
+} from '../NotAlone'
 import {placeRule} from '../material/PlaceCards'
 import {usePlacePower} from '../moves/UsePlacePower'
 import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS, TARGET_TOKEN} from '../material/HuntTokens'
@@ -190,7 +198,7 @@ export function exploresPlaceWithoutHuntToken(game, hunted) {
 }
 
 export function exploresPlaceWithToken(game, hunted, token) {
-  return getExploredPlaces(game, hunted).some(place => game.huntTokensLocations[token].includes(place))
+  return getExploredPlaces(game, hunted).some(place => getPlacesWithToken(game, token).includes(place))
 }
 
 function getExploredPlacesWithoutHuntToken(game, hunted) {
@@ -198,7 +206,7 @@ function getExploredPlacesWithoutHuntToken(game, hunted) {
 }
 
 export function getExploredPlacesWithToken(game, hunted, token) {
-  return getExploredPlaces(game, hunted).filter(place => game.huntTokensLocations[token].includes(place))
+  return getExploredPlaces(game, hunted).filter(place => getPlacesWithToken(game, token).includes(place))
 }
 
 function isPlaceWithoutHuntToken(game, place) {
