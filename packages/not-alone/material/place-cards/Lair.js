@@ -13,7 +13,7 @@ export const Lair = {
 
   usePower: (game) => game.ongoingAction = {cardType: PLACE_CARD, card: THE_LAIR},
 
-  getPlayerMoves: (game, huntedId) => {
+  getHuntedMoves: (game, huntedId) => {
     const moves = []
     if (huntedId === getCurrentHuntedId(game)) {
       const hunted = getHunted(game, huntedId)

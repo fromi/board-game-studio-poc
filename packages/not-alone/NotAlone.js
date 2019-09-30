@@ -59,7 +59,8 @@ export const setup = options => ({
   nextMoves: [],
   markerCounterOnBeach: false,
   beachUsed: false,
-  wreckUsed: false
+  wreckUsed: false,
+  pendingEffects: []
 })
 
 function setupHunted(numberOfPlayers) {
@@ -186,6 +187,10 @@ function getCreatureMoves(game) {
   if (!game.boardSide) {
     return BOARD_SIDES.map(side => chooseBoardSide(side))
   }
+  if (game.ongoingAction) {
+    const rule = getOngoingActionRule(game)
+    return rule.getCreatureMoves ? rule.getCreatureMoves(game) : []
+  }
   const moves = []
   if (game.phase) {
     const phaseRule = PhaseRule(game.phase)
@@ -211,6 +216,10 @@ function getHuntedMoves(game, huntedId) {
   const hunted = getHunted(game, huntedId)
   if (hunted.ongoingAction && hunted.ongoingAction.type === RESIST) {
     return hunted.discardedPlaceCards.map(place => takeBackDiscardedPlace(huntedId, place))
+  }
+  if (game.ongoingAction) {
+    const rule = getOngoingActionRule(game)
+    return rule.getHuntedMoves ? rule.getHuntedMoves(game, huntedId) : []
   }
   const moves = []
   if (game.phase) {
@@ -321,7 +330,7 @@ export function continueGameAfterMove(game, move) {
     return
   }
   if (game.ongoingAction) {
-    const rule = getongoingActionRule(game)
+    const rule = getOngoingActionRule(game)
     if (rule.continueGameAfterMove) {
       rule.continueGameAfterMove(game, move)
     } else {
@@ -333,7 +342,7 @@ export function continueGameAfterMove(game, move) {
   }
 }
 
-function getongoingActionRule(game) {
+function getOngoingActionRule(game) {
   switch (game.ongoingAction.cardType) {
     case "PLACE_CARD": return placeRule(game.ongoingAction.card)
     case "HUNT_CARD": return huntCardRule(game.ongoingAction.card)

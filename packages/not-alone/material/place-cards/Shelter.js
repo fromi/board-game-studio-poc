@@ -12,9 +12,11 @@ export const Shelter = {
     game.nextMoves.push(drawSurvivalCard(huntedId), drawSurvivalCard(huntedId))
   },
 
-  getPlayerMoves: (game, playerId) => {
-    if (playerId === getCurrentHuntedId(game)) {
-      return game.ongoingAction.survivalCards.map(card => discardSurvivalCard(playerId, card))
+  getHuntedMoves: (game, hunted) => {
+    if (hunted === getCurrentHuntedId(game)) {
+      return game.ongoingAction.survivalCards.map(card => discardSurvivalCard(hunted, card))
+    } else {
+      return []
     }
   }
 }

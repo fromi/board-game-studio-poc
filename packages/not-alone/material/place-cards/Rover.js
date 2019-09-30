@@ -8,10 +8,10 @@ export const Rover = {
 
   usePower: (game) => game.ongoingAction = {cardType: PLACE_CARD, card: THE_ROVER},
 
-  getPlayerMoves: (game, playerId) => {
-    if (playerId === getCurrentHuntedId(game)) {
-      const hunted = getHunted(game, playerId)
-      return PLACES.filter(place => canTakePlaceFromReserve(hunted, place)).map(place => takePlaceFromReserve(playerId, place))
+  getHuntedMoves: (game, huntedId) => {
+    if (huntedId === getCurrentHuntedId(game)) {
+      const hunted = getHunted(game, huntedId)
+      return PLACES.filter(place => canTakePlaceFromReserve(hunted, place)).map(place => takePlaceFromReserve(huntedId, place))
     }
   }
 }

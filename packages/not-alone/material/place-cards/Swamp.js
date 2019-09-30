@@ -17,14 +17,16 @@ export const Swamp = {
     }
   },
 
-  getPlayerMoves: (game, playerId) => {
-    if (playerId === getCurrentHuntedId(game)) {
-      const hunted = getHunted(game, playerId)
+  getHuntedMoves: (game, huntedId) => {
+    if (huntedId === getCurrentHuntedId(game)) {
+      const hunted = getHunted(game, huntedId)
       if (game.ongoingAction.cardsLeft === hunted.discardedPlaceCards.length) {
         // Remove useless choice if player will take back all the cards from their discard
-        return [takeBackDiscardedPlace(playerId, hunted.discardedPlaceCards[0])]
+        return [takeBackDiscardedPlace(huntedId, hunted.discardedPlaceCards[0])]
       }
-      return hunted.discardedPlaceCards.map(place => takeBackDiscardedPlace(playerId, place))
+      return hunted.discardedPlaceCards.map(place => takeBackDiscardedPlace(huntedId, place))
+    } else {
+      return []
     }
   }
 }

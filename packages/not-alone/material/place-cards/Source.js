@@ -9,12 +9,12 @@ export const Source = {
 
   usePower: (game) => game.ongoingAction = {cardType: PLACE_CARD, card: THE_SOURCE},
 
-  getPlayerMoves: (game, playerId) => {
+  getHuntedMoves: (game, huntedId) => {
     const moves = []
-    if (playerId === getCurrentHuntedId(game)) {
+    if (huntedId === getCurrentHuntedId(game)) {
       game.hunted.filter(hunted => hunted.willCounters < 3).forEach(hunted => moves.push(regainWillCounter(getHuntedId(game, hunted))))
       if (game.survivalCardsDeck.length > 0 || game.survivalCardsDiscard.length > 0) {
-        moves.push(drawSurvivalCard(playerId))
+        moves.push(drawSurvivalCard(huntedId))
       }
     }
     return moves

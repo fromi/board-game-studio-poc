@@ -17,10 +17,11 @@ export const Jungle = {
     }
   },
 
-  getPlayerMoves: (game, playerId) => {
-    if (playerId === getCurrentHuntedId(game)) {
-      const hunted = getHunted(game, playerId)
-      return hunted.discardedPlaceCards.map(place => takeBackDiscardedPlace(playerId, place))
+  getHuntedMoves: (game, huntedId) => {
+    if (huntedId === getCurrentHuntedId(game)) {
+      return getHunted(game, huntedId).discardedPlaceCards.map(place => takeBackDiscardedPlace(huntedId, place))
+    } else {
+      return []
     }
   }
 }
