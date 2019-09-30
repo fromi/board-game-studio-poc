@@ -20,6 +20,7 @@ import {moveAssimilationCounter} from '../moves/MoveAssimilationCounter'
 import {regainWillCounter} from '../moves/RegainWillCounter'
 import {takeBackDiscardedPlace} from '../moves/TakeBackDiscardedPlace'
 import {pass} from '../moves/Pass'
+import {ANTICIPATION} from '../material/HuntCards'
 
 export const REVEAL_PLACE_CARDS_STEP = 'REVEAL_PLACE_CARDS', EXPLORE_PLACES_WITHOUT_TOKEN_STEP = 'EXPLORE_PLACES_WITHOUT_TOKEN',
   TARGET_TOKEN_STEP = 'TARGET_TOKEN_STEP', ARTEMIA_TOKEN_STEP = 'ARTEMIA_TOKEN_STEP', CREATURE_TOKEN_STEP = 'CREATURE_TOKEN_STEP',
@@ -146,8 +147,13 @@ const ArtemiaTokenStep = {
 
 const creatureTokenStep = game => {
   if (game.hunted.some(hunted => exploresPlaceWithToken(game, hunted, CREATURE_TOKEN))) {
-    game.hunted.filter(hunted => exploresPlaceWithToken(game, hunted, CREATURE_TOKEN))
-      .filter(hunted => hunted.willCounters > 0).forEach(hunted => game.nextMoves.push(loseWillCounter(getHuntedId(game, hunted))))
+    game.hunted.filter(hunted => exploresPlaceWithToken(game, hunted, CREATURE_TOKEN)).filter(hunted => hunted.willCounters > 0).forEach(hunted => {
+      const huntedId = getHuntedId(game, hunted)
+      if (game.pendingEffects.some(effect => effect.card === ANTICIPATION && effect.huntedId === huntedId)) {
+        game.nextMoves.push(moveAssimilationCounter)
+      }
+      game.nextMoves.push(loseWillCounter(huntedId))
+    })
     game.nextMoves.push(moveAssimilationCounter)
   }
   assimilationStep(game)

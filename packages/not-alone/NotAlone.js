@@ -36,6 +36,7 @@ import {TakeBackAllDiscardedPlaces} from './moves/TakeBackAllDiscardedPlaces'
 import {TakePlaceFromReserve} from './moves/TakePlaceFromReserve'
 import {DiscardPlaceCard} from './moves/DiscardPlaceCard'
 import {DiscardSurvivalCard} from './moves/DiscardSurvivalCard'
+import {ChooseHunted} from './moves/ChooseHunted'
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 export const EXPLORATION = 1, HUNTING = 2, RECKONING = 3, END_OF_TURN_ACTIONS = 4
@@ -115,6 +116,7 @@ export const moves = {
   DiscardPlayedPlaceCard,
   RemoveHuntToken,
   MoveRescueCounter,
+  ChooseHunted,
   ShuffleHuntCards,
   StrikeBack
 }
@@ -349,7 +351,7 @@ export function continueGameAfterMove(game, move) {
   }
 }
 
-function getOngoingActionRule(game) {
+export function getOngoingActionRule(game) {
   switch (game.ongoingAction.cardType) {
     case "PLACE_CARD": return placeRule(game.ongoingAction.card)
     case "HUNT_CARD": return huntCardRule(game.ongoingAction.card)
