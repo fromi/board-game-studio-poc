@@ -4,7 +4,7 @@ import HuntCards, {huntCardRule} from './material/HuntCards'
 import {ChooseBoardSide, chooseBoardSide} from './moves/ChooseBoardSide'
 import {DrawHuntCard} from './moves/DrawHuntCard'
 import {DrawSurvivalCard} from './moves/DrawSurvivalCard'
-import {StartPhase} from './moves/StartPhase'
+import {startPhase, StartPhase} from './moves/StartPhase'
 import {PlayPlaceCard} from './moves/PlayPlaceCard'
 import {StrikeBack} from './moves/StrikeBack'
 import {ShuffleHuntCards} from './moves/ShuffleHuntCards'
@@ -25,7 +25,7 @@ import {EndOfTurnActions} from './phases/EndOfTurnActions'
 import {placeRule} from './material/PlaceCards'
 import {DiscardPlayedPlaceCard} from './moves/DiscardPlayedPlaceCard'
 import {RemoveHuntToken} from './moves/RemoveHuntToken'
-import {MoveRescueCounter} from './moves/MoveRescueCounter'
+import {MOVE_RESCUE_COUNTER, MoveRescueCounter} from './moves/MoveRescueCounter'
 import {MoveAssimilationCounter} from './moves/MoveAssimilationCounter'
 import {RESIST, Resist} from './moves/Resist'
 import {GiveUp} from './moves/GiveUp'
@@ -125,8 +125,12 @@ export function getAutomaticMove(game) {
   }
   if (game.nextMoves.length) {
     return game.nextMoves[0]
-  }
-  if (game.phase) {
+  } else if (game.ongoingAction) {
+    const rule = getOngoingActionRule(game)
+    if (rule.getAutomaticMove) {
+      return rule.getAutomaticMove(game)
+    }
+  } else if (game.phase) {
     const phaseAutomaticMove = PhaseRule(game.phase).getAutomaticMove(game)
     if (phaseAutomaticMove) {
       return phaseAutomaticMove
@@ -327,9 +331,8 @@ export function creatureShouldPassOrPlayHuntCard(game) {
 
 export function continueGameAfterMove(game, move) {
   if (game.nextMoves.length > 0) {
-    return
-  }
-  if (game.ongoingAction) {
+    game.nextMoves.shift()
+  } else if (game.ongoingAction) {
     const rule = getOngoingActionRule(game)
     if (rule.continueGameAfterMove) {
       rule.continueGameAfterMove(game, move)
@@ -338,7 +341,11 @@ export function continueGameAfterMove(game, move) {
       continueGameAfterMove(game, move)
     }
   } else if (game.phase === RECKONING) {
-    continueReckoning(game)
+    if (move.type === MOVE_RESCUE_COUNTER) {
+      game.nextMoves.push(startPhase(EXPLORATION))
+    } else {
+      continueReckoning(game)
+    }
   }
 }
 

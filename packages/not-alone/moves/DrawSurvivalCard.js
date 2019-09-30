@@ -1,7 +1,5 @@
-import {getHunted} from '../NotAlone'
+import {continueGameAfterMove, getHunted} from '../NotAlone'
 import {shuffleSurvivalCards} from './ShuffleSurvivalCards'
-import {THE_SHELTER, THE_SOURCE} from '../material/PlaceCards'
-import {continueReckoning} from '../phases/Reckoning'
 
 export const DRAW_SURVIVAL_CARD = 'DrawSurvivalCard'
 
@@ -15,14 +13,7 @@ export const DrawSurvivalCard = {
   execute: (game, move) => {
     const survivalCard = game.survivalCardsDeck.shift()
     getHunted(game, move.huntedId).handSurvivalCards.push(survivalCard)
-    game.nextMoves.shift()
-    if (game.ongoingAction) {
-      if (game.ongoingAction.card === THE_SHELTER) {
-        game.ongoingAction.survivalCards.push(survivalCard)
-      } else if (game.ongoingAction.card === THE_SOURCE) {
-        continueReckoning(game)
-      }
-    }
+    continueGameAfterMove(game, move)
   },
 
   getView: (move, playerId, game) => playerId === move.huntedId ? {...move, card: getHunted(game, playerId).handSurvivalCards.slice(-1)[0]} : move,

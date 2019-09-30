@@ -14,9 +14,8 @@ export const TakeBackPlace = {
         delete hunted.ongoingAction
       }
     } else {
-      game.nextMoves.shift()
+      continueGameAfterMove(game, move)
     }
-    continueGameAfterMove(game, move)
   },
 
   reportInView: (game, move, playerId) => {

@@ -1,17 +1,12 @@
-import {startPhase} from "./StartPhase"
-import {EXPLORATION} from "../NotAlone"
+import {continueGameAfterMove} from '../NotAlone'
 
 export const MOVE_RESCUE_COUNTER = 'MoveRescueCounter'
 
 export const moveRescueCounter = {type: MOVE_RESCUE_COUNTER}
 
 export const MoveRescueCounter = {
-  execute: (game) => {
+  execute: (game, move) => {
     game.rescueCounter--
-    if (game.nextMoves[0] === moveRescueCounter) {
-      game.nextMoves.shift()
-    } else {
-      game.nextMoves.push(startPhase(EXPLORATION))
-    }
+    continueGameAfterMove(game, move)
   }
 }
