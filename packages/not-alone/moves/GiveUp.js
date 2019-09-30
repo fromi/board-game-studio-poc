@@ -1,7 +1,7 @@
 import {getHunted} from '../NotAlone'
 import {isExplorationMove} from '../phases/Exploration'
 import {regainWillCounter} from './RegainWillCounter'
-import {tackBackDiscardedPlace} from './TakeBackDiscardedPlace'
+import {takeBackDiscardedPlace} from './TakeBackDiscardedPlace'
 
 export const GIVE_UP = 'GiveUp'
 export const giveUp = (huntedId) => ({type: GIVE_UP, huntedId})
@@ -12,7 +12,7 @@ export const GiveUp = {
     for (let i = hunted.willCounters; i < 3; i++) {
       game.nextMoves.push(regainWillCounter(move.huntedId))
     }
-    hunted.discardedPlaceCards.forEach(place => game.nextMoves.push(tackBackDiscardedPlace(move.huntedId, place)))
+    hunted.discardedPlaceCards.forEach(place => game.nextMoves.push(takeBackDiscardedPlace(move.huntedId, place)))
   },
 
   undoable: (move, nextMoves) => !nextMoves.some(nextMove => isExplorationMove(nextMove, move.huntedId)),

@@ -18,7 +18,8 @@ import {discardPlaceCard} from '../moves/DiscardPlaceCard'
 import {loseWillCounter} from '../moves/LoseWillCounter'
 import {moveAssimilationCounter} from '../moves/MoveAssimilationCounter'
 import {regainWillCounter} from '../moves/RegainWillCounter'
-import {tackBackDiscardedPlace} from '../moves/TakeBackDiscardedPlace'
+import {takeBackDiscardedPlace} from '../moves/TakeBackDiscardedPlace'
+import {pass} from '../moves/Pass'
 
 export const REVEAL_PLACE_CARDS_STEP = 'REVEAL_PLACE_CARDS', EXPLORE_PLACES_WITHOUT_TOKEN_STEP = 'EXPLORE_PLACES_WITHOUT_TOKEN',
   TARGET_TOKEN_STEP = 'TARGET_TOKEN_STEP', ARTEMIA_TOKEN_STEP = 'ARTEMIA_TOKEN_STEP', CREATURE_TOKEN_STEP = 'CREATURE_TOKEN_STEP',
@@ -157,7 +158,7 @@ const assimilationStep = game => {
     game.nextMoves.push(moveAssimilationCounter)
     game.hunted.filter(hunted => hunted.willCounters === 0).forEach(hunted => {
       const huntedId = getHuntedId(game, hunted)
-      hunted.discardedPlaceCards.forEach(place => game.nextMoves.push(tackBackDiscardedPlace(huntedId, place)))
+      hunted.discardedPlaceCards.forEach(place => game.nextMoves.push(takeBackDiscardedPlace(huntedId, place)))
       for (let i = 0; i < 3; i++) {
         game.nextMoves.push(regainWillCounter(huntedId))
       }
@@ -238,11 +239,12 @@ export function placesPowerMoves(game, huntedId, places) {
     const Place = placeRule(place)
     if (Place.canUsePower(game, hunted)) {
       moves.push(usePlacePower(place, huntedId))
-    } else if (!hunted.discardedPlaceCards.length) {
-      // TODO moves.push(passPlaceReckoning) -> Place power cannot be used and player has 0 place card discarded
     }
-    if (hunted.discardedPlaceCards.length) {
-      // TODO moves.push(takeBackDiscardedPlace)
+    if (!Place.powerAllowsToTakeBackFromDiscard) {
+      hunted.discardedPlaceCards.forEach(place => moves.push(takeBackDiscardedPlace(huntedId, place)))
+    }
+    if (moves.length === 0) {
+      moves.push(pass(huntedId))
     }
   } else {
     // TODO Artefact choosePlaceToResolve

@@ -30,9 +30,9 @@ import {MoveAssimilationCounter} from './moves/MoveAssimilationCounter'
 import {RESIST, Resist} from './moves/Resist'
 import {GiveUp} from './moves/GiveUp'
 import {LoseWillCounter} from './moves/LoseWillCounter'
-import {tackBackDiscardedPlace, TackBackDiscardedPlace} from './moves/TakeBackDiscardedPlace'
+import {takeBackDiscardedPlace, TakeBackDiscardedPlace} from './moves/TakeBackDiscardedPlace'
 import {RegainWillCounter} from './moves/RegainWillCounter'
-import {TackBackAllDiscardedPlaces} from './moves/TakeBackAllDiscardedPlaces'
+import {TakeBackAllDiscardedPlaces} from './moves/TakeBackAllDiscardedPlaces'
 import {TakePlaceFromReserve} from './moves/TakePlaceFromReserve'
 import {DiscardPlaceCard} from './moves/DiscardPlaceCard'
 
@@ -92,7 +92,7 @@ export const moves = {
   PlayPlaceCard,
   Resist,
   LoseWillCounter,
-  TackBackDiscardedPlace,
+  TakeBackDiscardedPlace,
   GiveUp,
   RegainWillCounter,
   PlaceHuntToken,
@@ -101,7 +101,7 @@ export const moves = {
   PlayHuntCard,
   PlaySurvivalCard,
   UsePlacePower,
-  TackBackAllDiscardedPlaces,
+  TakeBackAllDiscardedPlaces,
   TakeBackPlayedPlace,
   PutMarkerOnBeach,
   RemoveMarkerFromBeach,
@@ -207,7 +207,7 @@ function getCreatureMoves(game) {
 function getHuntedMoves(game, huntedId) {
   const hunted = getHunted(game, huntedId)
   if (hunted.pendingAction && hunted.pendingAction.type === RESIST) {
-    return hunted.discardedPlaceCards.map(place => tackBackDiscardedPlace(huntedId, place))
+    return hunted.discardedPlaceCards.map(place => takeBackDiscardedPlace(huntedId, place))
   }
   const moves = []
   if (game.phase) {
