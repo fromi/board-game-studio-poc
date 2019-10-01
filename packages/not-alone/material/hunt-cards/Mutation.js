@@ -1,4 +1,4 @@
-import {ARTEMIA_TOKEN} from "../HuntTokens";
+import {ARTEMIA_TOKEN} from '../HuntTokens'
 
 export const Mutation = {
   phase: 2,

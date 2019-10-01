@@ -20,7 +20,7 @@ import {moveAssimilationCounter} from '../moves/MoveAssimilationCounter'
 import {regainWillCounter} from '../moves/RegainWillCounter'
 import {takeBackDiscardedPlace} from '../moves/TakeBackDiscardedPlace'
 import {pass} from '../moves/Pass'
-import {huntCardRule} from '../material/HuntCards'
+import {huntCardRule, MUTATION} from '../material/HuntCards'
 
 export const REVEAL_PLACE_CARDS_STEP = 'REVEAL_PLACE_CARDS', EXPLORE_PLACES_WITHOUT_TOKEN_STEP = 'EXPLORE_PLACES_WITHOUT_TOKEN',
   TARGET_TOKEN_STEP = 'TARGET_TOKEN_STEP', ARTEMIA_TOKEN_STEP = 'ARTEMIA_TOKEN_STEP', CREATURE_TOKEN_STEP = 'CREATURE_TOKEN_STEP',
@@ -124,14 +124,7 @@ const ArtemiaTokenStep = {
     const hunted = getHunted(game, huntedId)
     const currentHunted = getHunted(game, getCurrentHuntedId(game))
     if (hunted === currentHunted) {
-      const huntCards = getHuntCardPlayedWithTokenEffect(game, ARTEMIA_TOKEN)
-      const huntCardToApply = huntCards.find(huntCard => !hunted.huntCardsEffectsApplied.includes(huntCard))
-      if (huntCardToApply) {
-        // TODO: get Hunt Card moves (Mutation)
-        console.error('Not implemented')
-      } else {
-        return hunted.handPlaceCards.map(place => discardPlaceCard(huntedId, place))
-      }
+      return hunted.handPlaceCards.map(place => discardPlaceCard(huntedId, place))
     } else {
       return []
     }
@@ -141,6 +134,8 @@ const ArtemiaTokenStep = {
     game.reckoning.huntedIndex = game.hunted.findIndex((hunted, index) => index > game.reckoning.huntedIndex && exploresPlaceWithToken(game, hunted, ARTEMIA_TOKEN))
     if (game.reckoning.huntedIndex === -1) {
       creatureTokenStep(game)
+    } else if (game.creature.huntCardsPlayed.includes(MUTATION)) {
+      game.nextMoves.push(loseWillCounter(getCurrentHuntedId(game)))
     }
   }
 }
@@ -150,7 +145,7 @@ const creatureTokenStep = game => {
     game.hunted.filter(hunted => exploresPlaceWithToken(game, hunted, CREATURE_TOKEN)).filter(hunted => hunted.willCounters > 0).forEach(hunted => {
       const huntedId = getHuntedId(game, hunted)
       game.nextMoves.push(loseWillCounter(huntedId))
-      game.creature.huntCardsPlayed.map(huntCard => huntCardRule(huntCard)).filter(rule => rule.huntedCaught).forEach(rule => rule.huntedCaught(game, huntedId, CREATURE_TOKEN))
+      game.creature.huntCardsPlayed.map(huntCard => huntCardRule(huntCard)).filter(rule => rule.huntedCaughtByCreature).forEach(rule => rule.huntedCaughtByCreature(game, huntedId))
     })
     game.nextMoves.push(moveAssimilationCounter)
   }
