@@ -211,7 +211,7 @@ function getCreatureMoves(game) {
   if (couldCreaturePlayHuntCard(game)) {
     game.creature.hand.forEach(card => {
       const HuntCardRule = huntCardRule(card)
-      if (HuntCardRule && HuntCardRule.phase === game.phase) {
+      if (HuntCardRule.canBePlayed && HuntCardRule.canBePlayed(game) || HuntCardRule.phase === game.phase) {
         moves.push(playHuntCard(card))
       }
     })
