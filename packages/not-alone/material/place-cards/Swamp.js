@@ -3,6 +3,7 @@ import {takeBackPlaceBeingResolved} from '../../moves/TakeBackPlayedPlace'
 import {THE_SWAMP} from '../PlaceCards'
 import {getCurrentHuntedId} from '../../phases/Reckoning'
 import {takeBackDiscardedPlace} from '../../moves/TakeBackDiscardedPlace'
+import {PERSECUTION} from '../HuntCards'
 
 export const Swamp = {
   canUsePower: () => true,
@@ -11,22 +12,28 @@ export const Swamp = {
 
   usePower: (game, huntedId) => {
     const hunted = getHunted(game, huntedId)
-    game.nextMoves.push(takeBackPlaceBeingResolved(game, huntedId))
-    if (hunted.discardedPlaceCards.length > 0) {
-      game.ongoingAction = {cardType: PLACE_CARD, card: THE_SWAMP, cardsLeft: 2}
+    if (game.creature.huntCardsPlayed.includes(PERSECUTION)) {
+      game.ongoingAction = {cardType: PLACE_CARD, card: THE_SWAMP, cardsLeft: 1}
+    } else {
+      game.nextMoves.push(takeBackPlaceBeingResolved(game, huntedId))
+      if (hunted.discardedPlaceCards.length > 0) {
+        game.ongoingAction = {cardType: PLACE_CARD, card: THE_SWAMP, cardsLeft: 2}
+      }
     }
   },
 
   getHuntedMoves: (game, huntedId) => {
+    const moves = []
     if (huntedId === getCurrentHuntedId(game)) {
       const hunted = getHunted(game, huntedId)
-      if (game.ongoingAction.cardsLeft === hunted.discardedPlaceCards.length) {
+      if (game.creature.huntCardsPlayed.includes(PERSECUTION)) {
+        moves.push(takeBackPlaceBeingResolved(game, huntedId))
+      } else if (game.ongoingAction.cardsLeft === hunted.discardedPlaceCards.length) {
         // Remove useless choice if player will take back all the cards from their discard
         return [takeBackDiscardedPlace(huntedId, hunted.discardedPlaceCards[0])]
       }
-      return hunted.discardedPlaceCards.map(place => takeBackDiscardedPlace(huntedId, place))
-    } else {
-      return []
+      hunted.discardedPlaceCards.forEach(place => moves.push(takeBackDiscardedPlace(huntedId, place)))
     }
+    return moves
   }
 }
