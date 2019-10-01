@@ -259,7 +259,7 @@ export function placesPowerMoves(game, huntedId, places) {
 }
 
 function placePowerIsEffective(game, place) {
-  return true // TODO: see if some played hunt cards make the place's power ineffective
+  return !game.creature.huntCardsPlayed.map(card => huntCardRule(card)).filter(rule => rule.isPlaceIneffective).some(rule => rule.isPlaceIneffective(place, game))
 }
 
 function getHuntCardPlayedWithTokenEffect(game, token) {
