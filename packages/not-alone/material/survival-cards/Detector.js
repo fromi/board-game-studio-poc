@@ -1,3 +1,5 @@
+import {RECKONING} from '../../NotAlone'
+
 export const Detector = {
-  phase: 3
+  phase: RECKONING
 }

@@ -1,6 +1,7 @@
-import {TARGET_TOKEN} from "../HuntTokens";
+import {TARGET_TOKEN} from '../HuntTokens'
+import {HUNTING} from '../../NotAlone'
 
 export const Clone = {
-  phase: 2,
+  phase: HUNTING,
   token: TARGET_TOKEN
 }

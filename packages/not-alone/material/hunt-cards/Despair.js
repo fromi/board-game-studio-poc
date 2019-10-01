@@ -1,6 +1,7 @@
-import {ARTEMIA_TOKEN} from "../HuntTokens";
+import {ARTEMIA_TOKEN} from '../HuntTokens'
+import {EXPLORATION} from '../../NotAlone'
 
 export const Despair = {
-  phase: 1,
+  phase: EXPLORATION,
   token: ARTEMIA_TOKEN
 }

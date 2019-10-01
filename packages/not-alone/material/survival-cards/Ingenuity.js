@@ -1,3 +1,5 @@
+import {EXPLORATION} from '../../NotAlone'
+
 export const Ingenuity = {
-  phase: 1
+  phase: EXPLORATION
 }

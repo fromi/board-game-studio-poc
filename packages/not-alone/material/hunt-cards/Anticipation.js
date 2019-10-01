@@ -1,10 +1,10 @@
-import {getHuntedId, HUNT_CARD} from '../../NotAlone'
+import {getHuntedId, HUNT_CARD, HUNTING} from '../../NotAlone'
 import {ANTICIPATION} from '../HuntCards'
 import {chooseHunted} from '../../moves/ChooseHunted'
 import {moveAssimilationCounter} from '../../moves/MoveAssimilationCounter'
 
 export const Anticipation = {
-  phase: 2,
+  phase: HUNTING,
 
   playCard: game => game.ongoingAction = {cardType: HUNT_CARD, card: ANTICIPATION},
 

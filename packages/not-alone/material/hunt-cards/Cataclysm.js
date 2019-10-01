@@ -1,3 +1,5 @@
+import {RECKONING} from '../../NotAlone'
+
 export const Cataclysm = {
-  phase: 3
+  phase: RECKONING
 }

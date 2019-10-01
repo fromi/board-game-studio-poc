@@ -1,10 +1,10 @@
-import {getHunted, getHuntedId, HUNT_CARD} from '../../NotAlone'
+import {getHunted, getHuntedId, HUNT_CARD, HUNTING} from '../../NotAlone'
 import {FORBIDDEN_ZONE} from '../HuntCards'
 import {choosePlace} from '../../moves/ChoosePlace'
 import {discardPlaceCard} from '../../moves/DiscardPlaceCard'
 
 export const ForbiddenZone = {
-  phase: 2,
+  phase: HUNTING,
 
   playCard: game => game.ongoingAction = {cardType: HUNT_CARD, card: FORBIDDEN_ZONE, huntedChosenPlace: {}},
 

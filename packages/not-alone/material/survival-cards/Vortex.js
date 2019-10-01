@@ -1,3 +1,5 @@
+import {HUNTING} from '../../NotAlone'
+
 export const Vortex = {
-  phase: 2
+  phase: HUNTING
 }
