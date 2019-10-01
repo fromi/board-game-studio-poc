@@ -359,3 +359,5 @@ export function getPlacesWithToken(game, token) {
 export function canDrawSurvivalCard(game) {
   return !game.creature.huntCardsPlayed.includes(DESPAIR) && (game.survivalCardsDeck.length > 0 || game.survivalCardsDiscard > 0)
 }
+
+export const ADJACENT_LOCATIONS = [[1, 2], [1, 6], [2, 3], [2, 7], [3, 4], [3, 8], [4, 5], [4, 9], [5, 10], [6, 7], [7, 8], [8, 9], [9, 10]]
