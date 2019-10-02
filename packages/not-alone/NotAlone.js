@@ -242,7 +242,7 @@ function getHuntedMoves(game, huntedId) {
   if (couldPlaySurvivalCard(game, hunted)) {
     hunted.handSurvivalCards.forEach(card => {
       const SurvivalCardRule = survivalCardRule(card)
-      if (SurvivalCardRule && SurvivalCardRule.phase === game.phase) {
+      if (SurvivalCardRule.canBePlayed && SurvivalCardRule.canBePlayed(game, huntedId) || SurvivalCardRule.phase === game.phase) {
         moves.push(playSurvivalCard(getHuntedId(game, hunted), card))
       }
     })

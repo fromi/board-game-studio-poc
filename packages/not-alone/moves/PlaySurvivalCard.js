@@ -11,9 +11,7 @@ export const PlaySurvivalCard = {
     hunted.handSurvivalCards.splice(hunted.handSurvivalCards.indexOf(move.card), 1)
     hunted.survivalCardPlayed = move.card
     const survivalCardRule = survivalCardRule(move.card)
-    if (survivalCardRule.playCard) {
-      survivalCardRule.playCard(game, move.huntedId)
-    }
+    survivalCardRule.playCard(game, move.huntedId)
     game.creature.passed = false
   }
 }
