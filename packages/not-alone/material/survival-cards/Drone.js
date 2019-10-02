@@ -1,5 +1,17 @@
-import {RECKONING} from '../../NotAlone'
+import {getHunted, RECKONING, SURVIVAL_CARD} from '../../NotAlone'
+import {getExploredPlaces, placePowerIsEffective} from '../../phases/Reckoning'
+import {DRONE} from '../SurvivalCards'
+import {usePlacePower} from '../../moves/UsePlacePower'
+import {THE_ROVER} from '../PlaceCards'
 
 export const Drone = {
-  phase: RECKONING
+  phase: RECKONING,
+
+  canBePlayed: (game, huntedId) => game.phase === RECKONING && getExploredPlaces(game, getHunted(game, huntedId)).some(place => placePowerIsEffective(game, huntedId, place)),
+
+  playCard: (game, huntedId) => game.pendingEffects.push({cardType: SURVIVAL_CARD, card: DRONE, huntedId}),
+
+  activatesInsteadOfUsingPlacePower: true,
+
+  getHuntedMoves: (game, huntedId) => [usePlacePower(THE_ROVER, huntedId)]
 }

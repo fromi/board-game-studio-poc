@@ -133,18 +133,18 @@ const ArtemiaTokenStep = {
     const hunted = getHunted(game, huntedId)
     const currentHunted = getHunted(game, getCurrentHuntedId(game))
     if (hunted === currentHunted) {
-        return hunted.handPlaceCards.map(place => discardPlaceCard(huntedId, place))
+      return hunted.handPlaceCards.map(place => discardPlaceCard(huntedId, place))
     } else {
       return []
     }
   },
 
   continueReckoning: game => {
-      game.reckoning.huntedIndex = game.hunted.findIndex((hunted, index) => index > game.reckoning.huntedIndex && exploresPlaceWithToken(game, hunted, ARTEMIA_TOKEN))
-      if (game.reckoning.huntedIndex === -1) {
-        creatureTokenStep(game)
+    game.reckoning.huntedIndex = game.hunted.findIndex((hunted, index) => index > game.reckoning.huntedIndex && exploresPlaceWithToken(game, hunted, ARTEMIA_TOKEN))
+    if (game.reckoning.huntedIndex === -1) {
+      creatureTokenStep(game)
     } else if (game.pendingEffects.some(effect => effect.card === MUTATION)) {
-        game.nextMoves.push(loseWillCounter(getCurrentHuntedId(game)))
+      game.nextMoves.push(loseWillCounter(getCurrentHuntedId(game)))
     }
   }
 }
@@ -198,6 +198,14 @@ export const Reckoning = {
 }
 
 export function continueReckoning(game) {
+  if (game.reckoning.huntedIndex !== -1) {
+    // Removing Gate and Drone effects once applied so they do not apply to both place combined with The Artefact...
+    const currentHuntedId = getCurrentHuntedId(game)
+    const effectToRemove = game.pendingEffects.find(effect => effect.huntedId === currentHuntedId && getEffectRule(effect).activatesInsteadOfUsingPlacePower)
+    if (effectToRemove) {
+      game.pendingEffects.splice(game.pendingEffects.indexOf(effectToRemove), 1)
+    }
+  }
   const Step = getReckoningStep(game)
   if (Step && Step.continueReckoning) {
     Step.continueReckoning(game)
@@ -232,7 +240,7 @@ function isPlaceWithoutHuntTokenForHunted(game, place, huntedId) {
   return tokensWithEffect.every(huntToken => !game.huntTokensLocations[huntToken].includes(place))
 }
 
-function getExploredPlaces(game, hunted) {
+export function getExploredPlaces(game, hunted) {
   const detour = game.pendingEffects.find(effect => effect.card === DETOUR && effect.huntedId === getHuntedId(game, hunted))
   if (detour) {
     return hunted.playedPlaceCards.map(place => detour.origin === place ? detour.destination : place)
@@ -267,6 +275,10 @@ export function placePowerMoves(game, huntedId, place) {
   const hunted = getHunted(game, huntedId)
   const Place = placeRule(place)
   if (Place.canUsePower(game, hunted)) {
+    const survivalCardReplacingPlacePower = game.pendingEffects.filter(effect => effect.huntedId === huntedId).map(getEffectRule).find(rule => rule.activatesInsteadOfUsingPlacePower)
+    if (survivalCardReplacingPlacePower) {
+      return survivalCardReplacingPlacePower.getHuntedMoves(game, huntedId)
+    }
     moves.push(usePlacePower(place, huntedId))
   }
   if (!Place.powerAllowsToTakeBackFromDiscard) {
@@ -275,7 +287,7 @@ export function placePowerMoves(game, huntedId, place) {
   return moves
 }
 
-function placePowerIsEffective(game, huntedId, place) {
+export function placePowerIsEffective(game, huntedId, place) {
   return !game.pendingEffects.map(getEffectRule).filter(rule => rule.isPlaceIneffective).some(rule => rule.isPlaceIneffective(place, game))
     && (!game.huntTokensLocations[ARTEMIA_TOKEN].includes(place) || huntedAvoidsArtemiaTokenEffect(game, huntedId))
     && (!game.huntTokensLocations[CREATURE_TOKEN].includes(place) || huntedAvoidsCreatureTokenEffect(game, huntedId))
