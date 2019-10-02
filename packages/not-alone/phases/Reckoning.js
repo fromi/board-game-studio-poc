@@ -2,10 +2,10 @@ import {revealPlaceCards} from '../moves/RevealPlaceCard'
 import {
   creatureShouldPassOrPlayHuntCard,
   END_OF_TURN_ACTIONS,
+  getEffectRule,
   getHunted,
   getHuntedId,
   getPlacesWithToken,
-  HUNT_CARD,
   HUNTED_PREFIX,
   shouldPassOrPlaySurvivalCard
 } from '../NotAlone'
@@ -21,7 +21,7 @@ import {moveAssimilationCounter} from '../moves/MoveAssimilationCounter'
 import {regainWillCounter} from '../moves/RegainWillCounter'
 import {takeBackDiscardedPlace} from '../moves/TakeBackDiscardedPlace'
 import {pass} from '../moves/Pass'
-import {DETOUR, huntCardRule, MUTATION} from '../material/HuntCards'
+import {DETOUR, MUTATION} from '../material/HuntCards'
 
 export const REVEAL_PLACE_CARDS_STEP = 'REVEAL_PLACE_CARDS', EXPLORE_PLACES_WITHOUT_TOKEN_STEP = 'EXPLORE_PLACES_WITHOUT_TOKEN',
   TARGET_TOKEN_STEP = 'TARGET_TOKEN_STEP', ARTEMIA_TOKEN_STEP = 'ARTEMIA_TOKEN_STEP', CREATURE_TOKEN_STEP = 'CREATURE_TOKEN_STEP',
@@ -116,10 +116,10 @@ export const TargetTokenStep = {
   },
 
   actionNextTargetTokenEffect: (game, huntedId) => {
-    const nextHuntCards = game.ongoingAction ? game.creature.huntCardsPlayed.slice(1) : game.creature.huntCardsPlayed
-    const huntCardToApply = nextHuntCards.find(card => hasTargetTokenEffect(card, game, huntedId))
-    if (huntCardToApply) {
-      game.ongoingAction = {type: HUNT_CARD, card: huntCardToApply}
+    const nextEffects = game.ongoingAction ? game.pendingEffects.slice(game.pendingEffects.findIndex(effect => effect.card === game.ongoingAction.card)) : game.pendingEffects
+    const nextEffect = nextEffects.find(effect => hasTargetTokenEffect(effect, game, huntedId))
+    if (nextEffect) {
+      game.ongoingAction = nextEffect
     } else {
       delete game.ongoingAction
     }
@@ -141,7 +141,7 @@ const ArtemiaTokenStep = {
     game.reckoning.huntedIndex = game.hunted.findIndex((hunted, index) => index > game.reckoning.huntedIndex && exploresPlaceWithToken(game, hunted, ARTEMIA_TOKEN))
     if (game.reckoning.huntedIndex === -1) {
       creatureTokenStep(game)
-    } else if (game.creature.huntCardsPlayed.includes(MUTATION)) {
+    } else if (game.pendingEffects.some(effect => effect.card === MUTATION)) {
       game.nextMoves.push(loseWillCounter(getCurrentHuntedId(game)))
     }
   }
@@ -152,7 +152,7 @@ const creatureTokenStep = game => {
     game.hunted.filter(hunted => exploresPlaceWithToken(game, hunted, CREATURE_TOKEN)).filter(hunted => hunted.willCounters > 0).forEach(hunted => {
       const huntedId = getHuntedId(game, hunted)
       game.nextMoves.push(loseWillCounter(huntedId))
-      game.creature.huntCardsPlayed.map(huntCard => huntCardRule(huntCard)).filter(rule => rule.huntedCaughtByCreature).forEach(rule => rule.huntedCaughtByCreature(game, huntedId))
+      game.pendingEffects.map(getEffectRule).filter(rule => rule.huntedCaughtByCreature).forEach(rule => rule.huntedCaughtByCreature(game, huntedId))
     })
     game.nextMoves.push(moveAssimilationCounter)
   }
@@ -265,12 +265,12 @@ export function placesPowerMoves(game, huntedId, places) {
 }
 
 function placePowerIsEffective(game, place) {
-  return !game.creature.huntCardsPlayed.map(card => huntCardRule(card)).filter(rule => rule.isPlaceIneffective).some(rule => rule.isPlaceIneffective(place, game))
+  return !game.pendingEffects.map(getEffectRule).filter(rule => rule.isPlaceIneffective).some(rule => rule.isPlaceIneffective(place, game))
 }
 
 export const getCurrentHuntedId = game => HUNTED_PREFIX + (game.reckoning.huntedIndex + 1)
 
-function hasTargetTokenEffect(card, game, huntedId) {
-  const rule = huntCardRule(card)
+function hasTargetTokenEffect(effect, game, huntedId) {
+  const rule = getEffectRule(effect)
   return rule.token === TARGET_TOKEN && rule.getHuntedMoves && rule.getHuntedMoves(game, huntedId).length > 0
 }

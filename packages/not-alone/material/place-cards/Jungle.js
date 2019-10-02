@@ -12,7 +12,7 @@ export const Jungle = {
 
   usePower: (game, huntedId) => {
     const hunted = getHunted(game, huntedId)
-    if (game.creature.huntCardsPlayed.includes(PERSECUTION)) {
+    if (game.pendingEffects.some(effect => effect.card === PERSECUTION)) {
       game.ongoingAction = {cardType: PLACE_CARD, card: THE_JUNGLE}
     } else {
       game.nextMoves.push(takeBackPlaceBeingResolved(game, huntedId))
@@ -25,7 +25,7 @@ export const Jungle = {
   getHuntedMoves: (game, huntedId) => {
     const moves = []
     if (huntedId === getCurrentHuntedId(game)) {
-      if (game.creature.huntCardsPlayed.includes(PERSECUTION)) {
+      if (game.pendingEffects.some(effect => effect.card === PERSECUTION)) {
         moves.push(takeBackPlaceBeingResolved(game, huntedId))
       }
       getHunted(game, huntedId).discardedPlaceCards.forEach(place => moves.push(takeBackDiscardedPlace(huntedId, place)))

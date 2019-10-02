@@ -1,6 +1,6 @@
 import {shuffle} from './game-api/Random'
 import SurvivalCards, {survivalCardRule} from './material/SurvivalCards'
-import HuntCards, {CLONE, DESPAIR, huntCardRule} from './material/HuntCards'
+import HuntCards, {canHuntCardBePlayed, CLONE, DESPAIR, huntCardRule} from './material/HuntCards'
 import {ChooseBoardSide, chooseBoardSide} from './moves/ChooseBoardSide'
 import {DrawHuntCard} from './moves/DrawHuntCard'
 import {DrawSurvivalCard} from './moves/DrawSurvivalCard'
@@ -212,8 +212,7 @@ function getCreatureMoves(game) {
   }
   if (couldCreaturePlayHuntCard(game)) {
     game.creature.hand.forEach(card => {
-      const HuntCardRule = huntCardRule(card)
-      if (HuntCardRule.canBePlayed && HuntCardRule.canBePlayed(game) || HuntCardRule.phase === game.phase) {
+      if (canHuntCardBePlayed(card)) {
         moves.push(playHuntCard(card))
       }
     })
@@ -298,7 +297,7 @@ function hideHuntedSecrets(game, hunted) {
  */
 export function couldPlaySurvivalCard(game, hunted) {
   return !game.ongoingAction && !hunted.ongoingAction && hunted.handSurvivalCards.length && !hunted.survivalCardPlayed
-    && !game.creature.huntCardsPlayed.includes(DESPAIR)
+    && !game.pendingEffects.some(effect => effect.card === DESPAIR)
     && SurvivalCards.filter(card => !game.survivalCardsDiscard.includes(card)).some(card => survivalCardRule(card).phase === game.phase)
 }
 
@@ -344,25 +343,29 @@ export function continueGameAfterMove(game, move) {
 }
 
 export function getOngoingActionRule(game) {
-  switch (game.ongoingAction.cardType) {
+  return getEffectRule(game.ongoingAction)
+}
+
+export function getEffectRule(effect) {
+  switch (effect.cardType) {
     case 'PLACE_CARD':
-      return placeRule(game.ongoingAction.card)
+      return placeRule(effect.card)
     case 'HUNT_CARD':
-      return huntCardRule(game.ongoingAction.card)
+      return huntCardRule(effect.card)
     case 'SURVIVAL_CARD':
-      return survivalCardRule(game.ongoingAction.card)
+      return survivalCardRule(effect.card)
   }
 }
 
 export function getPlacesWithToken(game, token) {
-  if (game.creature.huntCardsPlayed.includes(CLONE) && token === CREATURE_TOKEN) {
+  if (game.pendingEffects.some(effect => effect.card === CLONE) && token === CREATURE_TOKEN) {
     return game.huntTokensLocations[token].concat(game.huntTokensLocations[TARGET_TOKEN])
   }
   return game.huntTokensLocations[token]
 }
 
 export function canDrawSurvivalCard(game) {
-  return !game.creature.huntCardsPlayed.includes(DESPAIR) && (game.survivalCardsDeck.length > 0 || game.survivalCardsDiscard > 0)
+  return !game.pendingEffects.some(effect => effect.card === DESPAIR) && (game.survivalCardsDeck.length > 0 || game.survivalCardsDiscard > 0)
 }
 
 export const ADJACENT_LOCATIONS = [[1, 2], [1, 6], [2, 3], [2, 7], [3, 4], [3, 8], [4, 5], [4, 9], [5, 10], [6, 7], [7, 8], [8, 9], [9, 10]]

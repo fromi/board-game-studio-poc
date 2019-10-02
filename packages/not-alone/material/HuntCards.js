@@ -88,3 +88,8 @@ export const huntCardRule = card => {
       return Flashback
   }
 }
+
+export function canHuntCardBePlayed(game, card) {
+  const HuntCardRule = huntCardRule(card)
+  return HuntCardRule.canBePlayed && HuntCardRule.canBePlayed(game) || HuntCardRule.phase === game.phase
+}

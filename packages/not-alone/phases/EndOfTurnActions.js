@@ -25,14 +25,14 @@ export const EndOfTurnActions = {
           return removeHuntToken(huntToken)
         }
       }
-      game.creature.huntCardPlayLimit = game.creature.huntCardsPlayed.includes(TRACKING) ? 2 : 1
+      game.creature.huntCardPlayLimit = game.pendingEffects.some(effect => effect.card === TRACKING) ? 2 : 1
       if (game.creature.huntCardsPlayed.length > 0) {
         return discardPlayedHuntCard(game.creature.huntCardsPlayed[0])
       }
       if (game.creature.hand.length < 3) {
         return drawHuntCard
       }
-      if (!game.creature.huntCardsPlayed.includes(STASIS)) {
+      if (!game.pendingEffects.some(effect => effect.card === STASIS)) {
         return moveRescueCounter
       }
       return startPhase(EXPLORATION)

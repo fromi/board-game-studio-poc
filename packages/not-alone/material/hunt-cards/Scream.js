@@ -1,12 +1,14 @@
 import {TARGET_TOKEN} from '../HuntTokens'
-import {getHunted, HUNTING} from '../../NotAlone'
+import {getHunted, HUNT_CARD, HUNTING} from '../../NotAlone'
 import {DISCARD_PLACE_CARD, discardPlaceCard} from '../../moves/DiscardPlaceCard'
 import {getCurrentHuntedId, TargetTokenStep} from '../../phases/Reckoning'
 import {loseWillCounter} from '../../moves/LoseWillCounter'
+import {SCREAM} from '../HuntCards'
 
 export const Scream = {
   phase: HUNTING,
   token: TARGET_TOKEN,
+  playCard: game => game.pendingEffects.push({cardType: HUNT_CARD, card: SCREAM}),
 
   getHuntedMoves: (game, huntedId) => {
     const moves = []

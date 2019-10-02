@@ -1,9 +1,8 @@
 import {startPhase} from '../moves/StartPhase'
-import {ADJACENT_LOCATIONS, couldPlaySurvivalCard, CREATURE, PLACES, RECKONING} from '../NotAlone'
+import {ADJACENT_LOCATIONS, couldPlaySurvivalCard, CREATURE, getEffectRule, PLACES, RECKONING} from '../NotAlone'
 import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS} from '../material/HuntTokens'
 import {pass} from '../moves/Pass'
 import {placeHuntToken} from '../moves/PlaceHuntToken'
-import {huntCardRule} from '../material/HuntCards'
 
 export const Hunting = {
   getAutomaticMove: game => {
@@ -27,7 +26,7 @@ export const Hunting = {
 }
 
 function getTokenValidLocations(game, token) {
-  if (game.creature.huntCardsPlayed.map(card => huntCardRule(card)).filter(rule => rule.token === token).some(rule => rule.placeTokenOnAdjacentPlaces)) {
+  if (game.pendingEffects.map(getEffectRule).some(rule => rule.placeTokenOnAdjacentPlaces && rule.token === token)) {
     return ADJACENT_LOCATIONS
   } else {
     return PLACES.map(place => [place])

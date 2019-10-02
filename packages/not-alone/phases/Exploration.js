@@ -3,7 +3,6 @@ import {creatureShouldPassOrPlayHuntCard, getHunted, HUNTING} from '../NotAlone'
 import {PLAY_PLACE_CARD, playPlaceCard} from '../moves/PlayPlaceCard'
 import {RESIST, resist} from '../moves/Resist'
 import {GIVE_UP, giveUp} from '../moves/GiveUp'
-import {FORCE_FIELD} from '../material/HuntCards'
 import {TARGET_TOKEN} from '../material/HuntTokens'
 
 export function explorationDone(hunted) {
@@ -39,5 +38,5 @@ const explorationMoves = [PLAY_PLACE_CARD, RESIST, GIVE_UP]
 export const isExplorationMove = (move, huntedId) => move.huntedId === huntedId && explorationMoves.includes(move.type)
 
 function placeCanBePlayed(game, place) {
-  return !(game.creature.huntCardsPlayed.includes(FORCE_FIELD) && game.huntTokensLocations[TARGET_TOKEN].includes(place))
+  return !game.huntTokensLocations[TARGET_TOKEN].includes(place)
 }

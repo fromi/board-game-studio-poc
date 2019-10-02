@@ -4,7 +4,7 @@ import {placeRule, THE_LAIR} from '../PlaceCards'
 import {getCurrentHuntedId} from '../../phases/Reckoning'
 import {takeBackAllDiscardedPlaces} from '../../moves/TakeBackAllDiscardedPlaces'
 import {usePlacePower} from '../../moves/UsePlacePower'
-import {PERSECUTION} from '../HuntCards'
+import {CLONE, PERSECUTION} from '../HuntCards'
 import {takeBackDiscardedPlace} from '../../moves/TakeBackDiscardedPlace'
 
 export const Lair = {
@@ -20,7 +20,7 @@ export const Lair = {
     if (huntedId === getCurrentHuntedId(game)) {
       const hunted = getHunted(game, huntedId)
       if (hunted.discardedPlaceCards.length > 0) {
-        if (game.creature.huntCardsPlayed.includes(PERSECUTION)) {
+        if (game.pendingEffects.some(effect => effect.card === PERSECUTION)) {
           hunted.discardedPlaceCards.forEach(place => moves.push(takeBackDiscardedPlace(huntedId, place)))
         } else {
           moves.push(takeBackAllDiscardedPlaces(huntedId))
