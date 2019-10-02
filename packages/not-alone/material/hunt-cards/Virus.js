@@ -3,5 +3,6 @@ import {HUNTING} from '../../NotAlone'
 
 export const Virus = {
   phase: HUNTING,
-  token: ARTEMIA_TOKEN
+  token: ARTEMIA_TOKEN,
+  placeTokenOnAdjacentPlaces: true
 }
