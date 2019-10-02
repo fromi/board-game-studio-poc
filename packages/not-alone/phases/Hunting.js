@@ -1,5 +1,5 @@
 import {startPhase} from '../moves/StartPhase'
-import {ADJACENT_LOCATIONS, couldPlaySurvivalCard, CREATURE, getEffectRule, PLACES, RECKONING} from '../NotAlone'
+import {ADJACENT_LOCATIONS, couldPlaySurvivalCard, CREATURE, getEffectRule, HUNT_CARD, PLACES, RECKONING} from '../NotAlone'
 import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS} from '../material/HuntTokens'
 import {pass} from '../moves/Pass'
 import {placeHuntToken} from '../moves/PlaceHuntToken'
@@ -38,9 +38,9 @@ function huntTokenCanBePlaced(game, token) {
 }
 
 function isHuntTokenAvailable(game, token) {
-  return token === CREATURE_TOKEN ||
-    (token === ARTEMIA_TOKEN && isRescueCounterOnArtemiaSymbol(game)) ||
-    creaturePlayedHuntCardWithSymbol(game, token)
+  return token === CREATURE_TOKEN
+    || (token === ARTEMIA_TOKEN && isRescueCounterOnArtemiaSymbol(game))
+    || creaturePlayedHuntCardWithSymbol(game, token)
 }
 
 function isRescueCounterOnArtemiaSymbol(game) {
@@ -52,5 +52,5 @@ function isRescueCounterOnArtemiaSymbol(game) {
 }
 
 function creaturePlayedHuntCardWithSymbol(game, token) {
-  return false // TODO
+  return game.pendingEffects.filter(effect => effect.cardType === HUNT_CARD).map(getEffectRule).some(rule => rule.token === token)
 }
