@@ -21,7 +21,7 @@ import {moveAssimilationCounter} from '../moves/MoveAssimilationCounter'
 import {regainWillCounter} from '../moves/RegainWillCounter'
 import {takeBackDiscardedPlace} from '../moves/TakeBackDiscardedPlace'
 import {pass} from '../moves/Pass'
-import {huntCardRule, MUTATION} from '../material/HuntCards'
+import {DETOUR, huntCardRule, MUTATION} from '../material/HuntCards'
 
 export const REVEAL_PLACE_CARDS_STEP = 'REVEAL_PLACE_CARDS', EXPLORE_PLACES_WITHOUT_TOKEN_STEP = 'EXPLORE_PLACES_WITHOUT_TOKEN',
   TARGET_TOKEN_STEP = 'TARGET_TOKEN_STEP', ARTEMIA_TOKEN_STEP = 'ARTEMIA_TOKEN_STEP', CREATURE_TOKEN_STEP = 'CREATURE_TOKEN_STEP',
@@ -223,7 +223,11 @@ function isPlaceWithoutHuntToken(game, place) {
 }
 
 function getExploredPlaces(game, hunted) {
-  return hunted.playedPlaceCards // TODO: Detour
+  const detour = game.pendingEffects.find(effect => effect.card === DETOUR && effect.huntedId === getHuntedId(game, hunted))
+  if (detour) {
+    return hunted.playedPlaceCards.map(place => detour.origin === place ? detour.destination : place)
+  }
+  return hunted.playedPlaceCards
 }
 
 export function getPlaceBeingResolved(game, huntedId) {

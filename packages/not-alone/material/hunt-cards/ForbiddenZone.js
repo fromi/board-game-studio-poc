@@ -16,7 +16,7 @@ export const ForbiddenZone = {
     return hunted.handPlaceCards.map(place => choosePlace(huntedId, place))
   },
 
-  choosePlace: (place, huntedId, game) => {
+  choosePlace: (game, place, huntedId) => {
     game.ongoingAction.huntedChosenPlace[huntedId] = place
     if (game.hunted.filter(hunted => hunted.handPlaceCards.length > 0).every(hunted => game.ongoingAction.huntedChosenPlace[getHuntedId(game, hunted)])) {
       game.hunted.forEach(hunted => {

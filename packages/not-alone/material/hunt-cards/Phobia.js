@@ -35,7 +35,7 @@ export const Phobia = {
     }
   },
 
-  choosePlace: (place, huntedId, game) => {
+  choosePlace: (game, place, huntedId) => {
     game.ongoingAction.revealedCards.push(place)
     if (game.ongoingAction.revealedCards.length === huntedId.handPlaceCards.length + PLACES_TO_KEEP_SECRET) {
       delete game.ongoingAction

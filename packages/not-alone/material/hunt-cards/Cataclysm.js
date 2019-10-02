@@ -9,7 +9,7 @@ export const Cataclysm = {
 
   getCreatureMoves: game => PLACES.map(place => choosePlace(CREATURE, place)),
 
-  choosePlace: place => {
+  choosePlace: (game, place) => {
     game.ongoingAction.place = place
     game.pendingEffects.push(game.ongoingAction)
     delete game.ongoingAction

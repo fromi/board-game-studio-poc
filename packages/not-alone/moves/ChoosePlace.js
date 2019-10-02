@@ -5,7 +5,7 @@ export const CHOOSE_PLACE = 'ChoosePlace'
 export const choosePlace = (playerId, place) => ({type: CHOOSE_PLACE, playerId, place})
 
 export const ChoosePlace = {
-  execute: (game, move) => getOngoingActionRule(game).choosePlace(move.place, move.playerId, game),
+  execute: (game, move) => getOngoingActionRule(game).choosePlace(game, move.place, move.playerId),
 
   getView: (move, playerId, game) => {
     const rule = getOngoingActionRule(game)
