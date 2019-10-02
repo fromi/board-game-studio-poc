@@ -3,9 +3,11 @@ import {discardPlayedPlaceCard} from '../moves/DiscardPlayedPlaceCard'
 import {HUNT_TOKENS} from '../material/HuntTokens'
 import {removeHuntToken} from '../moves/RemoveHuntToken'
 import {drawHuntCard} from '../moves/DrawHuntCard'
-import {STASIS} from '../material/HuntCards'
+import {STASIS, TRACKING} from '../material/HuntCards'
 import {moveRescueCounter} from '../moves/MoveRescueCounter'
 import {startPhase} from '../moves/StartPhase'
+import {discardPlayedHuntCard} from '../moves/DiscardPlayedHuntCard'
+import {discardPlayedSurvivalCard} from '../moves/DiscardPlayedSurvivalCard'
 
 export const EndOfTurnActions = {
   getAutomaticMove: game => {
@@ -14,14 +16,19 @@ export const EndOfTurnActions = {
         if (hunted.playedPlaceCards.length > 0) {
           return discardPlayedPlaceCard(getHuntedId(game, hunted), hunted.playedPlaceCards[0])
         }
-        // TODO: discard played survival card
+        if (hunted.survivalCardPlayed) {
+          return discardPlayedSurvivalCard(getHuntedId(game, hunted))
+        }
       }
       for (const huntToken of HUNT_TOKENS) {
         if (game.huntTokensLocations[huntToken].length > 0) {
           return removeHuntToken(huntToken)
         }
       }
-      // TODO: discard played hunt cards
+      game.creature.huntCardPlayLimit = game.creature.huntCardsPlayed.includes(TRACKING) ? 2 : 1
+      if (game.creature.huntCardsPlayed.length > 0) {
+        return discardPlayedHuntCard(game.creature.huntCardsPlayed[0])
+      }
       if (game.creature.hand.length < 3) {
         return drawHuntCard
       }
