@@ -23,10 +23,11 @@ import {takeBackDiscardedPlace} from '../moves/TakeBackDiscardedPlace'
 import {pass} from '../moves/Pass'
 import {DETOUR, MUTATION} from '../material/HuntCards'
 import {Artefact} from '../material/place-cards/Artefact'
+import {huntedAvoidsArtemiaTokenEffect} from '../material/survival-cards/Detector'
+import {huntedAvoidsCreatureTokenEffect} from '../material/survival-cards/Dodge'
 
 export const REVEAL_PLACE_CARDS_STEP = 'REVEAL_PLACE_CARDS', EXPLORE_PLACES_WITHOUT_TOKEN_STEP = 'EXPLORE_PLACES_WITHOUT_TOKEN',
-  TARGET_TOKEN_STEP = 'TARGET_TOKEN_STEP', ARTEMIA_TOKEN_STEP = 'ARTEMIA_TOKEN_STEP', CREATURE_TOKEN_STEP = 'CREATURE_TOKEN_STEP',
-  ASSIMILATION_STEP = 'ASSIMILATION_STEP'
+  TARGET_TOKEN_STEP = 'TARGET_TOKEN_STEP', ARTEMIA_TOKEN_STEP = 'ARTEMIA_TOKEN_STEP'
 
 function getReckoningStep(game) {
   switch (game.reckoning.step) {
@@ -38,10 +39,6 @@ function getReckoningStep(game) {
       return TargetTokenStep
     case ARTEMIA_TOKEN_STEP:
       return ArtemiaTokenStep
-    case CREATURE_TOKEN_STEP:
-      return creatureTokenStep
-    case ASSIMILATION_STEP:
-      return AssimilationStep
   }
 }
 
@@ -79,7 +76,7 @@ const ExplorePlacesWithoutTokenStep = {
     const hunted = getHunted(game, huntedId)
     const currentHunted = getHunted(game, getCurrentHuntedId(game))
     if (hunted === currentHunted) {
-      return placesPowerMoves(game, huntedId, getExploredPlacesWithoutHuntToken(game, hunted))
+      return placesPowerMoves(game, huntedId, getExploredPlacesWithoutHuntToken(game, huntedId))
     } else {
       return []
     }
@@ -136,18 +133,18 @@ const ArtemiaTokenStep = {
     const hunted = getHunted(game, huntedId)
     const currentHunted = getHunted(game, getCurrentHuntedId(game))
     if (hunted === currentHunted) {
-      return hunted.handPlaceCards.map(place => discardPlaceCard(huntedId, place))
+        return hunted.handPlaceCards.map(place => discardPlaceCard(huntedId, place))
     } else {
       return []
     }
   },
 
   continueReckoning: game => {
-    game.reckoning.huntedIndex = game.hunted.findIndex((hunted, index) => index > game.reckoning.huntedIndex && exploresPlaceWithToken(game, hunted, ARTEMIA_TOKEN))
-    if (game.reckoning.huntedIndex === -1) {
-      creatureTokenStep(game)
+      game.reckoning.huntedIndex = game.hunted.findIndex((hunted, index) => index > game.reckoning.huntedIndex && exploresPlaceWithToken(game, hunted, ARTEMIA_TOKEN))
+      if (game.reckoning.huntedIndex === -1) {
+        creatureTokenStep(game)
     } else if (game.pendingEffects.some(effect => effect.card === MUTATION)) {
-      game.nextMoves.push(loseWillCounter(getCurrentHuntedId(game)))
+        game.nextMoves.push(loseWillCounter(getCurrentHuntedId(game)))
     }
   }
 }
@@ -208,23 +205,31 @@ export function continueReckoning(game) {
 }
 
 export function exploresPlaceWithoutHuntToken(game, hunted) {
-  return getExploredPlaces(game, hunted).some(place => isPlaceWithoutHuntToken(game, place))
+  return getExploredPlaces(game, hunted).some(place => isPlaceWithoutHuntTokenForHunted(game, place, getHuntedId(game, hunted)))
 }
 
 export function exploresPlaceWithToken(game, hunted, token) {
   return getExploredPlaces(game, hunted).some(place => getPlacesWithToken(game, token).includes(place))
 }
 
-function getExploredPlacesWithoutHuntToken(game, hunted) {
-  return getExploredPlaces(game, hunted).filter(place => isPlaceWithoutHuntToken(game, place))
+function getExploredPlacesWithoutHuntToken(game, huntedId) {
+  return getExploredPlaces(game, getHunted(game, huntedId)).filter(place => isPlaceWithoutHuntTokenForHunted(game, place, huntedId))
 }
 
 export function getExploredPlacesWithToken(game, hunted, token) {
   return getExploredPlaces(game, hunted).filter(place => getPlacesWithToken(game, token).includes(place))
 }
 
-function isPlaceWithoutHuntToken(game, place) {
-  return HUNT_TOKENS.every(huntToken => !game.huntTokensLocations[huntToken].includes(place))
+function isPlaceWithoutHuntTokenForHunted(game, place, huntedId) {
+  let tokensWithEffect
+  if (huntedAvoidsArtemiaTokenEffect(game, huntedId)) {
+    tokensWithEffect = [TARGET_TOKEN, CREATURE_TOKEN]
+  } else if (huntedAvoidsCreatureTokenEffect(game, huntedId)) {
+    tokensWithEffect = [TARGET_TOKEN, ARTEMIA_TOKEN]
+  } else {
+    tokensWithEffect = HUNT_TOKENS
+  }
+  return tokensWithEffect.every(huntToken => !game.huntTokensLocations[huntToken].includes(place))
 }
 
 function getExploredPlaces(game, hunted) {
@@ -245,7 +250,7 @@ export function getPlaceBeingResolved(game, huntedId) {
  */
 function placesPowerMoves(game, huntedId, places) {
   const moves = []
-  const effectivePlaces = places.filter(place => placePowerIsEffective(game, place))
+  const effectivePlaces = places.filter(place => placePowerIsEffective(game, huntedId, place))
   if (effectivePlaces.length === 1) {
     moves.push(...placePowerMoves(game, huntedId, effectivePlaces[0]))
   } else if (effectivePlaces.length > 1) {
@@ -270,8 +275,10 @@ export function placePowerMoves(game, huntedId, place) {
   return moves
 }
 
-function placePowerIsEffective(game, place) {
+function placePowerIsEffective(game, huntedId, place) {
   return !game.pendingEffects.map(getEffectRule).filter(rule => rule.isPlaceIneffective).some(rule => rule.isPlaceIneffective(place, game))
+    && (!game.huntTokensLocations[ARTEMIA_TOKEN].includes(place) || huntedAvoidsArtemiaTokenEffect(game, huntedId))
+    && (!game.huntTokensLocations[CREATURE_TOKEN].includes(place) || huntedAvoidsCreatureTokenEffect(game, huntedId))
 }
 
 export const getCurrentHuntedId = game => HUNTED_PREFIX + (game.reckoning.huntedIndex + 1)
