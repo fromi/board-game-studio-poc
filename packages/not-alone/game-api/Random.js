@@ -6,7 +6,7 @@ export function shuffle(array) {
   return array;
 }
 
-export function getRandom(array, quantity) {
+export function getRandom(array, quantity = 1) {
   let left = array.length
   const result = new Array(quantity),
     taken = new Array(left)
