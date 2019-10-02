@@ -1,5 +1,5 @@
 import {ARTEMIA_TOKEN} from '../HuntTokens'
-import {getHunted, getHuntedId, HUNT_CARD, HUNTING} from '../../NotAlone'
+import {CREATURE, getHunted, getHuntedId, HUNT_CARD, HUNTING} from '../../NotAlone'
 import {ASCENDANCY} from '../HuntCards'
 import {chooseHunted} from '../../moves/ChooseHunted'
 import {choosePlace} from '../../moves/ChoosePlace'
@@ -35,10 +35,12 @@ export const Phobia = {
     }
   },
 
-  choosePlace: (game, huntedId, place) => {
+  choosePlace: (place, huntedId, game) => {
     game.ongoingAction.revealedCards.push(place)
-    if (game.ongoingAction.revealedCards.length === getHuntedId(game.ongoingAction.huntedId).handPlaceCards.length + PLACES_TO_KEEP_SECRET) {
+    if (game.ongoingAction.revealedCards.length === huntedId.handPlaceCards.length + PLACES_TO_KEEP_SECRET) {
       delete game.ongoingAction
     }
-  }
+  },
+
+  shouldHideChosenPlaceTo: (playerId, move) => playerId !== move.playerId && playerId !== CREATURE
 }
