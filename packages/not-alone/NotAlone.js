@@ -1,6 +1,6 @@
 import {shuffle} from './game-api/Random'
 import SurvivalCards, {survivalCardRule} from './material/SurvivalCards'
-import HuntCards, {DESPAIR, huntCardRule} from './material/HuntCards'
+import HuntCards, {CLONE, DESPAIR, huntCardRule} from './material/HuntCards'
 import {ChooseBoardSide, chooseBoardSide} from './moves/ChooseBoardSide'
 import {DrawHuntCard} from './moves/DrawHuntCard'
 import {DrawSurvivalCard} from './moves/DrawSurvivalCard'
@@ -355,7 +355,14 @@ export function getOngoingActionRule(game) {
 }
 
 export function getPlacesWithToken(game, token) {
-  return game.huntTokensLocations[token] // TODO Clone: Target token is a second Creature token.
+  if (game.creature.huntCardsPlayed.includes(CLONE)) {
+    if (token === TARGET_TOKEN) {
+      return []
+    } else if (token === CREATURE_TOKEN) {
+      return game.huntTokensLocations[token].concat(game.huntTokensLocations[TARGET_TOKEN])
+    }
+  }
+  return game.huntTokensLocations[token]
 }
 
 export function canDrawSurvivalCard(game) {
