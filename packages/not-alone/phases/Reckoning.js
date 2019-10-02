@@ -22,6 +22,7 @@ import {regainWillCounter} from '../moves/RegainWillCounter'
 import {takeBackDiscardedPlace} from '../moves/TakeBackDiscardedPlace'
 import {pass} from '../moves/Pass'
 import {DETOUR, MUTATION} from '../material/HuntCards'
+import {Artefact} from '../material/place-cards/Artefact'
 
 export const REVEAL_PLACE_CARDS_STEP = 'REVEAL_PLACE_CARDS', EXPLORE_PLACES_WITHOUT_TOKEN_STEP = 'EXPLORE_PLACES_WITHOUT_TOKEN',
   TARGET_TOKEN_STEP = 'TARGET_TOKEN_STEP', ARTEMIA_TOKEN_STEP = 'ARTEMIA_TOKEN_STEP', CREATURE_TOKEN_STEP = 'CREATURE_TOKEN_STEP',
@@ -85,10 +86,12 @@ const ExplorePlacesWithoutTokenStep = {
   },
 
   continueReckoning: game => {
-    game.reckoning.huntedIndex = game.hunted.findIndex((hunted, index) => index > game.reckoning.huntedIndex && exploresPlaceWithoutHuntToken(game, hunted))
-    if (game.reckoning.huntedIndex === -1) {
-      game.reckoning.step = TARGET_TOKEN_STEP
-      continueReckoning(game)
+    if (!Artefact.currentHuntedStartsSecondPlaceResolution(game)) {
+      game.reckoning.huntedIndex = game.hunted.findIndex((hunted, index) => index > game.reckoning.huntedIndex && exploresPlaceWithoutHuntToken(game, hunted))
+      if (game.reckoning.huntedIndex === -1) {
+        game.reckoning.step = TARGET_TOKEN_STEP
+        continueReckoning(game)
+      }
     }
   }
 }
@@ -98,20 +101,22 @@ export const TargetTokenStep = {
     const hunted = getHunted(game, huntedId)
     const currentHunted = getHunted(game, getCurrentHuntedId(game))
     if (hunted === currentHunted) {
-        return placesPowerMoves(game, huntedId, getExploredPlacesWithToken(game, hunted, TARGET_TOKEN))
+      return placesPowerMoves(game, huntedId, getExploredPlacesWithToken(game, hunted, TARGET_TOKEN))
     } else {
       return []
     }
   },
 
   continueReckoning: game => {
-    game.reckoning.huntedIndex = game.hunted.findIndex((hunted, index) => index > game.reckoning.huntedIndex && exploresPlaceWithToken(game, hunted, TARGET_TOKEN))
-    if (game.reckoning.huntedIndex === -1) {
-      game.reckoning.step = ARTEMIA_TOKEN_STEP
-      continueReckoning(game)
-    } else {
-      const currentHuntedId = getCurrentHuntedId(game)
-      TargetTokenStep.actionNextTargetTokenEffect(game, currentHuntedId)
+    if (!Artefact.currentHuntedStartsSecondPlaceResolution(game)) {
+      game.reckoning.huntedIndex = game.hunted.findIndex((hunted, index) => index > game.reckoning.huntedIndex && exploresPlaceWithToken(game, hunted, TARGET_TOKEN))
+      if (game.reckoning.huntedIndex === -1) {
+        game.reckoning.step = ARTEMIA_TOKEN_STEP
+        continueReckoning(game)
+      } else {
+        const currentHuntedId = getCurrentHuntedId(game)
+        TargetTokenStep.actionNextTargetTokenEffect(game, currentHuntedId)
+      }
     }
   },
 
@@ -232,34 +237,35 @@ function getExploredPlaces(game, hunted) {
 
 export function getPlaceBeingResolved(game, huntedId) {
   const hunted = getHunted(game, huntedId)
-  if (hunted.playedPlaceCards.length === 1) {
-    return hunted.playedPlaceCards[0]
-  } else {
-    // TODO Artefact: return hunted.placeBeingResolved
-  }
+  return hunted.resolvingPlace || hunted.playedPlaceCards[0]
 }
 
 /**
  * Every time a Hunted may use some place’s power OR take back 1 Place card of his choice from his discard pile, if the place’s power is effective
  */
-export function placesPowerMoves(game, huntedId, places) {
+function placesPowerMoves(game, huntedId, places) {
   const moves = []
-  const hunted = getHunted(game, huntedId)
   const effectivePlaces = places.filter(place => placePowerIsEffective(game, place))
   if (effectivePlaces.length === 1) {
-    const place = effectivePlaces[0]
-    const Place = placeRule(place)
-    if (Place.canUsePower(game, hunted)) {
-      moves.push(usePlacePower(place, huntedId))
-    }
-    if (!Place.powerAllowsToTakeBackFromDiscard) {
-      hunted.discardedPlaceCards.forEach(place => moves.push(takeBackDiscardedPlace(huntedId, place)))
-    }
+    moves.push(...placePowerMoves(game, huntedId, effectivePlaces[0]))
   } else if (effectivePlaces.length > 1) {
-    // TODO Artefact choosePlaceToResolve
+    moves.push(...Artefact.getMovesForMultipleResolution(game, huntedId))
   }
   if (moves.length === 0) {
     moves.push(pass(huntedId)) // When the place power is ineffective or useless for the hunted
+  }
+  return moves
+}
+
+export function placePowerMoves(game, huntedId, place) {
+  const moves = []
+  const hunted = getHunted(game, huntedId)
+  const Place = placeRule(place)
+  if (Place.canUsePower(game, hunted)) {
+    moves.push(usePlacePower(place, huntedId))
+  }
+  if (!Place.powerAllowsToTakeBackFromDiscard) {
+    hunted.discardedPlaceCards.forEach(place => moves.push(takeBackDiscardedPlace(huntedId, place)))
   }
   return moves
 }
