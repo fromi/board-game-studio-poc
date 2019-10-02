@@ -1,5 +1,5 @@
 import {shuffle} from './game-api/Random'
-import SurvivalCards, {survivalCardRule} from './material/SurvivalCards'
+import SurvivalCards, {SACRIFICE, survivalCardRule} from './material/SurvivalCards'
 import HuntCards, {canHuntCardBePlayed, CLONE, DESPAIR, huntCardRule} from './material/HuntCards'
 import {ChooseBoardSide, chooseBoardSide} from './moves/ChooseBoardSide'
 import {DrawHuntCard} from './moves/DrawHuntCard'
@@ -309,10 +309,11 @@ export function shouldPassOrPlaySurvivalCard(game, hunted) {
  * @return boolean True if the Creature might have a Hunt card to play from another player point of view
  */
 export function couldCreaturePlayHuntCard(game) {
-  if (game.phase === 1 && game.creature.passed) {
-    return false
-  }
-  return !game.ongoingAction && game.creature.huntCardsPlayed.length < game.creature.huntCardPlayLimit && game.creature.hand.length > 0
+  return !game.ongoingAction
+    && game.creature.huntCardsPlayed.length < game.creature.huntCardPlayLimit
+    && game.creature.hand.length > 0
+    && !game.pendingEffects.some(effect => effect.card === SACRIFICE)
+    && !(game.phase === 1 && game.creature.passed)
 }
 
 export function creatureShouldPassOrPlayHuntCard(game) {

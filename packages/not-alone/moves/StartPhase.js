@@ -1,5 +1,5 @@
-import {EXPLORATION, RECKONING} from "../NotAlone"
-import {REVEAL_PLACE_CARDS_STEP} from "../phases/Reckoning"
+import {EXPLORATION, RECKONING} from '../NotAlone'
+import {REVEAL_PLACE_CARDS_STEP} from '../phases/Reckoning'
 
 export const START_PHASE = 'StartPhase'
 
@@ -14,6 +14,7 @@ export const StartPhase = {
     if (move.phase === EXPLORATION) {
       game.beachUsed = false
       game.wreckUsed = false
+      game.pendingEffects = []
     } else if (move.phase === RECKONING) {
       game.reckoning = {step: REVEAL_PLACE_CARDS_STEP}
     }

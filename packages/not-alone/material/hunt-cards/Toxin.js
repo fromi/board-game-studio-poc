@@ -1,7 +1,7 @@
 import {TARGET_TOKEN} from '../HuntTokens'
 import {getHunted, HUNT_CARD, HUNTING} from '../../NotAlone'
 import {discardSurvivalCard} from '../../moves/DiscardSurvivalCard'
-import {TargetTokenStep} from '../../phases/Reckoning'
+import {getCurrentHuntedId, TargetTokenStep} from '../../phases/Reckoning'
 import {TOXIN} from '../HuntCards'
 
 export const Toxin = {
@@ -12,7 +12,13 @@ export const Toxin = {
 
   isPlaceIneffective: (place, game) => game.huntTokensLocations[TARGET_TOKEN].includes(place),
 
-  getHuntedMoves: (game, huntedId) => getHunted(game, huntedId).handSurvivalCards.map(card => discardSurvivalCard(huntedId, card)),
+  getHuntedMoves: (game, huntedId) => {
+    if (getCurrentHuntedId(game) === huntedId) {
+      return getHunted(game, huntedId).handSurvivalCards.map(card => discardSurvivalCard(huntedId, card))
+    } else {
+      return []
+    }
+  },
 
   continueGameAfterMove: (game, move) => TargetTokenStep.actionNextTargetTokenEffect(game, move.huntedId)
 }
