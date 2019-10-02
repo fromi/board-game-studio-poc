@@ -1,4 +1,4 @@
-import {CREATURE, getHunted} from "../NotAlone";
+import {continueGameAfterMove, CREATURE, getHunted} from '../NotAlone'
 
 export const PASS = 'Pass'
 
@@ -11,5 +11,6 @@ export const Pass = {
     } else {
       getHunted(game, move.playerId).passed = true
     }
+    continueGameAfterMove(game, move)
   }
 }

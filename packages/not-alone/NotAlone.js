@@ -355,12 +355,8 @@ export function getOngoingActionRule(game) {
 }
 
 export function getPlacesWithToken(game, token) {
-  if (game.creature.huntCardsPlayed.includes(CLONE)) {
-    if (token === TARGET_TOKEN) {
-      return []
-    } else if (token === CREATURE_TOKEN) {
-      return game.huntTokensLocations[token].concat(game.huntTokensLocations[TARGET_TOKEN])
-    }
+  if (game.creature.huntCardsPlayed.includes(CLONE) && token === CREATURE_TOKEN) {
+    return game.huntTokensLocations[token].concat(game.huntTokensLocations[TARGET_TOKEN])
   }
   return game.huntTokensLocations[token]
 }

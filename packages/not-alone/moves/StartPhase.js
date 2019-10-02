@@ -12,7 +12,6 @@ export const StartPhase = {
     game.hunted.forEach(hunted => hunted.passed = false)
     game.nextMoves.shift()
     if (move.phase === EXPLORATION) {
-      game.hunted.forEach(hunted => hunted.huntCardsEffectsApplied = [])
       game.beachUsed = false
       game.wreckUsed = false
     } else if (move.phase === RECKONING) {

@@ -5,6 +5,7 @@ import {
   getHunted,
   getHuntedId,
   getPlacesWithToken,
+  HUNT_CARD,
   HUNTED_PREFIX,
   shouldPassOrPlaySurvivalCard
 } from '../NotAlone'
@@ -92,19 +93,12 @@ const ExplorePlacesWithoutTokenStep = {
   }
 }
 
-const TargetTokenStep = {
+export const TargetTokenStep = {
   getHuntedMoves: (game, huntedId) => {
     const hunted = getHunted(game, huntedId)
     const currentHunted = getHunted(game, getCurrentHuntedId(game))
     if (hunted === currentHunted) {
-      const huntCards = getHuntCardPlayedWithTokenEffect(game, TARGET_TOKEN)
-      const huntCardToApply = huntCards.find(huntCard => !hunted.huntCardsEffectsApplied.includes(huntCard))
-      if (huntCardToApply) {
-        // TODO: get Hunt Card moves (Scream and Toxin)
-        console.error('Not implemented')
-      } else {
         return placesPowerMoves(game, huntedId, getExploredPlacesWithToken(game, hunted, TARGET_TOKEN))
-      }
     } else {
       return []
     }
@@ -115,6 +109,19 @@ const TargetTokenStep = {
     if (game.reckoning.huntedIndex === -1) {
       game.reckoning.step = ARTEMIA_TOKEN_STEP
       continueReckoning(game)
+    } else {
+      const currentHuntedId = getCurrentHuntedId(game)
+      TargetTokenStep.actionNextTargetTokenEffect(game, currentHuntedId)
+    }
+  },
+
+  actionNextTargetTokenEffect: (game, huntedId) => {
+    const nextHuntCards = game.ongoingAction ? game.creature.huntCardsPlayed.slice(1) : game.creature.huntCardsPlayed
+    const huntCardToApply = nextHuntCards.find(card => hasTargetTokenEffect(card, game, huntedId))
+    if (huntCardToApply) {
+      game.ongoingAction = {type: HUNT_CARD, card: huntCardToApply}
+    } else {
+      delete game.ongoingAction
     }
   }
 }
@@ -244,11 +251,11 @@ export function placesPowerMoves(game, huntedId, places) {
     if (!Place.powerAllowsToTakeBackFromDiscard) {
       hunted.discardedPlaceCards.forEach(place => moves.push(takeBackDiscardedPlace(huntedId, place)))
     }
-    if (moves.length === 0) {
-      moves.push(pass(huntedId))
-    }
-  } else {
+  } else if (effectivePlaces.length > 1) {
     // TODO Artefact choosePlaceToResolve
+  }
+  if (moves.length === 0) {
+    moves.push(pass(huntedId)) // When the place power is ineffective or useless for the hunted
   }
   return moves
 }
@@ -257,8 +264,9 @@ function placePowerIsEffective(game, place) {
   return !game.creature.huntCardsPlayed.map(card => huntCardRule(card)).filter(rule => rule.isPlaceIneffective).some(rule => rule.isPlaceIneffective(place, game))
 }
 
-function getHuntCardPlayedWithTokenEffect(game, token) {
-  // TODO: check Hunt card that puts this token in play with a specific effect (Toxin, Scream, Mutation)
-}
-
 export const getCurrentHuntedId = game => HUNTED_PREFIX + (game.reckoning.huntedIndex + 1)
+
+function hasTargetTokenEffect(card, game, huntedId) {
+  const rule = huntCardRule(card)
+  return rule.token === TARGET_TOKEN && rule.getHuntedMoves && rule.getHuntedMoves(game, huntedId).length > 0
+}
