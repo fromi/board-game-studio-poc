@@ -7,9 +7,7 @@ export const SixthSense = {
 
   canBePlayed: (game, huntedId) => game.phase === EXPLORATION && getHunted(game, huntedId).discardedPlaceCards.length > 0,
 
-  playCard: (game, huntedId) => {
-    game.ongoingAction = {cardType: SURVIVAL_CARD, card: SIXTH_SENSE, huntedId, cardsLeft: 2}
-  },
+  playCard: (game, huntedId) => game.ongoingAction = {cardType: SURVIVAL_CARD, card: SIXTH_SENSE, huntedId, cardsLeft: 2},
 
   getHuntedMoves: (game, huntedId) => {
     if (game.ongoingAction.huntedId === huntedId) {
