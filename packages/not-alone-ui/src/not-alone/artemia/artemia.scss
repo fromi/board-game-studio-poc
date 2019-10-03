@@ -31,6 +31,7 @@
 
   .drop-info {
     position: absolute;
+    border-radius: inherit;
     left: 0;
     right: 0;
     top: 0;
@@ -41,6 +42,7 @@
     align-items: center;
 
     > p {
+      font-size: 5vh;
       color: antiquewhite;
       text-shadow: -2px 0 2px black, 0 2px 2px black, 2px 0 2px black, 0 -2px 2px black;
     }
