@@ -1,6 +1,7 @@
 import {ARTEMIA_TOKEN} from '../HuntTokens'
-import {EXPLORATION, HUNT_CARD} from '../../NotAlone'
+import {HUNT_CARD} from '../../NotAlone'
 import {DESPAIR} from '../HuntCards'
+import {EXPLORATION} from '../../Phases'
 
 export const Despair = {
   phase: EXPLORATION,

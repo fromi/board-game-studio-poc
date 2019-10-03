@@ -1,6 +1,7 @@
 import {loseWillCounter} from '../../moves/LoseWillCounter'
-import {HUNT_CARD, HUNTING} from '../../NotAlone'
+import {HUNT_CARD} from '../../NotAlone'
 import {FIERCENESS} from '../HuntCards'
+import {HUNTING} from '../../Phases'
 
 export const Fierceness = {
   phase: HUNTING,

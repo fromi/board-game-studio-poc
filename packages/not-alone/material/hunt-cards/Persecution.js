@@ -1,5 +1,6 @@
-import {HUNT_CARD, HUNTING} from '../../NotAlone'
+import {HUNT_CARD} from '../../NotAlone'
 import {PERSECUTION} from '../HuntCards'
+import {HUNTING} from '../../Phases'
 
 export const Persecution = {
   phase: HUNTING,

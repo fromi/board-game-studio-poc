@@ -1,5 +1,6 @@
-import {EXPLORATION, SURVIVAL_CARD} from '../../NotAlone'
+import {SURVIVAL_CARD} from '../../NotAlone'
 import {SMOKESCREEN} from '../SurvivalCards'
+import {EXPLORATION} from '../../Phases'
 
 export const Smokescreen = {
   phase: EXPLORATION,

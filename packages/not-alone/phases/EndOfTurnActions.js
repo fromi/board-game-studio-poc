@@ -1,4 +1,4 @@
-import {creatureShouldPassOrPlayHuntCard, EXPLORATION, getHuntedId, shouldPassOrPlaySurvivalCard} from '../NotAlone'
+import {creatureShouldPassOrPlayHuntCard, getHuntedId, shouldPassOrPlaySurvivalCard} from '../NotAlone'
 import {discardPlayedPlaceCard} from '../moves/DiscardPlayedPlaceCard'
 import {HUNT_TOKENS} from '../material/HuntTokens'
 import {removeHuntToken} from '../moves/RemoveHuntToken'
@@ -8,6 +8,7 @@ import {moveRescueCounter} from '../moves/MoveRescueCounter'
 import {startPhase} from '../moves/StartPhase'
 import {discardPlayedHuntCard} from '../moves/DiscardPlayedHuntCard'
 import {discardPlayedSurvivalCard} from '../moves/DiscardPlayedSurvivalCard'
+import {EXPLORATION} from '../Phases'
 
 export const EndOfTurnActions = {
   getAutomaticMove: game => {

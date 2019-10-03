@@ -1,7 +1,8 @@
-import {getAdjacentPlaces, getHunted, RECKONING, SURVIVAL_CARD} from '../../NotAlone'
+import {getAdjacentPlaces, getHunted, SURVIVAL_CARD} from '../../NotAlone'
 import {getExploredPlaces, getPlaceBeingResolved, placePowerIsEffective} from '../../phases/Reckoning'
 import {GATE} from '../SurvivalCards'
 import {usePlacePower} from '../../moves/UsePlacePower'
+import {RECKONING} from '../../Phases'
 
 export const Gate = {
   phase: RECKONING,

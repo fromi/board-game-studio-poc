@@ -1,8 +1,9 @@
 import {TARGET_TOKEN} from '../HuntTokens'
-import {getHunted, HUNT_CARD, HUNTING} from '../../NotAlone'
+import {getHunted, HUNT_CARD} from '../../NotAlone'
 import {discardSurvivalCard} from '../../moves/DiscardSurvivalCard'
 import {getCurrentHuntedId, TargetTokenStep} from '../../phases/Reckoning'
 import {TOXIN} from '../HuntCards'
+import {HUNTING} from '../../Phases'
 
 export const Toxin = {
   phase: HUNTING,

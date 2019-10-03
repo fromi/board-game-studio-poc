@@ -1,6 +1,7 @@
 import {ARTEMIA_TOKEN} from '../HuntTokens'
-import {HUNT_CARD, HUNTING} from '../../NotAlone'
+import {HUNT_CARD} from '../../NotAlone'
 import {MUTATION} from '../HuntCards'
+import {HUNTING} from '../../Phases'
 
 export const Mutation = {
   phase: HUNTING,

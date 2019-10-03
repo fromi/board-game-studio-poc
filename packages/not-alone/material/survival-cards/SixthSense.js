@@ -1,6 +1,7 @@
-import {EXPLORATION, getHunted, SURVIVAL_CARD} from '../../NotAlone'
+import {getHunted, SURVIVAL_CARD} from '../../NotAlone'
 import {SIXTH_SENSE} from '../SurvivalCards'
 import {takeBackDiscardedPlace} from '../../moves/TakeBackDiscardedPlace'
+import {EXPLORATION} from '../../Phases'
 
 export const SixthSense = {
   phase: EXPLORATION,

@@ -1,7 +1,6 @@
 import {revealPlaceCards} from '../moves/RevealPlaceCard'
 import {
   creatureShouldPassOrPlayHuntCard,
-  END_OF_TURN_ACTIONS,
   getEffectRule,
   getHunted,
   getHuntedId,
@@ -25,6 +24,7 @@ import {DETOUR, MUTATION} from '../material/HuntCards'
 import {Artefact} from '../material/place-cards/Artefact'
 import {huntedAvoidsArtemiaTokenEffect} from '../material/survival-cards/Detector'
 import {huntedAvoidsCreatureTokenEffect} from '../material/survival-cards/Dodge'
+import {END_OF_TURN_ACTIONS} from '../Phases'
 
 export const REVEAL_PLACE_CARDS_STEP = 'REVEAL_PLACE_CARDS', EXPLORE_PLACES_WITHOUT_TOKEN_STEP = 'EXPLORE_PLACES_WITHOUT_TOKEN',
   TARGET_TOKEN_STEP = 'TARGET_TOKEN_STEP', ARTEMIA_TOKEN_STEP = 'ARTEMIA_TOKEN_STEP'

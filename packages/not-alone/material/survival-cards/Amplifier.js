@@ -1,6 +1,6 @@
-import {END_OF_TURN_ACTIONS} from '../../NotAlone'
 import {removeMarkerFromBeach} from '../../moves/RemoveMarkerFromBeach'
 import {moveRescueCounter} from '../../moves/MoveRescueCounter'
+import {END_OF_TURN_ACTIONS} from '../../Phases'
 
 export const Amplifier = {
   phase: END_OF_TURN_ACTIONS,

@@ -39,9 +39,9 @@ import {ChooseHunted} from './moves/ChooseHunted'
 import {ChoosePlace} from './moves/ChoosePlace'
 import {ShuffleSurvivalCards} from './moves/ShuffleSurvivalCards'
 import {PutRandomHuntCardUnderDeck} from './moves/PutRandomHuntCardUnderDeck'
+import {END_OF_TURN_ACTIONS, EXPLORATION, HUNTING, RECKONING} from './Phases'
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-export const EXPLORATION = 1, HUNTING = 2, RECKONING = 3, END_OF_TURN_ACTIONS = 4
 export const PLACE_CARD = 'Place card', HUNT_CARD = 'Hunt card', SURVIVAL_CARD = 'Survival card'
 
 /**
@@ -214,7 +214,7 @@ function getCreatureMoves(game) {
   }
   if (couldCreaturePlayHuntCard(game)) {
     game.creature.hand.forEach(card => {
-      if (canHuntCardBePlayed(card)) {
+      if (canHuntCardBePlayed(game, card)) {
         moves.push(playHuntCard(card))
       }
     })

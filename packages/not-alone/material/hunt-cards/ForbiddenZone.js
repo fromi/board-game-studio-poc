@@ -1,7 +1,8 @@
-import {getHunted, getHuntedId, HUNT_CARD, HUNTING} from '../../NotAlone'
+import {getHunted, getHuntedId, HUNT_CARD} from '../../NotAlone'
 import {FORBIDDEN_ZONE} from '../HuntCards'
 import {choosePlace} from '../../moves/ChoosePlace'
 import {discardPlaceCard} from '../../moves/DiscardPlaceCard'
+import {HUNTING} from '../../Phases'
 
 export const ForbiddenZone = {
   phase: HUNTING,

@@ -1,6 +1,7 @@
 import {THE_BEACH, THE_WRECK} from '../PlaceCards'
-import {HUNT_CARD, HUNTING} from '../../NotAlone'
+import {HUNT_CARD} from '../../NotAlone'
 import {INTERFERENCE} from '../HuntCards'
+import {HUNTING} from '../../Phases'
 
 export const Interference = {
   phase: HUNTING,

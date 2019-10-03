@@ -1,7 +1,8 @@
-import {getAdjacentPlaces, RECKONING, SURVIVAL_CARD} from '../../NotAlone'
+import {getAdjacentPlaces, SURVIVAL_CARD} from '../../NotAlone'
 import {ARTEMIA_TOKEN} from '../HuntTokens'
 import {HOLOGRAM} from '../SurvivalCards'
 import {placeHuntToken} from '../../moves/PlaceHuntToken'
+import {RECKONING} from '../../Phases'
 
 export const Hologram = {
   phase: RECKONING,

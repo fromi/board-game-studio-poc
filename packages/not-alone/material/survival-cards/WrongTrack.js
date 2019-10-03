@@ -1,7 +1,8 @@
-import {getAdjacentPlaces, RECKONING, SURVIVAL_CARD} from '../../NotAlone'
+import {getAdjacentPlaces, SURVIVAL_CARD} from '../../NotAlone'
 import {CREATURE_TOKEN} from '../HuntTokens'
 import {placeHuntToken} from '../../moves/PlaceHuntToken'
 import {WRONG_TRACK} from '../SurvivalCards'
+import {RECKONING} from '../../Phases'
 
 export const WrongTrack = {
   phase: RECKONING,

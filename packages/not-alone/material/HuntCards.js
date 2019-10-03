@@ -91,5 +91,5 @@ export const huntCardRule = card => {
 
 export function canHuntCardBePlayed(game, card) {
   const HuntCardRule = huntCardRule(card)
-  return HuntCardRule.canBePlayed && HuntCardRule.canBePlayed(game) || HuntCardRule.phase === game.phase
+  return HuntCardRule && (HuntCardRule.canBePlayed && HuntCardRule.canBePlayed(game) || HuntCardRule.phase === game.phase)
 }

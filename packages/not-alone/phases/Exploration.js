@@ -1,9 +1,10 @@
 import {startPhase} from '../moves/StartPhase'
-import {creatureShouldPassOrPlayHuntCard, getHunted, HUNTING} from '../NotAlone'
+import {creatureShouldPassOrPlayHuntCard, getHunted} from '../NotAlone'
 import {PLAY_PLACE_CARD, playPlaceCard} from '../moves/PlayPlaceCard'
 import {RESIST, resist} from '../moves/Resist'
 import {GIVE_UP, giveUp} from '../moves/GiveUp'
 import {TARGET_TOKEN} from '../material/HuntTokens'
+import {HUNTING} from '../Phases'
 
 export function explorationDone(hunted) {
   return hunted.playedPlaceCards.length === 1

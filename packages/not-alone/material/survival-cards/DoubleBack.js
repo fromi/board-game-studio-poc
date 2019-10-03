@@ -1,6 +1,7 @@
-import {END_OF_TURN_ACTIONS, getHunted, SURVIVAL_CARD} from '../../NotAlone'
+import {getHunted, SURVIVAL_CARD} from '../../NotAlone'
 import {DOUBLE_BACK} from '../SurvivalCards'
 import {takeBackPlayedPlace} from '../../moves/TakeBackPlayedPlace'
+import {END_OF_TURN_ACTIONS} from '../../Phases'
 
 export const DoubleBack = {
   phase: END_OF_TURN_ACTIONS,

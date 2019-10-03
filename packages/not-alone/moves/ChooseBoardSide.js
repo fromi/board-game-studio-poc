@@ -1,7 +1,8 @@
 import {drawHuntCard} from "./DrawHuntCard"
 import {drawSurvivalCard} from "./DrawSurvivalCard"
-import {CREATURE, EXPLORATION, getPlayerIds} from "../NotAlone"
+import {CREATURE, getPlayerIds} from "../NotAlone"
 import {startPhase} from "./StartPhase"
+import {EXPLORATION} from '../Phases'
 
 export const CHOOSE_BOARD_SIDE = 'ChooseBoardSide'
 

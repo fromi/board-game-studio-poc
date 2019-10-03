@@ -1,8 +1,9 @@
 import {startPhase} from '../moves/StartPhase'
-import {ADJACENT_LOCATIONS, couldPlaySurvivalCard, CREATURE, getEffectRule, HUNT_CARD, PLACES, RECKONING} from '../NotAlone'
+import {ADJACENT_LOCATIONS, couldPlaySurvivalCard, CREATURE, getEffectRule, HUNT_CARD, PLACES} from '../NotAlone'
 import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS} from '../material/HuntTokens'
 import {pass} from '../moves/Pass'
 import {placeHuntToken} from '../moves/PlaceHuntToken'
+import {RECKONING} from '../Phases'
 
 export const Hunting = {
   getAutomaticMove: game => {

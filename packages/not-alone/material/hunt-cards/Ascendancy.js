@@ -1,7 +1,8 @@
-import {getHunted, getHuntedId, HUNT_CARD, HUNTING} from '../../NotAlone'
+import {getHunted, getHuntedId, HUNT_CARD} from '../../NotAlone'
 import {ASCENDANCY} from '../HuntCards'
 import {chooseHunted} from '../../moves/ChooseHunted'
 import {discardPlaceCard} from '../../moves/DiscardPlaceCard'
+import {HUNTING} from '../../Phases'
 
 const PLACES_TO_KEEP = 2
 

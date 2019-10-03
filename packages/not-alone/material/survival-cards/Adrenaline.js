@@ -1,5 +1,6 @@
-import {EXPLORATION, getHunted} from '../../NotAlone'
+import {getHunted} from '../../NotAlone'
 import {regainWillCounter} from '../../moves/RegainWillCounter'
+import {EXPLORATION} from '../../Phases'
 
 export const Adrenaline = {
   phase: EXPLORATION,

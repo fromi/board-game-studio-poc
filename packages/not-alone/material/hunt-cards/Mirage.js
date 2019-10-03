@@ -1,6 +1,7 @@
 import {TARGET_TOKEN} from '../HuntTokens'
-import {HUNT_CARD, HUNTING} from '../../NotAlone'
+import {HUNT_CARD} from '../../NotAlone'
 import {MIRAGE} from '../HuntCards'
+import {HUNTING} from '../../Phases'
 
 export const Mirage = {
   phase: HUNTING,

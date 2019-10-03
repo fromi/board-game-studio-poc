@@ -1,7 +1,8 @@
-import {getHuntedId, HUNT_CARD, HUNTING} from '../../NotAlone'
+import {getHuntedId, HUNT_CARD} from '../../NotAlone'
 import {ANTICIPATION} from '../HuntCards'
 import {chooseHunted} from '../../moves/ChooseHunted'
 import {moveAssimilationCounter} from '../../moves/MoveAssimilationCounter'
+import {HUNTING} from '../../Phases'
 
 export const Anticipation = {
   phase: HUNTING,

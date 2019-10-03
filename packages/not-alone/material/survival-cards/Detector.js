@@ -1,6 +1,7 @@
-import {RECKONING, SURVIVAL_CARD} from '../../NotAlone'
+import {SURVIVAL_CARD} from '../../NotAlone'
 import {DETECTOR} from '../SurvivalCards'
 import {ARTEMIA_TOKEN} from '../HuntTokens'
+import {RECKONING} from '../../Phases'
 
 export const Detector = {
   phase: RECKONING,

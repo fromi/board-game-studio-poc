@@ -1,5 +1,5 @@
-import {EXPLORATION} from '../../NotAlone'
 import {putRandomHuntCardUnderDeck} from '../../moves/PutRandomHuntCardUnderDeck'
+import {EXPLORATION} from '../../Phases'
 
 export const StrikeBack = {
   phase: EXPLORATION,

@@ -1,5 +1,5 @@
-import {EXPLORATION} from '../../NotAlone'
 import {putMarkerOnBeach} from '../../moves/PutMarkerOnBeach'
+import {EXPLORATION} from '../../Phases'
 
 export const Ingenuity = {
   phase: EXPLORATION,

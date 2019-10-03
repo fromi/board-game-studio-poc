@@ -1,9 +1,10 @@
-import {getHunted, HUNTING, SURVIVAL_CARD} from '../../NotAlone'
+import {getHunted, SURVIVAL_CARD} from '../../NotAlone'
 import {VORTEX} from '../SurvivalCards'
 import {choosePlace} from '../../moves/ChoosePlace'
 import {discardPlayedPlaceCard} from '../../moves/DiscardPlayedPlaceCard'
 import {takeBackDiscardedPlace} from '../../moves/TakeBackDiscardedPlace'
 import {playPlaceCard} from '../../moves/PlayPlaceCard'
+import {HUNTING} from '../../Phases'
 
 export const Vortex = {
   phase: HUNTING,

@@ -1,7 +1,8 @@
 import {TARGET_TOKEN} from '../HuntTokens'
-import {ADJACENT_LOCATIONS, EXPLORATION, HUNT_CARD} from '../../NotAlone'
+import {ADJACENT_LOCATIONS, HUNT_CARD} from '../../NotAlone'
 import {FORCE_FIELD} from '../HuntCards'
 import {placeHuntToken} from '../../moves/PlaceHuntToken'
+import {EXPLORATION} from '../../Phases'
 
 export const ForceField = {
   phase: EXPLORATION,

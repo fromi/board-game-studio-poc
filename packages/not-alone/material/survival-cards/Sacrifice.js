@@ -1,6 +1,7 @@
-import {EXPLORATION, getHunted, SURVIVAL_CARD} from '../../NotAlone'
+import {getHunted, SURVIVAL_CARD} from '../../NotAlone'
 import {SACRIFICE} from '../SurvivalCards'
 import {discardPlaceCard} from '../../moves/DiscardPlaceCard'
+import {EXPLORATION} from '../../Phases'
 
 export const Sacrifice = {
   phase: EXPLORATION,

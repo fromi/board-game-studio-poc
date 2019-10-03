@@ -1,8 +1,9 @@
-import {getHunted, RECKONING, SURVIVAL_CARD} from '../../NotAlone'
+import {getHunted, SURVIVAL_CARD} from '../../NotAlone'
 import {getExploredPlaces, placePowerIsEffective} from '../../phases/Reckoning'
 import {DRONE} from '../SurvivalCards'
 import {usePlacePower} from '../../moves/UsePlacePower'
 import {THE_ROVER} from '../PlaceCards'
+import {RECKONING} from '../../Phases'
 
 export const Drone = {
   phase: RECKONING,

@@ -1,5 +1,6 @@
-import {RECKONING, SURVIVAL_CARD} from '../../NotAlone'
+import {SURVIVAL_CARD} from '../../NotAlone'
 import {DODGE} from '../SurvivalCards'
+import {RECKONING} from '../../Phases'
 
 export const Dodge = {
   phase: RECKONING,

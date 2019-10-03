@@ -1,8 +1,9 @@
 import {ARTEMIA_TOKEN} from '../HuntTokens'
-import {CREATURE, getHunted, getHuntedId, HUNT_CARD, HUNTING} from '../../NotAlone'
+import {CREATURE, getHunted, getHuntedId, HUNT_CARD} from '../../NotAlone'
 import {PHOBIA} from '../HuntCards'
 import {chooseHunted} from '../../moves/ChooseHunted'
 import {choosePlace} from '../../moves/ChoosePlace'
+import {HUNTING} from '../../Phases'
 
 const PLACES_TO_KEEP_SECRET = 2
 

@@ -1,5 +1,6 @@
-import {EXPLORATION, RECKONING} from '../NotAlone'
+
 import {REVEAL_PLACE_CARDS_STEP} from '../phases/Reckoning'
+import {EXPLORATION, RECKONING} from '../Phases'
 
 export const START_PHASE = 'StartPhase'
 

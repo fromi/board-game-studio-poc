@@ -1,9 +1,10 @@
 import {TARGET_TOKEN} from '../HuntTokens'
-import {getHunted, HUNT_CARD, HUNTING} from '../../NotAlone'
+import {getHunted, HUNT_CARD} from '../../NotAlone'
 import {DISCARD_PLACE_CARD, discardPlaceCard} from '../../moves/DiscardPlaceCard'
 import {getCurrentHuntedId, TargetTokenStep} from '../../phases/Reckoning'
 import {loseWillCounter} from '../../moves/LoseWillCounter'
 import {SCREAM} from '../HuntCards'
+import {HUNTING} from '../../Phases'
 
 export const Scream = {
   phase: HUNTING,

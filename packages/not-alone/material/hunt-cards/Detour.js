@@ -1,7 +1,8 @@
-import {CREATURE, getAdjacentPlaces, getHunted, getHuntedId, HUNT_CARD, RECKONING} from '../../NotAlone'
+import {CREATURE, getAdjacentPlaces, getHunted, getHuntedId, HUNT_CARD} from '../../NotAlone'
 import {DETOUR} from '../HuntCards'
 import {chooseHunted} from '../../moves/ChooseHunted'
 import {choosePlace} from '../../moves/ChoosePlace'
+import {RECKONING} from '../../Phases'
 
 export const Detour = {
   phase: RECKONING,

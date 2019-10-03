@@ -29,7 +29,7 @@ import {tokensDisplay} from '../hunt-tokens/HuntToken'
 const HuntCard = ({cardName, classes = []}) => {
   const {t} = useTranslation()
   classes.push('card', 'hunt-card')
-  const HuntCardRule = huntCardRule(cardName)
+  const HuntCardRule = cardName ? huntCardRule(cardName) : null
   return (
     <div className={classes.join(' ')}>
       {cardName && (
