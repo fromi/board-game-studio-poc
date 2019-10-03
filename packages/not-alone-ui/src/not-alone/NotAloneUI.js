@@ -84,10 +84,10 @@ export const Interface = (props) => {
         {BOARD_SIDES.map(side =>
           <Board side={side} key={side} {...props}/>
         )}
-        <Artemia {...props}/>
-        <OtherPlayers {...props}/>
         <HuntCardsDeck {...props}/>
         <SurvivalCardsDeck {...props}/>
+        <Artemia {...props}/>
+        <OtherPlayers {...props}/>
         {playerId && <PlayerMaterial {...props}/>}
         {HUNT_TOKENS.map(token => <HuntToken token={token} locations={game.huntTokensLocations[token]} playerId={playerId} game={game} key={token}/>)}
       </div>

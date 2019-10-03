@@ -1,5 +1,5 @@
 $header-height: 7vh;
-$default-margin: 1.5vh;
+$default-margin: 1.1vh;
 
 $board-width: 100vh - $header-height;
 $board-height: $board-width * 886 / 4606;
@@ -20,7 +20,8 @@ $artemia-top-margin: 16vh;
 $artemia-grid-gap: 0.5vh;
 $artemia-width: $card-width * 5 + 6 * $artemia-grid-gap;
 
-$hand-bottom-margin: 2vh;
+$creature-hand-bottom-margin: 2vh;
+$hunted-hand-bottom-margin: 5vh;
 
 $player-panel-height: 21vh;
 $calc-player-panel-width: calc(50vw - #{$board-height + $artemia-width / 2 + $default-margin * 2});
@@ -30,6 +31,6 @@ $other-players-hand-top: 10vh;
 $board-side-chosen-animation: 1s;
 $setup-animation: 1s;
 $draw-card-animation: 1s;
-$other-player-draw-card-animation: 0.4s;
+$other-player-draw-card-animation: 1s;
 $playing-place-card-animation: 0.8s;
 $revealing-place-card-animation: 2s;

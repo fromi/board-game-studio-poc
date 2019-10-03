@@ -5,8 +5,9 @@
   left: 0;
   right: 0;
   width: fit-content;
-  bottom: $card-height + $default-margin * 2;
+  bottom: $hunted-hand-bottom-margin + $card-height + 2vh;
   margin: auto;
   display: flex;
   justify-content: center;
+  cursor: help;
 }

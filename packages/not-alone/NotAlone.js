@@ -187,7 +187,7 @@ export function getLegalMoves(game, playerId) {
   }
   if (playerId === CREATURE) {
     return getCreatureMoves(game)
-  } else if (playerId.startsWith(HUNTED_PREFIX)) {
+  } else if (playerId && playerId.startsWith(HUNTED_PREFIX)) {
     return getHuntedMoves(game, playerId)
   } else {
     return []

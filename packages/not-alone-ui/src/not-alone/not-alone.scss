@@ -51,15 +51,9 @@
 
     @include deck($card-width, $card-height, $decks-max-cards-displayed, $decks-card-shift-x, $decks-card-shift-y);
 
-    .card:not(.drawing) .face {
+    .card .face {
       box-shadow: none;
       filter: drop-shadow(0 0 0.05vh white);
-    }
-
-    .card.drawing {
-      transition: all $other-player-draw-card-animation ease-in-out;
-      z-index: 100;
-      transform: rotate(-180deg) scale($other-players-hand-scale);
     }
   }
 
@@ -76,59 +70,11 @@
     .hunt-cards-deck {
       top: $header-height + $default-margin;
       right: $default-margin;
-
-      .card.drawing {
-        $top: $other-players-hand-top - $card-height * $other-players-hand-scale / 2 - $card-height / 2;
-
-        &.seat-left {
-          left: -75.6vw;
-        }
-
-        &.seat-right {
-          left: calc(21.7vh - 25vw);
-        }
-
-        &.seat-top {
-          top: $top
-        }
-
-        &.seat-middle {
-          top: $top + $player-panel-height + $default-margin
-        }
-
-        &.seat-bottom {
-          top: $top + ($player-panel-height + $default-margin) * 2
-        }
-      }
     }
 
     .survival-cards-deck {
       bottom: $default-margin;
       right: $default-margin;
-
-      .card.drawing {
-        $top: $header-height + $card-height + $default-margin - 100vh;
-
-        &.seat-left {
-          left: -75.6vw;
-        }
-
-        &.seat-right {
-          left: calc(21.7vh - 25vw);
-        }
-
-        &.seat-top {
-          top: $top
-        }
-
-        &.seat-middle {
-          top: $top + $player-panel-height + $default-margin
-        }
-
-        &.seat-bottom {
-          top: $top + ($player-panel-height + $default-margin) * 2
-        }
-      }
     }
   }
 
@@ -141,30 +87,18 @@
     .survival-cards-deck {
       top: $header-height + $default-margin;
       left: $default-margin;
-
-      .card.drawing {
-        $top: $other-players-hand-top - $card-height * $other-players-hand-scale / 2 - $card-height / 2;
-
-        &.seat-left {
-          left: calc(25vw - 20.7vh);
-        }
-
-        &.seat-right {
-          left: 76.3vw;
-        }
-
-        &.seat-top {
-          top: $top
-        }
-
-        &.seat-middle {
-          top: $top + $player-panel-height + $default-margin
-        }
-
-        &.seat-bottom {
-          top: $top + ($player-panel-height + $default-margin) * 2
-        }
-      }
     }
+  }
+}
+
+@keyframes from-transform-none {
+  from {
+    transform: none;
+  }
+}
+
+@keyframes to-transform-none {
+  to {
+    transform: none;
   }
 }

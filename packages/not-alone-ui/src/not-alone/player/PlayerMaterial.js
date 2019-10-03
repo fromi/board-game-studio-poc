@@ -1,5 +1,5 @@
 import React from 'react'
-import Hand from './Hand'
+import PlayerHand from './PlayerHand'
 import {getHunted, HUNTED_PREFIX} from '@bga/not-alone'
 import PlayedCards from './PlayedCards'
 import DiscardedPlaces from './DiscardedPlaces'
@@ -13,7 +13,6 @@ const PlayerMaterial = (props) => {
   const {t} = useTranslation()
   return (
     <React.Fragment>
-      <Hand {...props}/>
       {playerId.startsWith(HUNTED_PREFIX) && <React.Fragment>
         <PlayedCards {...props}/>
         <DiscardedPlaces {...props}/>
@@ -23,6 +22,7 @@ const PlayerMaterial = (props) => {
           </div>
         </Tooltip>
       </React.Fragment>}
+      <PlayerHand {...props}/>
     </React.Fragment>
   )
 }

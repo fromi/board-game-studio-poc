@@ -13,4 +13,98 @@
       width: 3vh;
     }
   }
+
+  .survival-card {
+    will-change: transform;
+  }
+
+  .drawing .survival-card {
+    animation: to-transform-none $other-player-draw-card-animation ease-in-out;
+  }
+}
+
+.not-alone.hunted .other-player.hunted {
+  $survival-card-seat-top-translate-y: - $player-panel-height * 2 - $default-margin * 2 - 27.4vh;
+  $survival-card-seat-middle-translate-y: - $player-panel-height - $default-margin - 27.4vh;
+  $survival-card-seat-bottom-translate-y: - 27.4vh;
+
+  &.seat-left {
+    $survival-card-seat-left-transform-x: calc(-1.5 * #{$calc-player-panel-width} - #{$artemia-width + $default-margin * 3 + $card-width / 2});
+    &.seat-top {
+      .drawing .survival-card {
+        transform: scale(1 / $other-players-hand-scale) translateX($survival-card-seat-left-transform-x) translateY($survival-card-seat-top-translate-y) rotate(180deg);
+      }
+    }
+    &.seat-middle {
+      .drawing .survival-card {
+        transform: scale(1 / $other-players-hand-scale) translateX($survival-card-seat-left-transform-x) translateY($survival-card-seat-middle-translate-y) rotate(180deg);
+      }
+    }
+    &.seat-bottom {
+      .drawing .survival-card {
+        transform: scale(1 / $other-players-hand-scale) translateX($survival-card-seat-left-transform-x) translateY($survival-card-seat-bottom-translate-y) rotate(180deg);
+      }
+    }
+  }
+  &.seat-right {
+    $survival-card-seat-right-transform-x: calc(-0.5 * #{$calc-player-panel-width} - #{$default-margin + $card-width / 2});
+    &.seat-top {
+      .drawing .survival-card {
+        transform: scale(1 / $other-players-hand-scale) translateX($survival-card-seat-right-transform-x) translateY($survival-card-seat-top-translate-y) rotate(180deg);
+      }
+    }
+    &.seat-middle {
+      .drawing .survival-card {
+        transform: scale(1 / $other-players-hand-scale) translateX($survival-card-seat-right-transform-x) translateY($survival-card-seat-middle-translate-y) rotate(180deg);
+      }
+    }
+    &.seat-bottom {
+      .drawing .survival-card {
+        transform: scale(1 / $other-players-hand-scale) translateX($survival-card-seat-right-transform-x) translateY($survival-card-seat-bottom-translate-y) rotate(180deg);
+      }
+    }
+  }
+}
+
+.not-alone:not(.hunted) .other-player.hunted {
+  $survival-card-seat-top-translate-y: - 4vh;
+  $survival-card-seat-middle-translate-y: $player-panel-height + $default-margin - 4vh;
+  $survival-card-seat-bottom-translate-y: $player-panel-height * 2 + $default-margin * 2 - 4vh;
+
+  &.seat-left {
+    $survival-card-seat-left-transform-x: calc(0.5 * #{$calc-player-panel-width} + #{$board-height - $card-width / 2});
+    &.seat-top {
+      .drawing .survival-card {
+        transform: scale(1 / $other-players-hand-scale) translateX($survival-card-seat-left-transform-x) translateY($survival-card-seat-top-translate-y) rotate(180deg);
+      }
+    }
+    &.seat-middle {
+      .drawing .survival-card {
+        transform: scale(1 / $other-players-hand-scale) translateX($survival-card-seat-left-transform-x) translateY($survival-card-seat-middle-translate-y) rotate(180deg);
+      }
+    }
+    &.seat-bottom {
+      .drawing .survival-card {
+        transform: scale(1 / $other-players-hand-scale) translateX($survival-card-seat-left-transform-x) translateY($survival-card-seat-bottom-translate-y) rotate(180deg);
+      }
+    }
+  }
+  &.seat-right {
+    $survival-card-seat-right-transform-x: calc(1.5 * #{$calc-player-panel-width} + #{$artemia-width + $board-height + $default-margin * 2 - $card-width / 2});
+    &.seat-top {
+      .drawing .survival-card {
+        transform: scale(1 / $other-players-hand-scale) translateX($survival-card-seat-right-transform-x) translateY($survival-card-seat-top-translate-y) rotate(180deg);
+      }
+    }
+    &.seat-middle {
+      .drawing .survival-card {
+        transform: scale(1 / $other-players-hand-scale) translateX($survival-card-seat-right-transform-x) translateY($survival-card-seat-middle-translate-y) rotate(180deg);
+      }
+    }
+    &.seat-bottom {
+      .drawing .survival-card {
+        transform: scale(1 / $other-players-hand-scale) translateX($survival-card-seat-right-transform-x) translateY($survival-card-seat-bottom-translate-y) rotate(180deg);
+      }
+    }
+  }
 }

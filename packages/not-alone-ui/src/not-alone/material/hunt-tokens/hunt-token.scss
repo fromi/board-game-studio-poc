@@ -86,7 +86,7 @@ $token-size: 8vh;
 
 .not-alone.creature {
   .hunt-token:not(.placed) {
-    $translation-y: 100vh - $card-height - $token-size - $hand-bottom-margin - $default-margin;
+    $translation-y: 100vh - $card-height - $token-size - $creature-hand-bottom-margin - $default-margin;
 
     &.creature-token {
       transform: translateX(- $token-size - $default-margin) translateY($translation-y);

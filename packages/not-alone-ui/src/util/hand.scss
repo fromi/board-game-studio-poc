@@ -1,0 +1,93 @@
+@import "trigonometry";
+
+@mixin handOfCards($card-width, $card-height, $max-hand-size, $hover-scale: 1.5, $maximum-rotation: 12deg, $nearby-maximum-rotation: 5deg, $rotation-origin: 800%) {
+
+  transition: transform 0.2s ease-in-out;
+
+  > * {
+    pointer-events: none;
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    transition: inherit;
+
+    &:before, .hand-item-position {
+      transform-origin: center $rotation-origin;
+    }
+
+    .hand-item-position {
+      position: relative;
+    }
+
+    .hand-item-position, .hand-item-position > *, .hand-item-drag > * {
+      transition: inherit;
+      will-change: transform;
+    }
+
+    // This invisible pseudo elements stays on top of another hovered card, so that we can always see a card by hovering its default position
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 2;
+    }
+
+    &.draggable {
+      cursor: grab;
+    }
+
+    &.dragging {
+      pointer-events: none;
+      cursor: grabbing;
+    }
+
+    &:not(.dragging) {
+      &:before, > * {
+        pointer-events: auto;
+      }
+    }
+
+    @media (hover) {
+      &.hovering:hover .hand-item-position > * {
+        transform: translateY((1 - $hover-scale) * 50%) scale($hover-scale);
+      }
+    }
+
+    &.hovering.dragging {
+      .hand-item-drag > * {
+        transform: translateY((1 - $hover-scale) * 50%) scale($hover-scale);
+      }
+    }
+  }
+
+  @for $cards-in-hand from 1 through ($max-hand-size) {
+    @for $card-index from 1 through ($cards-in-hand) {
+      > :nth-child(#{$card-index}):nth-last-child(#{$cards-in-hand - $card-index + 1}) {
+        $nearby-rotation: min($maximum-rotation * 2 / $cards-in-hand, $nearby-maximum-rotation);
+        $card-rotation: ($card-index - ($cards-in-hand + 1) / 2) * $nearby-rotation;
+
+        &:before, .hand-item-position {
+          transform: rotate($card-rotation) translate3d(0, 0, 0);
+        }
+
+        // This transformation moves the card so that its center stay exactly at the same abscissa, but without any rotation
+        $sinus-projection: translateX(sin($card-rotation) * ($rotation-origin - 50%) * $card-height / $card-width);
+
+        @media (hover) {
+          &.hovering:hover > .hand-item-position {
+            transform: $sinus-projection;
+            z-index: 1;
+          }
+        }
+
+        &.dragging > .hand-item-position {
+          transform: $sinus-projection;
+          z-index: 1;
+        }
+      }
+    }
+  }
+}

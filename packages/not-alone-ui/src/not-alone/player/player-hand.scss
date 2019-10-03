@@ -1,0 +1,94 @@
+@import "../../util/hand";
+@import "../variables";
+
+$deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
+
+.not-alone.creature .player-hand {
+  bottom: $creature-hand-bottom-margin;
+}
+
+.not-alone:not(.creature) .player-hand {
+  bottom: $hunted-hand-bottom-margin;
+}
+
+.player-hand {
+  position: absolute;
+  width: $card-width;
+  height: $card-height;
+  left: calc(50vw - #{$card-width / 2});
+
+  @include handOfCards($card-width, $card-height, 15);
+
+  &.playing-place-card {
+    transition: transform $playing-place-card-animation ease-in-out;
+  }
+
+  .drawing {
+    .hand-item-position {
+      z-index: 1;
+      animation: from-transform-none 1s ease-in-out;
+
+      .survival-card {
+        animation: drawing-survival-card $draw-card-animation ease-in-out;
+      }
+
+      .hunt-card {
+        animation: drawing-hunt-card $draw-card-animation ease-in-out;
+      }
+    }
+  }
+
+  .draggable .place-card, .draggable .survival-card {
+    box-shadow: 0 0 0.1vh 0.1vh deepskyblue;
+    outline: 1px solid transparent;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0 0 0.8vh 0.2vh deepskyblue;
+      animation: opacity 1.5s ease-in-out infinite alternate;
+      outline: 1px solid transparent;
+      border-radius: 1vh;
+    }
+  }
+
+  .dragging {
+    .card {
+      opacity: 0.8;
+    }
+  }
+
+  .being-played .hand-item-position {
+    z-index: 1;
+    transform: none !important;
+
+    .place-card {
+      transition: transform $playing-place-card-animation ease-in-out;
+      transform: translateX($artemia-width / 2 + $default-margin + $card-width / 2) translateY(3vh) rotateY(-180deg);
+    }
+  }
+}
+
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drawing-hunt-card {
+  from {
+    transform: translate(calc(#{$card-width / 2 + $default-margin} - 50vw), $creature-hand-bottom-margin - $default-margin - $deck-top-card-shift-y) rotateY(-180deg);
+  }
+}
+
+@keyframes drawing-survival-card {
+  from {
+    transform: translate(calc(50vw - #{$card-width / 2 + $default-margin + $decks-card-shift-x * $decks-max-cards-displayed}),
+            $hunted-hand-bottom-margin - $default-margin - $deck-top-card-shift-y) rotateY(-180deg);
+  }
+}

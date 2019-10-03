@@ -4,9 +4,9 @@ import {useTranslation} from 'react-i18next'
 
 export const PLACE_CARD = 'Place card'
 
-const PlaceCard = ({place, classes = []}) => {
+const PlaceCard = ({place}) => {
+  const classes = ['card', 'place-card']
 
-  classes.push('card', 'place-card')
   if (!isNaN(place)) {
     classes.push('place-' + place)
   }

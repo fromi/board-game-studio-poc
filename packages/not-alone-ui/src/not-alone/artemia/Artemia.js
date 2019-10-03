@@ -5,15 +5,18 @@ import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
 import ArtemiaPlace from './ArtemiaPlace'
 import {PLACES} from '@bga/not-alone'
+import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
 
 const Artemia = (props) => {
   const {t} = useTranslation()
+  const {playerId, play} = props
   const [{draggedPlace, isOver}, drop] = useDrop({
     accept: PLACE_CARD,
     collect: (monitor) => ({
       draggedPlace: monitor.getItem() ? monitor.getItem().place : undefined,
       isOver: monitor.isOver()
-    })
+    }),
+    drop: item => play({type: PLAY_PLACE_CARD, place: item.place, huntedId: playerId})
   })
   const dropInfoClasses = ['drop-info']
   if (isOver) {

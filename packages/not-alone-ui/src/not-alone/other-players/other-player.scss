@@ -1,4 +1,4 @@
-@import "../../util/hand-of-cards";
+@import "../../util/hand";
 @import "../variables";
 
 .other-player {
@@ -14,22 +14,24 @@
     text-align: center;
   }
 
-  .player-hand {
+  .hand {
+    @include handOfCards($card-width, $card-height, 15);
     position: absolute;
     width: $card-width;
+    height: $card-height;
     margin: auto;
     left: 0;
     right: 0;
-    top: $other-players-hand-top;
-    transform: scale($other-players-hand-scale) rotate(180deg);
+    transform: translateY(- $card-height / 2) scale($other-players-hand-scale) rotate(180deg) translateY(- $card-height / 2);
     cursor: help;
 
-    @include handOfCards($card-width, $card-height, false, 20, 35deg);
-
-    .card {
+    &.drawing-survival-card, &.drawing-hunt-card {
+      z-index: 1;
       transition: transform $other-player-draw-card-animation ease-out;
-      &.drawing {
-        opacity: 0;
+
+      .drawing .hand-item-position {
+        z-index: 1;
+        animation: from-transform-none $other-player-draw-card-animation ease-in-out;
       }
     }
   }
