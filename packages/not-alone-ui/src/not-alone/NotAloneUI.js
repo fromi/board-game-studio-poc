@@ -1,41 +1,43 @@
 import React from 'react'
-import './not-alone.scss'
-import {BOARD_SIDES, CREATURE} from '@bga/not-alone'
-import Board from './material/board/Board'
+import {useTranslation} from 'react-i18next'
+import {createMuiTheme, MuiThemeProvider} from '@material-ui/core'
+import {lightBlue, pink} from '@material-ui/core/colors'
+import {HUNT_TOKENS} from '@bga/not-alone/material/HuntTokens'
+import {PlayHuntCard} from '@bga/not-alone/moves/PlayHuntCard'
+import {PlaySurvivalCard} from '@bga/not-alone/moves/PlaySurvivalCard'
+import {RevealPlaceCards} from '@bga/not-alone/moves/RevealPlaceCard'
+import {UsePlacePower} from '@bga/not-alone/moves/UsePlacePower'
 import {CHOOSE_BOARD_SIDE, ChooseBoardSide} from '@bga/not-alone/moves/ChooseBoardSide'
+import {BOARD_SIDES, CREATURE} from '@bga/not-alone'
+import {DrawHuntCard} from '@bga/not-alone/moves/DrawHuntCard'
+import {PlayPlaceCard} from '@bga/not-alone/moves/PlayPlaceCard'
+import {DrawSurvivalCard} from '@bga/not-alone/moves/DrawSurvivalCard'
+import {PlaceHuntToken} from '@bga/not-alone/moves/PlaceHuntToken'
+import {Pass} from '@bga/not-alone/moves/Pass'
+import Board from './material/board/Board'
 import Artemia from './artemia/Artemia'
 import HuntCardsDeck from './material/hunt-cards/HuntCardsDeck'
-import {DrawHuntCard} from '@bga/not-alone/moves/DrawHuntCard'
 import SurvivalCardsDeck from './material/survival-cards/SurvivalCardsDeck'
-import {PlayPlaceCard} from '@bga/not-alone/moves/PlayPlaceCard'
 import OtherPlayers from './other-players/OtherPlayers'
 import PlayerMaterial from './player/PlayerMaterial'
-import {DrawSurvivalCard} from '@bga/not-alone/moves/DrawSurvivalCard'
 import {ChooseBoardSideUI} from './moves-display/ChooseBoardSideUI'
 import {DrawHuntCardUI} from './moves-display/DrawHuntCardUI'
 import {DrawSurvivalCardUI} from './moves-display/DrawSurvivalCardUI'
 import {PlayPlaceCardUI} from './moves-display/PlayPlaceCardUI'
-import {PlaceHuntToken} from '@bga/not-alone/moves/PlaceHuntToken'
 import {PlaceHuntTokenUI} from './moves-display/PlaceHuntTokenUI'
 import HuntToken from './material/hunt-tokens/HuntToken'
-import {Pass} from '@bga/not-alone/moves/Pass'
 import {PassUI} from './moves-display/PassUI'
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core'
-import {lightBlue, pink} from '@material-ui/core/colors'
-import {HUNT_TOKENS} from '@bga/not-alone/material/HuntTokens'
-import {useTranslation} from 'react-i18next'
 import {PlayHuntCardUI} from './moves-display/PlayHuntCardUI'
-import {PlayHuntCard} from '@bga/not-alone/moves/PlayHuntCard'
-import {PlaySurvivalCard} from '@bga/not-alone/moves/PlaySurvivalCard'
 import {PlaySurvivalCardUI} from './moves-display/PlaySurvivalCardUI'
-import {RevealPlaceCards} from '@bga/not-alone/moves/RevealPlaceCard'
 import {RevealPlaceCardsUI} from './moves-display/RevealPlaceCardsUI'
-import {UsePlacePower} from '@bga/not-alone/moves/UsePlacePower'
 import {UsePlacePowerUI} from './moves-display/UsePlacePowerUI'
 import HeaderContent from './HeaderContent'
+import './not-alone.scss'
+import History from './History'
 
 const createTheme = (color) => createMuiTheme({
   palette: {
+    type: 'dark',
     primary: color
   },
   typography: {
@@ -79,7 +81,10 @@ export const Interface = (props) => {
   return (
     <MuiThemeProvider theme={playerId === CREATURE ? createTheme(pink) : createTheme(lightBlue)}>
       <div className={classes.join(' ')}>
-        <h2 className="information"><HeaderContent {...props}/></h2>
+        <h2 className="information">
+          <History {...props}/>
+          <HeaderContent {...props}/>
+        </h2>
         {game.phase && <h3 className="phase">{t(phases[game.phase])}</h3>}
         {BOARD_SIDES.map(side =>
           <Board side={side} key={side} {...props}/>
