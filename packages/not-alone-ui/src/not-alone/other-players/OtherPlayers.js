@@ -19,7 +19,7 @@ const OtherPlayers = (props) => {
             return null
           }
         })}
-        <CreaturePlayer classes={[...tableSeats[0]]} creature={game.creature} animation={animation} playersMap={playersMap}/>
+        <CreaturePlayer classes={[...tableSeats[0]]} {...props}/>
       </React.Fragment>
     )
   } else {

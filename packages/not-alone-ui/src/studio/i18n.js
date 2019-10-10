@@ -214,6 +214,8 @@ i18n.use(ICU).use(initReactI18next).init({
         'You cannot play your Hunt cards, you must pass': 'Vous ne pouvez pas jouer vos cartes Traque, vous devez passer',
         'You cannot play your Hunt cards, you must <1>Pass</1>': 'Vous ne pouvez pas jouer vos cartes Traque, vous devez <1>Passer</1>',
         'You cannot play your Survival {cards, plural, one{card} other{cards}}, you must pass': 'Vous ne pouvez pas jouer {cards, plural, one{votre carte} other{vos cartes}} Survie, vous devez passer',
+        'I don’t play any Hunt card': 'Je ne joue pas de carte Traque',
+        'I pass': 'Je passe',
 
         'You must play {card} or pass': 'Vous devez jouer {card} ou passer',
         'You must play {card1} or {card2} or pass': 'Vous devez jouer {card1} ou {card2} ou passer',

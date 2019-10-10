@@ -46,5 +46,7 @@ export const PassUI = {
     } else {
       return t('Some Hunted may play a Survival card')
     }
-  }
+  },
+
+  animationDelay: (animation, playerId) => animation.move.playerId !== playerId ? 1 : 0
 }
