@@ -11,11 +11,15 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
   bottom: $hunted-hand-bottom-margin;
 }
 
-.player-hand {
+.not-alone .player-hand {
   position: absolute;
   width: $card-width;
   height: $card-height;
   left: calc(50vw - #{$card-width / 2});
+
+  .card .face {
+    box-shadow: 0 0 0.1vh white, -0.2vh 0.2vh 0.4vh black;
+  }
 
   @include handOfCards($card-width, $card-height, 15);
 

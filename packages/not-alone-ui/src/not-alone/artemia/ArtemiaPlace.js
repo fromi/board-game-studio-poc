@@ -5,7 +5,7 @@ import {Tooltip} from '@material-ui/core'
 import {useTranslation} from 'react-i18next'
 import ArtemiaPlaceCard from './ArtemiaPlaceCard'
 import './artemia-place.scss'
-import PlaceCard, {places} from '../material/place-cards/PlaceCard'
+import PlaceCard from '../material/place-cards/PlaceCard'
 
 const ArtemiaPlace = (props) => {
   const {place, game} = props
