@@ -1,6 +1,6 @@
 import React from 'react'
-import PlaceCard, {places} from '../material/place-cards/PlaceCard'
-import {Tooltip} from '@material-ui/core'
+import PlaceCard from '../material/place-cards/PlaceCard'
+import {Popover} from '@material-ui/core'
 import {useTranslation} from 'react-i18next'
 import {HUNT_TOKEN} from '../material/hunt-tokens/HuntToken'
 import {useDrop} from 'react-dnd'
@@ -10,8 +10,8 @@ import {getLegalMoves} from '@bga/not-alone'
 import {USE_PLACE_POWER, usePlacePower} from '@bga/not-alone/moves/UsePlacePower'
 
 const ArtemiaPlaceCard = ({game, place, play, playerId}) => {
-  const {t} = useTranslation()
   const classes = ['artemia-place-card']
+  const [isOpen, setOpen] = React.useState(false)
 
   const canUsePlacePower = getLegalMoves(game, playerId).some(move => move.type === USE_PLACE_POWER && move.place === place)
   if (canUsePlacePower) {
@@ -21,6 +21,8 @@ const ArtemiaPlaceCard = ({game, place, play, playerId}) => {
   const handleClick = () => {
     if (canUsePlacePower) {
       play(usePlacePower(place, playerId))
+    } else {
+      setOpen(true)
     }
   }
 
@@ -28,7 +30,7 @@ const ArtemiaPlaceCard = ({game, place, play, playerId}) => {
     accept: [HUNT_TOKEN],
     collect: monitor => ({
       isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
+      canDrop: monitor.canDrop()
     }),
     drop: item => {
       play(placeHuntToken(item.token, [place]))
@@ -40,16 +42,14 @@ const ArtemiaPlaceCard = ({game, place, play, playerId}) => {
   }
 
   return (
-    <Tooltip title={(
-      <React.Fragment>
-        <h3 key="name">{t(places[place].name)}</h3>
-        {places[place].description.map((description, index) => <p key={index}>{t(description)}</p>)}
-      </React.Fragment>
-    )} enterTouchDelay={0}>
+    <React.Fragment>
       <div ref={drop} className={classes.join(' ')} onClick={handleClick}>
         <PlaceCard place={place}/>
       </div>
-    </Tooltip>
+      <Popover className="card-big" open={isOpen} onClose={() => setOpen(false)}>
+        <PlaceCard place={place}/>
+      </Popover>
+    </React.Fragment>
   )
 }
 

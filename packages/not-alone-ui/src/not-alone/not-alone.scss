@@ -86,6 +86,30 @@
   }
 }
 
+.card-big {
+  background: rgba(0, 0, 0, 0.5);
+  $scale: 3.5;
+
+  > :last-child {
+    background: none !important;
+    box-shadow: none !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: $card-width * $scale;
+    height: $card-height * $scale;
+    transform: translate(-50%, -50%) !important;
+
+    .card {
+      transform-origin: top left;
+      transform: scale($scale);
+
+      .face {
+        box-shadow: none;
+      }
+    }
+  }
+}
+
 @keyframes from-transform-none {
   from {
     transform: none;
