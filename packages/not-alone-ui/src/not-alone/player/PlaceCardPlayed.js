@@ -9,12 +9,12 @@ import {MOVE_PLAYED} from '../../studio/reducers/ServerReducer'
 import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
 import {TAKE_BACK_PLAYED_PLACE, takeBackPlayedPlace} from '@bga/not-alone/moves/TakeBackPlayedPlace'
 
-const PlaceCardPlayed = ({place, game, playerId, animation, play, undo}) => {
+const PlaceCardPlayed = ({place, game, playerId, animation, play}) => {
   const {t} = useTranslation()
   const hunted = getHunted(game, playerId)
   const isBeingPlayed = animation && animation.type === MOVE_PLAYED && animation.move.type === PLAY_PLACE_CARD && animation.move.huntedId === playerId
   const isBeingRevealed = animation && animation.move.type === REVEAL_PLACE_CARDS && animation.move.huntedId === playerId
-  const canTakeBack = game.phase === 1 || getLegalMoves(game, playerId).some(move => move.type === TAKE_BACK_PLAYED_PLACE && move.place === place)
+  const canTakeBack = getLegalMoves(game, playerId).some(move => move.type === TAKE_BACK_PLAYED_PLACE && move.place === place)
 
   const classes = ['place-card-played']
   if (isBeingPlayed) {
@@ -30,9 +30,7 @@ const PlaceCardPlayed = ({place, game, playerId, animation, play, undo}) => {
   }
 
   const takeBack = () => {
-    if (game.phase === 1) {
-      undo({type: PLAY_PLACE_CARD, place, huntedId: playerId})
-    } else {
+    if (canTakeBack) {
       play(takeBackPlayedPlace(playerId, place))
     }
   }
