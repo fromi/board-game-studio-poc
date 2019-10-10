@@ -1,3 +1,5 @@
+@import "../variables";
+
 .artemia-place {
   transition-property: transform;
 
@@ -8,15 +10,26 @@
     }
   }
 
+  $reserve-max-size: 3;
+
+  .artemia-place-card {
+    z-index: $reserve-max-size;
+  }
+
   .reserve {
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-bottom-left-radius: 3vh;
-    border-bottom-right-radius: 3vh;
-    font-size: 3vh;
-    width: 6vh;
-    margin: 0 auto;
-    text-align: center;
     cursor: help;
+
+    .place-card {
+      $offset: 1.5vh;
+      position: relative;
+      height: $offset;
+
+      @for $card from 1 through 3 {
+        &:nth-child(#{$card}) {
+          z-index: $reserve-max-size - $card;
+          top: $offset - $card-height
+        }
+      }
+    }
   }
 }
