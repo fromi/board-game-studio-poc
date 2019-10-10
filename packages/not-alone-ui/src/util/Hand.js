@@ -27,7 +27,7 @@ const HandItem = ({children, className = '', hovering, drag}) => {
   }
 
   return (
-    <div className={`${className} ${hovering ? 'hovering' : ''} ${draggable ? 'draggable' : ''} ${dragging ? 'dragging' : ''}`} ref={ref}>
+    <div className={`${className} ${hovering ? 'hovering' : ''} ${draggable ? 'draggable' : ''} ${dragging ? 'dragging' : ''}`.trim()} ref={ref}>
       <div className="hand-item-position">
         {child}
       </div>

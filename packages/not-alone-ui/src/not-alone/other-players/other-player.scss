@@ -25,6 +25,10 @@
     transform: translateY(- $card-height / 2) scale($other-players-hand-scale) rotate(180deg) translateY(- $card-height / 2);
     cursor: help;
 
+    .card .face {
+      box-shadow: 0 0 0.1vh white, -0.2vh 0.2vh 0.4vh black;
+    }
+
     &.drawing-survival-card, &.drawing-hunt-card {
       z-index: 1;
       transition: transform $other-player-draw-card-animation ease-out;
