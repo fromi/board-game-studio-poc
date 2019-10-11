@@ -1,11 +1,13 @@
 import React from 'react'
 import {IconButton, Popover} from '@material-ui/core'
-import {History as HistoryIcon} from '@material-ui/icons'
+import {History as HistoryIcon, PlayCircleOutline} from '@material-ui/icons'
 import './history.scss'
 import PastMove from './PastMove'
+import {useTranslation} from 'react-i18next'
 
 export default function History(props) {
-  const {moveHistory} = props
+  const {t} = useTranslation()
+  const {moveHistory, replay} = props
   const [isOpen, setOpen] = React.useState(false)
 
   return (
@@ -15,6 +17,12 @@ export default function History(props) {
       </IconButton>
       <Popover className="history" open={isOpen} onClose={() => setOpen(false)}>
         <ol>
+          <li>
+            <IconButton disabled={moveHistory.length === 0} onClick={() => replay(0)}>
+              <PlayCircleOutline/>
+            </IconButton>
+            {t('The game begins!')}
+          </li>
           {moveHistory.map((move, index) => <PastMove key={index} index={index} move={move} {...props}/>)}
         </ol>
       </Popover>

@@ -2,6 +2,7 @@
 
 .artemia-place {
   transition-property: transform;
+  z-index: 0;
 
   @for $i from 0 through (9) {
     &.place-#{$i + 1} {

@@ -30,7 +30,7 @@
     }
 
     &.drawing-survival-card, &.drawing-hunt-card {
-      z-index: 10;
+      z-index: 1;
       transition: transform $other-player-draw-card-animation ease-out;
 
       .drawing .hand-item-position {

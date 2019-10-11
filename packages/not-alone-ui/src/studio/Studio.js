@@ -1,18 +1,18 @@
 import React from 'react'
 import {connect, Provider} from 'react-redux'
-import * as PropTypes from "prop-types"
-import {applyMiddleware, combineReducers, createStore} from "redux"
-import {DndProvider} from "react-dnd"
-import MultiBackend from 'react-dnd-multi-backend';
-import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch';
-import {createServerReducer, getMoveView, MOVE_PLAYED, pendingNotificationsListener} from "./reducers/ServerReducer"
-import {createClientReducer, notificationsAnimationListener} from "./reducers/ClientReducer"
-import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, MOVE_BACK, MOVE_FORWARD, NEW_GAME, PLAY_MOVE, RESUME, UNDO_MOVE} from "./StudioActions"
-import {priorMoveMiddleware} from "./middleware/PriorMoveMiddleware"
-import {prepareMoveMiddleware} from "./middleware/PrepareMoveMiddleware"
-import {useTranslation} from "react-i18next"
-import "./i18n"
-import produce from "immer";
+import * as PropTypes from 'prop-types'
+import {applyMiddleware, combineReducers, createStore} from 'redux'
+import {DndProvider} from 'react-dnd'
+import MultiBackend from 'react-dnd-multi-backend'
+import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch'
+import {createServerReducer, getMoveView, MOVE_PLAYED, pendingNotificationsListener} from './reducers/ServerReducer'
+import {createClientReducer, notificationsAnimationListener} from './reducers/ClientReducer'
+import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, MOVE_BACK, MOVE_FORWARD, NEW_GAME, PLAY_MOVE, RESUME, UNDO_MOVE} from './StudioActions'
+import {priorMoveMiddleware} from './middleware/PriorMoveMiddleware'
+import {prepareMoveMiddleware} from './middleware/PrepareMoveMiddleware'
+import {useTranslation} from 'react-i18next'
+import './i18n'
+import produce from 'immer'
 
 export const createStudio = (Game, GameUI) => {
   const store = createStudioStore(Game, GameUI)
@@ -175,6 +175,10 @@ const Studio = ({store, GameUI, Game}) => {
       } else {
         dispatch({type: UNDO_MOVE, playerId: store.getState().client.playerId, move})
       }
+    },
+    replay: (startingMove) => {
+      store.dispatch({type: MOVE_BACK, moves: store.getState().client.moveHistory.length - startingMove})
+      setTimeout(() => store.dispatch({type: MOVE_FORWARD}), 1000)
     }
   }))(GameUI.Interface)
 
