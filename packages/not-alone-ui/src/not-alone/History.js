@@ -1,5 +1,5 @@
 import React from 'react'
-import {IconButton, Popover} from '@material-ui/core'
+import {IconButton, Popover, Tooltip} from '@material-ui/core'
 import {History as HistoryIcon, PlayCircleOutline} from '@material-ui/icons'
 import './history.scss'
 import PastMove from './PastMove'
@@ -23,9 +23,11 @@ export default function History(props) {
       <Popover className="history" open={isOpen} onClose={() => setOpen(false)}>
         <ol>
           <li>
-            <IconButton disabled={moveHistory.length === 0} onClick={() => replayFrom(0)}>
-              <PlayCircleOutline/>
-            </IconButton>
+            <Tooltip title={t('Replay from this move')}>
+              <IconButton disabled={moveHistory.length === 0} onClick={() => replayFrom(0)}>
+                <PlayCircleOutline/>
+              </IconButton>
+            </Tooltip>
             {t('The game begins!')}
           </li>
           {moveHistory.map((move, index) => <PastMove key={index} index={index} move={move} {...props}/>)}

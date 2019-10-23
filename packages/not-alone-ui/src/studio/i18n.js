@@ -242,7 +242,8 @@ i18n.use(ICU).use(initReactI18next).init({
         '{place} is in {player}’s discard': '{place} est dans la défausse de {player}',
 
         'Undo': 'Annuler',
-        'The game begins!': 'La partie commence !'
+        'The game begins!': 'La partie commence !',
+        'Replay from this move': 'Revoir depuis ce coup'
       }
     }
   },
