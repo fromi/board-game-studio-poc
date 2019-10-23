@@ -22,12 +22,12 @@
     }
   }
 
-  > *:not(.information):not(.board) {
+  > *:not(header):not(.board) {
     pointer-events: none;
   }
 
   &:not(.board-side-chosen) {
-    > *:not(.information):not(.board) {
+    > *:not(header):not(.board) {
       z-index: -1;
       opacity: 0;
     }

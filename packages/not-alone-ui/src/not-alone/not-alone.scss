@@ -13,17 +13,20 @@
   user-select: none;
   font-family: Arial, Helvetica, sans-serif;
 
-  .information {
+  header {
     $padding: 0.5vh;
     $height: $header-height - $padding * 2;
     color: antiquewhite;
-    font-size: 4vh;
     height: $height;
-    line-height: $height;
     padding: $padding;
     text-align: center;
-    margin: 0;
     background: rgba(255, 255, 255, 0.2);
+
+    h1 {
+      font-size: 4vh;
+      line-height: $height;
+      margin: 0;
+    }
 
     button {
       padding: 0.5vh;

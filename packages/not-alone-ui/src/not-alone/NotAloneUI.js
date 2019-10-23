@@ -31,7 +31,7 @@ import {PlayHuntCardUI} from './moves-display/PlayHuntCardUI'
 import {PlaySurvivalCardUI} from './moves-display/PlaySurvivalCardUI'
 import {RevealPlaceCardsUI} from './moves-display/RevealPlaceCardsUI'
 import {UsePlacePowerUI} from './moves-display/UsePlacePowerUI'
-import HeaderContent from './HeaderContent'
+import Title from './Title'
 import './not-alone.scss'
 import History from './History'
 import {StartPhase} from '@bga/not-alone/moves/StartPhase'
@@ -83,10 +83,10 @@ export const Interface = (props) => {
   return (
     <MuiThemeProvider theme={playerId === CREATURE ? createTheme(pink) : createTheme(lightBlue)}>
       <div className={classes.join(' ')}>
-        <h2 className="information">
+        <header>
           <History {...props}/>
-          <HeaderContent {...props}/>
-        </h2>
+          <h1><Title {...props}/></h1>
+        </header>
         {game.phase && <h3 className="phase">{t(phases[game.phase])}</h3>}
         {BOARD_SIDES.map(side =>
           <Board side={side} key={side} {...props}/>
