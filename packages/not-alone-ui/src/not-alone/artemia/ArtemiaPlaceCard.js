@@ -1,7 +1,6 @@
 import React from 'react'
 import PlaceCard from '../material/place-cards/PlaceCard'
 import {Popover} from '@material-ui/core'
-import {useTranslation} from 'react-i18next'
 import {HUNT_TOKEN} from '../material/hunt-tokens/HuntToken'
 import {useDrop} from 'react-dnd'
 import {placeHuntToken} from '@bga/not-alone/moves/PlaceHuntToken'

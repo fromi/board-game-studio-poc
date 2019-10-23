@@ -6,6 +6,6 @@ export const placeHuntToken = (token, locations) => ({type: PLACE_HUNT_TOKEN, to
 export const PlaceHuntToken = {
   execute: (game, move) => {
     game.huntTokensLocations[move.token] = move.locations
-    continueGameAfterMove(move)
+    continueGameAfterMove(game, move)
   }
 }

@@ -1,47 +1,50 @@
 import React from 'react'
-import {Trans} from 'react-i18next'
-import {Button} from '@material-ui/core'
-import {CREATURE, getHunted, getLegalMoves} from '@bga/not-alone'
-import {resist, RESIST} from '@bga/not-alone/moves/Resist'
-import {GIVE_UP, giveUp} from '@bga/not-alone/moves/GiveUp'
-import {pass, PASS} from '@bga/not-alone/moves/Pass'
+import {useTranslation} from 'react-i18next'
+import {CREATURE, moves} from '@bga/not-alone'
+import {MOVE_PLAYED} from '../studio/reducers/ServerReducer'
+import ExplorationTitle from './ExplorationTitle'
+import {EXPLORATION, HUNTING, RECKONING} from '@bga/not-alone/Phases'
+import HuntingTitle from './HuntingTitle'
+import ReckoningTitle from './ReckoningTitle'
+import CardActionTitle from './CardActionTitle'
 
-const Title = ({game, playerId, information, play}) => {
+const Title = (props) => {
+  const {t} = useTranslation()
+  const {game, playerId, animation, playersMap} = props
 
-  const moves = getLegalMoves(game, playerId)
-
-  const onResist = () => play(resist(playerId))
-  const onGiveUp = () => play(giveUp(playerId))
-  const onPass = () => play(pass(playerId))
-
-  if (moves.some(move => move.type === RESIST)) {
-    return (
-      <Trans>You must play a Place card. You may <Action onClick={onResist}>Resist</Action> or <Action onClick={onGiveUp}>Give up</Action>.</Trans>
-    )
-  } else if (moves.some(move => move.type === GIVE_UP)) {
-    return (
-      <Trans>You must play a Place card. You may <Action onClick={onGiveUp}>Give up</Action>.</Trans>
-    )
-  } else if (moves.some(move => move.type === PASS)) {
-    if (playerId === CREATURE) {
-      return (
-        <Trans>You cannot play your Hunt cards, you must <Action onClick={onPass}>Pass</Action></Trans>
-      )
-    } else {
-      return (
-        <Trans
-          defaults="You cannot play your Survival {cards, plural, one{card} other{cards}}, you must <1>Pass</1>"
-          values={{cards: getHunted(game, playerId).handSurvivalCards.length}}
-          components={[<Action onClick={onPass}>Pass</Action>]}/>
-      )
+  if (animation && animation.type === MOVE_PLAYED) {
+    const Move = moves[animation.move.type]
+    if (Move.animationInformation) {
+      const animationTitle = Move.animationInformation(t, {...props, playersMap})
+      if (animationTitle) {
+        return animationTitle
+      }
     }
   }
 
-  return information
-}
+  if (!game.boardSide) {
+    if (playerId === CREATURE) {
+      return t('You are the Creature. Please choose the board side.')
+    } else {
+      return t('{player} is the Creature! {gender, select, ♀ {She} ♂ {He} other {They}} must choose the board side.', {player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender})
+    }
+  }
 
-const Action = ({children, onClick}) => {
-  return <Button color="primary" onClick={onClick}>{children}</Button>
+  if (game.assimilationCounter === 0) {
+    return t('{player} has assimilated the Hunted and wins the game!', {player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender})
+  } else if (game.rescueCounter === 0) {
+    return t('The Hunted escaped Artemia, they all win the game!')
+  }
+
+  if (game.phase === EXPLORATION) {
+    return <ExplorationTitle {...props}/>
+  } else if (game.phase === HUNTING) {
+    return <HuntingTitle {...props}/>
+  } else if (game.phase === RECKONING) {
+    return <ReckoningTitle {...props}/>
+  } else {
+    return <CardActionTitle {...props}/>
+  }
 }
 
 export default Title

@@ -3,16 +3,12 @@ import {useTranslation} from 'react-i18next'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core'
 import {lightBlue, pink} from '@material-ui/core/colors'
 import {HUNT_TOKENS} from '@bga/not-alone/material/HuntTokens'
-import {PlayHuntCard} from '@bga/not-alone/moves/PlayHuntCard'
-import {PlaySurvivalCard} from '@bga/not-alone/moves/PlaySurvivalCard'
 import {RevealPlaceCards} from '@bga/not-alone/moves/RevealPlaceCard'
-import {UsePlacePower} from '@bga/not-alone/moves/UsePlacePower'
 import {CHOOSE_BOARD_SIDE, ChooseBoardSide} from '@bga/not-alone/moves/ChooseBoardSide'
 import {BOARD_SIDES, CREATURE} from '@bga/not-alone'
 import {DrawHuntCard} from '@bga/not-alone/moves/DrawHuntCard'
 import {PlayPlaceCard} from '@bga/not-alone/moves/PlayPlaceCard'
 import {DrawSurvivalCard} from '@bga/not-alone/moves/DrawSurvivalCard'
-import {PlaceHuntToken} from '@bga/not-alone/moves/PlaceHuntToken'
 import {Pass} from '@bga/not-alone/moves/Pass'
 import Board from './material/board/Board'
 import Artemia from './artemia/Artemia'
@@ -24,13 +20,9 @@ import {ChooseBoardSideUI} from './moves-display/ChooseBoardSideUI'
 import {DrawHuntCardUI} from './moves-display/DrawHuntCardUI'
 import {DrawSurvivalCardUI} from './moves-display/DrawSurvivalCardUI'
 import {PlayPlaceCardUI} from './moves-display/PlayPlaceCardUI'
-import {PlaceHuntTokenUI} from './moves-display/PlaceHuntTokenUI'
 import HuntToken from './material/hunt-tokens/HuntToken'
 import {PassUI} from './moves-display/PassUI'
-import {PlayHuntCardUI} from './moves-display/PlayHuntCardUI'
-import {PlaySurvivalCardUI} from './moves-display/PlaySurvivalCardUI'
 import {RevealPlaceCardsUI} from './moves-display/RevealPlaceCardsUI'
-import {UsePlacePowerUI} from './moves-display/UsePlacePowerUI'
 import Title from './Title'
 import './not-alone.scss'
 import History from './History'
@@ -106,18 +98,6 @@ Object.assign(ChooseBoardSide, ChooseBoardSideUI)
 Object.assign(DrawHuntCard, DrawHuntCardUI)
 Object.assign(DrawSurvivalCard, DrawSurvivalCardUI)
 Object.assign(PlayPlaceCard, PlayPlaceCardUI)
-Object.assign(PlaceHuntToken, PlaceHuntTokenUI)
-Object.assign(PlayHuntCard, PlayHuntCardUI)
-Object.assign(PlaySurvivalCard, PlaySurvivalCardUI)
 Object.assign(RevealPlaceCards, RevealPlaceCardsUI)
-Object.assign(UsePlacePower, UsePlacePowerUI)
 Object.assign(Pass, PassUI)
 Object.assign(StartPhase, StartPhaseUI)
-
-export const getInformation = (t, game, playerId, animation, playersMap) => {
-  if (game.assimilationCounter === 0) {
-    return t('{player} has assimilated the Hunted and wins the game!', {player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender})
-  } else if (game.rescueCounter === 0) {
-    return t('The Hunted escaped Artemia, they all win the game!')
-  }
-}

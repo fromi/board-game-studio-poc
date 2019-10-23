@@ -5,7 +5,7 @@ import {applyMiddleware, combineReducers, createStore} from 'redux'
 import {DndProvider} from 'react-dnd'
 import MultiBackend from 'react-dnd-multi-backend'
 import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch'
-import {createServerReducer, getMoveView, MOVE_PLAYED, pendingNotificationsListener} from './reducers/ServerReducer'
+import {createServerReducer, getMoveView, pendingNotificationsListener} from './reducers/ServerReducer'
 import {createClientReducer, notificationsAnimationListener} from './reducers/ClientReducer'
 import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, MOVE_BACK, MOVE_FORWARD, NEW_GAME, PLAY_MOVE, RESUME, UNDO_MOVE} from './StudioActions'
 import {priorMoveMiddleware} from './middleware/PriorMoveMiddleware'
@@ -90,77 +90,11 @@ const createConsoleTools = (Game, store) => {
   }
 }
 
-const getInformation = (Game, GameUI, state, playersMap, t) => {
-  const animationInformation = getAnimationInformation(Game, state, playersMap, t)
-  if (animationInformation) {
-    return animationInformation
-  }
-  const playerMoveInformation = getPlayerMovesInformation(Game, GameUI, state, playersMap, t)
-  if (playerMoveInformation) {
-    return playerMoveInformation
-  }
-  const defaultMoveInformation = getDefaultMovesInformation(Game, GameUI, state, playersMap, t)
-  if (defaultMoveInformation) {
-    return defaultMoveInformation
-  }
-  const {game, animation, playerId} = state.client
-  const information = GameUI.getInformation(t, game, playerId, animation, playersMap)
-  if (information) {
-    return information
-  }
-  if (state.client.replayToMove) {
-    return 'You are ' + (state.client.moveHistory.length - state.client.currentMove) + ' steps back in game history'
-  }
-  console.warn('No information message for this state:', state)
-  return '?'
-}
-
-const getAnimationInformation = (Game, state, playersMap, t) => {
-  const animation = state.client.animation
-  if (animation && animation.type === MOVE_PLAYED) {
-    const Move = Game.moves[animation.move.type]
-    if (Move && Move.animationInformation) {
-      return Move.animationInformation(t, {...state.client, playersMap})
-    }
-  }
-}
-
-const getPlayerMovesInformation = (Game, GameUI, state, playersMap, t) => {
-  const {game, playerId} = state.client
-  if (playerId) {
-    for (const move of Game.getLegalMoves(game, playerId)) {
-      const Move = Game.moves[move.type]
-      if (Move && Move.playerInformation) {
-        const information = Move.playerInformation(t, game, playerId, playersMap)
-        if (information) {
-          return information
-        }
-      }
-    }
-  }
-}
-
-const getDefaultMovesInformation = (Game, GameUI, state, playersMap, t) => {
-  const {game} = state.client
-  const playerIds = Game.getPlayerIds(game);
-  for (const playerId of playerIds) {
-    for (const move of Game.getLegalMoves(game, playerId)) {
-      const Move = Game.moves[move.type]
-      if (Move && Move.defaultInformation) {
-        const information = Move.defaultInformation(t, game, playersMap, playerId);
-        if (information) {
-          return information;
-        }
-      }
-    }
-  }
-}
-
-const Studio = ({store, GameUI, Game}) => {
-  const {i18n, t} = useTranslation();
+const Studio = ({store, GameUI}) => {
+  const {i18n} = useTranslation();
   window.changeLanguage = (language) => i18n.changeLanguage(language)
   const GameView = connect(state => ({
-    ...state.client, playersMap: state.server.playersMap, information: getInformation(Game, GameUI, state, state.server.playersMap, t)
+    ...state.client, playersMap: state.server.playersMap
   }), (dispatch) => ({
     play: (move) => {
       if (store.getState().client.replayToMove !== undefined) {
@@ -194,8 +128,7 @@ const Studio = ({store, GameUI, Game}) => {
 Studio.propTypes = {
   store: PropTypes.object,
   GameUI: PropTypes.shape({
-    Interface: PropTypes.func.isRequired,
-    getInformation: PropTypes.func
+    Interface: PropTypes.func.isRequired
   }),
   Game: PropTypes.shape({
     moves: PropTypes.object.isRequired,

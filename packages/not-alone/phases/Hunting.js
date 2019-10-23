@@ -34,7 +34,7 @@ function getTokenValidLocations(game, token) {
   }
 }
 
-function huntTokenCanBePlaced(game, token) {
+export function huntTokenCanBePlaced(game, token) {
   return !game.huntTokensLocations[token].length && isHuntTokenAvailable(game, token)
 }
 
