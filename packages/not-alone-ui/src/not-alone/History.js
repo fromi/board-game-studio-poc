@@ -10,6 +10,11 @@ export default function History(props) {
   const {moveHistory, replay} = props
   const [isOpen, setOpen] = React.useState(false)
 
+  const replayFrom = moveIndex => {
+    setOpen(false)
+    replay(moveIndex)
+  }
+
   return (
     <React.Fragment>
       <IconButton className="history-button" onClick={() => setOpen(true)}>
@@ -18,7 +23,7 @@ export default function History(props) {
       <Popover className="history" open={isOpen} onClose={() => setOpen(false)}>
         <ol>
           <li>
-            <IconButton disabled={moveHistory.length === 0} onClick={() => replay(0)}>
+            <IconButton disabled={moveHistory.length === 0} onClick={() => replayFrom(0)}>
               <PlayCircleOutline/>
             </IconButton>
             {t('The game begins!')}

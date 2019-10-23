@@ -7,14 +7,6 @@
 
   .board {
     will-change: transform, opacity;
-    transition-property: transform, opacity;
-    transition-duration: $board-side-chosen-animation;
-    transition-timing-function: ease-in-out;
-
-    &.removing {
-      opacity: 0;
-      z-index: -1;
-    }
 
     .rescue-counter, .assimilation-counter {
       display: none;
@@ -61,6 +53,17 @@
   }
 
   &.board-side-chosen {
+    .board {
+      transition-property: transform, opacity;
+      transition-duration: $board-side-chosen-animation;
+      transition-timing-function: ease-in-out;
+
+      &.removing {
+        opacity: 0;
+        z-index: -1;
+      }
+    }
+
     > *:not(.information):not(.board) {
       transition: opacity $setup-animation ease $board-side-chosen-animation;
     }
