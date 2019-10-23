@@ -34,6 +34,8 @@ import {UsePlacePowerUI} from './moves-display/UsePlacePowerUI'
 import HeaderContent from './HeaderContent'
 import './not-alone.scss'
 import History from './History'
+import {StartPhase} from '@bga/not-alone/moves/StartPhase'
+import {StartPhaseUI} from './moves-display/StartPhaseUI'
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -51,7 +53,7 @@ const createTheme = (color) => createMuiTheme({
   }
 })
 
-const phases = {
+export const phases = {
   1: 'Phase 1: Exploration',
   2: 'Phase 2: Hunting',
   3: 'Phase 3: Reckoning',
@@ -110,6 +112,7 @@ Object.assign(PlaySurvivalCard, PlaySurvivalCardUI)
 Object.assign(RevealPlaceCards, RevealPlaceCardsUI)
 Object.assign(UsePlacePower, UsePlacePowerUI)
 Object.assign(Pass, PassUI)
+Object.assign(StartPhase, StartPhaseUI)
 
 export const getInformation = (t, game, playerId, animation, playersMap) => {
   if (game.assimilationCounter === 0) {
