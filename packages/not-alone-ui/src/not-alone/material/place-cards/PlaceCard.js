@@ -1,6 +1,18 @@
 import React from 'react'
 import './place-card.scss'
 import {useTranslation} from 'react-i18next'
+import {
+  THE_ARTEFACT,
+  THE_BEACH,
+  THE_JUNGLE,
+  THE_LAIR,
+  THE_RIVER,
+  THE_ROVER,
+  THE_SHELTER,
+  THE_SOURCE,
+  THE_SWAMP,
+  THE_WRECK
+} from '@bga/not-alone/material/PlaceCards'
 
 export const PLACE_CARD = 'Place card'
 
@@ -17,9 +29,9 @@ export default function PlaceCard({place}) {
     <div className={classes.join(' ')} onTouchEnd={event => event.preventDefault()}>
       {!isNaN(place) && (
         <div className="face front">
-          <h3 key="name">{t(places[place].name)}</h3>
+          <h3 key="name">{placeTexts[place].name(t)}</h3>
           <div className="description" key="description">
-            {places[place].description.map((description, index) => <p key={index}>{t(description)}</p>)}
+            {placeTexts[place].description(t).map((description, index) => <p key={index}>{description}</p>)}
           </div>
         </div>)
       }
@@ -28,47 +40,57 @@ export default function PlaceCard({place}) {
   )
 }
 
-// TODO: functions of t
-export const places = {
-  1: {
-    name: 'The Lair',
-    description: ['Take back to your hand the Place cards from your discard pile OR copy the power of the place with the Creature token.',
-      'Lose 1 extra Will if caught by the Creature token.']
+export const placeTexts = {
+  [THE_LAIR]: {
+    name: t => t('The Lair'),
+    description: t => [
+      t('Take back to your hand the Place cards from your discard pile OR copy the power of the place with the Creature token.'),
+      t('Lose 1 extra Will if caught by the Creature token.')
+    ]
   },
-  2: {
-    name: 'The Jungle',
-    description: ['Take back to your hand this Place card and 1 Place card from your discard pile.']
+  [THE_JUNGLE]: {
+    name: t => t('The Jungle'),
+    description: t => [t('Take back to your hand this Place card and 1 Place card from your discard pile.')]
   },
-  3: {
-    name: 'The River',
-    description: ['Next turn, play 2 Place cards. Before revealing, choose one and return the second to your hand.']
+  [THE_RIVER]: {
+    name: t => t('The River'),
+    description: t => [t('Next turn, play 2 Place cards. Before revealing, choose one and return the second to your hand.')]
   },
-  4: {
-    name: 'The Beach',
-    description: ['Place the Marker counter on the Beach OR remove it to move the Rescue counter forward 1 space.', '(max 1x/turn)']
+  [THE_BEACH]: {
+    name: t => t('The Beach'),
+    description: t => [
+      t('Place the Marker counter on the Beach OR remove it to move the Rescue counter forward 1 space.'),
+      t('(max 1x/turn)')
+    ]
   },
-  5: {
-    name: 'The Rover',
-    description: ['Take from the reserve 1 Place card you do not own and add it to your hand.']
+  [THE_ROVER]: {
+    name: t => t('The Rover'),
+    description: t => [t('Take from the reserve 1 Place card you do not own and add it to your hand.')]
   },
-  6: {
-    name: 'The Swamp',
-    description: ['Take back to your hand this Place card and 2 Place cards from your discard pile.']
+  [THE_SWAMP]: {
+    name: t => t('The Swamp'),
+    description: t => [t('Take back to your hand this Place card and 2 Place cards from your discard pile.')]
   },
-  7: {
-    name: 'The Shelter',
-    description: ['Draw 2 Survival cards, choose one and discard the second.']
+  [THE_SHELTER]: {
+    name: t => t('The Shelter'),
+    description: t => [t('Draw 2 Survival cards, choose one and discard the second.')]
   },
-  8: {
-    name: 'The Wreck',
-    description: ['Move the Rescue counter forward 1 space.', '(max 1x/turn)']
+  [THE_WRECK]: {
+    name: t => t('The Wreck'),
+    description: t => [
+      t('Move the Rescue counter forward 1 space.'),
+      t('(max 1x/turn)')
+    ]
   },
-  9: {
-    name: 'The Source',
-    description: ['The Hunted of your choice (you or another player) regains 1 Will OR you draw 1 Survival card.']
+  [THE_SOURCE]: {
+    name: t => t('The Source'),
+    description: t => [t('The Hunted of your choice (you or another player) regains 1 Will OR you draw 1 Survival card.')]
   },
-  10: {
-    name: 'The Artefact',
-    description: ['Next turn, play 2 Place cards. Resolve both places.', 'You may not copy the Artefact.']
+  [THE_ARTEFACT]: {
+    name: t => t('The Artefact'),
+    description: t => [
+      t('Next turn, play 2 Place cards. Resolve both places.'),
+      t('You may not copy the Artefact.')
+    ]
   }
 }

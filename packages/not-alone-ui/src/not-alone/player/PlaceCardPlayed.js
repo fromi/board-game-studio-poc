@@ -1,5 +1,5 @@
 import React from 'react'
-import PlaceCard, {places} from '../material/place-cards/PlaceCard'
+import PlaceCard, {placeTexts} from '../material/place-cards/PlaceCard'
 import './place-card-played.scss'
 import {getHunted, getLegalMoves} from '@bga/not-alone'
 import {REVEAL_PLACE_CARDS} from '@bga/not-alone/moves/RevealPlaceCard'
@@ -36,7 +36,7 @@ export default function PlaceCardPlayed({place, game, playerId, animation, play}
   }
 
   return (
-    <Tooltip title={t('You played {place}', {place: t(places[place].name)})} enterTouchDelay={0}>
+    <Tooltip title={t('You played {place}', {place: placeTexts[place].name(t)})} enterTouchDelay={0}>
       <div className={classes.join(' ')} onClick={takeBack}>
         <PlaceCard place={place}/>
       </div>

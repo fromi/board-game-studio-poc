@@ -7,7 +7,7 @@ import {IconButton, Tooltip} from '@material-ui/core'
 import {START_PHASE} from '@bga/not-alone/moves/StartPhase'
 import {phaseTexts} from '../NotAloneUI'
 import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
-import {places} from '../material/place-cards/PlaceCard'
+import {placeTexts} from '../material/place-cards/PlaceCard'
 import ReplayButton from './ReplayButton'
 
 export default function PastMove({move, playerId, playersMap, moveHistory, index, undo, replay}) {
@@ -47,6 +47,6 @@ function UndoButton({move, undo}) {
 const texts = {
   [START_PHASE]: (t, move) => phaseTexts[move.phase](t),
   [PLAY_PLACE_CARD]: (t, move, playerId, playersMap) => playerId === move.huntedId ?
-    t('You played {place}', {place: t(places[move.place].name)}) :
+    t('You played {place}', {place: placeTexts[move.place].name(t)}) :
     t('{player} played a place card', {player: playersMap[move.huntedId].name})
 }

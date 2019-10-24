@@ -46,7 +46,7 @@ export default function PlayerHand({game, playerId, animation}) {
     const classes = drawing ? ['drawing'] : []
     cards.push(
       <HandItem key={card} className={drawing ? 'drawing' : ''} hovering>
-        <SpecialCardComponent cardName={card} classes={classes}/>
+        <SpecialCardComponent card={card} classes={classes}/>
       </HandItem>
     )
   })

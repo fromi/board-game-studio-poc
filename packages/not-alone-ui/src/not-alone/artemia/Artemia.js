@@ -1,5 +1,5 @@
 import React from 'react'
-import {PLACE_CARD, places} from '../material/place-cards/PlaceCard'
+import {PLACE_CARD, placeTexts} from '../material/place-cards/PlaceCard'
 import './artemia.scss'
 import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
@@ -25,6 +25,6 @@ export default function Artemia(props) {
   return <div className="artemia" ref={drop}>
     <h3>Artemia</h3>
     {PLACES.map(place => <ArtemiaPlace place={place} key={place} {...props}/>)}
-    {draggedPlace && <div className={dropInfoClasses.join(' ')}><p>{t('Play {place}', {place: t(places[draggedPlace].name)})}</p></div>}
+    {draggedPlace && <div className={dropInfoClasses.join(' ')}><p>{t('Play {place}', {place: placeTexts[draggedPlace].name(t)})}</p></div>}
   </div>
 }

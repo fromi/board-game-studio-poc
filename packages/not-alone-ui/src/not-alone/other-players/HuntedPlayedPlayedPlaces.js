@@ -1,5 +1,5 @@
 import React from 'react'
-import PlaceCard, {places} from '../material/place-cards/PlaceCard'
+import PlaceCard, {placeTexts} from '../material/place-cards/PlaceCard'
 import Tooltip from '@material-ui/core/Tooltip'
 import {REVEAL_PLACE_CARDS} from '@bga/not-alone/moves/RevealPlaceCard'
 import {useTranslation} from 'react-i18next'
@@ -24,7 +24,7 @@ export default function HuntedPlayedPlayedPlaces(props) {
             player: playersMap[huntedId].name,
             count: hunted.playedPlaceCards.length
           }) :
-          t('{player} played {place}', {player: playersMap[huntedId].name, place: t(places[place].name)})
+          t('{player} played {place}', {player: playersMap[huntedId].name, place: placeTexts[place].name(t)})
         return (
           <Tooltip title={tooltip} enterTouchDelay={0} key={isNaN(place) ? index : place}>
             <div>
