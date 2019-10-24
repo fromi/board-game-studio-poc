@@ -23,7 +23,7 @@ export default function CreaturePlayer({game, classes, playersMap, animation}) {
   }
 
   const cards = game.creature.hand.map((card, index) => {
-    return <HandItem key={index} className={isDrawingHuntCard && index === game.creature.hand.length - 1 ? 'drawing' : ''}><HuntCard/></HandItem>
+    return <HandItem key={index} className={isDrawingHuntCard && index >= game.creature.hand.length - animation.move.quantity ? 'drawing' : ''}><HuntCard/></HandItem>
   })
 
   if (!speech && animation && animation.type === MOVE_PLAYED && animation.move.type === PASS && animation.move.playerId === CREATURE) {

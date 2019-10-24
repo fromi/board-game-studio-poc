@@ -37,7 +37,7 @@ $revealing-place-card-animation: 2s;
 //noinspection CssInvalidPseudoSelector,CssUnknownProperty
 :export {
   ChooseBoardSide: $board-side-chosen-animation + $setup-animation;
-  DrawHuntCard: $draw-card-animation;
+  drawCardDuration: $draw-card-animation;
   DrawSurvivalCard: $draw-card-animation;
   Pass: 1s;
   PlayPlaceCard: $playing-place-card-animation;

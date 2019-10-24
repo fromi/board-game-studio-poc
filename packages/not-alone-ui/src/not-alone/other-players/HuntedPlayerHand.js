@@ -22,7 +22,7 @@ export default function HuntedPlayedHand(props) {
       <div className={classes.join(' ')}>
         {hunted.handPlaceCards.map((card, index) => <HandItem key={'place-card-' + index}><PlaceCard/></HandItem>)}
         {hunted.handSurvivalCards.map((card, index) => {
-          const isDrawing = isDrawingSurvivalCard && index === hunted.handSurvivalCards.length - 1
+          const isDrawing = isDrawingSurvivalCard && index >= hunted.handSurvivalCards.length - animation.move.quantity
           return <HandItem key={'survival-card-' + index} className={isDrawing ? 'drawing' : ''}><SurvivalCard/></HandItem>
         })}
       </div>

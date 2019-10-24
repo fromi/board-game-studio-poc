@@ -29,15 +29,23 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
 
   .drawing {
     .hand-item-position {
-      z-index: 1;
-      animation: from-transform-none 1s ease-in-out;
+      animation: from-transform-none 1s ease-in-out both;
+      animation-delay: inherit;
 
       .survival-card {
-        animation: drawing-survival-card $draw-card-animation ease-in-out;
+        animation: drawing-survival-card $draw-card-animation ease-in-out both;
+        animation-delay: inherit;
       }
 
       .hunt-card {
-        animation: drawing-hunt-card $draw-card-animation ease-in-out;
+        animation: drawing-hunt-card $draw-card-animation ease-in-out both;
+        animation-delay: inherit;
+      }
+    }
+
+    @for $i from 1 through 3 {
+      &:nth-last-child(#{$i}) .hand-item-position {
+        z-index: $i;
       }
     }
   }

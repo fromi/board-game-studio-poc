@@ -8,17 +8,17 @@ export const Shelter = {
   canUsePower: canDrawSurvivalCard,
 
   usePower: (game) => {
-    game.ongoingAction = {cardType: PLACE_CARD, card: THE_SHELTER, survivalCards: []}
+    game.ongoingAction = {cardType: PLACE_CARD, card: THE_SHELTER}
   },
 
   getAutomaticMove: (game) => {
-    if (game.ongoingAction.survivalCards.length < 2) {
-      return drawSurvivalCard(getCurrentHuntedId(game))
+    if (!game.ongoingAction.survivalCards) {
+      return drawSurvivalCard(getCurrentHuntedId(game), Math.max(2, game.survivalCardsDeck.length + game.survivalCardsDiscard.length))
     }
   },
 
   getHuntedMoves: (game, hunted) => {
-    if (game.ongoingAction.survivalCards === 2 && hunted === getCurrentHuntedId(game)) {
+    if (game.ongoingAction.survivalCards && hunted === getCurrentHuntedId(game)) {
       return game.ongoingAction.survivalCards.map(card => discardSurvivalCard(hunted, card))
     } else {
       return []
@@ -26,8 +26,8 @@ export const Shelter = {
   },
 
   continueGameAfterMove: (game, move) => {
-    if (move.type === DRAW_SURVIVAL_CARD) {
-      game.ongoingAction.survivalCards.push(move.card)
+    if (move.type === DRAW_SURVIVAL_CARD && move.quantity === 2) {
+      game.ongoingAction.survivalCards = move.cards
     } else {
       delete game.ongoingAction
       continueReckoning(game)

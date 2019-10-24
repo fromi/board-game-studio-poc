@@ -11,8 +11,8 @@ export const chooseBoardSide = (side) => ({type: CHOOSE_BOARD_SIDE, side})
 export const ChooseBoardSide = {
   execute: (game, move) => {
     game.boardSide = move.side
-    game.nextMoves.push(drawHuntCard, drawHuntCard, drawHuntCard)
-    getPlayerIds(game).filter((playerId) => playerId !== CREATURE).forEach((playerId) => game.nextMoves.push(drawSurvivalCard(playerId)))
+    game.nextMoves.push(drawHuntCard(3))
+    getPlayerIds(game).filter((playerId) => playerId !== CREATURE).forEach((playerId) => game.nextMoves.push(drawSurvivalCard(playerId, 1)))
     game.nextMoves.push(startPhase(EXPLORATION))
   }
 }

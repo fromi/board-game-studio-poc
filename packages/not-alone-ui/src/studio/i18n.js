@@ -179,8 +179,8 @@ i18n.use(ICU).use(initReactI18next).init({
         'You are the Creature. Please choose the board side.': 'Vous êtes la Créature ! Veuillez choisir la face du plateau.',
         '{player} is the Creature! {gender, select, ♀ {She} ♂ {He} other {They}} must choose the board side.': '{player} est la Creature! {gender, select, ♀ {Elle} ♂ {Il} other {Elle·Il}} doit choisir la face du plateau.',
         'Board side is chosen! Creating Artemia...': 'La face du plateau est choisie ! Création d’Artemia...',
-        'You draw 3 Hunt cards': 'Vous piochez 3 cartes Traque',
-        '{player} draws 3 Hunt cards': '{player} pioche 3 cartes Traque',
+        'You draw {quantity, plural, one {one Hunt card} other {{quantity} Hunt cards}}': 'Vous piochez {quantity, plural, one {une carte Traque} other {{quantity} cartes Traque}}',
+        '{player} draws {quantity, plural, one {one Hunt card} other {{quantity} Hunt cards}}': '{player} pioche {quantity, plural, one {une carte Traque} other {{quantity} cartes Traque}}',
         'Hunted players must play a Place card': 'Les Traqués doivent jouer une carte Lieu',
         '{player} must play a Place card': '{player} doit jouer une carte Lieu',
         'You must play a Place card': 'Vous devez jouer une carte Lieu',
@@ -188,8 +188,8 @@ i18n.use(ICU).use(initReactI18next).init({
         'You must play a Place card. You may <1>Give up</1>.': 'Vous devez jouer une carte Lieu. Vous pouvez <1>Lâcher prise</1>.',
         'You played {place}': 'Vous avez joué {place}',
         '{player} played a place card': '{player} a joué une carte Lieu',
-        'You draw a Survival card': 'Vous piochez une carte Survie',
-        '{player} draws a Survival card': '{player} pioche une carte Survie',
+        'You draw {quantity, plural, one {a Survival card} other {{quantity} Survival cards}}': 'Vous piochez {quantity, plural, one {une carte Survie} other {{quantity} cartes Survie}}',
+        '{player} draws {quantity, plural, one {a Survival card} other {{quantity} Survival cards}}': '{player} pioche {quantity, plural, one {une carte Survie} other {{quantity} cartes Survie}}',
 
         'The Creature will have the Artemia token when Rescue counter is 6 spaces or less from victory.':
           'La Créature pourra placer le jeton Artemia lorsque le jeton Secours sera à 6 cases ou moins de la victoire.',
@@ -262,4 +262,4 @@ i18n.use(ICU).use(initReactI18next).init({
   interpolation: {
     escapeValue: false
   }
-});
+})

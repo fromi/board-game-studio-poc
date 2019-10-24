@@ -17,6 +17,7 @@ import './not-alone.scss'
 import History from './history/History'
 import variables from './variables.scss'
 import {END_OF_TURN_ACTIONS, EXPLORATION, HUNTING, RECKONING} from '@bga/not-alone/Phases'
+import {DrawHuntCard} from '@bga/not-alone/moves/DrawHuntCard'
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -69,8 +70,8 @@ export const Interface = (props) => {
         <SurvivalCardsDeck {...props}/>
         <Artemia {...props}/>
         <OtherPlayers {...props}/>
-        {playerId && <PlayerMaterial {...props}/>}
         {HUNT_TOKENS.map(token => <HuntToken token={token} locations={game.huntTokensLocations[token]} playerId={playerId} game={game} key={token}/>)}
+        {playerId && <PlayerMaterial {...props}/>}
       </div>
     </MuiThemeProvider>
   )
@@ -90,3 +91,8 @@ for (let move in moves) {
     Object.assign(moves[move], {animationDelay: () => cssDurationToSecond(variables[move])})
   }
 }
+
+const drawCardDuration = cssDurationToSecond(variables.drawCardDuration)
+export const drawNextCardDelay = 0.2
+
+Object.assign(DrawHuntCard, {animationDelay: (animation) => drawCardDuration + (animation.move.quantity - 1) * drawNextCardDelay})

@@ -3,7 +3,7 @@ import './hand.scss'
 import {useDrag, useDragLayer} from 'react-dnd'
 import {getEmptyImage} from 'react-dnd-html5-backend'
 
-export default function HandItem({children, className = '', hovering, drag}) {
+export default function HandItem({children, className = '', hovering, drag, ...props}) {
   let draggable = drag ? drag.enable : false, dragging, ref, preview, child = children
 
   if (drag) {
@@ -27,7 +27,7 @@ export default function HandItem({children, className = '', hovering, drag}) {
   }
 
   return (
-    <div className={`${className} ${hovering ? 'hovering' : ''} ${draggable ? 'draggable' : ''} ${dragging ? 'dragging' : ''}`.trim()} ref={ref}>
+    <div ref={ref} className={`${className} ${hovering ? 'hovering' : ''} ${draggable ? 'draggable' : ''} ${dragging ? 'dragging' : ''}`.trim()} {...props}>
       <div className="hand-item-position">
         {child}
       </div>

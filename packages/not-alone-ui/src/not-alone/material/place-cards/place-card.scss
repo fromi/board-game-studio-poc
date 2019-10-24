@@ -42,7 +42,7 @@
     font-size: $card-image-height / 28;
   }
 
-  @for $i from 1 through 10{
+  @for $i from 1 through 10 {
     &.place-#{$i} .face.front {
       background-image: url("place-#{$i}.jpg");
     }

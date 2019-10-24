@@ -58,14 +58,16 @@ export default function Title(props) {
 
 const animationTexts = {
   [CHOOSE_BOARD_SIDE]: t => t('Board side is chosen! Creating Artemia...'),
-  [DRAW_HUNT_CARD]: (t, {playerId, playersMap}) => playerId === CREATURE ?
-    t('You draw 3 Hunt cards') :
-    t('{player} draws 3 Hunt cards', {player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender}),
+  [DRAW_HUNT_CARD]: (t, {playerId, animation, playersMap}) => playerId === CREATURE ?
+    t('You draw {quantity, plural, one {one Hunt card} other {{quantity} Hunt cards}}', {quantity: animation.move.quantity}) :
+    t('{player} draws {quantity, plural, one {one Hunt card} other {{quantity} Hunt cards}}',
+      {quantity: animation.move.quantity, player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender}),
   [DRAW_SURVIVAL_CARD]: (t, {playerId, animation, playersMap}) => playerId === animation.move.huntedId ?
-    t('You draw a Survival card') :
-    t('{player} draws a Survival card', {player: playersMap[animation.move.huntedId].name, gender: playersMap[animation.move.huntedId].gender}),
+    t('You draw {quantity, plural, one {a Survival card} other {{quantity} Survival cards}}', {quantity: animation.move.quantity}) :
+    t('{player} draws {quantity, plural, one {a Survival card} other {{quantity} Survival cards}}',
+      {quantity: animation.move.quantity, player: playersMap[animation.move.huntedId].name, gender: playersMap[animation.move.huntedId].gender}),
   [PLAY_PLACE_CARD]: (t, {game}) => {
-    const automaticMove = getAutomaticMove(game);
+    const automaticMove = getAutomaticMove(game)
     if (automaticMove && automaticMove.type === START_PHASE) {
       return t('All the Hunted have selected a Place to explore')
     }

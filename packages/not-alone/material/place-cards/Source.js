@@ -14,7 +14,7 @@ export const Source = {
     if (huntedId === getCurrentHuntedId(game)) {
       game.hunted.filter(hunted => hunted.willCounters < 3).forEach(hunted => moves.push(regainWillCounter(getHuntedId(game, hunted))))
       if (canDrawSurvivalCard(game)) {
-        moves.push(drawSurvivalCard(huntedId))
+        moves.push(drawSurvivalCard(huntedId, 1))
       }
     }
     return moves

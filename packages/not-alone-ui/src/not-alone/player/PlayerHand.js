@@ -9,6 +9,7 @@ import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
 import {DRAW_SURVIVAL_CARD} from '@bga/not-alone/moves/DrawSurvivalCard'
 import {MOVE_PLAYED} from '../../studio/reducers/ServerReducer'
 import HandItem from '../../util/Hand'
+import {drawNextCardDelay} from '../NotAloneUI'
 
 export default function PlayerHand({game, playerId, animation}) {
   const cards = []
@@ -41,11 +42,12 @@ export default function PlayerHand({game, playerId, animation}) {
   const SpecialCardComponent = hunted ? SurvivalCard : HuntCard
   const specialCards = hunted ? hunted.handSurvivalCards : game.creature.hand
 
-  specialCards.forEach((card) => {
-    const drawing = isDrawingSpecialCard && animation.move.card === card
+  specialCards.forEach((card, index) => {
+    const drawing = isDrawingSpecialCard && animation.move.cards.includes(card)
     const classes = drawing ? ['drawing'] : []
+    const cardsDrawnBefore = drawing ? index - specialCards.length + animation.move.quantity : 0
     cards.push(
-      <HandItem key={card} className={drawing ? 'drawing' : ''} hovering>
+      <HandItem key={card} className={drawing ? 'drawing' : ''} hovering style={{animationDelay: drawNextCardDelay * cardsDrawnBefore + 's'}}>
         <SpecialCardComponent card={card} classes={classes}/>
       </HandItem>
     )

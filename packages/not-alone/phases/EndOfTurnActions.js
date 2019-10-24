@@ -31,7 +31,7 @@ export const EndOfTurnActions = {
         return discardPlayedHuntCard(game.creature.huntCardsPlayed[0])
       }
       if (game.creature.hand.length < 3) {
-        return drawHuntCard
+        return drawHuntCard(3 - game.creature.hand.length)
       }
       if (!game.pendingEffects.some(effect => effect.card === STASIS)) {
         return moveRescueCounter
