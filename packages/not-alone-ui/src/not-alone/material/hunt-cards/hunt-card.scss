@@ -19,7 +19,6 @@
     font-size: $card-image-height / 15;
     text-transform: uppercase;
     font-weight: bold;
-    backface-visibility: hidden;
   }
 
   .hunt-token-symbol {
@@ -46,10 +45,6 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-
-    p {
-      backface-visibility: hidden;
-    }
   }
 
   .phase {
@@ -61,6 +56,5 @@
     text-align: center;
     font-size: $card-image-height / 17;
     font-weight: bold;
-    backface-visibility: hidden;
   }
 }

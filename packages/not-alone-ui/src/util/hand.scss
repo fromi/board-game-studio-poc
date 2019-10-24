@@ -70,7 +70,7 @@
         $card-rotation: ($card-index - ($cards-in-hand + 1) / 2) * $nearby-rotation;
 
         &:before, .hand-item-position {
-          transform: rotate($card-rotation) translate3d(0, 0, 0);
+          transform: rotate($card-rotation);
         }
 
         // This transformation moves the card so that its center stay exactly at the same abscissa, but without any rotation
