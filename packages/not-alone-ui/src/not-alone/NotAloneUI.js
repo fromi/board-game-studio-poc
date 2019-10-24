@@ -3,24 +3,15 @@ import {useTranslation} from 'react-i18next'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core'
 import {lightBlue, pink} from '@material-ui/core/colors'
 import {HUNT_TOKENS} from '@bga/not-alone/material/HuntTokens'
-import {RevealPlaceCards} from '@bga/not-alone/moves/RevealPlaceCard'
-import {CHOOSE_BOARD_SIDE, ChooseBoardSide} from '@bga/not-alone/moves/ChooseBoardSide'
+import {CHOOSE_BOARD_SIDE} from '@bga/not-alone/moves/ChooseBoardSide'
 import {BOARD_SIDES, CREATURE, moves} from '@bga/not-alone'
-import {DrawHuntCard} from '@bga/not-alone/moves/DrawHuntCard'
-import {PlayPlaceCard} from '@bga/not-alone/moves/PlayPlaceCard'
-import {DrawSurvivalCard} from '@bga/not-alone/moves/DrawSurvivalCard'
 import Board from './material/board/Board'
 import Artemia from './artemia/Artemia'
 import HuntCardsDeck from './material/hunt-cards/HuntCardsDeck'
 import SurvivalCardsDeck from './material/survival-cards/SurvivalCardsDeck'
 import OtherPlayers from './other-players/OtherPlayers'
 import PlayerMaterial from './player/PlayerMaterial'
-import {ChooseBoardSideUI} from './moves-display/ChooseBoardSideUI'
-import {DrawHuntCardUI} from './moves-display/DrawHuntCardUI'
-import {DrawSurvivalCardUI} from './moves-display/DrawSurvivalCardUI'
-import {PlayPlaceCardUI} from './moves-display/PlayPlaceCardUI'
 import HuntToken from './material/hunt-tokens/HuntToken'
-import {RevealPlaceCardsUI} from './moves-display/RevealPlaceCardsUI'
 import Title from './Title'
 import './not-alone.scss'
 import History from './history/History'
@@ -99,9 +90,3 @@ for (let move in moves) {
     Object.assign(moves[move], {animationDelay: () => cssDurationToSecond(variables[move])})
   }
 }
-
-Object.assign(ChooseBoardSide, ChooseBoardSideUI)
-Object.assign(DrawHuntCard, DrawHuntCardUI)
-Object.assign(DrawSurvivalCard, DrawSurvivalCardUI)
-Object.assign(PlayPlaceCard, PlayPlaceCardUI)
-Object.assign(RevealPlaceCards, RevealPlaceCardsUI)

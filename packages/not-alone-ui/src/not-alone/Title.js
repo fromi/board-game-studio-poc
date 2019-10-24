@@ -1,21 +1,27 @@
 import React from 'react'
 import {useTranslation} from 'react-i18next'
-import {CREATURE, moves} from '@bga/not-alone'
+import {CREATURE, getAutomaticMove} from '@bga/not-alone'
 import {MOVE_PLAYED} from '../studio/reducers/ServerReducer'
 import ExplorationTitle from './ExplorationTitle'
 import {EXPLORATION, HUNTING, RECKONING} from '@bga/not-alone/Phases'
 import HuntingTitle from './HuntingTitle'
 import ReckoningTitle from './ReckoningTitle'
 import CardActionTitle from './CardActionTitle'
+import {CHOOSE_BOARD_SIDE} from '@bga/not-alone/moves/ChooseBoardSide'
+import {DRAW_HUNT_CARD} from '@bga/not-alone/moves/DrawHuntCard'
+import {DRAW_SURVIVAL_CARD} from '@bga/not-alone/moves/DrawSurvivalCard'
+import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
+import {START_PHASE} from '@bga/not-alone/moves/StartPhase'
+import {REVEAL_PLACE_CARDS} from '@bga/not-alone/moves/RevealPlaceCard'
+import {placeTexts} from './material/place-cards/PlaceCard'
 
 export default function Title(props) {
   const {t} = useTranslation()
   const {game, playerId, animation, playersMap} = props
 
   if (animation && animation.type === MOVE_PLAYED) {
-    const Move = moves[animation.move.type]
-    if (Move.animationInformation) {
-      const animationTitle = Move.animationInformation(t, {...props, playersMap})
+    if (animationTexts[animation.move.type]) {
+      const animationTitle = animationTexts[animation.move.type](t, {...props})
       if (animationTitle) {
         return animationTitle
       }
@@ -47,5 +53,43 @@ export default function Title(props) {
     return <ReckoningTitle {...props}/>
   } else {
     return <CardActionTitle {...props}/>
+  }
+}
+
+const animationTexts = {
+  [CHOOSE_BOARD_SIDE]: t => t('Board side is chosen! Creating Artemia...'),
+  [DRAW_HUNT_CARD]: (t, {playerId, playersMap}) => playerId === CREATURE ?
+    t('You draw 3 Hunt cards') :
+    t('{player} draws 3 Hunt cards', {player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender}),
+  [DRAW_SURVIVAL_CARD]: (t, {playerId, animation, playersMap}) => playerId === animation.move.huntedId ?
+    t('You draw a Survival card') :
+    t('{player} draws a Survival card', {player: playersMap[animation.move.huntedId].name, gender: playersMap[animation.move.huntedId].gender}),
+  [PLAY_PLACE_CARD]: (t, {game}) => {
+    const automaticMove = getAutomaticMove(game);
+    if (automaticMove && automaticMove.type === START_PHASE) {
+      return t('All the Hunted have selected a Place to explore')
+    }
+  },
+  [REVEAL_PLACE_CARDS]: (t, {playerId, animation, playersMap}) => {
+    if (playerId === animation.move.huntedId) {
+      if (animation.move.revealedPlaces.length === 1) {
+        return t('You reveal {place}', {place: placeTexts[animation.move.revealedPlaces[0]].name(t)})
+      } else {
+        return t('You reveal {place1} and {place2}', {
+          place1: placeTexts[animation.move.revealedPlaces[0]].name(t),
+          place2: placeTexts[animation.move.revealedPlaces[1]].name(t)
+        })
+      }
+    } else {
+      if (animation.move.revealedPlaces.length === 1) {
+        return t('{player} reveals {place}', {player: playersMap[animation.move.huntedId].name, place: placeTexts[animation.move.revealedPlaces[0]].name(t)})
+      } else {
+        return t('{player} reveals {place1} and {place2}', {
+          player: playersMap[animation.move.huntedId].name,
+          place1: placeTexts[animation.move.revealedPlaces[0]].name(t),
+          place2: placeTexts[animation.move.revealedPlaces[1]].name(t)
+        })
+      }
+    }
   }
 }
