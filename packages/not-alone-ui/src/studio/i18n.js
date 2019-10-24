@@ -187,6 +187,7 @@ i18n.use(ICU).use(initReactI18next).init({
         'You must play a Place card. You may <1>Resist</1> or <3>Give up</3>.': 'Vous devez jouer une carte Lieu. Vous pouvez <1>Résister</1> ou <3>Lâcher prise</3>.',
         'You must play a Place card. You may <1>Give up</1>.': 'Vous devez jouer une carte Lieu. Vous pouvez <1>Lâcher prise</1>.',
         'You played {place}': 'Vous avez joué {place}',
+        '{player} played a place card': '{player} a joué une carte Lieu',
         'You draw a Survival card': 'Vous piochez une carte Survie',
         '{player} draws a Survival card': '{player} pioche une carte Survie',
 

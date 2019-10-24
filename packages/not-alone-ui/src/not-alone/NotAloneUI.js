@@ -23,10 +23,9 @@ import HuntToken from './material/hunt-tokens/HuntToken'
 import {RevealPlaceCardsUI} from './moves-display/RevealPlaceCardsUI'
 import Title from './Title'
 import './not-alone.scss'
-import History from './History'
-import {StartPhase} from '@bga/not-alone/moves/StartPhase'
-import {StartPhaseUI} from './moves-display/StartPhaseUI'
+import History from './history/History'
 import variables from './variables.scss'
+import {END_OF_TURN_ACTIONS, EXPLORATION, HUNTING, RECKONING} from '@bga/not-alone/Phases'
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -43,13 +42,6 @@ const createTheme = (color) => createMuiTheme({
     }
   }
 })
-
-export const phases = {
-  1: 'Phase 1: Exploration',
-  2: 'Phase 2: Hunting',
-  3: 'Phase 3: Reckoning',
-  4: 'Phase 4: End-of-turn actions'
-}
 
 export const Interface = (props) => {
   const {playerId, game, animation} = props
@@ -78,7 +70,7 @@ export const Interface = (props) => {
           <History {...props}/>
           <h1><Title {...props}/></h1>
         </header>
-        {game.phase && <h3 className="phase">{t(phases[game.phase])}</h3>}
+        {game.phase && <h3 className="phase">{phaseTexts[game.phase](t)}</h3>}
         {BOARD_SIDES.map(side =>
           <Board side={side} key={side} {...props}/>
         )}
@@ -91,6 +83,13 @@ export const Interface = (props) => {
       </div>
     </MuiThemeProvider>
   )
+}
+
+export const phaseTexts = {
+  [EXPLORATION]: t => t('Phase 1: Exploration'),
+  [HUNTING]: t => t('Phase 2: Hunting'),
+  [RECKONING]: t => t('Phase 3: Reckoning'),
+  [END_OF_TURN_ACTIONS]: t => t('Phase 4: End-of-turn actions')
 }
 
 const cssDurationToSecond = cssDuration => cssDuration.endsWith('ms') ? 1000 * parseInt(cssDuration.slice(0, -2)) : parseFloat(cssDuration.slice(0, -1))
@@ -106,4 +105,3 @@ Object.assign(DrawHuntCard, DrawHuntCardUI)
 Object.assign(DrawSurvivalCard, DrawSurvivalCardUI)
 Object.assign(PlayPlaceCard, PlayPlaceCardUI)
 Object.assign(RevealPlaceCards, RevealPlaceCardsUI)
-Object.assign(StartPhase, StartPhaseUI)
