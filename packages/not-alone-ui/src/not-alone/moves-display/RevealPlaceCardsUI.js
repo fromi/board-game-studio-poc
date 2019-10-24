@@ -1,11 +1,6 @@
 import {places} from '../material/place-cards/PlaceCard'
 
-// eslint-disable-next-line import/no-webpack-loader-syntax
-const style = require('sass-extract-loader!../variables.scss');
-
 export const RevealPlaceCardsUI = {
-  animationDelay: () => style.global['$revealing-place-card-animation'].value,
-
   animationInformation: (t, {playerId, animation, playersMap}) => {
     if (playerId === animation.move.huntedId) {
       if (animation.move.revealedPlaces.length === 1) {

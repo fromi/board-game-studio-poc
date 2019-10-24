@@ -31,11 +31,11 @@
 
     &.drawing-survival-card, &.drawing-hunt-card {
       z-index: 1;
-      transition: transform $other-player-draw-card-animation ease-out;
+      transition: transform $draw-card-animation ease-out;
 
       .drawing .hand-item-position {
         z-index: 1;
-        animation: from-transform-none $other-player-draw-card-animation ease-in-out;
+        animation: from-transform-none $draw-card-animation ease-in-out;
       }
     }
   }

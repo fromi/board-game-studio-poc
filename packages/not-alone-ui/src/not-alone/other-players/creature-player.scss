@@ -2,7 +2,7 @@
 
 .other-player.creature {
   .drawing .hunt-card {
-    animation: to-transform-none $other-player-draw-card-animation ease-in-out;
+    animation: to-transform-none $draw-card-animation ease-in-out forwards;
   }
 
   $hunt-card-seat-top-translate-y: - 4vh;

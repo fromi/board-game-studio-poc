@@ -22,9 +22,7 @@
     "react-i18next": "^10.12.2",
     "react-redux": "^6.0.1",
     "react-scripts": "2.1.8",
-    "redux": "^4.0.4",
-    "sass-extract": "^2.1.0",
-    "sass-extract-loader": "^1.1.0"
+    "redux": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

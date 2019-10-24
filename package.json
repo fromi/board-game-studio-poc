@@ -5,13 +5,13 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
-    "lerna": "^3.16.4"
+    "lerna": "^3.18.3"
   },
   "dependencies": {
     "@bga/not-alone": "./packages/not-alone",
     "babel-preset-env": "^1.7.0",
     "express": "^4.17.1",
-    "mongoose": "^5.7.1"
+    "mongoose": "^5.7.6"
   },
   "scripts": {
     "clean": "rm -rf build && mkdir build",

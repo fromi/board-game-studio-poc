@@ -5,11 +5,10 @@ import {lightBlue, pink} from '@material-ui/core/colors'
 import {HUNT_TOKENS} from '@bga/not-alone/material/HuntTokens'
 import {RevealPlaceCards} from '@bga/not-alone/moves/RevealPlaceCard'
 import {CHOOSE_BOARD_SIDE, ChooseBoardSide} from '@bga/not-alone/moves/ChooseBoardSide'
-import {BOARD_SIDES, CREATURE} from '@bga/not-alone'
+import {BOARD_SIDES, CREATURE, moves} from '@bga/not-alone'
 import {DrawHuntCard} from '@bga/not-alone/moves/DrawHuntCard'
 import {PlayPlaceCard} from '@bga/not-alone/moves/PlayPlaceCard'
 import {DrawSurvivalCard} from '@bga/not-alone/moves/DrawSurvivalCard'
-import {Pass} from '@bga/not-alone/moves/Pass'
 import Board from './material/board/Board'
 import Artemia from './artemia/Artemia'
 import HuntCardsDeck from './material/hunt-cards/HuntCardsDeck'
@@ -21,13 +20,13 @@ import {DrawHuntCardUI} from './moves-display/DrawHuntCardUI'
 import {DrawSurvivalCardUI} from './moves-display/DrawSurvivalCardUI'
 import {PlayPlaceCardUI} from './moves-display/PlayPlaceCardUI'
 import HuntToken from './material/hunt-tokens/HuntToken'
-import {PassUI} from './moves-display/PassUI'
 import {RevealPlaceCardsUI} from './moves-display/RevealPlaceCardsUI'
 import Title from './Title'
 import './not-alone.scss'
 import History from './History'
 import {StartPhase} from '@bga/not-alone/moves/StartPhase'
 import {StartPhaseUI} from './moves-display/StartPhaseUI'
+import variables from './variables.scss'
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -94,10 +93,17 @@ export const Interface = (props) => {
   )
 }
 
+const cssDurationToSecond = cssDuration => cssDuration.endsWith('ms') ? 1000 * parseInt(cssDuration.slice(0, -2)) : parseFloat(cssDuration.slice(0, -1))
+
+for (let move in moves) {
+  if (variables[move]) {
+    Object.assign(moves[move], {animationDelay: () => cssDurationToSecond(variables[move])})
+  }
+}
+
 Object.assign(ChooseBoardSide, ChooseBoardSideUI)
 Object.assign(DrawHuntCard, DrawHuntCardUI)
 Object.assign(DrawSurvivalCard, DrawSurvivalCardUI)
 Object.assign(PlayPlaceCard, PlayPlaceCardUI)
 Object.assign(RevealPlaceCards, RevealPlaceCardsUI)
-Object.assign(Pass, PassUI)
 Object.assign(StartPhase, StartPhaseUI)
