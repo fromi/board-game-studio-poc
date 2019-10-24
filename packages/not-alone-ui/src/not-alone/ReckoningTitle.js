@@ -5,7 +5,7 @@ import {places} from './material/place-cards/PlaceCard'
 import CardActionTitle from './CardActionTitle'
 import React from 'react'
 
-export default function(props) {
+export default function ReckoningTitle(props) {
   const {t} = useTranslation()
   const {game, playerId, playersMap} = props
   const ownMoves = getLegalMoves(game, playerId)

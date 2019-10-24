@@ -10,7 +10,7 @@ import {MOVE_PLAYED} from '../../studio/reducers/ServerReducer'
 import {PASS} from '@bga/not-alone/moves/Pass'
 import {EXPLORATION} from '@bga/not-alone/Phases'
 
-const CreaturePlayer = ({game, classes, playersMap, animation}) => {
+export default function CreaturePlayer({game, classes, playersMap, animation}) {
   const {t} = useTranslation()
   classes.push('other-player', 'creature')
   const [speech, setSpeech] = React.useState(false)
@@ -47,5 +47,3 @@ const CreaturePlayer = ({game, classes, playersMap, animation}) => {
     </div>
   )
 }
-
-export default CreaturePlayer

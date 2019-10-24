@@ -13,7 +13,7 @@ import DragWrapper from '../../../util/DragWrapper'
 
 export const HUNT_TOKEN = 'Hunt token'
 
-const HuntToken = ({token, locations, playerId, game}) => {
+export default function HuntToken({token, locations, playerId, game}) {
   const {t} = useTranslation()
   const classes = ['hunt-token', tokensDisplay[token].className]
   const availableForPlacement = playerId === CREATURE && getLegalMoves(game, playerId).some((move) => move.type === PLACE_HUNT_TOKEN && move.token === token)
@@ -52,5 +52,3 @@ export const tokensDisplay = {
   [ARTEMIA_TOKEN]: {className: 'artemia-token', image: artemiaToken, description: (t) => t('The Artemia token')},
   [TARGET_TOKEN]: {className: 'target-token', image: targetToken, description: (t) => t('The Target token')}
 }
-
-export default HuntToken

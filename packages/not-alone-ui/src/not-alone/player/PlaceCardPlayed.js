@@ -9,7 +9,7 @@ import {MOVE_PLAYED} from '../../studio/reducers/ServerReducer'
 import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
 import {TAKE_BACK_PLAYED_PLACE, takeBackPlayedPlace} from '@bga/not-alone/moves/TakeBackPlayedPlace'
 
-const PlaceCardPlayed = ({place, game, playerId, animation, play}) => {
+export default function PlaceCardPlayed({place, game, playerId, animation, play}) {
   const {t} = useTranslation()
   const hunted = getHunted(game, playerId)
   const isBeingPlayed = animation && animation.type === MOVE_PLAYED && animation.move.type === PLAY_PLACE_CARD && animation.move.huntedId === playerId
@@ -43,5 +43,3 @@ const PlaceCardPlayed = ({place, game, playerId, animation, play}) => {
     </Tooltip>
   )
 }
-
-export default PlaceCardPlayed

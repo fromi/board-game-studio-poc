@@ -4,7 +4,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import {useTranslation} from 'react-i18next'
 import variables from '../../variables.scss'
 
-const SurvivalCardsDeck = ({game}) => {
+export default function SurvivalCardsDeck({game}) {
   const {t} = useTranslation()
   const slice = game.survivalCardsDeck.slice(-variables.decksMaxCardsDisplayed)
   return (
@@ -16,5 +16,3 @@ const SurvivalCardsDeck = ({game}) => {
     </Tooltip>
   )
 }
-
-export default SurvivalCardsDeck

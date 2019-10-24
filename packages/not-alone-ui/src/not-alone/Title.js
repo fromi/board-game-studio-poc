@@ -8,7 +8,7 @@ import HuntingTitle from './HuntingTitle'
 import ReckoningTitle from './ReckoningTitle'
 import CardActionTitle from './CardActionTitle'
 
-const Title = (props) => {
+export default function Title(props) {
   const {t} = useTranslation()
   const {game, playerId, animation, playersMap} = props
 
@@ -26,7 +26,10 @@ const Title = (props) => {
     if (playerId === CREATURE) {
       return t('You are the Creature. Please choose the board side.')
     } else {
-      return t('{player} is the Creature! {gender, select, ♀ {She} ♂ {He} other {They}} must choose the board side.', {player: playersMap[CREATURE].name, gender: playersMap[CREATURE].gender})
+      return t('{player} is the Creature! {gender, select, ♀ {She} ♂ {He} other {They}} must choose the board side.', {
+        player: playersMap[CREATURE].name,
+        gender: playersMap[CREATURE].gender
+      })
     }
   }
 
@@ -46,5 +49,3 @@ const Title = (props) => {
     return <CardActionTitle {...props}/>
   }
 }
-
-export default Title

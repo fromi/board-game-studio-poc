@@ -7,7 +7,7 @@ import './board.scss'
 import RescueCounter from '../counters/RescueCounter'
 import AssimilationCounter from '../counters/AssimilationCounter'
 
-const Board = ({game, playerId, animation, side, play}) => {
+export default function Board({game, playerId, animation, side, play}) {
   const animating = animation && animation.move.type === CHOOSE_BOARD_SIDE
 
   if (!animating && game.boardSide && game.boardSide !== side) {
@@ -40,5 +40,3 @@ const Board = ({game, playerId, animation, side, play}) => {
     </Tooltip>
   )
 }
-
-export default Board

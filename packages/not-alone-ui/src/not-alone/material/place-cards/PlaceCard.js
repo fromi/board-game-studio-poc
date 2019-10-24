@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next'
 
 export const PLACE_CARD = 'Place card'
 
-const PlaceCard = ({place}) => {
+export default function PlaceCard({place}) {
   const classes = ['card', 'place-card']
 
   if (!isNaN(place)) {
@@ -28,6 +28,7 @@ const PlaceCard = ({place}) => {
   )
 }
 
+// TODO: functions of t
 export const places = {
   1: {
     name: 'The Lair',
@@ -71,5 +72,3 @@ export const places = {
     description: ['Next turn, play 2 Place cards. Resolve both places.', 'You may not copy the Artefact.']
   }
 }
-
-export default PlaceCard

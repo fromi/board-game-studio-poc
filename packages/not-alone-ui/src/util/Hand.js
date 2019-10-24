@@ -3,7 +3,7 @@ import './hand.scss'
 import {useDrag, useDragLayer} from 'react-dnd'
 import {getEmptyImage} from 'react-dnd-html5-backend'
 
-const HandItem = ({children, className = '', hovering, drag}) => {
+export default function HandItem({children, className = '', hovering, drag}) {
   let draggable = drag ? drag.enable : false, dragging, ref, preview, child = children
 
   if (drag) {
@@ -49,5 +49,3 @@ const HandItemDrag = React.memo(({children, dragging}) => {
     </div>
   )
 })
-
-export default HandItem

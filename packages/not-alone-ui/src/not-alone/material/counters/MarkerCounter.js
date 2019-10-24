@@ -4,7 +4,7 @@ import React from 'react'
 import './marker-counter.scss'
 import {useTranslation} from 'react-i18next'
 
-const MarkerCounter = ({game}) => {
+export default function MarkerCounter({game}) {
   const {t} = useTranslation()
   const classes = ['marker-counter']
   if (game.markerCounterOnBeach) {
@@ -25,5 +25,3 @@ const Counter = () => {
     <img src={markerCounter} alt={t('A round yellow piece')} draggable={false}/>
   )
 }
-
-export default MarkerCounter

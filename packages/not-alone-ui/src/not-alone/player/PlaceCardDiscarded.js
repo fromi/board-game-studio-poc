@@ -4,7 +4,7 @@ import PlaceCard, {places} from '../material/place-cards/PlaceCard'
 import {useTranslation} from 'react-i18next'
 import './place-card-discarded.scss'
 
-const PlaceCardDiscarded = (props) => {
+export default function PlaceCardDiscarded(props) {
   const {place} = props
   const {t} = useTranslation()
   const classes = ['place-card-discarded']
@@ -17,5 +17,3 @@ const PlaceCardDiscarded = (props) => {
     </Tooltip>
   )
 }
-
-export default PlaceCardDiscarded

@@ -6,7 +6,7 @@ import {useTranslation} from 'react-i18next'
 import {DRAW_SURVIVAL_CARD} from '@bga/not-alone/moves/DrawSurvivalCard'
 import HandItem from '../../util/Hand'
 
-const HuntedPlayedHand = (props) => {
+export default function HuntedPlayedHand(props) {
   const {hunted, huntedId, animation} = props
   const {t} = useTranslation()
   const isDrawingSurvivalCard = animation && animation.move.type === DRAW_SURVIVAL_CARD && animation.move.huntedId === huntedId
@@ -29,4 +29,3 @@ const HuntedPlayedHand = (props) => {
     </Tooltip>
   )
 }
-export default HuntedPlayedHand

@@ -10,7 +10,7 @@ import {DRAW_SURVIVAL_CARD} from '@bga/not-alone/moves/DrawSurvivalCard'
 import {MOVE_PLAYED} from '../../studio/reducers/ServerReducer'
 import HandItem from '../../util/Hand'
 
-const PlayerHand = ({game, playerId, animation}) => {
+export default function PlayerHand({game, playerId, animation}) {
   const cards = []
   const hunted = playerId && playerId !== CREATURE ? getHunted(game, playerId) : undefined
 
@@ -53,5 +53,3 @@ const PlayerHand = ({game, playerId, animation}) => {
 
   return <div className={classes.join(' ')}>{cards}</div>
 }
-
-export default PlayerHand

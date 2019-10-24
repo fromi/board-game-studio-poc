@@ -26,7 +26,7 @@ import {
 } from '@bga/not-alone/material/HuntCards'
 import {tokensDisplay} from '../hunt-tokens/HuntToken'
 
-const HuntCard = ({cardName, classes = []}) => {
+export default function HuntCard({cardName, classes = []}) {
   const {t} = useTranslation()
   classes.push('card', 'hunt-card')
   const HuntCardRule = cardName ? huntCardRule(cardName) : null
@@ -35,7 +35,9 @@ const HuntCard = ({cardName, classes = []}) => {
       {cardName && (
         <div className="face front">
           <h3 key="name">{t(cardName)}</h3>
-          {HuntCardRule.token && <img src={tokensDisplay[HuntCardRule.token].image} className="hunt-token-symbol" alt={tokensDisplay[HuntCardRule.token].description(t)} draggable={false}/>}
+          {HuntCardRule.token &&
+          <img src={tokensDisplay[HuntCardRule.token].image} className="hunt-token-symbol" alt={tokensDisplay[HuntCardRule.token].description(t)}
+               draggable={false}/>}
           <div className="description" key="description">
             <p>{t(descriptions[cardName])}</p>
           </div>
@@ -69,5 +71,3 @@ const descriptions = {
   [TRACKING]: 'Next turn, you may play up to 2 Hunt cards.',
   [FLASHBACK]: 'Copy the last Hunt card you discarded.'
 }
-
-export default HuntCard

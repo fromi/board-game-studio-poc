@@ -3,7 +3,7 @@ import {CREATURE, getHunted} from '@bga/not-alone'
 import './played-cards.scss'
 import PlaceCardPlayed from './PlaceCardPlayed'
 
-const PlayedCards = (props) => {
+export default function PlayedCards(props) {
   const {game, playerId} = props
   if (playerId === CREATURE) {
     return null
@@ -18,5 +18,3 @@ const PlayedCards = (props) => {
     )
   }
 }
-
-export default PlayedCards

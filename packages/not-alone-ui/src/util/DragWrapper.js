@@ -2,12 +2,12 @@ import React, {useEffect} from 'react'
 import {useDrag, useDragLayer} from 'react-dnd'
 import {getEmptyImage} from 'react-dnd-html5-backend'
 
-const DragWrapper = ({children, draggable, item}) => {
+export default function DragWrapper({children, draggable, item}) {
   let [{isDragging}, drag, preview] = useDrag({
-    item: (typeof item) === "string" ? {type: item} : item,
+    item: (typeof item) === 'string' ? {type: item} : item,
     canDrag: draggable,
     collect: monitor => ({
-      isDragging: monitor.isDragging(),
+      isDragging: monitor.isDragging()
     }),
     end: (item, monitor) => monitor.didDrop()
   })
@@ -35,5 +35,3 @@ const DragWrapper = ({children, draggable, item}) => {
     </div>
   )
 }
-
-export default DragWrapper

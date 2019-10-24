@@ -3,7 +3,7 @@ import {getHunted} from '@bga/not-alone'
 import PlaceCardDiscarded from './PlaceCardDiscarded'
 import './discarded-places.scss'
 
-const DiscardedPlaces = (props) => {
+export default function DiscardedPlaces(props) {
   const {game, playerId} = props
   const hunted = getHunted(game, playerId)
 
@@ -15,5 +15,3 @@ const DiscardedPlaces = (props) => {
     </div>
   )
 }
-
-export default DiscardedPlaces

@@ -3,7 +3,7 @@ import React from 'react'
 import {useTranslation} from 'react-i18next'
 import {Tooltip} from '@material-ui/core'
 
-const RescueCounter = ({game}) => {
+export default function RescueCounter({game}) {
   const {t} = useTranslation()
   return (
     <Tooltip title={t('Rescue counter')} enterTouchDelay={0}>
@@ -12,4 +12,3 @@ const RescueCounter = ({game}) => {
     </Tooltip>
   )
 }
-export default RescueCounter

@@ -7,7 +7,7 @@ import HuntedPlayedPlayedPlaces from './HuntedPlayedPlayedPlaces'
 import HuntedPlayedDiscard from './HuntedPlayedDiscard'
 import WillCounter from '../material/counters/WillCounter'
 
-const HuntedPlayer = (props) => {
+export default function HuntedPlayer(props) {
   const {hunted, huntedId, classes, playersMap} = props
   const {t} = useTranslation()
   classes.push('other-player', 'hunted')
@@ -26,5 +26,3 @@ const HuntedPlayer = (props) => {
     </div>
   )
 }
-
-export default HuntedPlayer

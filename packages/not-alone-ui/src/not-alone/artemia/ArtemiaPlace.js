@@ -7,7 +7,7 @@ import ArtemiaPlaceCard from './ArtemiaPlaceCard'
 import './artemia-place.scss'
 import PlaceCard from '../material/place-cards/PlaceCard'
 
-const ArtemiaPlace = (props) => {
+export default function ArtemiaPlace(props) {
   const {place, game} = props
   const {t} = useTranslation()
   const classes = ['artemia-place', 'place-' + place]
@@ -17,13 +17,12 @@ const ArtemiaPlace = (props) => {
       <ArtemiaPlaceCard {...props} place={place}/>
       {place === THE_BEACH && <MarkerCounter {...props}/>}
       {place > THE_ROVER && (
-        <Tooltip title={t('Reserve: there is {count, plural, one {one copy} other {{count} copies}} left to take using The Rover', {count: game.reserve[place]})}
-                 enterTouchDelay={0}>
+        <Tooltip
+          title={t('Reserve: there is {count, plural, one {one copy} other {{count} copies}} left to take using The Rover', {count: game.reserve[place]})}
+          enterTouchDelay={0}>
           <div className="reserve">{[...Array(game.reserve[place])].map((_, key) => <PlaceCard place={place} key={key}/>)}</div>
         </Tooltip>
       )}
     </div>
   )
 }
-
-export default ArtemiaPlace

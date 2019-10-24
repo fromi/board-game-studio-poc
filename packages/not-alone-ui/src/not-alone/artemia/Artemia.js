@@ -7,7 +7,7 @@ import ArtemiaPlace from './ArtemiaPlace'
 import {PLACES} from '@bga/not-alone'
 import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
 
-const Artemia = (props) => {
+export default function Artemia(props) {
   const {t} = useTranslation()
   const {playerId, play} = props
   const [{draggedPlace, isOver}, drop] = useDrop({
@@ -28,5 +28,3 @@ const Artemia = (props) => {
     {draggedPlace && <div className={dropInfoClasses.join(' ')}><p>{t('Play {place}', {place: t(places[draggedPlace].name)})}</p></div>}
   </div>
 }
-
-export default Artemia

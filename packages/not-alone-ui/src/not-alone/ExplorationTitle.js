@@ -7,7 +7,7 @@ import {Button} from '@material-ui/core'
 import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
 import CardActionTitle from './CardActionTitle'
 
-export default function (props) {
+export default function ExplorationTitle(props) {
   const {game, playerId, playersMap} = props
   if (!game.creature.passed) {
     return <CardActionTitle {...props}/>

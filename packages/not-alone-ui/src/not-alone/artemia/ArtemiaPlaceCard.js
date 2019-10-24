@@ -8,7 +8,7 @@ import './artemia-place-card.scss'
 import {getLegalMoves} from '@bga/not-alone'
 import {USE_PLACE_POWER, usePlacePower} from '@bga/not-alone/moves/UsePlacePower'
 
-const ArtemiaPlaceCard = ({game, place, play, playerId}) => {
+export default function ArtemiaPlaceCard({game, place, play, playerId}) {
   const classes = ['artemia-place-card']
   const [isOpen, setOpen] = React.useState(false)
 
@@ -51,5 +51,3 @@ const ArtemiaPlaceCard = ({game, place, play, playerId}) => {
     </React.Fragment>
   )
 }
-
-export default ArtemiaPlaceCard

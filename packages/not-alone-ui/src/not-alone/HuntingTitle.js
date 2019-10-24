@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next'
 import CardActionTitle from './CardActionTitle'
 import React from 'react'
 
-export default function (props) {
+export default function HuntingTitle(props) {
   const {t} = useTranslation()
   const {game, playerId, playersMap} = props
   if (!game.creature.passed) {

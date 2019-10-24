@@ -10,7 +10,7 @@ import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
 import {places} from '../material/place-cards/PlaceCard'
 import ReplayButton from './ReplayButton'
 
-export default ({move, playerId, playersMap, moveHistory, index, undo, replay}) => {
+export default function PastMove({move, playerId, playersMap, moveHistory, index, undo, replay}) {
   if (!texts[move.type]) {
     return null
   }

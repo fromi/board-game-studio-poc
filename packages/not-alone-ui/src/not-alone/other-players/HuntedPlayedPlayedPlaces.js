@@ -5,7 +5,7 @@ import {REVEAL_PLACE_CARDS} from '@bga/not-alone/moves/RevealPlaceCard'
 import {useTranslation} from 'react-i18next'
 import './hunted-player-played-places.scss'
 
-const HuntedPlayedPlayedPlaces = (props) => {
+export default function HuntedPlayedPlayedPlaces(props) {
   const {hunted, huntedId, playersMap, animation} = props
   const {t} = useTranslation()
 
@@ -36,4 +36,3 @@ const HuntedPlayedPlayedPlaces = (props) => {
     </div>
   )
 }
-export default HuntedPlayedPlayedPlaces

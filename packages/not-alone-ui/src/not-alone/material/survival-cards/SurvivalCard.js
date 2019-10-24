@@ -20,7 +20,7 @@ import {
   WRONG_TRACK
 } from '@bga/not-alone/material/SurvivalCards'
 
-const SurvivalCard = ({cardName, classes = []}) => {
+export default function SurvivalCard({cardName, classes = []}) {
   const {t} = useTranslation()
   classes.push('card', 'survival-card')
   return (
@@ -39,6 +39,7 @@ const SurvivalCard = ({cardName, classes = []}) => {
   )
 }
 
+// TODO: functions of t
 const descriptions = {
   [ADRENALINE]: 'Regain 1 Will.',
   [INGENUITY]: 'Place the Marker counter on the Beach.',
@@ -56,5 +57,3 @@ const descriptions = {
   [AMPLIFIER]: 'Remove the Marker counter from the Beach to immediately move the Rescue counter forward 1 space.',
   [DOUBLE_BACK]: 'Take back the Place card you just played.'
 }
-
-export default SurvivalCard

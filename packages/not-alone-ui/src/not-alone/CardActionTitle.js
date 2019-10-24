@@ -5,7 +5,7 @@ import {pass, PASS} from '@bga/not-alone/moves/Pass'
 import {Button} from '@material-ui/core'
 import {PLAY_HUNT_CARD} from '@bga/not-alone/moves/PlayHuntCard'
 
-export default function (props) {
+export default function CardActionTitle(props) {
   const {t} = useTranslation()
   const {game, playerId, playersMap} = props
   const ownMoves = getLegalMoves(game, playerId)

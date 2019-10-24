@@ -4,7 +4,7 @@ import {CREATURE, getHuntedNumber, HUNTED_PREFIX} from '@bga/not-alone'
 import CreaturePlayer from './CreaturePlayer'
 import './other-player.scss'
 
-const OtherPlayers = (props) => {
+export default function OtherPlayers(props) {
   const {playerId, game, animation, playersMap} = props
   if (playerId && playerId !== CREATURE) {
     const huntedNumber = getHuntedNumber(playerId)
@@ -93,5 +93,3 @@ export const numberOfHuntedAndHuntedPositionToTableSeats = {
     6: [BOTTOM_LEFT, MIDDLE_LEFT, TOP_LEFT, TOP_RIGHT, MIDDLE_RIGHT, BOTTOM_RIGHT]
   }
 }
-
-export default OtherPlayers
