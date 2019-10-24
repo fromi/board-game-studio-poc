@@ -9,14 +9,15 @@ import {phaseTexts} from '../NotAloneUI'
 import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
 import {placeTexts} from '../material/place-cards/PlaceCard'
 import ReplayButton from './ReplayButton'
+import MoveTexts from '../MoveTexts'
 
-export default function PastMove({move, playerId, playersMap, moveHistory, index, undo, replay}) {
+export default function PastMove({move, moveHistory, index, undo, replay, ...props}) {
   if (!texts[move.type]) {
     return null
   }
 
   const {t} = useTranslation()
-  const text = texts[move.type](t, move, playerId, playersMap)
+  const text = texts[move.type](t, move, props)
 
   if (!text) {
     return null
@@ -45,8 +46,9 @@ function UndoButton({move, undo}) {
 }
 
 const texts = {
+  ...MoveTexts,
   [START_PHASE]: (t, move) => phaseTexts[move.phase](t),
-  [PLAY_PLACE_CARD]: (t, move, playerId, playersMap) => playerId === move.huntedId ?
+  [PLAY_PLACE_CARD]: (t, move, {playerId, playersMap}) => playerId === move.huntedId ?
     t('You played {place}', {place: placeTexts[move.place].name(t)}) :
     t('{player} played a place card', {player: playersMap[move.huntedId].name})
 }
