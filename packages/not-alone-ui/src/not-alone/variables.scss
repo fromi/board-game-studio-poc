@@ -25,8 +25,9 @@ $hunted-hand-bottom-margin: 5vh;
 
 $player-panel-height: 21vh;
 $calc-player-panel-width: calc(50vw - #{$board-height + $artemia-width / 2 + $default-margin * 2});
+$other-players-hand-top: 5vh;
 $other-players-hand-scale: 0.18;
-$other-players-hand-top: 10vh;
+$other-players-played-place-scale: 0.3;
 
 $board-side-chosen-animation: 1s;
 $setup-animation: 1s;

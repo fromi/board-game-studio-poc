@@ -20,6 +20,7 @@
     width: $card-width;
     height: $card-height;
     margin: auto;
+    top: $other-players-hand-top;
     left: 0;
     right: 0;
     transform: translateY(- $card-height / 2) scale($other-players-hand-scale) rotate(180deg) translateY(- $card-height / 2);

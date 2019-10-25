@@ -5,11 +5,15 @@ import SurvivalCard from '../material/survival-cards/SurvivalCard'
 import {useTranslation} from 'react-i18next'
 import {DRAW_SURVIVAL_CARD} from '@bga/not-alone/moves/DrawSurvivalCard'
 import HandItem from '../../util/Hand'
+import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
+import './hunted-player-hand.scss'
 
 export default function HuntedPlayedHand(props) {
   const {hunted, huntedId, animation} = props
   const {t} = useTranslation()
   const isDrawingSurvivalCard = animation && animation.move.type === DRAW_SURVIVAL_CARD && animation.move.huntedId === huntedId
+  const isPlayingPlaceCard = animation && animation.move.type === PLAY_PLACE_CARD && animation.move.huntedId === huntedId
+
   const classes = ['hand']
   if (isDrawingSurvivalCard) {
     classes.push('drawing-survival-card')
@@ -21,6 +25,7 @@ export default function HuntedPlayedHand(props) {
         {placeCards: hunted.handPlaceCards.length, survivalCards: hunted.handSurvivalCards.length})} enterTouchDelay={0}>
       <div className={classes.join(' ')}>
         {hunted.handPlaceCards.map((card, index) => <HandItem key={'place-card-' + index}><PlaceCard/></HandItem>)}
+        {isPlayingPlaceCard && <HandItem key={'place-card-' + hunted.handPlaceCards.length} className="playing"><PlaceCard/></HandItem>}
         {hunted.handSurvivalCards.map((card, index) => {
           const isDrawing = isDrawingSurvivalCard && index >= hunted.handSurvivalCards.length - animation.move.quantity
           return <HandItem key={'survival-card-' + index} className={isDrawing ? 'drawing' : ''}><SurvivalCard/></HandItem>

@@ -29,7 +29,7 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
 
   .drawing {
     .hand-item-position {
-      animation: from-transform-none 1s ease-in-out both;
+      animation: from-transform-none $draw-card-animation ease-in-out both, to-z-index-0 $draw-card-animation ease-in-out both;
       animation-delay: inherit;
 
       .survival-card {
