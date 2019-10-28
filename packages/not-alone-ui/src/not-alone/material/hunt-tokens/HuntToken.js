@@ -19,7 +19,7 @@ export const HUNT_TOKEN = 'Hunt token'
 
 export default function HuntToken({token, locations, playerId, game, animation}) {
   const {t} = useTranslation()
-  const classes = ['hunt-token', tokensDisplay[token].className]
+  const classes = ['hunt-token', huntTokens[token].className]
   const availableForPlacement = playerId === CREATURE && getLegalMoves(game, playerId).some((move) => move.type === PLACE_HUNT_TOKEN && move.token === token)
   const canChangePlacement = locations.length !== 0 && playerId === CREATURE && game.phase === 2
 
@@ -35,7 +35,7 @@ export default function HuntToken({token, locations, playerId, game, animation})
     }
   }
 
-  const audio = new Audio(tokensDisplay[token].sound);
+  const audio = new Audio(huntTokens[token].sound);
   useEffect(() => {
     if (animation && animation.type === MOVE_PLAYED && animation.move.type === PLACE_HUNT_TOKEN && animation.move.token === token) {
       audio.play()
@@ -43,7 +43,7 @@ export default function HuntToken({token, locations, playerId, game, animation})
   })
 
   return (
-    <Tooltip title={tokensDisplay[token].description(t)}>
+    <Tooltip title={huntTokens[token].description(t)}>
       <div className={classes.join(' ')}>
         <DragWrapper draggable={availableForPlacement || canChangePlacement} item={{type: HUNT_TOKEN, token}}>
           <Image token={token}/>
@@ -55,11 +55,11 @@ export default function HuntToken({token, locations, playerId, game, animation})
 
 const Image = React.memo(({token}) => {
   const {t} = useTranslation()
-  return (<img src={tokensDisplay[token].image} alt={tokensDisplay[token].description(t)} draggable={false}/>)
+  return (<img src={huntTokens[token].image} alt={huntTokens[token].description(t)} draggable={false}/>)
 })
 
-export const tokensDisplay = {
-  [CREATURE_TOKEN]: {className: 'creature-token', image: creatureToken, description: (t) => t('The Creature token'), sound: creatureTokenSound},
-  [ARTEMIA_TOKEN]: {className: 'artemia-token', image: artemiaToken, description: (t) => t('The Artemia token'), sound: artemiaTokenSound},
-  [TARGET_TOKEN]: {className: 'target-token', image: targetToken, description: (t) => t('The Target token'), sound: targetTokenSound}
+export const huntTokens = {
+  [CREATURE_TOKEN]: {className: 'creature-token', image: creatureToken, description: (t) => t('Creature token'), sound: creatureTokenSound},
+  [ARTEMIA_TOKEN]: {className: 'artemia-token', image: artemiaToken, description: (t) => t('Artemia token'), sound: artemiaTokenSound},
+  [TARGET_TOKEN]: {className: 'target-token', image: targetToken, description: (t) => t('Target token'), sound: targetTokenSound}
 }

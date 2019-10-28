@@ -203,9 +203,9 @@ i18n.use(ICU).use(initReactI18next).init({
         'Reserve: there is {count, plural, one {one copy} other {{count} copies}} left to take using The Rover':
           'Réserve : il reste {count, plural, one {un exemplaire} other {{count} exemplaires}} à prendre avec Le Rover',
 
-        'The Creature token': 'Le jeton Créature',
-        'The Artemia token': 'Le jeton Artemia',
-        'The Target token': 'Le jeton Cible',
+        'Creature token': 'Jeton Créature',
+        'Artemia token': 'Jeton Artemia',
+        'Target token': 'Jeton Cible',
 
         'You may place the Creature token on Artemia': 'Vous pouvez placer le jeton Creature sur Artemia',
         'You may place the Artemia token on Artemia': 'Vous pouvez placer le jeton Artemia sur Artemia',
@@ -215,6 +215,10 @@ i18n.use(ICU).use(initReactI18next).init({
         'You may place the Artemia and Target tokens on Artemia': 'Vous pouvez placer les jetons Artemia et Cible sur Artemia',
         'You may place all the Hunt tokens on Artemia!': 'Vous pouvez placer tous les jetons Traque sur Artemia !',
         '{player} may place Hunt tokens on Artemia': '{player} peut placer des jetons Traque sur Artemia',
+        'You place the {huntToken} on {place}': 'Vous placez le {huntToken} sur {place}',
+        'You place the {huntToken} on {place1} and {place2}': 'Vous placez le {huntToken} sur {place1} et {place2}',
+        '{player} places the {huntToken} on {place}': '{player} place le {huntToken} sur {place}',
+        '{player} places the {huntToken} on {place1} and {place2}': '{player} place le {huntToken} sur {place1} et {place2}',
 
         'Pass': 'Passer',
         'Pass to end your turn': 'Passez pour terminer votre tour',

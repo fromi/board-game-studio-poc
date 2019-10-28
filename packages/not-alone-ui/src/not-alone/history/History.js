@@ -27,7 +27,7 @@ export default function History(props) {
             <ReplayButton onClick={() => closeAndReplay(0)}/>
             {t('The game begins!')}
           </li>
-          {moveHistory.map((move, index) => <PastMove key={index} index={index} move={move} {...props} replay={closeAndReplay}/>)}
+          {moveHistory.map((move, index) => <PastMove key={index} index={index} move={move} replay={closeAndReplay} {...props}/>)}
         </ol>
       </Popover>
     </React.Fragment>

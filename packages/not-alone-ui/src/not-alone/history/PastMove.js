@@ -34,11 +34,11 @@ function undoable(move, index, moveHistory) {
   return Move.undoable && Move.undoable(move, nextMoves)
 }
 
-function UndoButton({move, undo}) {
+function UndoButton({onClick}) {
   const {t} = useTranslation()
   return (
     <Tooltip title={t('Undo')}>
-      <IconButton onClick={() => undo(move)}>
+      <IconButton onClick={onClick}>
         <Undo/>
       </IconButton>
     </Tooltip>

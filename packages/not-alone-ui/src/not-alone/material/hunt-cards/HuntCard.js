@@ -24,7 +24,7 @@ import {
   TRACKING,
   VIRUS
 } from '@bga/not-alone/material/HuntCards'
-import {tokensDisplay} from '../hunt-tokens/HuntToken'
+import {huntTokens} from '../hunt-tokens/HuntToken'
 
 export default function HuntCard({card, classes = []}) {
   const {t} = useTranslation()
@@ -36,7 +36,7 @@ export default function HuntCard({card, classes = []}) {
         <div className="face front">
           <h3 key="name">{huntCardTexts[card].name(t)}</h3>
           {HuntCardRule.token &&
-          <img src={tokensDisplay[HuntCardRule.token].image} className="hunt-token-symbol" alt={tokensDisplay[HuntCardRule.token].description(t)}
+          <img src={huntTokens[HuntCardRule.token].image} className="hunt-token-symbol" alt={huntTokens[HuntCardRule.token].description(t)}
                draggable={false}/>}
           <div className="description" key="description">
             <p>{huntCardTexts[card].description(t)}</p>

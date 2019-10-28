@@ -8,7 +8,7 @@ import './artemia-place-card.scss'
 import {getLegalMoves} from '@bga/not-alone'
 import {USE_PLACE_POWER, usePlacePower} from '@bga/not-alone/moves/UsePlacePower'
 
-export default function ArtemiaPlaceCard({game, place, play, playerId}) {
+export default function ArtemiaPlaceCard({game, place, play, undo, playerId}) {
   const classes = ['artemia-place-card']
   const [isOpen, setOpen] = React.useState(false)
 
@@ -32,6 +32,9 @@ export default function ArtemiaPlaceCard({game, place, play, playerId}) {
       canDrop: monitor.canDrop()
     }),
     drop: item => {
+      if (game.huntTokensLocations[item.token].length !== 0) {
+        undo(placeHuntToken(item.token, game.huntTokensLocations[item.token]))
+      }
       play(placeHuntToken(item.token, [place]))
     }
   })
