@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Tooltip} from '@material-ui/core'
 import creatureToken from './creature-token.png'
 import artemiaToken from './artemia-token.png'
@@ -10,10 +10,14 @@ import {numberOfHuntedAndHuntedPositionToTableSeats, SEAT_CENTER} from '../../ot
 import {PLACE_HUNT_TOKEN} from '@bga/not-alone/moves/PlaceHuntToken'
 import {ARTEMIA_TOKEN, CREATURE_TOKEN, TARGET_TOKEN} from '@bga/not-alone/material/HuntTokens'
 import DragWrapper from '../../../util/DragWrapper'
+import {MOVE_PLAYED} from '../../../studio/reducers/ServerReducer'
+import creatureTokenSound from './creature-token.mp3'
+import artemiaTokenSound from './artemia-token.mp3'
+import targetTokenSound from './target-token.mp3'
 
 export const HUNT_TOKEN = 'Hunt token'
 
-export default function HuntToken({token, locations, playerId, game}) {
+export default function HuntToken({token, locations, playerId, game, animation}) {
   const {t} = useTranslation()
   const classes = ['hunt-token', tokensDisplay[token].className]
   const availableForPlacement = playerId === CREATURE && getLegalMoves(game, playerId).some((move) => move.type === PLACE_HUNT_TOKEN && move.token === token)
@@ -30,6 +34,13 @@ export default function HuntToken({token, locations, playerId, game}) {
       classes.push(SEAT_CENTER)
     }
   }
+
+  const audio = new Audio(tokensDisplay[token].sound);
+  useEffect(() => {
+    if (animation && animation.type === MOVE_PLAYED && animation.move.type === PLACE_HUNT_TOKEN && animation.move.token === token) {
+      audio.play()
+    }
+  })
 
   return (
     <Tooltip title={tokensDisplay[token].description(t)}>
@@ -48,7 +59,7 @@ const Image = React.memo(({token}) => {
 })
 
 export const tokensDisplay = {
-  [CREATURE_TOKEN]: {className: 'creature-token', image: creatureToken, description: (t) => t('The Creature token')},
-  [ARTEMIA_TOKEN]: {className: 'artemia-token', image: artemiaToken, description: (t) => t('The Artemia token')},
-  [TARGET_TOKEN]: {className: 'target-token', image: targetToken, description: (t) => t('The Target token')}
+  [CREATURE_TOKEN]: {className: 'creature-token', image: creatureToken, description: (t) => t('The Creature token'), sound: creatureTokenSound},
+  [ARTEMIA_TOKEN]: {className: 'artemia-token', image: artemiaToken, description: (t) => t('The Artemia token'), sound: artemiaTokenSound},
+  [TARGET_TOKEN]: {className: 'target-token', image: targetToken, description: (t) => t('The Target token'), sound: targetTokenSound}
 }

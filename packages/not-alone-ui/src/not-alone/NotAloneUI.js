@@ -70,7 +70,7 @@ export const Interface = (props) => {
         <SurvivalCardsDeck {...props}/>
         <Artemia {...props}/>
         <OtherPlayers {...props}/>
-        {HUNT_TOKENS.map(token => <HuntToken token={token} locations={game.huntTokensLocations[token]} playerId={playerId} game={game} key={token}/>)}
+        {HUNT_TOKENS.map(token => <HuntToken token={token} locations={game.huntTokensLocations[token]} key={token} {...props}/>)}
         {playerId && <PlayerMaterial {...props}/>}
       </div>
     </MuiThemeProvider>
