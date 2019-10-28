@@ -5,6 +5,8 @@ import {REVEAL_PLACE_CARDS} from '@bga/not-alone/moves/RevealPlaceCard'
 import {placeTexts} from './material/place-cards/PlaceCard'
 import {PLACE_HUNT_TOKEN} from '@bga/not-alone/moves/PlaceHuntToken'
 import {huntTokens} from './material/hunt-tokens/HuntToken'
+import {USE_PLACE_POWER} from '@bga/not-alone/moves/UsePlacePower'
+import {TAKE_BACK_PLAYED_PLACE} from '@bga/not-alone/moves/TakeBackPlayedPlace'
 
 export default {
   [DRAW_HUNT_CARD]: (t, move, {playerId, playersMap}) => playerId === CREATURE ?
@@ -53,6 +55,23 @@ export default {
           place2: placeTexts[move.revealedPlaces[1]].name(t)
         })
       }
+    }
+  },
+  [USE_PLACE_POWER]: (t, move, {playerId, playersMap}) => {
+    const place = placeTexts[move.place].name(t)
+    if (playerId === move.huntedId) {
+      return t('You use the power of {place}', {place})
+    } else {
+      return t('{player} uses the power of {place}', {player: playersMap[move.huntedId].name, place})
+    }
+  },
+  [TAKE_BACK_PLAYED_PLACE]: (t, move, {playerId, playersMap}) => {
+    const place = placeTexts[move.place].name(t)
+    if (playerId === move.huntedId) {
+      return t('You take back {place} to your hand', {place})
+    } else {
+      return t('{player} takes back {place} to {gender, select, ♀ {her} ♂ {his} other {their}}',
+        {player: playersMap[move.huntedId].name, gender: playersMap[move.huntedId].gender, place})
     }
   }
 }

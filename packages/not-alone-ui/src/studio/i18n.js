@@ -254,7 +254,12 @@ i18n.use(ICU).use(initReactI18next).init({
 
         'Undo': 'Annuler',
         'The game begins!': 'La partie commence !',
-        'Replay from this move': 'Revoir depuis ce coup'
+        'Replay from this move': 'Revoir depuis ce coup',
+
+        'You use the power of {place}': 'Vous utilisez le pouvoir de {place}',
+        '{player} uses the power of {place}': '{player} utilise le pouvoir de {place}',
+        'You take back {place} to your hand': 'Vous reprenez {place} en main',
+        '{player} takes back {place} to {gender, select, ♀ {her} ♂ {his} other {their}}': '{player} reprend {place} en main'
       }
     }
   },
