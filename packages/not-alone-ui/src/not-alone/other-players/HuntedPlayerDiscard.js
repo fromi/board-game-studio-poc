@@ -4,7 +4,7 @@ import PlaceCard, {placeTexts} from '../material/place-cards/PlaceCard'
 import './hunted-player-discard.scss'
 import {Tooltip} from '@material-ui/core'
 
-export default function HuntedPlayedDiscard(props) {
+export default function HuntedPlayerDiscard(props) {
   const {hunted, huntedId, playersMap} = props
   const {t} = useTranslation()
 

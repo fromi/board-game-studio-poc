@@ -3,8 +3,8 @@ import './hunted-player.scss'
 import Tooltip from '@material-ui/core/Tooltip'
 import {useTranslation} from 'react-i18next'
 import HuntedPlayedHand from './HuntedPlayerHand'
-import HuntedPlayedPlayedPlaces from './HuntedPlayedPlayedPlaces'
-import HuntedPlayedDiscard from './HuntedPlayedDiscard'
+import HuntedPlayerPlayedPlaces from './HuntedPlayedPlayedPlaces'
+import HuntedPlayerDiscard from './HuntedPlayedDiscard'
 import WillCounter from '../material/counters/WillCounter'
 
 export default function HuntedPlayer(props) {
@@ -21,8 +21,8 @@ export default function HuntedPlayer(props) {
           {[...Array(hunted.willCounters)].map((_, index) => <WillCounter key={index}/>)}
         </div>
       </Tooltip>
-      <HuntedPlayedPlayedPlaces {...props}/>
-      <HuntedPlayedDiscard {...props}/>
+      <HuntedPlayerPlayedPlaces {...props}/>
+      <HuntedPlayerDiscard {...props}/>
     </div>
   )
 }

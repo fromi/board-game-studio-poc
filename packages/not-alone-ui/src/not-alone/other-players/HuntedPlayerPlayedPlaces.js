@@ -6,7 +6,7 @@ import {useTranslation} from 'react-i18next'
 import './hunted-player-played-places.scss'
 import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
 
-export default function HuntedPlayedPlayedPlaces(props) {
+export default function HuntedPlayerPlayedPlaces(props) {
   const {hunted, huntedId, playersMap, animation} = props
   const {t} = useTranslation()
 
