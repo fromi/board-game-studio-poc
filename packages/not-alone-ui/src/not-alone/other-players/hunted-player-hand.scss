@@ -17,12 +17,29 @@
       animation: playing-place-card $playing-place-card-animation ease-out forwards;
     }
   }
+
+  .taking-back-played-place .hand-item-position {
+    animation: from-transform-none $taking-back-played-place-animation ease-in-out forwards;
+    .place-card {
+      animation: hunted-player-take-back-played-place $taking-back-played-place-animation ease-in-out forwards;
+    }
+  }
 }
 
 @keyframes playing-place-card {
   to {
     transform: translateY($card-height / 2) scale(1 / $other-players-hand-scale) translateY($other-players-hand-top) // Reverse other player hand transformation
     translateX(calc(#{$calc-player-panel-width} / 2 - #{$default-margin})) translateY($default-margin - $player-panel-height) scale($other-players-played-place-scale) translateX(- $card-width / 2) translateY($card-height / 2) rotate(-180deg); // Then apply player place card transformation
+  }
+}
+
+@keyframes hunted-player-take-back-played-place {
+  from {
+    transform: translateY($card-height / 2) scale(1 / $other-players-hand-scale) translateY($other-players-hand-top) // Reverse other player hand transformation
+    translateX(calc(#{$calc-player-panel-width} / 2 - #{$default-margin})) translateY($default-margin - $player-panel-height) scale($other-players-played-place-scale) translateX(- $card-width / 2) translateY($card-height / 2) rotate(-180deg); // Then apply player place card transformation
+  }
+  to {
+    transform: rotateY(-180deg);
   }
 }
 

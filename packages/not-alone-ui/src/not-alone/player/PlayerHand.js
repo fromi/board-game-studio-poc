@@ -21,7 +21,7 @@ export default function PlayerHand({game, playerId, animation}) {
   if (hunted) {
     hunted.handPlaceCards.forEach((place) => {
       const canBePlayed = getLegalMoves(game, playerId).some(move => move.type === PLAY_PLACE_CARD && move.place === place)
-      const isTakingBack = animation && animation.type === MOVE_PLAYED && animation.move.type === TAKE_BACK_PLAYED_PLACE && animation.move.place === place
+      const isTakingBack = animation && animation.type === MOVE_PLAYED && animation.move.type === TAKE_BACK_PLAYED_PLACE && animation.move.huntedId === playerId && animation.move.place === place
       let itemClassName = ''
       if (isTakingBack) {
         classes.push('taking-back-played-place')
