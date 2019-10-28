@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
-import express from "express";
-import path from "path";
-import {setup} from "@bga/not-alone";
+import mongoose from 'mongoose'
+import express from 'express'
+import path from 'path'
+import {setup} from '@bga/not-alone'
 
 const app = express();
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/your-app-name');

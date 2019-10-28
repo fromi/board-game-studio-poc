@@ -1,4 +1,4 @@
-import {PLAY_MOVE} from "../StudioActions"
+import {PLAY_MOVE} from '../StudioActions'
 
 /**
  * Prepares a game move which is going to be taken, by adding some more information.

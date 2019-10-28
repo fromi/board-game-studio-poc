@@ -1,4 +1,4 @@
-import {getHunted} from "../NotAlone"
+import {getHunted} from '../NotAlone'
 
 export const DISCARD_PLAYED_PLACE_CARD = 'DiscardPlayedPlaceCard'
 

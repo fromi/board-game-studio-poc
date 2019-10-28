@@ -1,6 +1,6 @@
-import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, MOVE_BACK, MOVE_FORWARD, NEW_GAME, PLAY_MOVE, RESUME, SERVER_NOTIFICATION} from "../StudioActions"
-import produce from "immer"
-import {findLastIndex, MOVE_PLAYED} from "./ServerReducer"
+import {DISPLAY_PLAYER_VIEW, DISPLAY_SPECTATOR_VIEW, MOVE_BACK, MOVE_FORWARD, NEW_GAME, PLAY_MOVE, RESUME, SERVER_NOTIFICATION} from '../StudioActions'
+import produce from 'immer'
+import {findLastIndex, MOVE_PLAYED} from './ServerReducer'
 
 const isEqual = require("react-fast-compare");
 

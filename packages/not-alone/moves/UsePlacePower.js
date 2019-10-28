@@ -1,4 +1,4 @@
-import {placeRule} from "../material/PlaceCards"
+import {placeRule} from '../material/PlaceCards'
 
 export const USE_PLACE_POWER = 'UsePlacePower'
 export const usePlacePower = (place, huntedId) => ({type: USE_PLACE_POWER, place, huntedId})
