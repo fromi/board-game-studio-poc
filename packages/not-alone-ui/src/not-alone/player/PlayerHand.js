@@ -10,6 +10,7 @@ import {DRAW_SURVIVAL_CARD} from '@bga/not-alone/moves/DrawSurvivalCard'
 import {MOVE_PLAYED} from '../../studio/reducers/ServerReducer'
 import HandItem from '../../util/Hand'
 import {drawNextCardDelay} from '../NotAloneUI'
+import {TAKE_BACK_PLAYED_PLACE} from '@bga/not-alone/moves/TakeBackPlayedPlace'
 
 export default function PlayerHand({game, playerId, animation}) {
   const cards = []
@@ -20,8 +21,14 @@ export default function PlayerHand({game, playerId, animation}) {
   if (hunted) {
     hunted.handPlaceCards.forEach((place) => {
       const canBePlayed = getLegalMoves(game, playerId).some(move => move.type === PLAY_PLACE_CARD && move.place === place)
+      const isTakingBack = animation && animation.type === MOVE_PLAYED && animation.move.type === TAKE_BACK_PLAYED_PLACE && animation.move.place === place
+      let itemClassName = ''
+      if (isTakingBack) {
+        classes.push('taking-back-played-place')
+        itemClassName = 'taking-back-played-place'
+      }
       cards.push(
-        <HandItem key={place} drag={{enable: canBePlayed, item: {type: PLACE_CARD, place}}} hovering>
+        <HandItem key={place} drag={{enable: canBePlayed, item: {type: PLACE_CARD, place}}} hovering className={itemClassName}>
           <PlaceCard place={place}/>
         </HandItem>
       )

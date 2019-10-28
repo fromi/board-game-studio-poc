@@ -26,6 +26,9 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
   &.playing-place-card {
     transition: transform $playing-place-card-animation ease-in-out;
   }
+  &.taking-back-played-place {
+    transition: transform $taking-back-played-place-animation ease-in-out;
+  }
 
   .drawing {
     .hand-item-position {
@@ -81,6 +84,13 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
       transform: translateX($artemia-width / 2 + $default-margin + $card-width / 2) translateY(3vh) rotateY(-180deg);
     }
   }
+
+  .taking-back-played-place .hand-item-position {
+    animation: from-transform-none $taking-back-played-place-animation ease-in-out both;
+    .place-card {
+      animation: taking-back-played-place $taking-back-played-place-animation ease-in-out;
+    }
+  }
 }
 
 @keyframes opacity {
@@ -102,5 +112,11 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
   from {
     transform: translate(calc(50vw - #{$card-width / 2 + $default-margin + $decks-card-shift-x * $decks-max-cards-displayed}),
             $hunted-hand-bottom-margin - $default-margin - $deck-top-card-shift-y) rotateY(-180deg);
+  }
+}
+
+@keyframes taking-back-played-place {
+  from {
+    transform: translateX($artemia-width / 2 + $default-margin + $card-width / 2) translateY(3vh);
   }
 }
