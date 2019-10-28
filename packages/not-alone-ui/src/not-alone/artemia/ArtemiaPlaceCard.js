@@ -29,7 +29,7 @@ export default function ArtemiaPlaceCard({game, place, play, undo, playerId}) {
     accept: [HUNT_TOKEN],
     collect: monitor => ({
       isOver: monitor.isOver(),
-      canDrop: monitor.canDrop()
+      canDrop: monitor.canDrop() && !game.huntTokensLocations[monitor.getItem().token].includes(place)
     }),
     drop: item => {
       if (game.huntTokensLocations[item.token].length !== 0) {

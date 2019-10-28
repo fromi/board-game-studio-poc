@@ -12,6 +12,7 @@ $token-size: 8vh;
   margin: auto;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh black);
   transition: transform 0.3s ease-in-out;
+  will-change: transform;
   z-index: 0;
 
   img {
@@ -51,6 +52,11 @@ $token-size: 8vh;
         }
       }
     }
+  }
+
+  &.placing {
+    transition-duration: $place-hunt-token-animation;
+    z-index: 1;
   }
 
   &.placed {

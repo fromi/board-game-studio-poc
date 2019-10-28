@@ -35,9 +35,14 @@ export default function HuntToken({token, locations, playerId, game, animation})
     }
   }
 
+  const isBeingPlaced = animation && animation.type === MOVE_PLAYED && animation.move.type === PLACE_HUNT_TOKEN && animation.move.token === token
+  if (isBeingPlaced) {
+    classes.push('placing')
+  }
+
   const audio = new Audio(huntTokens[token].sound);
   useEffect(() => {
-    if (animation && animation.type === MOVE_PLAYED && animation.move.type === PLACE_HUNT_TOKEN && animation.move.token === token) {
+    if (isBeingPlaced) {
       audio.play()
     }
   })
