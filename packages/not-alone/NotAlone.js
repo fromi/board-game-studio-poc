@@ -182,7 +182,7 @@ function PhaseRule(phase) {
  * @return {[]} The player legal moves at this state of the game
  */
 export function getLegalMoves(game, playerId) {
-  if (game.assimilationCounter === 0 || game.rescueCounter === 0) {
+  if (game.nextMoves.length > 0 || game.assimilationCounter === 0 || game.rescueCounter === 0) {
     return []
   }
   if (playerId === CREATURE) {
@@ -328,20 +328,20 @@ export function creatureShouldPassOrPlayHuntCard(game) {
 export function continueGameAfterMove(game, move) {
   if (game.nextMoves.length > 0) {
     game.nextMoves.shift()
-  } else if (game.ongoingAction) {
+  }
+  if (game.ongoingAction) {
     const rule = getOngoingActionRule(game)
     if (rule.continueGameAfterMove) {
       rule.continueGameAfterMove(game, move)
+      return
     } else {
       delete game.ongoingAction
-      continueGameAfterMove(game, move)
     }
-  } else if (game.phase === RECKONING) {
-    if (move.type === MOVE_RESCUE_COUNTER) {
-      game.nextMoves.push(startPhase(EXPLORATION))
-    } else {
+  }
+  if (game.phase === RECKONING) {
       continueReckoning(game)
-    }
+  } else if (game.phase === END_OF_TURN_ACTIONS && move.type === MOVE_RESCUE_COUNTER) {
+    game.nextMoves.push(startPhase(EXPLORATION))
   }
 }
 

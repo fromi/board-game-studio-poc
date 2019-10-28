@@ -198,6 +198,9 @@ export const Reckoning = {
 }
 
 export function continueReckoning(game) {
+  if (game.hunted.some(hunted => shouldPassOrPlaySurvivalCard(game, hunted)) || creatureShouldPassOrPlayHuntCard(game)) {
+    return
+  }
   if (game.reckoning.huntedIndex !== -1) {
     // Removing Gate and Drone effects once applied so they do not apply to both place combined with The Artefact...
     const currentHuntedId = getCurrentHuntedId(game)
