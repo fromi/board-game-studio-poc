@@ -78,6 +78,6 @@ export default {
     }
   },
   [PUT_MARKER_ON_BEACH]: (t) => t('The Marker counter is placed on the Beach'),
-  [MOVE_RESCUE_COUNTER]: (t) => t('The Rescue counter is moved forward 1 space'),
-  [MOVE_ASSIMILATION_COUNTER]: (t) => t('The Assimilation counter is moved forward 1 space'),
+  [MOVE_RESCUE_COUNTER]: (t) => t('The Rescue counter moves forward 1 space'),
+  [MOVE_ASSIMILATION_COUNTER]: (t) => t('The Assimilation counter moves forward 1 space'),
 }

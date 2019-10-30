@@ -11,18 +11,26 @@
   }
 }
 
-.history > :last-child {
-  top: $header-height !important;
-  left: 0 !important;
-  max-width: 100%;
-  width: 50%;
-  height: 93vh;
-  font-size: 2.5vh;
-  border-radius: 0;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
+.history {
 
-  ol {
-    list-style-type: none;
+  .ScrollbarsCustom-Thumb {
+    background: rgba(255, 255, 255, 0.2) !important;
   }
-}
+
+  > :last-child {
+    top: $header-height !important;
+    left: 0 !important;
+    max-width: 100%;
+    width: 50%;
+    height: 93vh;
+    font-size: 2.5vh;
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+
+    ol {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+  }}
