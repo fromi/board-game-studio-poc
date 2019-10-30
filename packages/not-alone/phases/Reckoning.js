@@ -16,7 +16,7 @@ import {mustChoosePlaceToReveal} from '../material/place-cards/River'
 import {startPhase} from '../moves/StartPhase'
 import {discardPlaceCard} from '../moves/DiscardPlaceCard'
 import {loseWillCounter} from '../moves/LoseWillCounter'
-import {moveAssimilationCounter} from '../moves/MoveAssimilationCounter'
+import {AT_LEAST_ONE_HUNTED_LOST_ALL_WILL, moveAssimilationCounter} from '../moves/MoveAssimilationCounter'
 import {regainWillCounter} from '../moves/RegainWillCounter'
 import {takeBackDiscardedPlace} from '../moves/TakeBackDiscardedPlace'
 import {pass} from '../moves/Pass'
@@ -144,7 +144,7 @@ const ArtemiaTokenStep = {
     if (game.reckoning.huntedIndex === -1) {
       creatureTokenStep(game)
     } else if (game.pendingEffects.some(effect => effect.card === MUTATION)) {
-      game.nextMoves.push(loseWillCounter(getCurrentHuntedId(game)))
+      game.nextMoves.push(loseWillCounter(getCurrentHuntedId(game), MUTATION))
     }
   }
 }
@@ -154,26 +154,22 @@ const creatureTokenStep = game => {
   if (game.hunted.some(hunted => exploresPlaceWithToken(game, hunted, CREATURE_TOKEN))) {
     game.hunted.filter(hunted => exploresPlaceWithToken(game, hunted, CREATURE_TOKEN)).filter(hunted => hunted.willCounters > 0).forEach(hunted => {
       const huntedId = getHuntedId(game, hunted)
-      game.nextMoves.push(loseWillCounter(huntedId))
-      if (getExploredPlacesWithToken(game, hunted, CREATURE_TOKEN).includes(THE_LAIR)) {
-        game.nextMoves.push(loseWillCounter(huntedId))
-      }
+      const caughtOnTheLair = getExploredPlacesWithToken(game, hunted, CREATURE_TOKEN).includes(THE_LAIR)
+      game.nextMoves.push(loseWillCounter(huntedId, CREATURE_TOKEN, caughtOnTheLair ? 2 : 1))
       game.pendingEffects.map(getEffectRule).filter(rule => rule.huntedCaughtByCreature).forEach(rule => rule.huntedCaughtByCreature(game, huntedId))
     })
-    game.nextMoves.push(moveAssimilationCounter)
+    game.nextMoves.push(moveAssimilationCounter(CREATURE_TOKEN))
   }
   assimilationStep(game)
 }
 
 const assimilationStep = game => {
   if (game.hunted.some(hunted => hunted.willCounters === 0)) {
-    game.nextMoves.push(moveAssimilationCounter)
+    game.nextMoves.push(moveAssimilationCounter(AT_LEAST_ONE_HUNTED_LOST_ALL_WILL))
     game.hunted.filter(hunted => hunted.willCounters === 0).forEach(hunted => {
       const huntedId = getHuntedId(game, hunted)
       hunted.discardedPlaceCards.forEach(place => game.nextMoves.push(takeBackDiscardedPlace(huntedId, place)))
-      for (let i = 0; i < 3; i++) {
-        game.nextMoves.push(regainWillCounter(huntedId))
-      }
+      game.nextMoves.push(regainWillCounter(huntedId, 3))
     })
   }
   game.nextMoves.push(startPhase(END_OF_TURN_ACTIONS))

@@ -261,8 +261,18 @@ i18n.use(ICU).use(initReactI18next).init({
         'You take back {place} to your hand': 'Vous reprenez {place} en main',
         '{player} takes back {place} to {gender, select, ♀ {her} ♂ {his} other {their}}': '{player} reprend {place} en main',
         'The Marker counter is placed on the Beach': 'Le pion Balise est placé sur la Plage',
+        'You are caught by the Creature! You lose a Will counter': 'La Créature vous attrape ! Vous perdez un pion Volonté',
+        'You are caught by the Creature on the Lair! You lose 2 Will counters': 'La Créature vous attrape sur l’Antre ! Vous perdez 2 pions Volonté',
+        'You lose a Will counter because of {cardName} card': 'Vous perdez un pion Volonté à cause de la carte {cardName}',
+        'You lose a Will counter': 'Vous perdez un pion Volonté',
+        '{player} is caught by the Creature and loses a Will counter': '{player} est attrapé par la Créature et perd un pion Volonté',
+        '{player} is caught by the Creature on the Lair and loses 2 Will counters': '{player} est attrapé par la Créature sur l’Antre et perd 2 pions Volonté',
+        '{player} loses a Will counter because of {cardName} card': '{player} perd un pion Volonté à cause de la carte {cardName}',
+        '{player} loses a Will counter': '{player} perd un pion Volonté',
         'The Rescue counter moves forward 1 space': 'Le pion Secours avance de 1 case',
-        'The Assimilation counter moves forward 1 space': 'Le pion Assimilation avance de 1 case'
+        'The Creature caught a Hunted! The Assimilation counter moves forward 1 space': 'La Créature a attrapé un Traqué ! Le pion Assimilation avance de 1 case',
+        'At least on Hunted lost his third Will counter! The Assimilation counter moves forward 1 space': 'Au moins un Traqué a perdu son dernier jeton Volonté ! Le pion Assimilation avance de 1 case',
+        'The Assimilation counter moves forward 1 extra space because of Anticipation card!': 'Le pion Assimilation avance de 1 case supplémentaire à cause de la carte Anticipation !'
       }
     }
   },

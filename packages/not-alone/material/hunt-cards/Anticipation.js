@@ -19,7 +19,7 @@ export const Anticipation = {
 
   huntedCaughtByCreature: (game, huntedId) => {
     if (game.pendingEffects.find(effect => effect.card === ANTICIPATION).huntedId === huntedId) {
-      game.nextMoves.push(moveAssimilationCounter)
+      game.nextMoves.push(moveAssimilationCounter(ANTICIPATION))
     }
   }
 }

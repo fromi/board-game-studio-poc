@@ -18,7 +18,7 @@ export const Scream = {
       if (game.ongoingAction.discardPlaces) {
         hunted.handPlaceCards.forEach(place => moves.push(discardPlaceCard(huntedId, place)))
       } else if (hunted.willCounters > 0) {
-        moves.push(loseWillCounter(huntedId))
+        moves.push(loseWillCounter(huntedId, SCREAM))
         if (huntedId.handPlaceCards.length >= 2) {
           hunted.handPlaceCards.forEach(place => moves.push(discardPlaceCard(huntedId, place)))
         }

@@ -8,7 +8,7 @@ export const resist = (huntedId) => ({type: RESIST, huntedId})
 export const Resist = {
   execute: (game, move) => {
     const hunted = getHunted(game, move.huntedId)
-    game.nextMoves.push(loseWillCounter(move.huntedId))
+    game.nextMoves.push(loseWillCounter(move.huntedId, RESIST))
     hunted.ongoingAction = {type: RESIST, cardsLeft: 2}
   },
 

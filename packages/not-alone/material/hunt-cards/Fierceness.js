@@ -9,6 +9,6 @@ export const Fierceness = {
   playCard: game => game.ongoingAction = {cardType: HUNT_CARD, card: FIERCENESS},
 
   huntedCaughtByCreature: (game, huntedId) => {
-    game.nextMoves.push(loseWillCounter(huntedId))
+    game.nextMoves.push(loseWillCounter(huntedId, FIERCENESS))
   }
 }
