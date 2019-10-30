@@ -6,6 +6,8 @@ import {useTranslation} from 'react-i18next'
 import './board.scss'
 import RescueCounter from '../counters/RescueCounter'
 import AssimilationCounter from '../counters/AssimilationCounter'
+import {MOVE_ASSIMILATION_COUNTER} from '@bga/not-alone/moves/MoveAssimilationCounter'
+import {MOVE_RESCUE_COUNTER} from '@bga/not-alone/moves/MoveRescueCounter'
 
 export default function Board({game, playerId, animation, side, play}) {
   const animating = animation && animation.move.type === CHOOSE_BOARD_SIDE
@@ -34,8 +36,8 @@ export default function Board({game, playerId, animation, side, play}) {
   return (
     <Tooltip title={tooltip} enterTouchDelay={0}>
       <div className={classes.join(' ')} onClick={onClick}>
-        <RescueCounter game={game}/>
-        <AssimilationCounter game={game}/>
+        <RescueCounter game={game} animation={animation}/>
+        <AssimilationCounter game={game} animation={animation}/>
       </div>
     </Tooltip>
   )

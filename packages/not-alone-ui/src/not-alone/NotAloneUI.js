@@ -18,6 +18,8 @@ import History from './history/History'
 import variables from './variables.scss'
 import {END_OF_TURN_ACTIONS, EXPLORATION, HUNTING, RECKONING} from '@bga/not-alone/Phases'
 import {DrawHuntCard} from '@bga/not-alone/moves/DrawHuntCard'
+import {MOVE_ASSIMILATION_COUNTER} from '@bga/not-alone/moves/MoveAssimilationCounter'
+import {MOVE_RESCUE_COUNTER} from '@bga/not-alone/moves/MoveRescueCounter'
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -54,6 +56,12 @@ export const Interface = (props) => {
       classes.push('board-side-chosen')
     }
   }
+
+  const counterMoving = animation && (animation.move.type === MOVE_ASSIMILATION_COUNTER || animation.move.type === MOVE_RESCUE_COUNTER)
+  if (counterMoving) {
+    classes.push('counter-moving')
+  }
+
 
   return (
     <MuiThemeProvider theme={playerId === CREATURE ? createTheme(pink) : createTheme(lightBlue)}>

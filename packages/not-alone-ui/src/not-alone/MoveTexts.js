@@ -7,6 +7,9 @@ import {PLACE_HUNT_TOKEN} from '@bga/not-alone/moves/PlaceHuntToken'
 import {huntTokens} from './material/hunt-tokens/HuntToken'
 import {USE_PLACE_POWER} from '@bga/not-alone/moves/UsePlacePower'
 import {TAKE_BACK_PLAYED_PLACE} from '@bga/not-alone/moves/TakeBackPlayedPlace'
+import {PUT_MARKER_ON_BEACH} from '@bga/not-alone/moves/PutMarkerOnBeach'
+import {MOVE_RESCUE_COUNTER} from '@bga/not-alone/moves/MoveRescueCounter'
+import {MOVE_ASSIMILATION_COUNTER} from '@bga/not-alone/moves/MoveAssimilationCounter'
 
 export default {
   [DRAW_HUNT_CARD]: (t, move, {playerId, playersMap}) => playerId === CREATURE ?
@@ -73,5 +76,8 @@ export default {
       return t('{player} takes back {place} to {gender, select, ♀ {her} ♂ {his} other {their}}',
         {player: playersMap[move.huntedId].name, gender: playersMap[move.huntedId].gender, place})
     }
-  }
+  },
+  [PUT_MARKER_ON_BEACH]: (t) => t('The Marker counter is placed on the Beach'),
+  [MOVE_RESCUE_COUNTER]: (t) => t('The Rescue counter is moved forward 1 space'),
+  [MOVE_ASSIMILATION_COUNTER]: (t) => t('The Assimilation counter is moved forward 1 space'),
 }

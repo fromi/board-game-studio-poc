@@ -36,6 +36,8 @@ $playing-place-card-animation: 0.8s;
 $taking-back-played-place-animation: 0.8s;
 $revealing-place-card-animation: 2s;
 $place-hunt-token-animation: 1s;
+$move-marker-counter-animation: 1s;
+$move-score-counter-animation: 2s;
 
 //noinspection CssInvalidPseudoSelector,CssUnknownProperty
 :export {
@@ -47,5 +49,9 @@ $place-hunt-token-animation: 1s;
   PlaceHuntToken: $place-hunt-token-animation;
   RevealPlaceCards: $revealing-place-card-animation;
   TakeBackPlayedPlace: $taking-back-played-place-animation;
+  PutMarkerOnBeach: $move-marker-counter-animation;
+  RemoveMarkerFromBeach: $move-marker-counter-animation;
+  MoveRescueCounter: $move-score-counter-animation;
+  MoveAssimilationCounter: $move-score-counter-animation;
   decksMaxCardsDisplayed: $decks-max-cards-displayed;
 }

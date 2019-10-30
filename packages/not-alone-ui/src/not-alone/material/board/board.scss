@@ -19,9 +19,15 @@
     .rescue-counter, .assimilation-counter {
       height: 4.5vh;
       position: absolute;
+      border-radius: 50%;
 
       &[data-value='0'] {
         transform: translate(53.65vh, 5.3vh);
+      }
+
+      &.moving {
+        transition: transform $move-score-counter-animation ease-in-out;
+        box-shadow: 0 0 10vh 10vh white;
       }
     }
 
@@ -160,5 +166,37 @@
     .board {
       transform: rotate(90deg) translate($board-width / 2 - $board-height / 2, calc(-100vw + #{$board-width / 2 + $board-height / 2}));
     }
+  }
+
+  &.counter-moving {
+    .board {
+      z-index: 100;
+    }
+
+    &:before {
+      content: '';
+      z-index: 50;
+      position: absolute;
+      top: $header-height;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      animation: highlight-board $move-score-counter-animation linear;
+    }
+  }
+}
+
+@keyframes highlight-board {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  10% {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  90% {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0);
   }
 }

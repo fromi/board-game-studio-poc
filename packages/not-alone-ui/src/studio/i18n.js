@@ -259,7 +259,10 @@ i18n.use(ICU).use(initReactI18next).init({
         'You use the power of {place}': 'Vous utilisez le pouvoir de {place}',
         '{player} uses the power of {place}': '{player} utilise le pouvoir de {place}',
         'You take back {place} to your hand': 'Vous reprenez {place} en main',
-        '{player} takes back {place} to {gender, select, ♀ {her} ♂ {his} other {their}}': '{player} reprend {place} en main'
+        '{player} takes back {place} to {gender, select, ♀ {her} ♂ {his} other {their}}': '{player} reprend {place} en main',
+        'The Marker counter is placed on the Beach': 'Le pion Balise est placé sur la Plage',
+        'The Rescue counter is moved forward 1 space': 'Le pion Secours est avancé de 1 case',
+        'The Assimilation counter is moved forward 1 space': 'Le pion Assimilation est avancé de 1 case'
       }
     }
   },
