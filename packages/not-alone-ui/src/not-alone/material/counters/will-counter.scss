@@ -3,4 +3,17 @@
 .will-counter {
   display: block;
   width: 3vh;
+
+  &.lost {
+    animation: fade-out $lose-will-counter-animation ease-in forwards;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }

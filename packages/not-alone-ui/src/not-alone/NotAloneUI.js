@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useTranslation} from 'react-i18next'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core'
 import {lightBlue, pink} from '@material-ui/core/colors'
@@ -20,6 +20,9 @@ import {END_OF_TURN_ACTIONS, EXPLORATION, HUNTING, RECKONING} from '@bga/not-alo
 import {DrawHuntCard} from '@bga/not-alone/moves/DrawHuntCard'
 import {MOVE_ASSIMILATION_COUNTER} from '@bga/not-alone/moves/MoveAssimilationCounter'
 import {MOVE_RESCUE_COUNTER} from '@bga/not-alone/moves/MoveRescueCounter'
+import {MOVE_PLAYED} from '../studio/reducers/ServerReducer'
+import {LOSE_WILL_COUNTER} from '@bga/not-alone/moves/LoseWillCounter'
+import willCounterLostAudio from './material/counters/will-counter-lost.mp3'
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -62,6 +65,18 @@ export const Interface = (props) => {
     classes.push('counter-moving')
   }
 
+  const huntedLosingWillCounter = animation && animation.type === MOVE_PLAYED && animation.move.type === LOSE_WILL_COUNTER
+  useEffect(() => {
+    if (huntedLosingWillCounter) {
+      for (let i = 0; i < animation.move.quantity; i++) {
+        const audio = new Audio(willCounterLostAudio)
+        setTimeout(() => audio.play(), 300 * i)
+      }
+    }
+  })
+  if (huntedLosingWillCounter && animation.move.huntedId === playerId) {
+    classes.push('losing-will-counter')
+  }
 
   return (
     <MuiThemeProvider theme={playerId === CREATURE ? createTheme(pink) : createTheme(lightBlue)}>

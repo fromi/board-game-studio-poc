@@ -10,15 +10,13 @@ export const StartPhase = {
   execute: (game, move) => {
     game.phase = move.phase
     game.creature.passed = false
-    game.hunted.forEach(hunted => {
-      hunted.passed = false
-      hunted.playedPlaceCardsRevealed = false
-    })
+    game.hunted.forEach(hunted => hunted.passed = false)
     game.nextMoves.shift()
     if (move.phase === EXPLORATION) {
       game.beachUsed = false
       game.wreckUsed = false
       game.pendingEffects = []
+      game.hunted.forEach(hunted => hunted.playedPlaceCardsRevealed = false)
     } else if (move.phase === RECKONING) {
       game.reckoning = {step: REVEAL_PLACE_CARDS_STEP}
     }

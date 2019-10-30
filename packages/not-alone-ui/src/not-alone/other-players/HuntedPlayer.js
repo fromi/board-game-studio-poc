@@ -8,6 +8,7 @@ import HuntedPlayerDiscard from './HuntedPlayerDiscard'
 import WillCounter from '../material/counters/WillCounter'
 import {MOVE_PLAYED} from '../../studio/reducers/ServerReducer'
 import {PASS} from '@bga/not-alone/moves/Pass'
+import {LOSE_WILL_COUNTER} from '@bga/not-alone/moves/LoseWillCounter'
 
 export default function HuntedPlayer(props) {
   const {hunted, huntedId, classes, playersMap, animation} = props
@@ -20,6 +21,11 @@ export default function HuntedPlayer(props) {
     setTimeout(() => setSpeech(''), 5000)
   }
 
+  const losingWillCounter = animation && animation.type === MOVE_PLAYED && animation.move.type === LOSE_WILL_COUNTER && animation.move.huntedId === huntedId
+  if (losingWillCounter) {
+    classes.push('losing-will-counter')
+  }
+
   return (
     <div className={classes.join(' ')}>
       <h2>{playersMap[huntedId].name}</h2>
@@ -28,6 +34,9 @@ export default function HuntedPlayer(props) {
       <Tooltip title={t('{count, plural, one {One Will counter} other {{count} Will counters}}', {count: hunted.willCounters})} enterTouchDelay={0}>
         <div className="will-counters">
           {[...Array(hunted.willCounters)].map((_, index) => <WillCounter key={index}/>)}
+          {losingWillCounter && [...Array(animation.move.quantity)].map((_, index) =>
+            <WillCounter key={'lost' + index} className='lost'/>
+          )}
         </div>
       </Tooltip>
       <HuntedPlayerPlayedPlaces {...props}/>

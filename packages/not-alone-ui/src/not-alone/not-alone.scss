@@ -87,6 +87,17 @@
       left: $default-margin;
     }
   }
+
+  &.losing-will-counter:after {
+    content: '';
+    position: absolute;
+    top: $header-height;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    animation: losing-will-counter $lose-will-counter-animation linear;
+  }
 }
 
 .card-big {

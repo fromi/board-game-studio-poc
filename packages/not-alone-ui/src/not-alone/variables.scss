@@ -38,6 +38,7 @@ $revealing-place-card-animation: 2s;
 $place-hunt-token-animation: 1s;
 $move-marker-counter-animation: 1s;
 $move-score-counter-animation: 2s;
+$lose-will-counter-animation: 1s;
 
 //noinspection CssInvalidPseudoSelector,CssUnknownProperty
 :export {
@@ -53,5 +54,6 @@ $move-score-counter-animation: 2s;
   RemoveMarkerFromBeach: $move-marker-counter-animation;
   MoveRescueCounter: $move-score-counter-animation;
   MoveAssimilationCounter: $move-score-counter-animation;
+  LoseWillCounter: $lose-will-counter-animation;
   decksMaxCardsDisplayed: $decks-max-cards-displayed;
 }
