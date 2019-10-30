@@ -54,11 +54,6 @@ $token-size: 8vh;
     }
   }
 
-  &.placing {
-    transition-duration: $place-hunt-token-animation;
-    z-index: 1;
-  }
-
   &.placed {
     $translate-y-artemia: $artemia-top-margin + $artemia-grid-gap + $card-height / 2 - $token-size / 2;
 
@@ -109,98 +104,131 @@ $token-size: 8vh;
 }
 
 .not-alone:not(.creature) {
-  .hunt-token:not(.placed) {
-    $seat-top-translateY: $header-height + $player-panel-height - $token-size;
-    $seat-middle-translateY: $header-height + $player-panel-height * 2 + $default-margin - $token-size;
-    $seat-bottom-translateY: $header-height + $player-panel-height * 3 + $default-margin * 2 - $token-size;
-    $seat-center-translateY: 100vh - $token-size - $default-margin * 2;
+  .hunt-token {
+    &:not(.placed) {
+      $seat-top-translateY: $header-height + $player-panel-height - $token-size;
+      $seat-middle-translateY: $header-height + $player-panel-height * 2 + $default-margin - $token-size;
+      $seat-bottom-translateY: $header-height + $player-panel-height * 3 + $default-margin * 2 - $token-size;
+      $seat-center-translateY: 100vh - $token-size - $default-margin * 2;
 
-    &.creature-token {
-      &.seat-left {
-        $seat-left-translateX: calc(#{- $artemia-width / 2 - $default-margin * 1.5 - $token-size} - #{$calc-player-panel-width} / 2);
-        &.seat-top {
-          transform: translateX($seat-left-translateX) translateY($seat-top-translateY);
+      &.creature-token {
+        &.seat-left {
+          $seat-left-translateX: calc(#{- $artemia-width / 2 - $default-margin * 1.5 - $token-size} - #{$calc-player-panel-width} / 2);
+
+          &.seat-top {
+            transform: translateX($seat-left-translateX) translateY($seat-top-translateY);
+          }
+
+          &.seat-middle {
+            transform: translateX($seat-left-translateX) translateY($seat-middle-translateY);
+          }
+
+          &.seat-bottom {
+            transform: translateX($seat-left-translateX) translateY($seat-bottom-translateY);
+          }
         }
-        &.seat-middle {
-          transform: translateX($seat-left-translateX) translateY($seat-middle-translateY);
+
+        &.seat-right {
+          $seat-right-translateX: calc(#{$artemia-width / 2 + $default-margin * 0.5 - $token-size} + #{$calc-player-panel-width} / 2);
+
+          &.seat-top {
+            transform: translateX($seat-right-translateX) translateY($seat-top-translateY);
+          }
+
+          &.seat-middle {
+            transform: translateX($seat-right-translateX) translateY($seat-middle-translateY);
+          }
+
+          &.seat-bottom {
+            transform: translateX($seat-right-translateX) translateY($seat-bottom-translateY);
+          }
         }
-        &.seat-bottom {
-          transform: translateX($seat-left-translateX) translateY($seat-bottom-translateY);
+
+        &.seat-center {
+          transform: translateX(- $token-size - $default-margin * 0.5) translateY($seat-center-translateY);
         }
       }
-      &.seat-right {
-        $seat-right-translateX: calc(#{$artemia-width / 2 + $default-margin * 0.5 - $token-size} + #{$calc-player-panel-width} / 2);
-        &.seat-top {
-          transform: translateX($seat-right-translateX) translateY($seat-top-translateY);
+
+      &.artemia-token {
+        &.seat-left {
+          $seat-left-translateX: calc(#{- $artemia-width / 2 - $default-margin} - #{$calc-player-panel-width} / 2);
+
+          &.seat-top {
+            transform: translateX($seat-left-translateX) translateY($seat-top-translateY);
+          }
+
+          &.seat-middle {
+            transform: translateX($seat-left-translateX) translateY($seat-middle-translateY);
+          }
+
+          &.seat-bottom {
+            transform: translateX($seat-left-translateX) translateY($seat-bottom-translateY);
+          }
         }
-        &.seat-middle {
-          transform: translateX($seat-right-translateX) translateY($seat-middle-translateY);
+
+        &.seat-right {
+          $seat-right-translateX: calc(#{$artemia-width / 2 + $default-margin} + #{$calc-player-panel-width} / 2);
+
+          &.seat-top {
+            transform: translateX($seat-right-translateX) translateY($seat-top-translateY);
+          }
+
+          &.seat-middle {
+            transform: translateX($seat-right-translateX) translateY($seat-middle-translateY);
+          }
+
+          &.seat-bottom {
+            transform: translateX($seat-right-translateX) translateY($seat-bottom-translateY);
+          }
         }
-        &.seat-bottom {
-          transform: translateX($seat-right-translateX) translateY($seat-bottom-translateY);
+
+        &.seat-center {
+          transform: translateY($seat-center-translateY);
         }
       }
-      &.seat-center {
-        transform: translateX(- $token-size - $default-margin * 0.5) translateY($seat-center-translateY);
+
+      &.target-token {
+        &.seat-left {
+          $seat-left-translateX: calc(#{- $artemia-width / 2 - $default-margin * 0.5 + $token-size} - #{$calc-player-panel-width} / 2);
+
+          &.seat-top {
+            transform: translateX($seat-left-translateX) translateY($seat-top-translateY);
+          }
+
+          &.seat-middle {
+            transform: translateX($seat-left-translateX) translateY($seat-middle-translateY);
+          }
+
+          &.seat-bottom {
+            transform: translateX($seat-left-translateX) translateY($seat-bottom-translateY);
+          }
+        }
+
+        &.seat-right {
+          $seat-right-translateX: calc(#{$artemia-width / 2 + $default-margin * 1.5 + $token-size} + #{$calc-player-panel-width} / 2);
+
+          &.seat-top {
+            transform: translateX($seat-right-translateX) translateY($seat-top-translateY);
+          }
+
+          &.seat-middle {
+            transform: translateX($seat-right-translateX) translateY($seat-middle-translateY);
+          }
+
+          &.seat-bottom {
+            transform: translateX($seat-right-translateX) translateY($seat-bottom-translateY);
+          }
+        }
+
+        &.seat-center {
+          transform: translateX($token-size + $default-margin * 0.5) translateY($seat-center-translateY);
+        }
       }
     }
-    &.artemia-token {
-      &.seat-left {
-        $seat-left-translateX: calc(#{- $artemia-width / 2 - $default-margin} - #{$calc-player-panel-width} / 2);
-        &.seat-top {
-          transform: translateX($seat-left-translateX) translateY($seat-top-translateY);
-        }
-        &.seat-middle {
-          transform: translateX($seat-left-translateX) translateY($seat-middle-translateY);
-        }
-        &.seat-bottom {
-          transform: translateX($seat-left-translateX) translateY($seat-bottom-translateY);
-        }
-      }
-      &.seat-right {
-        $seat-right-translateX: calc(#{$artemia-width / 2 + $default-margin} + #{$calc-player-panel-width} / 2);
-        &.seat-top {
-          transform: translateX($seat-right-translateX) translateY($seat-top-translateY);
-        }
-        &.seat-middle {
-          transform: translateX($seat-right-translateX) translateY($seat-middle-translateY);
-        }
-        &.seat-bottom {
-          transform: translateX($seat-right-translateX) translateY($seat-bottom-translateY);
-        }
-      }
-      &.seat-center {
-        transform: translateY($seat-center-translateY);
-      }
-    }
-    &.target-token {
-      &.seat-left {
-        $seat-left-translateX: calc(#{- $artemia-width / 2 - $default-margin * 0.5 + $token-size} - #{$calc-player-panel-width} / 2);
-        &.seat-top {
-          transform: translateX($seat-left-translateX) translateY($seat-top-translateY);
-        }
-        &.seat-middle {
-          transform: translateX($seat-left-translateX) translateY($seat-middle-translateY);
-        }
-        &.seat-bottom {
-          transform: translateX($seat-left-translateX) translateY($seat-bottom-translateY);
-        }
-      }
-      &.seat-right {
-        $seat-right-translateX: calc(#{$artemia-width / 2 + $default-margin * 1.5 + $token-size} + #{$calc-player-panel-width} / 2);
-        &.seat-top {
-          transform: translateX($seat-right-translateX) translateY($seat-top-translateY);
-        }
-        &.seat-middle {
-          transform: translateX($seat-right-translateX) translateY($seat-middle-translateY);
-        }
-        &.seat-bottom {
-          transform: translateX($seat-right-translateX) translateY($seat-bottom-translateY);
-        }
-      }
-      &.seat-center {
-        transform: translateX($token-size + $default-margin * 0.5) translateY($seat-center-translateY);
-      }
+
+    &.placing {
+      transition-duration: $place-hunt-token-animation;
+      z-index: 1;
     }
   }
 }

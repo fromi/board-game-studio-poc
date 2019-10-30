@@ -4,7 +4,7 @@ import {placeRule, THE_LAIR} from '../PlaceCards'
 import {getCurrentHuntedId} from '../../phases/Reckoning'
 import {takeBackAllDiscardedPlaces} from '../../moves/TakeBackAllDiscardedPlaces'
 import {usePlacePower} from '../../moves/UsePlacePower'
-import {CLONE, PERSECUTION} from '../HuntCards'
+import {PERSECUTION} from '../HuntCards'
 import {takeBackDiscardedPlace} from '../../moves/TakeBackDiscardedPlace'
 
 export const Lair = {

@@ -10,7 +10,10 @@ export const StartPhase = {
   execute: (game, move) => {
     game.phase = move.phase
     game.creature.passed = false
-    game.hunted.forEach(hunted => hunted.passed = false)
+    game.hunted.forEach(hunted => {
+      hunted.passed = false
+      hunted.playedPlaceCardsRevealed = false
+    })
     game.nextMoves.shift()
     if (move.phase === EXPLORATION) {
       game.beachUsed = false

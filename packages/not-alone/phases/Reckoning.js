@@ -8,7 +8,7 @@ import {
   HUNTED_PREFIX,
   shouldPassOrPlaySurvivalCard
 } from '../NotAlone'
-import {placeRule} from '../material/PlaceCards'
+import {placeRule, THE_LAIR} from '../material/PlaceCards'
 import {usePlacePower} from '../moves/UsePlacePower'
 import {ARTEMIA_TOKEN, CREATURE_TOKEN, HUNT_TOKENS, TARGET_TOKEN} from '../material/HuntTokens'
 import {takeBackPlayedPlace} from '../moves/TakeBackPlayedPlace'
@@ -27,7 +27,7 @@ import {huntedAvoidsCreatureTokenEffect} from '../material/survival-cards/Dodge'
 import {END_OF_TURN_ACTIONS} from '../Phases'
 
 export const REVEAL_PLACE_CARDS_STEP = 'REVEAL_PLACE_CARDS', EXPLORE_PLACES_WITHOUT_TOKEN_STEP = 'EXPLORE_PLACES_WITHOUT_TOKEN',
-  TARGET_TOKEN_STEP = 'TARGET_TOKEN_STEP', ARTEMIA_TOKEN_STEP = 'ARTEMIA_TOKEN_STEP'
+  TARGET_TOKEN_STEP = 'TARGET_TOKEN_STEP', ARTEMIA_TOKEN_STEP = 'ARTEMIA_TOKEN_STEP', CREATURE_TOKEN_STEP = 'CREATURE_TOKEN_STEP'
 
 function getReckoningStep(game) {
   switch (game.reckoning.step) {
@@ -150,10 +150,14 @@ const ArtemiaTokenStep = {
 }
 
 const creatureTokenStep = game => {
+  game.reckoning.step = CREATURE_TOKEN_STEP
   if (game.hunted.some(hunted => exploresPlaceWithToken(game, hunted, CREATURE_TOKEN))) {
     game.hunted.filter(hunted => exploresPlaceWithToken(game, hunted, CREATURE_TOKEN)).filter(hunted => hunted.willCounters > 0).forEach(hunted => {
       const huntedId = getHuntedId(game, hunted)
       game.nextMoves.push(loseWillCounter(huntedId))
+      if (getExploredPlacesWithToken(game, hunted, CREATURE_TOKEN).includes(THE_LAIR)) {
+        game.nextMoves.push(loseWillCounter(huntedId))
+      }
       game.pendingEffects.map(getEffectRule).filter(rule => rule.huntedCaughtByCreature).forEach(rule => rule.huntedCaughtByCreature(game, huntedId))
     })
     game.nextMoves.push(moveAssimilationCounter)

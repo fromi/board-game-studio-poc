@@ -328,8 +328,7 @@ export function creatureShouldPassOrPlayHuntCard(game) {
 export function continueGameAfterMove(game, move) {
   if (game.nextMoves.length > 0) {
     game.nextMoves.shift()
-  }
-  if (game.ongoingAction) {
+  } else if (game.ongoingAction) {
     const rule = getOngoingActionRule(game)
     if (rule.continueGameAfterMove) {
       rule.continueGameAfterMove(game, move)
@@ -338,10 +337,12 @@ export function continueGameAfterMove(game, move) {
       delete game.ongoingAction
     }
   }
-  if (game.phase === RECKONING) {
+  if (!game.ongoingAction) {
+    if (game.phase === RECKONING) {
       continueReckoning(game)
-  } else if (game.phase === END_OF_TURN_ACTIONS && move.type === MOVE_RESCUE_COUNTER) {
-    game.nextMoves.push(startPhase(EXPLORATION))
+    } else if (game.phase === END_OF_TURN_ACTIONS && move.type === MOVE_RESCUE_COUNTER) {
+      game.nextMoves.push(startPhase(EXPLORATION))
+    }
   }
 }
 
@@ -351,11 +352,11 @@ export function getOngoingActionRule(game) {
 
 export function getEffectRule(effect) {
   switch (effect.cardType) {
-    case 'PLACE_CARD':
+    case PLACE_CARD:
       return placeRule(effect.card)
-    case 'HUNT_CARD':
+    case HUNT_CARD:
       return huntCardRule(effect.card)
-    case 'SURVIVAL_CARD':
+    case SURVIVAL_CARD:
       return survivalCardRule(effect.card)
   }
 }

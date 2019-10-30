@@ -6,8 +6,6 @@ import {useTranslation} from 'react-i18next'
 import './board.scss'
 import RescueCounter from '../counters/RescueCounter'
 import AssimilationCounter from '../counters/AssimilationCounter'
-import {MOVE_ASSIMILATION_COUNTER} from '@bga/not-alone/moves/MoveAssimilationCounter'
-import {MOVE_RESCUE_COUNTER} from '@bga/not-alone/moves/MoveRescueCounter'
 
 export default function Board({game, playerId, animation, side, play}) {
   const animating = animation && animation.move.type === CHOOSE_BOARD_SIDE
