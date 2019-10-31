@@ -19,9 +19,9 @@
   }
 
   .taking-back-played-place .hand-item-position {
-    animation: from-transform-none $taking-back-played-place-animation ease-in-out forwards;
+    animation: from-transform-none $taking-back-place-animation ease-in-out forwards;
     .place-card {
-      animation: hunted-player-take-back-played-place $taking-back-played-place-animation ease-in-out forwards;
+      animation: hunted-player-take-back-played-place $taking-back-place-animation ease-in-out forwards;
     }
   }
 }

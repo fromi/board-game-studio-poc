@@ -11,6 +11,7 @@ import {MOVE_PLAYED} from '../../studio/reducers/ServerReducer'
 import HandItem from '../../util/Hand'
 import {drawNextCardDelay} from '../NotAloneUI'
 import {TAKE_BACK_PLAYED_PLACE} from '@bga/not-alone/moves/TakeBackPlayedPlace'
+import {TAKE_BACK_DISCARDED_PLACE} from '@bga/not-alone/moves/TakeBackDiscardedPlace'
 
 export default function PlayerHand({game, playerId, animation}) {
   const cards = []
@@ -21,11 +22,12 @@ export default function PlayerHand({game, playerId, animation}) {
   if (hunted) {
     hunted.handPlaceCards.forEach((place) => {
       const canBePlayed = getLegalMoves(game, playerId).some(move => move.type === PLAY_PLACE_CARD && move.place === place)
-      const isTakingBack = animation && animation.type === MOVE_PLAYED && animation.move.type === TAKE_BACK_PLAYED_PLACE && animation.move.huntedId === playerId && animation.move.place === place
-      let itemClassName = ''
-      if (isTakingBack) {
-        classes.push('taking-back-played-place')
-        itemClassName = 'taking-back-played-place'
+      const isAnimatingPlace = animation && animation.type === MOVE_PLAYED && animation.move.huntedId === playerId && animation.move.place === place
+      const isTakingBackPlayedPlace = isAnimatingPlace && animation.move.type === TAKE_BACK_PLAYED_PLACE
+      const isTakingBackDiscardedPlace = isAnimatingPlace && animation.move.type === TAKE_BACK_DISCARDED_PLACE
+      const itemClassName = isTakingBackPlayedPlace ? 'taking-back-played-place' : isTakingBackDiscardedPlace ? 'taking-back-discarded-place' : ''
+      if (isTakingBackPlayedPlace || isTakingBackDiscardedPlace) {
+        classes.push('taking-back-place')
       }
       cards.push(
         <HandItem key={place} drag={{enable: canBePlayed, item: {type: PLACE_CARD, place}}} hovering className={itemClassName}>

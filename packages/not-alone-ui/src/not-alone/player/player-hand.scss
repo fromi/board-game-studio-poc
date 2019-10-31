@@ -26,8 +26,8 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
   &.playing-place-card {
     transition: transform $playing-place-card-animation ease-in-out;
   }
-  &.taking-back-played-place {
-    transition: transform $taking-back-played-place-animation ease-in-out;
+  &.taking-back-place {
+    transition: transform $taking-back-place-animation ease-in-out;
   }
 
   .drawing {
@@ -86,9 +86,16 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
   }
 
   .taking-back-played-place .hand-item-position {
-    animation: from-transform-none $taking-back-played-place-animation ease-in-out both;
+    animation: from-transform-none $taking-back-place-animation ease-in-out both;
     .place-card {
-      animation: taking-back-played-place $taking-back-played-place-animation ease-in-out;
+      animation: taking-back-played-place $taking-back-place-animation ease-in-out;
+    }
+  }
+
+  .taking-back-discarded-place .hand-item-position {
+    animation: from-transform-none $taking-back-place-animation ease-in-out both;
+    .place-card {
+      animation: taking-back-discarded-place $taking-back-place-animation ease-in-out;
     }
   }
 }
@@ -118,5 +125,11 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
 @keyframes taking-back-played-place {
   from {
     transform: translateX($artemia-width / 2 + $default-margin + $card-width / 2) translateY(3vh);
+  }
+}
+
+@keyframes taking-back-discarded-place {
+  from {
+    transform: translateX(calc(#{$board-height + $default-margin + $card-width / 2} - 50vw)) translateY(2vh);
   }
 }
