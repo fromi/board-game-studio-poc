@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {useDrag, useDragLayer} from 'react-dnd'
 import {getEmptyImage} from 'react-dnd-html5-backend'
 
-export default function DragWrapper({children, draggable, item}) {
+export default function DragWrapper({children, draggable, item, className, ...props}) {
   let [{isDragging}, drag, preview] = useDrag({
     item: (typeof item) === 'string' ? {type: item} : item,
     canDrag: draggable,
@@ -30,7 +30,7 @@ export default function DragWrapper({children, draggable, item}) {
   const style = isDragging && dragOffsetDiff ? {transform: `translate(${dragOffsetDiff.x}px, ${dragOffsetDiff.y}px)`} : {}
 
   return (
-    <div ref={drag} className={classes.join(' ')} style={style}>
+    <div ref={drag} className={className + ' ' + classes.join(' ')} style={style} {...props}>
       {children}
     </div>
   )

@@ -71,13 +71,14 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
   }
 
   .dragging {
+    z-index: 5;
     .card {
       opacity: 0.8;
     }
   }
 
   .being-played .hand-item-position {
-    z-index: 1;
+    z-index: 5;
     transform: none !important;
 
     .place-card {

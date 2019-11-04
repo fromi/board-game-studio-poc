@@ -13,7 +13,7 @@ $token-size: 8vh;
   filter: drop-shadow(0.2vh 0.2vh 0.1vh black);
   transition: transform 0.3s ease-in-out;
   will-change: transform;
-  z-index: 0;
+  z-index: 5;
 
   img {
     cursor: help;
@@ -32,7 +32,6 @@ $token-size: 8vh;
       &.dragging {
         pointer-events: none;
         transition: none;
-        z-index: 1000;
       }
 
       &:not(.dragging) {
