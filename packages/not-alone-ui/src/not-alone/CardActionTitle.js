@@ -6,10 +6,11 @@ import {Button} from '@material-ui/core'
 import {PLAY_HUNT_CARD} from '@bga/not-alone/moves/PlayHuntCard'
 import {huntCardTexts} from './material/hunt-cards/HuntCard'
 import {survivalCardTexts} from './material/survival-cards/SurvivalCard'
+import {MOVE_PLAYED} from '../studio/reducers/ServerReducer'
 
 export default function CardActionTitle(props) {
   const {t} = useTranslation()
-  const {game, playerId, playersMap} = props
+  const {game, playerId, playersMap, animation} = props
   const ownMoves = getLegalMoves(game, playerId)
   if (ownMoves.some(move => move.type === PASS)) {
     const moveType = playerId === CREATURE ? PLAY_HUNT_CARD : SURVIVAL_CARD
@@ -43,6 +44,13 @@ export default function CardActionTitle(props) {
   const awaitedPlayers = getPlayerIds(game).filter(playerId => getLegalMoves(game, playerId).some(move => move.type === PASS))
   const creatureCouldPlayHuntCard = awaitedPlayers.includes(CREATURE) && couldCreaturePlayHuntCard(game)
   if (awaitedPlayers.length === 0) {
+    if (animation && animation.type === MOVE_PLAYED && animation.move.type === PASS) {
+      if (animation.move.playerId === playerId) {
+        return t('You pass')
+      } else {
+        return t('{player} passes', {player: playersMap[animation.move.playerId].name})
+      }
+    }
     console.warn('Missing message for this state', props)
     return ''
   } else if (awaitedPlayers.length === 1) {

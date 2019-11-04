@@ -26,7 +26,8 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
   &.playing-place-card {
     transition: transform $playing-place-card-animation ease-in-out;
   }
-  &.taking-back-place {
+
+  &.taking-place-card {
     transition: transform $taking-back-place-animation ease-in-out;
   }
 
@@ -87,6 +88,7 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
 
   .taking-back-played-place .hand-item-position {
     animation: from-transform-none $taking-back-place-animation ease-in-out both;
+
     .place-card {
       animation: taking-back-played-place $taking-back-place-animation ease-in-out;
     }
@@ -94,8 +96,30 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
 
   .taking-back-discarded-place .hand-item-position {
     animation: from-transform-none $taking-back-place-animation ease-in-out both;
+
     .place-card {
       animation: taking-back-discarded-place $taking-back-place-animation ease-in-out;
+    }
+  }
+
+  .taking-place-from-reserve {
+    .hand-item-position {
+      animation: from-transform-none $taking-place-from-reserve-animation ease-in-out both;
+    }
+
+    @for $i from 1 through 3 {
+      &.reserve-#{$i} {
+        @for $place from 6 through 10 {
+          @keyframes taking-place-#{$i}-from-reserve-#{$place} {
+            from {
+              transform: translateY($artemia-top-margin + $card-height * 2 + $artemia-grid-gap * 2 + $reserve-offset * $i + $hunted-hand-bottom-margin - 100vh) translateX(($place - 8) * ($card-width + $artemia-grid-gap));
+            }
+          }
+          .place-card.place-#{$place} {
+            animation: taking-place-#{$i}-from-reserve-#{$place} $taking-place-from-reserve-animation ease-in-out both;
+          }
+        }
+      }
     }
   }
 }

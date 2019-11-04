@@ -56,6 +56,7 @@ $token-size: 8vh;
 
   &.placed {
     $translate-y-artemia: $artemia-top-margin + $artemia-grid-gap + $card-height / 2 - $token-size / 2;
+    z-index: 5;
 
     @for $i from 1 through (5) {
       &.place-#{$i} {
@@ -228,7 +229,7 @@ $token-size: 8vh;
 
     &.placing {
       transition-duration: $place-hunt-token-animation;
-      z-index: 1;
+      z-index: 5;
     }
   }
 }

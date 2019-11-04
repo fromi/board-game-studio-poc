@@ -12,6 +12,7 @@ import HandItem from '../../util/Hand'
 import {drawNextCardDelay} from '../NotAloneUI'
 import {TAKE_BACK_PLAYED_PLACE} from '@bga/not-alone/moves/TakeBackPlayedPlace'
 import {TAKE_BACK_DISCARDED_PLACE} from '@bga/not-alone/moves/TakeBackDiscardedPlace'
+import {TAKE_PLACE_FROM_RESERVE} from '@bga/not-alone/moves/TakePlaceFromReserve'
 
 export default function PlayerHand({game, playerId, animation}) {
   const cards = []
@@ -25,9 +26,13 @@ export default function PlayerHand({game, playerId, animation}) {
       const isAnimatingPlace = animation && animation.type === MOVE_PLAYED && animation.move.huntedId === playerId && animation.move.place === place
       const isTakingBackPlayedPlace = isAnimatingPlace && animation.move.type === TAKE_BACK_PLAYED_PLACE
       const isTakingBackDiscardedPlace = isAnimatingPlace && animation.move.type === TAKE_BACK_DISCARDED_PLACE
-      const itemClassName = isTakingBackPlayedPlace ? 'taking-back-played-place' : isTakingBackDiscardedPlace ? 'taking-back-discarded-place' : ''
-      if (isTakingBackPlayedPlace || isTakingBackDiscardedPlace) {
-        classes.push('taking-back-place')
+      const isTakingPlaceFromReserve = isAnimatingPlace && animation.move.type === TAKE_PLACE_FROM_RESERVE
+      let itemClassName = isAnimatingPlace ? moveToClassName[animation.move.type] || '' : ''
+      if (isTakingBackPlayedPlace || isTakingBackDiscardedPlace || isTakingPlaceFromReserve) {
+        classes.push('taking-place-card')
+      }
+      if (isTakingPlaceFromReserve) {
+        itemClassName += ' reserve-' + (game.reserve[place] + 1)
       }
       cards.push(
         <HandItem key={place} drag={{enable: canBePlayed, item: {type: PLACE_CARD, place}}} hovering className={itemClassName}>
@@ -63,4 +68,10 @@ export default function PlayerHand({game, playerId, animation}) {
   })
 
   return <div className={classes.join(' ')}>{cards}</div>
+}
+
+const moveToClassName = {
+  [TAKE_BACK_PLAYED_PLACE]: 'taking-back-played-place',
+  [TAKE_BACK_DISCARDED_PLACE]: 'taking-back-discarded-place',
+  [TAKE_PLACE_FROM_RESERVE]: 'taking-place-from-reserve'
 }
