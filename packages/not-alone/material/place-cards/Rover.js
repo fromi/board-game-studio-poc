@@ -11,7 +11,7 @@ export const Rover = {
   getHuntedMoves: (game, huntedId) => {
     if (huntedId === getCurrentHuntedId(game)) {
       const hunted = getHunted(game, huntedId)
-      return PLACES.filter(place => canTakePlaceFromReserve(game, hunted, place)).map(place => takePlaceFromReserve(huntedId, place))
+      return PLACES.filter(place => canTakePlaceFromReserve(game, hunted, place)).map(place => takePlaceFromReserve(place, huntedId))
     }
   }
 }

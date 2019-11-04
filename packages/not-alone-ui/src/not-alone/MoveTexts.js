@@ -16,6 +16,7 @@ import {CREATURE_TOKEN} from '@bga/not-alone/material/HuntTokens'
 import {huntCardTexts} from './material/hunt-cards/HuntCard'
 import HuntCards, {ANTICIPATION} from '@bga/not-alone/material/HuntCards'
 import {COPY_PLACE_POWER} from '@bga/not-alone/moves/CopyPlacePower'
+import {TAKE_PLACE_FROM_RESERVE} from '@bga/not-alone/moves/TakePlaceFromReserve'
 
 
 const takeBackPlaceText = (t, move, {playerId, playersMap}) => {
@@ -94,6 +95,13 @@ export default {
   [TAKE_BACK_PLAYED_PLACE]: takeBackPlaceText,
   [TAKE_BACK_DISCARDED_PLACE]: takeBackPlaceText,
   [PUT_MARKER_ON_BEACH]: (t) => t('The Marker counter is placed on the Beach'),
+  [TAKE_PLACE_FROM_RESERVE]: (t, move, {playerId, playersMap}) => {
+    if (playerId === move.huntedId) {
+      return t('You take a copy {ofPlace} from the reserve', {ofPlace: placeTexts[move.place].article(t)})
+    } else {
+      return t('{player} takes a copy {ofPlace} from the reserve', {player: playersMap[move.huntedId].name, ofPlace: placeTexts[move.place].article(t)})
+    }
+  },
   [LOSE_WILL_COUNTER]: (t, move, {playerId, playersMap}) => {
     if (playerId === move.huntedId) {
       if (move.reason === CREATURE_TOKEN) {

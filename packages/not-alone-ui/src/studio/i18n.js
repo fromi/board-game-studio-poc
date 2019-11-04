@@ -277,6 +277,8 @@ i18n.use(ICU).use(initReactI18next).init({
         'The Marker counter is placed on the Beach': 'Le pion Balise est placé sur la Plage',
         'Take a Place card from the reserve': 'Prenez une carte Lieu de la réserve',
         '{player} takes a Place card from the reserve': '{player} prend une carte Lieu de la réserve',
+        'You take a copy {ofPlace} from the reserve': 'Vous prenez une copie {ofPlace} de la réserve',
+        '{player} takes a copy {ofPlace} from the reserve': '{player} prend une copie {ofPlace} de la réserve',
 
         'You are caught by the Creature! You lose a Will counter': 'La Créature vous attrape ! Vous perdez un pion Volonté',
         'You are caught by the Creature on the Lair! You lose 2 Will counters': 'La Créature vous attrape sur l’Antre ! Vous perdez 2 pions Volonté',

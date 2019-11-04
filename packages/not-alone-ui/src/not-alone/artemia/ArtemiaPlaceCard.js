@@ -8,6 +8,7 @@ import './artemia-place-card.scss'
 import {getLegalMoves} from '@bga/not-alone'
 import {USE_PLACE_POWER, usePlacePower} from '@bga/not-alone/moves/UsePlacePower'
 import {COPY_PLACE_POWER, copyPlacePower} from '@bga/not-alone/moves/CopyPlacePower'
+import {TAKE_PLACE_FROM_RESERVE, takePlaceFromReserve} from '@bga/not-alone/moves/TakePlaceFromReserve'
 
 export default function ArtemiaPlaceCard({game, place, play, undo, playerId}) {
   const classes = ['artemia-place-card']
@@ -15,7 +16,8 @@ export default function ArtemiaPlaceCard({game, place, play, undo, playerId}) {
 
   const canUsePlacePower = getLegalMoves(game, playerId).some(move => move.type === USE_PLACE_POWER && move.place === place)
   const canCopyPlacePower = getLegalMoves(game, playerId).some(move => move.type === COPY_PLACE_POWER && move.place === place)
-  if (canUsePlacePower || canCopyPlacePower) {
+  const canTakePlace = getLegalMoves(game, playerId).some(move => move.type === TAKE_PLACE_FROM_RESERVE && move.place === place)
+  if (canUsePlacePower || canCopyPlacePower || canTakePlace) {
     classes.push('activable')
   }
 
@@ -24,6 +26,8 @@ export default function ArtemiaPlaceCard({game, place, play, undo, playerId}) {
       play(usePlacePower(place, playerId))
     } else if (canCopyPlacePower) {
       play(copyPlacePower(place, playerId))
+    } else if (canTakePlace) {
+      play(takePlaceFromReserve(place, playerId))
     } else {
       setOpen(true)
     }
