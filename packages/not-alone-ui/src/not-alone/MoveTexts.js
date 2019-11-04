@@ -15,6 +15,7 @@ import {LOSE_WILL_COUNTER} from '@bga/not-alone/moves/LoseWillCounter'
 import {CREATURE_TOKEN} from '@bga/not-alone/material/HuntTokens'
 import {huntCardTexts} from './material/hunt-cards/HuntCard'
 import HuntCards, {ANTICIPATION} from '@bga/not-alone/material/HuntCards'
+import {COPY_PLACE_POWER} from '@bga/not-alone/moves/CopyPlacePower'
 
 
 const takeBackPlaceText = (t, move, {playerId, playersMap}) => {
@@ -77,11 +78,17 @@ export default {
     }
   },
   [USE_PLACE_POWER]: (t, move, {playerId, playersMap}) => {
-    const place = placeTexts[move.place].name(t)
     if (playerId === move.huntedId) {
-      return t('You use the power of {place}', {place})
+      return t('You use the power {ofPlace}', {ofPlace: placeTexts[move.place].article(t)})
     } else {
-      return t('{player} uses the power of {place}', {player: playersMap[move.huntedId].name, place})
+      return t('{player} uses the power {ofPlace}', {player: playersMap[move.huntedId].name, ofPlace: placeTexts[move.place].article(t)})
+    }
+  },
+  [COPY_PLACE_POWER]: (t, move, {playerId, playersMap}) => {
+    if (playerId === move.huntedId) {
+      return t('You copy the power {ofPlace}', {ofPlace: placeTexts[move.place].article(t)})
+    } else {
+      return t('{player} copies the power {ofPlace}', {player: playersMap[move.huntedId].name, ofPlace: placeTexts[move.place].article(t)})
     }
   },
   [TAKE_BACK_PLAYED_PLACE]: takeBackPlaceText,

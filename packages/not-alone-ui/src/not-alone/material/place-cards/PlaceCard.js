@@ -46,51 +46,61 @@ export const placeTexts = {
     description: t => [
       t('Take back to your hand the Place cards from your discard pile OR copy the power of the place with the Creature token.'),
       t('Lose 1 extra Will if caught by the Creature token.')
-    ]
+    ],
+    article: t => t('of the Lair')
   },
   [THE_JUNGLE]: {
     name: t => t('The Jungle'),
-    description: t => [t('Take back to your hand this Place card and 1 Place card from your discard pile.')]
+    description: t => [t('Take back to your hand this Place card and 1 Place card from your discard pile.')],
+    article: t => t('of the Jungle')
   },
   [THE_RIVER]: {
     name: t => t('The River'),
-    description: t => [t('Next turn, play 2 Place cards. Before revealing, choose one and return the second to your hand.')]
+    description: t => [t('Next turn, play 2 Place cards. Before revealing, choose one and return the second to your hand.')],
+    article: t => t('of the River')
   },
   [THE_BEACH]: {
     name: t => t('The Beach'),
     description: t => [
       t('Place the Marker counter on the Beach OR remove it to move the Rescue counter forward 1 space.'),
       t('(max 1x/turn)')
-    ]
+    ],
+    article: t => t('of the Beach')
   },
   [THE_ROVER]: {
     name: t => t('The Rover'),
-    description: t => [t('Take from the reserve 1 Place card you do not own and add it to your hand.')]
+    description: t => [t('Take from the reserve 1 Place card you do not own and add it to your hand.')],
+    article: t => t('of the Rover')
   },
   [THE_SWAMP]: {
     name: t => t('The Swamp'),
-    description: t => [t('Take back to your hand this Place card and 2 Place cards from your discard pile.')]
+    description: t => [t('Take back to your hand this Place card and 2 Place cards from your discard pile.')],
+    article: t => t('of the Swamp')
   },
   [THE_SHELTER]: {
     name: t => t('The Shelter'),
-    description: t => [t('Draw 2 Survival cards, choose one and discard the second.')]
+    description: t => [t('Draw 2 Survival cards, choose one and discard the second.')],
+    article: t => t('of the Shelter')
   },
   [THE_WRECK]: {
     name: t => t('The Wreck'),
     description: t => [
       t('Move the Rescue counter forward 1 space.'),
       t('(max 1x/turn)')
-    ]
+    ],
+    article: t => t('of the Wreck')
   },
   [THE_SOURCE]: {
     name: t => t('The Source'),
-    description: t => [t('The Hunted of your choice (you or another player) regains 1 Will OR you draw 1 Survival card.')]
+    description: t => [t('The Hunted of your choice (you or another player) regains 1 Will OR you draw 1 Survival card.')],
+    article: t => t('of the Source')
   },
   [THE_ARTEFACT]: {
     name: t => t('The Artefact'),
     description: t => [
       t('Next turn, play 2 Place cards. Resolve both places.'),
       t('You may not copy the Artefact.')
-    ]
+    ],
+    article: t => t('of the Artefact')
   }
 }

@@ -5,6 +5,7 @@ import {choosePlace} from '../../moves/ChoosePlace'
 
 export const Artefact = {
   canUsePower: (game, hunted) => !hunted.pendingPlacePower,
+  copyForbidden: true,
 
   usePower: (game, huntedId) => {
     getHunted(game, huntedId).pendingPlacePower = THE_ARTEFACT

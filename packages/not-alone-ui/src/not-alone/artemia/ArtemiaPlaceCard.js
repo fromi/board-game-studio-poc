@@ -7,19 +7,23 @@ import {placeHuntToken} from '@bga/not-alone/moves/PlaceHuntToken'
 import './artemia-place-card.scss'
 import {getLegalMoves} from '@bga/not-alone'
 import {USE_PLACE_POWER, usePlacePower} from '@bga/not-alone/moves/UsePlacePower'
+import {COPY_PLACE_POWER, copyPlacePower} from '@bga/not-alone/moves/CopyPlacePower'
 
 export default function ArtemiaPlaceCard({game, place, play, undo, playerId}) {
   const classes = ['artemia-place-card']
   const [isOpen, setOpen] = React.useState(false)
 
   const canUsePlacePower = getLegalMoves(game, playerId).some(move => move.type === USE_PLACE_POWER && move.place === place)
-  if (canUsePlacePower) {
+  const canCopyPlacePower = getLegalMoves(game, playerId).some(move => move.type === COPY_PLACE_POWER && move.place === place)
+  if (canUsePlacePower || canCopyPlacePower) {
     classes.push('activable')
   }
 
   const handleClick = () => {
     if (canUsePlacePower) {
       play(usePlacePower(place, playerId))
+    } else if (canCopyPlacePower) {
+      play(copyPlacePower(place, playerId))
     } else {
       setOpen(true)
     }

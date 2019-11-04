@@ -27,6 +27,17 @@ i18n.use(ICU).use(initReactI18next).init({
         'The Source': 'La Source',
         'The Artefact': 'L’Artefact',
 
+        'of the Lair': 'de l’Antre',
+        'of the Jungle': 'de la Jungle',
+        'of the River': 'de la Rivière',
+        'of the Beach': 'de la Plage',
+        'of the Rover': 'du Rover',
+        'of the Swamp': 'du Marais',
+        'of the Shelter': 'de l’Abri',
+        'of the Wreck': 'de l’Épave',
+        'of the Source': 'de la Source',
+        'of the Artefact': 'de l’Artefact',
+
         'Take back to your hand the Place cards from your discard pile OR copy the power of the place with the Creature token.':
           'Reprenez en main les cartes Lieu de votre défausse OU copiez le pouvoir du lieu avec le jeton Créature.',
         'Lose 1 extra Will if caught by the Creature token.':
@@ -89,7 +100,7 @@ i18n.use(ICU).use(initReactI18next).init({
         'All Hunted discard 1 Place card simultaneously.':
           'Les Traqués défaussent simultanément 1 carte Lieu.',
         'The powers of the Beach and the Wreck are ineffective.':
-          'Les pouvoirs de la Plage et de l’Epave sont inutilisables.',
+          'Les pouvoirs de la Plage et de l’Épave sont inutilisables.',
         'Each Hunted may only take back 1 Place card when using the power of a Place card.':
           'Chaque Traqué ne peut récupérer que 1 seule carte Lieu quand il utilise le pouvoir d’un lieu.',
         'In addition to its effects, the Artemia token inflicts the loss of 1 Will.':
@@ -246,8 +257,6 @@ i18n.use(ICU).use(initReactI18next).init({
 
         'Marker counter (see "The Beach")': 'Pion Balise (voir "La Plage")',
         'A round yellow piece': 'Un pion jaune et rond',
-        'You may use the power of {place}': 'Vous pouvez utiliser le pouvoir de {place}',
-        '{player} may use the power of {place}': '{player} peut utiliser le pouvoir de {place}',
 
         '{place} is in your discard': '{place} est dans votre défausse',
         '{place} is in {player}’s discard': '{place} est dans la défausse de {player}',
@@ -256,11 +265,19 @@ i18n.use(ICU).use(initReactI18next).init({
         'The game begins!': 'La partie commence !',
         'Replay from this move': 'Revoir depuis ce coup',
 
-        'You use the power of {place}': 'Vous utilisez le pouvoir de {place}',
-        '{player} uses the power of {place}': '{player} utilise le pouvoir de {place}',
+        'You may use the power {ofPlace}': 'Vous pouvez utiliser le pouvoir {ofPlace}',
+        '{player} may use the power {ofPlace}': '{player} peut utiliser le pouvoir {ofPlace}',
+        'You use the power {ofPlace}': 'Vous utilisez le pouvoir {ofPlace}',
+        '{player} uses the power {ofPlace}': '{player} utilise le pouvoir {ofPlace}',
+        'You copy the power {ofPlace}': 'Vous copiez le pouvoir {ofPlace}',
+        '{player} copies the power {ofPlace}': '{player} copie le pouvoir {ofPlace}',
+
         'You take back {place} to your hand': 'Vous reprenez {place} en main',
         '{player} takes back {place} to {gender, select, ♀ {her} ♂ {his} other {their}}': '{player} reprend {place} en main',
         'The Marker counter is placed on the Beach': 'Le pion Balise est placé sur la Plage',
+        'Take a Place card from the reserve': 'Prenez une carte Lieu de la réserve',
+        '{player} takes a Place card from the reserve': '{player} prend une carte Lieu de la réserve',
+
         'You are caught by the Creature! You lose a Will counter': 'La Créature vous attrape ! Vous perdez un pion Volonté',
         'You are caught by the Creature on the Lair! You lose 2 Will counters': 'La Créature vous attrape sur l’Antre ! Vous perdez 2 pions Volonté',
         'You lose a Will counter because of {cardName} card': 'Vous perdez un pion Volonté à cause de la carte {cardName}',

@@ -40,6 +40,7 @@ import {ChoosePlace} from './moves/ChoosePlace'
 import {ShuffleSurvivalCards} from './moves/ShuffleSurvivalCards'
 import {PutRandomHuntCardUnderDeck} from './moves/PutRandomHuntCardUnderDeck'
 import {END_OF_TURN_ACTIONS, EXPLORATION, HUNTING, RECKONING} from './Phases'
+import {CopyPlacePower} from './moves/CopyPlacePower'
 
 export const CREATURE = 'Creature', HUNTED_PREFIX = 'Hunted ', BOARD_SIDES = [1, 2], PLACES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 export const PLACE_CARD = 'Place card', HUNT_CARD = 'Hunt card', SURVIVAL_CARD = 'Survival card'
@@ -108,6 +109,7 @@ export const moves = {
   PlayHuntCard,
   PlaySurvivalCard,
   UsePlacePower,
+  CopyPlacePower,
   TakeBackAllDiscardedPlaces,
   TakeBackPlayedPlace,
   PutMarkerOnBeach,
@@ -229,7 +231,11 @@ function getHuntedMoves(game, huntedId) {
   }
   if (game.ongoingAction) {
     const rule = getOngoingActionRule(game)
-    return rule.getHuntedMoves ? rule.getHuntedMoves(game, huntedId) : []
+    if (rule.getHuntedMoves) {
+      return rule.getHuntedMoves(game, huntedId) || []
+    } else {
+      return []
+    }
   }
   const moves = []
   if (game.phase) {

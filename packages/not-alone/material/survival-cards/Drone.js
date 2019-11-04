@@ -1,9 +1,9 @@
 import {getHunted, SURVIVAL_CARD} from '../../NotAlone'
 import {getExploredPlaces, placePowerIsEffective} from '../../phases/Reckoning'
 import {DRONE} from '../SurvivalCards'
-import {usePlacePower} from '../../moves/UsePlacePower'
 import {THE_ROVER} from '../PlaceCards'
 import {RECKONING} from '../../Phases'
+import {copyPlacePower} from '../../moves/CopyPlacePower'
 
 export const Drone = {
   phase: RECKONING,
@@ -14,5 +14,5 @@ export const Drone = {
 
   activatesInsteadOfUsingPlacePower: true,
 
-  getHuntedMoves: (game, huntedId) => [usePlacePower(THE_ROVER, huntedId)]
+  getHuntedMoves: (game, huntedId) => [copyPlacePower(THE_ROVER, huntedId)]
 }

@@ -3,13 +3,12 @@ import {CREATURE_TOKEN} from '../HuntTokens'
 import {placeRule, THE_LAIR} from '../PlaceCards'
 import {getCurrentHuntedId} from '../../phases/Reckoning'
 import {takeBackAllDiscardedPlaces} from '../../moves/TakeBackAllDiscardedPlaces'
-import {usePlacePower} from '../../moves/UsePlacePower'
 import {PERSECUTION} from '../HuntCards'
 import {takeBackDiscardedPlace} from '../../moves/TakeBackDiscardedPlace'
+import {copyPlacePower} from '../../moves/CopyPlacePower'
 
 export const Lair = {
-  canUsePower: (game, hunted) => hunted.discardedPlaceCards.length > 0 || Lair.canCopyCreaturePlace(game, hunted),
-  canCopyCreaturePlace: (game, hunted) => getPlacesWithToken(game, CREATURE_TOKEN).some(place => placeRule(place).canUsePower(game, hunted)),
+  canUsePower: (game, hunted) => hunted.discardedPlaceCards.length > 0 || getPlacesWithToken(game, CREATURE_TOKEN).some(place => !placeRule(place).copyForbidden),
 
   powerAllowsToTakeBackFromDiscard: true,
 
@@ -26,7 +25,7 @@ export const Lair = {
           moves.push(takeBackAllDiscardedPlaces(huntedId))
         }
       }
-      getPlacesWithToken(game, CREATURE_TOKEN).filter(place => placeRule(place).canUsePower(game, hunted)).forEach(place => usePlacePower(place, huntedId))
+      getPlacesWithToken(game, CREATURE_TOKEN).filter(place => !placeRule(place).copyForbidden).forEach(place => moves.push(copyPlacePower(place, huntedId)))
     }
     return moves
   }

@@ -42,7 +42,10 @@ export default function CardActionTitle(props) {
   }
   const awaitedPlayers = getPlayerIds(game).filter(playerId => getLegalMoves(game, playerId).some(move => move.type === PASS))
   const creatureCouldPlayHuntCard = awaitedPlayers.includes(CREATURE) && couldCreaturePlayHuntCard(game)
-  if (awaitedPlayers.length === 1) {
+  if (awaitedPlayers.length === 0) {
+    console.warn('Missing message for this state', props)
+    return ''
+  } else if (awaitedPlayers.length === 1) {
     if (creatureCouldPlayHuntCard) {
       return t('{player} must play a Hunt card or pass', {player: playersMap[CREATURE].name})
     } else {

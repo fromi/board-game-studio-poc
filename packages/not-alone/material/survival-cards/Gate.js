@@ -1,8 +1,9 @@
 import {getAdjacentPlaces, getHunted, SURVIVAL_CARD} from '../../NotAlone'
 import {getExploredPlaces, getPlaceBeingResolved, placePowerIsEffective} from '../../phases/Reckoning'
 import {GATE} from '../SurvivalCards'
-import {usePlacePower} from '../../moves/UsePlacePower'
 import {RECKONING} from '../../Phases'
+import {placeRule} from '../PlaceCards'
+import {copyPlacePower} from '../../moves/CopyPlacePower'
 
 export const Gate = {
   phase: RECKONING,
@@ -13,5 +14,5 @@ export const Gate = {
 
   activatesInsteadOfUsingPlacePower: true,
 
-  getHuntedMoves: (game, huntedId) => getAdjacentPlaces(getPlaceBeingResolved(game, huntedId)).map(place => usePlacePower(place, huntedId))
+  getHuntedMoves: (game, huntedId) => getAdjacentPlaces(getPlaceBeingResolved(game, huntedId)).filter(place => !placeRule(place).copyForbidden).map(place => copyPlacePower(place, huntedId))
 }
