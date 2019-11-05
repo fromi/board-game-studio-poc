@@ -1,6 +1,6 @@
 import React from 'react'
-import {CREATURE, getHunted, getLegalMoves} from '@bga/not-alone'
-import PlaceCard, {PLACE_CARD} from '../material/place-cards/PlaceCard'
+import {CREATURE, getHunted, getLegalMoves, HUNT_CARD, PLACE_CARD, SURVIVAL_CARD} from '@bga/not-alone'
+import PlaceCard from '../material/place-cards/PlaceCard'
 import HuntCard from '../material/hunt-cards/HuntCard'
 import './player-hand.scss'
 import {DRAW_HUNT_CARD} from '@bga/not-alone/moves/DrawHuntCard'
@@ -13,16 +13,20 @@ import {drawNextCardDelay} from '../NotAloneUI'
 import {TAKE_BACK_PLAYED_PLACE} from '@bga/not-alone/moves/TakeBackPlayedPlace'
 import {TAKE_BACK_DISCARDED_PLACE} from '@bga/not-alone/moves/TakeBackDiscardedPlace'
 import {TAKE_PLACE_FROM_RESERVE} from '@bga/not-alone/moves/TakePlaceFromReserve'
+import {PLAY_HUNT_CARD} from '@bga/not-alone/moves/PlayHuntCard'
+import {PLAY_SURVIVAL_CARD} from '@bga/not-alone/moves/PlaySurvivalCard'
+import {DISCARD_SURVIVAL_CARD} from '@bga/not-alone/moves/DiscardSurvivalCard'
 
 export default function PlayerHand({game, playerId, animation}) {
   const cards = []
-  const hunted = playerId && playerId !== CREATURE ? getHunted(game, playerId) : undefined
+  const hunted = playerId !== CREATURE ? getHunted(game, playerId) : undefined
+  const moves = getLegalMoves(game, playerId)
 
   const classes = ['player-hand']
 
   if (hunted) {
     hunted.handPlaceCards.forEach((place) => {
-      const canBePlayed = getLegalMoves(game, playerId).some(move => move.type === PLAY_PLACE_CARD && move.place === place)
+      const canBePlayed = moves.some(move => move.type === PLAY_PLACE_CARD && move.place === place)
       const isAnimatingPlace = animation && animation.type === MOVE_PLAYED && animation.move.huntedId === playerId && animation.move.place === place
       const isTakingBackPlayedPlace = isAnimatingPlace && animation.move.type === TAKE_BACK_PLAYED_PLACE
       const isTakingBackDiscardedPlace = isAnimatingPlace && animation.move.type === TAKE_BACK_DISCARDED_PLACE
@@ -52,16 +56,21 @@ export default function PlayerHand({game, playerId, animation}) {
   }
 
   const specialCardDrawType = hunted ? DRAW_SURVIVAL_CARD : DRAW_HUNT_CARD
+  const specialCardPlayType = hunted ? PLAY_SURVIVAL_CARD : PLAY_HUNT_CARD
+  const specialCardDiscardType = hunted ? DISCARD_SURVIVAL_CARD : undefined
   const isDrawingSpecialCard = animation && animation.type === MOVE_PLAYED && animation.move.type === specialCardDrawType && (!hunted || animation.move.huntedId === playerId)
   const SpecialCardComponent = hunted ? SurvivalCard : HuntCard
   const specialCards = hunted ? hunted.handSurvivalCards : game.creature.hand
 
   specialCards.forEach((card, index) => {
+    const canBePlayed = moves.some(move => move.type === specialCardPlayType && move.card === card)
+    const canBeDiscarded = moves.some(move => move.type === specialCardDiscardType && move.card === card)
     const drawing = isDrawingSpecialCard && animation.move.cards.includes(card)
     const classes = drawing ? ['drawing'] : []
     const cardsDrawnBefore = drawing ? index - specialCards.length + animation.move.quantity : 0
     cards.push(
-      <HandItem key={card} className={drawing ? 'drawing' : ''} hovering style={{animationDelay: drawNextCardDelay * cardsDrawnBefore + 's'}}>
+      <HandItem key={card} className={drawing ? 'drawing' : ''} hovering style={{animationDelay: drawNextCardDelay * cardsDrawnBefore + 's'}}
+                drag={{enable: canBePlayed || canBeDiscarded, item: {type: hunted ? SURVIVAL_CARD : HUNT_CARD, card}}}>
         <SpecialCardComponent card={card} classes={classes}/>
       </HandItem>
     )

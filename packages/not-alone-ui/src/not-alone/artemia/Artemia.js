@@ -1,10 +1,10 @@
 import React from 'react'
-import {PLACE_CARD, placeTexts} from '../material/place-cards/PlaceCard'
+import {placeTexts} from '../material/place-cards/PlaceCard'
 import './artemia.scss'
 import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
 import ArtemiaPlace from './ArtemiaPlace'
-import {PLACES} from '@bga/not-alone'
+import {PLACE_CARD, PLACES} from '@bga/not-alone'
 import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
 
 export default function Artemia(props) {

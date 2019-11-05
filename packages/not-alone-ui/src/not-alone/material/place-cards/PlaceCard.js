@@ -14,8 +14,6 @@ import {
   THE_WRECK
 } from '@bga/not-alone/material/PlaceCards'
 
-export const PLACE_CARD = 'Place card'
-
 export default function PlaceCard({place}) {
   const classes = ['card', 'place-card']
 
