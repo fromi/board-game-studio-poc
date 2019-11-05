@@ -2,7 +2,7 @@ import {continueGameAfterMove, getHunted} from '../NotAlone'
 
 export const DISCARD_SURVIVAL_CARD = 'DiscardSurvivalCard'
 
-export const discardSurvivalCard = (huntedId, card) => ({type: DISCARD_SURVIVAL_CARD, huntedId, place: card})
+export const discardSurvivalCard = (huntedId, card) => ({type: DISCARD_SURVIVAL_CARD, huntedId, card})
 
 export const DiscardSurvivalCard = {
   execute: (game, move) => {

@@ -1,7 +1,7 @@
 import {THE_SHELTER} from '../PlaceCards'
 import {continueReckoning, getCurrentHuntedId} from '../../phases/Reckoning'
 import {discardSurvivalCard} from '../../moves/DiscardSurvivalCard'
-import {canDrawSurvivalCard, PLACE_CARD} from '../../NotAlone'
+import {canDrawSurvivalCard, getHunted, PLACE_CARD} from '../../NotAlone'
 import {DRAW_SURVIVAL_CARD, drawSurvivalCard} from '../../moves/DrawSurvivalCard'
 
 export const Shelter = {
@@ -12,14 +12,14 @@ export const Shelter = {
   },
 
   getAutomaticMove: (game) => {
-    if (!game.ongoingAction.survivalCards) {
-      return drawSurvivalCard(getCurrentHuntedId(game), Math.max(2, game.survivalCardsDeck.length + game.survivalCardsDiscard.length))
+    if (!game.ongoingAction.survivalCardsDrawn) {
+      return drawSurvivalCard(getCurrentHuntedId(game), Math.min(2, game.survivalCardsDeck.length + game.survivalCardsDiscard.length))
     }
   },
 
-  getHuntedMoves: (game, hunted) => {
-    if (game.ongoingAction.survivalCards && hunted === getCurrentHuntedId(game)) {
-      return game.ongoingAction.survivalCards.map(card => discardSurvivalCard(hunted, card))
+  getHuntedMoves: (game, huntedId) => {
+    if (game.ongoingAction.survivalCardsDrawn && huntedId === getCurrentHuntedId(game)) {
+      return getHunted(game, huntedId).handSurvivalCards.slice(-2).map(card => discardSurvivalCard(huntedId, card))
     } else {
       return []
     }
@@ -27,7 +27,7 @@ export const Shelter = {
 
   continueGameAfterMove: (game, move) => {
     if (move.type === DRAW_SURVIVAL_CARD && move.quantity === 2) {
-      game.ongoingAction.survivalCards = move.cards
+      game.ongoingAction.survivalCardsDrawn = true
     } else {
       delete game.ongoingAction
       continueReckoning(game)
