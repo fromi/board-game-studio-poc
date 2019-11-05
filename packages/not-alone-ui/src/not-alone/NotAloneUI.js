@@ -23,6 +23,7 @@ import {MOVE_RESCUE_COUNTER} from '@bga/not-alone/moves/MoveRescueCounter'
 import {MOVE_PLAYED} from '../studio/reducers/ServerReducer'
 import {LOSE_WILL_COUNTER} from '@bga/not-alone/moves/LoseWillCounter'
 import willCounterLostAudio from './material/counters/will-counter-lost.mp3'
+import SurvivalCardsDiscard from './material/survival-cards/SurvivalCardsDiscard'
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -91,6 +92,7 @@ export const Interface = (props) => {
         )}
         <HuntCardsDeck {...props}/>
         <SurvivalCardsDeck {...props}/>
+        <SurvivalCardsDiscard {...props}/>
         <Artemia {...props}/>
         <OtherPlayers {...props}/>
         {HUNT_TOKENS.map(token => <HuntToken token={token} locations={game.huntTokensLocations[token]} key={token} {...props}/>)}

@@ -1,0 +1,39 @@
+@import "../../variables";
+
+.survival-cards-discard {
+  position: absolute;
+  height: $card-height;
+  width: $card-width;
+
+  .drop-info {
+    position: absolute;
+    border-radius: $card-border * 2;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    justify-content: center;
+    align-items: center;
+
+    > p {
+      font-size: 3vh;
+      color: black;
+      text-align: center;
+    }
+
+    &.item-over {
+      background-color: rgba(0, 128, 0, 0.4);
+    }
+  }
+}
+
+.not-alone.hunted .survival-cards-discard {
+  bottom: $card-height + $default-margin * 2 + $decks-card-shift-y * $decks-max-cards-displayed;
+  right: $default-margin + $decks-card-shift-x * $decks-max-cards-displayed;
+}
+
+.not-alone:not(.hunted) .survival-cards-discard {
+  top: $header-height + $card-height + $default-margin * 2 + $decks-card-shift-y * $decks-max-cards-displayed;
+  left: $default-margin + $decks-card-shift-x * $decks-max-cards-displayed;
+}

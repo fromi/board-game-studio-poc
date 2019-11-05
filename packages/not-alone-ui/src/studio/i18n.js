@@ -286,6 +286,7 @@ i18n.use(ICU).use(initReactI18next).init({
         'You must discard {card1} or {card2}': 'Vous devez défausser {card1} ou {card2}',
         'You must discard a Survival card': 'Vous devez défausser une carte Survie',
         '{player} must discard a Survival card': '{player} doit défausser une carte Survie',
+        'Discard {card}': 'Défausser {card}',
 
         'You are caught by the Creature! You lose a Will counter': 'La Créature vous attrape ! Vous perdez un pion Volonté',
         'You are caught by the Creature on the Lair! You lose 2 Will counters': 'La Créature vous attrape sur l’Antre ! Vous perdez 2 pions Volonté',
