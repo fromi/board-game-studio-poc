@@ -17,11 +17,13 @@ export const GiveUp = {
 
   undoable: (move, nextMoves) => !nextMoves.some(nextMove => isExplorationMove(nextMove, move.huntedId)),
 
-  effect: (move, nextMoves) => {
+  consequences: (move, nextMoves) => {
     const nextExplorationMoveIndex = nextMoves.findIndex(nextMove => isExplorationMove(nextMove, move.huntedId))
     if (nextExplorationMoveIndex !== -1) {
       nextMoves = nextMoves.slice(0, nextExplorationMoveIndex)
     }
-    return nextMoves.filter(nextMoves => nextMoves.huntedId === move.huntedId)
+    const consequences = nextMoves.filter(nextMoves => nextMoves.huntedId === move.huntedId)
+    consequences.push(moveAssimilationCounter(GIVE_UP))
+    return consequences
   }
 }

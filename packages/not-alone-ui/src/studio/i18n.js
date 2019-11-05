@@ -208,6 +208,8 @@ i18n.use(ICU).use(initReactI18next).init({
           'La Créature pourra placer le jeton Artemia lorsque le jeton Secours sera à 1, 3, 5, 7, 9 or 11 cases de la victoire.',
 
         'Play {place}': 'Jouer {place}',
+        'You give up': 'Vous lâchez prise',
+        '{player} gives up': '{player} lâche prise',
         '{player} played {count, plural, one {one Place card} other {{count} Place cards}}, not revealed yet': '{player} a joué {count, plural, one {une carte} other {{count} cartes}} Lieu, pas encore révélée',
         'All the Hunted have selected a Place to explore': 'Tous les traqués ont choisi un Lieu à explorer',
 
@@ -288,9 +290,14 @@ i18n.use(ICU).use(initReactI18next).init({
         'You lose a Will counter': 'Vous perdez un pion Volonté',
         '{player} is caught by the Creature and loses a Will counter': '{player} est attrapé par la Créature et perd un pion Volonté',
         '{player} is caught by the Creature on the Lair and loses 2 Will counters': '{player} est attrapé par la Créature sur l’Antre et perd 2 pions Volonté',
+
         '{player} loses a Will counter because of {cardName} card': '{player} perd un pion Volonté à cause de la carte {cardName}',
         '{player} loses a Will counter': '{player} perd un pion Volonté',
+        'You regain {count, plural, one{1 Will counter} other{{count} Will counters}}': 'Vous récupérez {count, plural, one{1 pion} other{{count} pions}} Volonté',
+        '{player} regains {count, plural, one{1 Will counter} other{{count} Will counters}}': '{player} récupère {count, plural, one{1 pion} other{{count} pions}} Volonté',
+
         'The Rescue counter moves forward 1 space': 'Le pion Secours avance de 1 case',
+        'The Assimilation counter moves forward 1 space': 'Le pion Assimilation avance de 1 case',
         'The Creature caught a Hunted! The Assimilation counter moves forward 1 space': 'La Créature a attrapé un Traqué ! Le pion Assimilation avance de 1 case',
         'At least on Hunted lost his third Will counter! The Assimilation counter moves forward 1 space': 'Au moins un Traqué a perdu son dernier jeton Volonté ! Le pion Assimilation avance de 1 case',
         'The Assimilation counter moves forward 1 extra space because of Anticipation card!': 'Le pion Assimilation avance de 1 case supplémentaire à cause de la carte Anticipation !'

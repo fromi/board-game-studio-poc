@@ -14,7 +14,7 @@ export const Resist = {
 
   undoable: (move, nextMoves) => !nextMoves.some(nextMove => isExplorationMove(nextMove, move.huntedId)),
 
-  effect: (move, nextMoves) => {
+  consequences: (move, nextMoves) => {
     const nextExplorationMoveIndex = nextMoves.findIndex(nextMove => isExplorationMove(nextMove, move.huntedId))
     if (nextExplorationMoveIndex !== -1) {
       nextMoves = nextMoves.slice(0, nextExplorationMoveIndex)

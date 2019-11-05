@@ -17,6 +17,8 @@ import {huntCardTexts} from './material/hunt-cards/HuntCard'
 import HuntCards, {ANTICIPATION} from '@bga/not-alone/material/HuntCards'
 import {COPY_PLACE_POWER} from '@bga/not-alone/moves/CopyPlacePower'
 import {TAKE_PLACE_FROM_RESERVE} from '@bga/not-alone/moves/TakePlaceFromReserve'
+import {GIVE_UP} from '@bga/not-alone/moves/GiveUp'
+import {REGAIN_WILL_COUNTER} from '@bga/not-alone/moves/RegainWillCounter'
 
 
 const takeBackPlaceText = (t, move, {playerId, playersMap}) => {
@@ -138,6 +140,22 @@ export default {
       return t('At least on Hunted lost his third Will counter! The Assimilation counter moves forward 1 space')
     } else if (move.reason === ANTICIPATION) {
       return t('The Assimilation counter moves forward 1 extra space because of Anticipation card!')
+    } else {
+      return t('The Assimilation counter moves forward 1 space')
     }
   },
+  [GIVE_UP]: (t, move, {playerId, playersMap}) => {
+    if (playerId === move.huntedId) {
+      return t('You give up')
+    } else {
+      return t('{player} gives up', {player: playersMap[move.huntedId].name})
+    }
+  },
+  [REGAIN_WILL_COUNTER]: (t, move, {playerId, playersMap}) => {
+    if (playerId === move.huntedId) {
+      return t('You regain {count, plural, one{1 Will counter} other{{count} Will counters}}', {count: move.quantity})
+    } else {
+      return t('{player} regains {count, plural, one{1 Will counter} other{{count} Will counters}}', {player: playersMap[move.huntedId].name, count: move.quantity})
+    }
+  }
 }
