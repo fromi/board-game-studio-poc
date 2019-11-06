@@ -25,7 +25,7 @@ export default function ReckoningTitle(props) {
   if (usePlacePower) {
     return t('You may use the power {ofPlace}', {ofPlace: placeTexts[usePlacePower.place].article(t)})
   }
-  if (ownMoves.length) {
+  if (ownMoves.length && movesTexts[ownMoves[0].type]) {
     return movesTexts[ownMoves[0].type].ownText(t, ownMoves)
   }
   for (const playerId of getPlayerIds(game)) {
@@ -35,7 +35,7 @@ export default function ReckoningTitle(props) {
       const player = playersMap[playerId].name
       return t('{player} may use the power {ofPlace}', {player, ofPlace: placeTexts[usePlacePower.place].article(t)})
     }
-    if (moves.length && movesTexts[moves[0].type].otherPlayerText) {
+    if (moves.length && movesTexts[moves[0].type] && movesTexts[moves[0].type].otherPlayerText) {
       return movesTexts[moves[0].type].otherPlayerText(t, moves, props)
     }
   }

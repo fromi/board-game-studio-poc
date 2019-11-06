@@ -76,6 +76,18 @@ export default function PlayerHand({game, playerId, animation}) {
     )
   })
 
+  if (animation && animation.type === MOVE_PLAYED && animation.move.type === DISCARD_SURVIVAL_CARD && animation.move.huntedId === playerId) {
+    classes.push('discarding-card')
+    const index = previousSpecialCardsState.indexOf(animation.move.card) + hunted.handPlaceCards.length
+    cards.splice(index, 0, (
+      <HandItem key={animation.move.card} className="discarding" drag={{item: {type: SURVIVAL_CARD, card: animation.move.card}}}>
+        <SurvivalCard card={animation.move.card}/>
+      </HandItem>
+    ))
+  } else {
+    previousSpecialCardsState = specialCards
+  }
+
   return <div className={classes.join(' ')}>{cards}</div>
 }
 
@@ -84,3 +96,5 @@ const moveToClassName = {
   [TAKE_BACK_DISCARDED_PLACE]: 'taking-back-discarded-place',
   [TAKE_PLACE_FROM_RESERVE]: 'taking-place-from-reserve'
 }
+
+let previousSpecialCardsState

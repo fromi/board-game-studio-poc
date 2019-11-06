@@ -8,6 +8,8 @@ import HandItem from '../../util/Hand'
 import {PLAY_PLACE_CARD} from '@bga/not-alone/moves/PlayPlaceCard'
 import './hunted-player-hand.scss'
 import {TAKE_BACK_PLAYED_PLACE} from '@bga/not-alone/moves/TakeBackPlayedPlace'
+import {MOVE_PLAYED} from '../../studio/reducers/ServerReducer'
+import {DISCARD_SURVIVAL_CARD} from '@bga/not-alone/moves/DiscardSurvivalCard'
 
 export default function HuntedPlayedHand(props) {
   const {hunted, huntedId, animation} = props
@@ -15,6 +17,7 @@ export default function HuntedPlayedHand(props) {
   const isDrawingSurvivalCard = animation && animation.move.type === DRAW_SURVIVAL_CARD && animation.move.huntedId === huntedId
   const isPlayingPlaceCard = animation && animation.move.type === PLAY_PLACE_CARD && animation.move.huntedId === huntedId
   const isTakingBackPlayedPlace = animation && animation.move.type === TAKE_BACK_PLAYED_PLACE && animation.move.huntedId === huntedId
+  const isDiscardingSurvivalCard = animation && animation.type === MOVE_PLAYED && animation.move.type === DISCARD_SURVIVAL_CARD && animation.move.huntedId === huntedId
 
   const classes = ['hand']
   if (isDrawingSurvivalCard) {
@@ -35,6 +38,7 @@ export default function HuntedPlayedHand(props) {
           const isDrawing = isDrawingSurvivalCard && index >= hunted.handSurvivalCards.length - animation.move.quantity
           return <HandItem key={'survival-card-' + index} className={isDrawing ? 'drawing' : ''}><SurvivalCard/></HandItem>
         })}
+        {isDiscardingSurvivalCard && <HandItem key={'survival-card-' + hunted.handSurvivalCards.length} className="discarding"><SurvivalCard card={animation.move.card}/></HandItem>}
       </div>
     </Tooltip>
   )

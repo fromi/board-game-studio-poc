@@ -31,18 +31,26 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
     transition: transform $taking-back-place-animation ease-in-out;
   }
 
+  &.discarding-card {
+    transition: transform $discard-survival-card-animation ease-in-out;
+  }
+
   .drawing {
     .hand-item-position {
-      animation: from-transform-none $draw-card-animation ease-in-out both, to-z-index-0 $draw-card-animation ease-in-out both;
+      animation: from-transform-none $draw-card-animation ease-in-out backwards, to-z-index-0 $draw-card-animation ease-in-out forwards;
       animation-delay: inherit;
 
+      .hand-item-drag {
+        animation-delay: inherit;
+      }
+
       .survival-card {
-        animation: drawing-survival-card $draw-card-animation ease-in-out both;
+        animation: drawing-survival-card $draw-card-animation ease-in-out backwards;
         animation-delay: inherit;
       }
 
       .hunt-card {
-        animation: drawing-hunt-card $draw-card-animation ease-in-out both;
+        animation: drawing-hunt-card $draw-card-animation ease-in-out backwards;
         animation-delay: inherit;
       }
     }
@@ -70,11 +78,8 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
     }
   }
 
-  .dragging {
-    z-index: 5;
-    .card {
-      opacity: 0.8;
-    }
+  .dragging .card {
+    opacity: 0.5;
   }
 
   .being-played .hand-item-position {
@@ -120,6 +125,17 @@ $deck-top-card-shift-y: ($decks-max-cards-displayed - 1) * $decks-card-shift-y;
             animation: taking-place-#{$i}-from-reserve-#{$place} $taking-place-from-reserve-animation ease-in-out both;
           }
         }
+      }
+    }
+  }
+
+  .discarding {
+    .hand-item-position {
+      transform: none !important;
+
+      .survival-card {
+        transform: translate(calc(50vw - #{$card-width / 2 + $default-margin + $decks-card-shift-x * $decks-max-cards-displayed}),
+                $hunted-hand-bottom-margin - $default-margin * 2 - $deck-top-card-shift-y - $card-height);
       }
     }
   }

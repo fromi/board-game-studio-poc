@@ -7,7 +7,7 @@ $board-ratio: 4606 / 886;
 
 $card-border: 0.5vh;
 $card-image-ratio: 5 / 7;
-$card-image-height: 21vh;
+$card-image-height: 20vh;
 $card-image-width: $card-image-height * $card-image-ratio;
 $card-height: $card-image-height + $card-border * 2;
 $card-width: $card-image-width + $card-border * 2;
@@ -41,6 +41,7 @@ $place-hunt-token-animation: 1s;
 $move-marker-counter-animation: 1s;
 $move-score-counter-animation: 2s;
 $lose-will-counter-animation: 1s;
+$discard-survival-card-animation: 0.8s;
 
 //noinspection CssInvalidPseudoSelector,CssUnknownProperty
 :export {
@@ -59,5 +60,6 @@ $lose-will-counter-animation: 1s;
   TakePlaceFromReserve: $taking-place-from-reserve-animation;
   MoveAssimilationCounter: $move-score-counter-animation;
   LoseWillCounter: $lose-will-counter-animation;
+  DiscardSurvivalCard: $discard-survival-card-animation;
   decksMaxCardsDisplayed: $decks-max-cards-displayed;
 }

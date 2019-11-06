@@ -24,6 +24,7 @@ import {MOVE_PLAYED} from '../studio/reducers/ServerReducer'
 import {LOSE_WILL_COUNTER} from '@bga/not-alone/moves/LoseWillCounter'
 import willCounterLostAudio from './material/counters/will-counter-lost.mp3'
 import SurvivalCardsDiscard from './material/survival-cards/SurvivalCardsDiscard'
+import {DrawSurvivalCard} from '@bga/not-alone/moves/DrawSurvivalCard'
 
 const createTheme = (color) => createMuiTheme({
   palette: {
@@ -121,3 +122,4 @@ const drawCardDuration = cssDurationToSecond(variables.drawCardDuration)
 export const drawNextCardDelay = 0.2
 
 Object.assign(DrawHuntCard, {animationDelay: (animation) => drawCardDuration + (animation.move.quantity - 1) * drawNextCardDelay})
+Object.assign(DrawSurvivalCard, {animationDelay: (animation) => drawCardDuration + (animation.move.quantity - 1) * drawNextCardDelay})

@@ -5,7 +5,6 @@
   transition: transform 0.2s ease-in-out;
 
   > * {
-    pointer-events: none;
     position: absolute;
     width: fit-content;
     height: fit-content;
@@ -43,15 +42,9 @@
       cursor: grab;
     }
 
-    &.dragging {
+    &.dragging .hand-item-position {
       pointer-events: none;
       cursor: grabbing;
-    }
-
-    &:not(.dragging) {
-      &:before, > * {
-        pointer-events: auto;
-      }
     }
 
     @media (hover) {

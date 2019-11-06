@@ -30,7 +30,6 @@ export default function HuntedPlayer(props) {
     <div className={classes.join(' ')}>
       <h2>{playersMap[huntedId].name}</h2>
       {speech && <div className="speech-bubble">{speech}</div>}
-      <HuntedPlayedHand {...props}/>
       <Tooltip title={t('{count, plural, one {One Will counter} other {{count} Will counters}}', {count: hunted.willCounters})} enterTouchDelay={0}>
         <div className="will-counters">
           {[...Array(hunted.willCounters)].map((_, index) => <WillCounter key={index}/>)}
@@ -41,6 +40,7 @@ export default function HuntedPlayer(props) {
       </Tooltip>
       <HuntedPlayerPlayedPlaces {...props}/>
       <HuntedPlayerDiscard {...props}/>
+      <HuntedPlayedHand {...props}/>
     </div>
   )
 }

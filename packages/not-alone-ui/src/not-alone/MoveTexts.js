@@ -19,6 +19,8 @@ import {COPY_PLACE_POWER} from '@bga/not-alone/moves/CopyPlacePower'
 import {TAKE_PLACE_FROM_RESERVE} from '@bga/not-alone/moves/TakePlaceFromReserve'
 import {GIVE_UP} from '@bga/not-alone/moves/GiveUp'
 import {REGAIN_WILL_COUNTER} from '@bga/not-alone/moves/RegainWillCounter'
+import {DISCARD_SURVIVAL_CARD} from '@bga/not-alone/moves/DiscardSurvivalCard'
+import {survivalCardTexts} from './material/survival-cards/SurvivalCard'
 
 
 const takeBackPlaceText = (t, move, {playerId, playersMap}) => {
@@ -102,6 +104,13 @@ export default {
       return t('You take a copy {ofPlace} from the reserve', {ofPlace: placeTexts[move.place].article(t)})
     } else {
       return t('{player} takes a copy {ofPlace} from the reserve', {player: playersMap[move.huntedId].name, ofPlace: placeTexts[move.place].article(t)})
+    }
+  },
+  [DISCARD_SURVIVAL_CARD]: (t, move, {playerId, playersMap}) => {
+    if (playerId === move.huntedId) {
+      return t('You discard {card}', {card: survivalCardTexts[move.card].name(t)})
+    } else {
+      return t('{player} discards {card}', {player: playersMap[move.huntedId].name, card: survivalCardTexts[move.card].name(t)})
     }
   },
   [LOSE_WILL_COUNTER]: (t, move, {playerId, playersMap}) => {

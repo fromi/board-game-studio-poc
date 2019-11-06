@@ -25,3 +25,9 @@
     }
   }
 }
+
+@keyframes from-flipped {
+  from {
+    transform: rotateY(-180deg);
+  }
+}
