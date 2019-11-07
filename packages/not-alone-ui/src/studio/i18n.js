@@ -210,6 +210,10 @@ i18n.use(ICU).use(initReactI18next).init({
         'Play {place}': 'Jouer {place}',
         'You give up': 'Vous lâchez prise',
         '{player} gives up': '{player} lâche prise',
+        'You resist': 'Vous résistez',
+        '{player} resists': '{player} résiste',
+        'Take back 2 Place cards from you discard': 'Reprenez 2 cartes Lieu de votre défausse',
+        'Take back a Place card from you discard': 'Reprenez une carte Lieu de votre défausse',
         '{player} played {count, plural, one {one Place card} other {{count} Place cards}}, not revealed yet': '{player} a joué {count, plural, one {une carte} other {{count} cartes}} Lieu, pas encore révélée',
         'All the Hunted have selected a Place to explore': 'Tous les traqués ont choisi un Lieu à explorer',
 

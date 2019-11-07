@@ -21,6 +21,7 @@ import {GIVE_UP} from '@bga/not-alone/moves/GiveUp'
 import {REGAIN_WILL_COUNTER} from '@bga/not-alone/moves/RegainWillCounter'
 import {DISCARD_SURVIVAL_CARD} from '@bga/not-alone/moves/DiscardSurvivalCard'
 import {survivalCardTexts} from './material/survival-cards/SurvivalCard'
+import {RESIST} from '@bga/not-alone/moves/Resist'
 
 
 const takeBackPlaceText = (t, move, {playerId, playersMap}) => {
@@ -151,6 +152,13 @@ export default {
       return t('The Assimilation counter moves forward 1 extra space because of Anticipation card!')
     } else {
       return t('The Assimilation counter moves forward 1 space')
+    }
+  },
+  [RESIST]: (t, move, {playerId, playersMap}) => {
+    if (playerId === move.huntedId) {
+      return t('You resist')
+    } else {
+      return t('{player} resists', {player: playersMap[move.huntedId].name})
     }
   },
   [GIVE_UP]: (t, move, {playerId, playersMap}) => {

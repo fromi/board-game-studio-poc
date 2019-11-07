@@ -1,7 +1,7 @@
 import React from 'react'
 import {Undo} from '@material-ui/icons'
 import './history.scss'
-import {moves} from '@bga/not-alone'
+import {CREATURE, moves} from '@bga/not-alone'
 import {useTranslation} from 'react-i18next'
 import {IconButton, Tooltip} from '@material-ui/core'
 import {START_PHASE} from '@bga/not-alone/moves/StartPhase'
@@ -11,7 +11,8 @@ import {placeTexts} from '../material/place-cards/PlaceCard'
 import ReplayButton from './ReplayButton'
 import MoveTexts from '../MoveTexts'
 
-export default function PastMove({move, moveHistory, index, undo, replay, ...props}) {
+export default function PastMove(props) {
+  const {playerId, move, moveHistory, index, undo, replay} = props
   if (!texts[move.type]) {
     return null
   }
@@ -23,12 +24,18 @@ export default function PastMove({move, moveHistory, index, undo, replay, ...pro
     return null
   }
 
-  const button = undoable(move, index, moveHistory) ? <UndoButton onClick={() => undo(move)}/> : <ReplayButton onClick={() => replay(index)}/>
+  const button = undoable(playerId, move, index, moveHistory) ? <UndoButton onClick={() => undo(move)}/> : <ReplayButton onClick={() => replay(index)}/>
 
   return <li>{button}{text}</li>
 }
 
-function undoable(move, index, moveHistory) {
+function undoable(playerId, move, index, moveHistory) {
+  if (move.huntedId && move.huntedId !== playerId) {
+    return false
+  }
+  if (!move.huntedId && playerId !== CREATURE) {
+    return false
+  }
   const Move = moves[move.type]
   const nextMoves = moveHistory.slice(index + 1)
   return Move.undoable && Move.undoable(move, nextMoves)

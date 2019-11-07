@@ -1,4 +1,4 @@
-import {CREATURE, getLegalMoves, getPlayerIds, HUNTED_PREFIX} from '@bga/not-alone'
+import {CREATURE, getHunted, getLegalMoves, getPlayerIds, HUNTED_PREFIX} from '@bga/not-alone'
 import {resist, RESIST} from '@bga/not-alone/moves/Resist'
 import {Trans, useTranslation} from 'react-i18next'
 import {GIVE_UP, giveUp} from '@bga/not-alone/moves/GiveUp'
@@ -25,6 +25,15 @@ export default function ExplorationTitle(props) {
       )
     } else if (ownMoves.some(move => move.type === PLAY_PLACE_CARD)) {
       return t('You must play a Place card')
+    } else {
+      const hunted = getHunted(game, playerId)
+      if (hunted.ongoingAction && hunted.ongoingAction.type === RESIST) {
+        if (hunted.ongoingAction.cardsLeft === 2) {
+          return t('Take back 2 Place cards from you discard')
+        } else {
+          return t('Take back a Place card from your discard')
+        }
+      }
     }
   }
   const huntedIds = getPlayerIds(game).filter(playerId => playerId !== CREATURE && getLegalMoves(game, playerId).some(move => move.type === PLAY_PLACE_CARD))

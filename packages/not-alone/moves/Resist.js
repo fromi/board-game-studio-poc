@@ -3,7 +3,7 @@ import {getHunted} from '../NotAlone'
 import {isExplorationMove} from '../phases/Exploration'
 
 export const RESIST = 'Resist'
-export const resist = (huntedId) => ({type: RESIST, huntedId})
+export const resist = huntedId => ({type: RESIST, huntedId})
 
 export const Resist = {
   execute: (game, move) => {
